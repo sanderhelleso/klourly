@@ -1,8 +1,10 @@
-body {
-    min-height: 300vh;
-}
 
 #landing {
     background-color: #311d3f;
     min-height: 100vh;
+}
+
+section {
+    min-height: 100vh;
+    text-align: center;
 }

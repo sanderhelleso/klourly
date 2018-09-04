@@ -11,6 +11,17 @@
     transform: rotate(90deg);
 }
 
+#discover-menu #prev, #discover-menu #next {
+    color: #88304e;
+}
+
 #discover-menu ul li {
+    color: #522546;
+    text-align: center;
+}
+
+#discover-menu .active {
     color: #e23e57;
+    border-bottom: 1px solid #e23e57;
+    transform: rotate(360deg);
 }
