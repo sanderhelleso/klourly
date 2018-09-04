@@ -48,17 +48,27 @@ export default class Landing extends Component {
         }
     }
 
+    // update menu state depending on current position of page
     updateMenu(currentSection, currentMenu) {
-        console.log(this.state.menuSections.indexOf(this.state.activeMenu) + 1);
+
+        // variables to keep state, shorten down names
+        const menuItems = this.state.menuSections;
+        const sections = this.state.landingSections;
+
+        console.log(menuItems.indexOf(this.state.activeMenu) + 1);
+
+        // update state
         this.setState({
-            activeMenu: this.state.menuSections[this.state.menuSections.indexOf(currentMenu) + 1],
-            activeSection: this.state.landingSections[this.state.landingSections.indexOf(currentSection) + 1]
+            activeMenu: menuItems[menuItems.indexOf(currentMenu) + 1],
+            activeSection: sections[sections.indexOf(currentSection) + 1]
         });
 
-        for (let i = 0; i < this.state.menuSections.length; i++) {
-            this.state.menuSections[i].className = 'discover-menu-section';
+        // remove old style of menu items
+        for (let i = 0; i < sections.length; i++) {
+            sections[i].className = 'discover-menu-section';
         }
 
+        // update current menu item with active class
         this.state.activeMenu.className = 'discover-menu-section active';
     }
 
