@@ -7,6 +7,8 @@ import './styles/discoverMenu.css';
 // import Main navigation component
 import MainNav from '../navigation/main/MainNav';
 
+// global to keep track if user scrolls down or up
+let previousPosition = window.pageYOffset || document.documentElement.scrollTop;
 export default class Landing extends Component {
     constructor(props) {
         super(props);
@@ -41,31 +43,60 @@ export default class Landing extends Component {
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
     }
+
     
     handleScroll() {
-        if ((window.scrollY + 200) > (this.state.activeSection.offsetTop + this.state.activeSection.offsetHeight)) {
-            this.updateMenu(this.state.activeSection, this.state.activeMenu);
-        }
-    }
 
-    // update menu state depending on current position of page
-    updateMenu(currentSection, currentMenu) {
+        /*let down = true;
+
+        if (previousPosition > currentPosition) {
+            down = false;
+        }
+        
+        else {
+            down = true;
+        }
+
+        previousPosition = currentPosition;*/
 
         // variables to keep state, shorten down names
         const menuItems = this.state.menuSections;
         const sections = this.state.landingSections;
 
-        console.log(menuItems.indexOf(this.state.activeMenu) + 1);
+        // current position of page
+        let currentPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-        // update state
-        this.setState({
-            activeMenu: menuItems[menuItems.indexOf(currentMenu) + 1],
-            activeSection: sections[sections.indexOf(currentSection) + 1]
-        });
+        if ((currentPosition) < (sections[0].offsetTop + sections[0].offsetHeight)) {
+            this.setState({
+                activeMenu: menuItems[0],
+                activeSection: sections[0]
+            });
+        }
+
+        else if ((currentPosition) < (sections[1].offsetTop + sections[1].offsetHeight)) {
+            this.setState({
+                activeMenu: menuItems[1],
+                activeSection: sections[1]
+            });
+        }
+
+        else if ((currentPosition) < (sections[2].offsetTop + sections[2].offsetHeight)) {
+            this.setState({
+                activeMenu: menuItems[2],
+                activeSection: sections[2]
+            });
+        }
+
+        else if ((currentPosition) < (sections[3].offsetTop + sections[3].offsetHeight)) {
+            this.setState({
+                activeMenu: menuItems[3],
+                activeSection: sections[3]
+            });
+        }
 
         // remove old style of menu items
-        for (let i = 0; i < sections.length; i++) {
-            sections[i].className = 'discover-menu-section';
+        for (let i = 0; i < menuItems.length; i++) {
+            menuItems[i].className = 'discover-menu-section';
         }
 
         // update current menu item with active class
@@ -97,6 +128,9 @@ export default class Landing extends Component {
                 </section>
                 <section>
                     <h2>Section Three</h2>
+                </section>
+                <section>
+                    <h2>Section Four</h2>
                 </section>
             </main>
         )
