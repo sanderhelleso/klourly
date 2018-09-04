@@ -8,7 +8,6 @@ export default class App extends Component {
         return (
             <div>
                 <Landing />
-                <h1>Hello World</h1>
             </div>
         )
     }

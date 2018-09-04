@@ -1,0 +1,24 @@
+body {
+    min-height: 300vh;
+}
+
+#landing {
+    background-color: #311d3f;
+    min-height: 100vh;
+}
+
+#discover-menu {
+    position: absolute;
+    right: 4%;
+    top: 30%;
+}
+
+#discover-menu ul li {
+    display: block;
+    padding: 0px 30px 30px 0px;
+    transform: rotate(90deg);
+}
+
+#discover-menu ul li {
+    color: #e23e57;
+}
