@@ -8,3 +8,13 @@ section {
     min-height: 200vh;
     text-align: center;
 }
+
+#landing-heading {
+    position: absolute;
+    bottom: 20%;
+    left: 15%;
+    text-align: left;
+    font-size: 80px;
+    line-height: 90px;
+    color: #e23e57;
+}

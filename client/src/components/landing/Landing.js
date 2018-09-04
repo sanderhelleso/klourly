@@ -93,14 +93,14 @@ export default class Landing extends Component {
                 activeSection: sections[3]
             });
         }
-        
+
         // remove old style of menu items
         for (let i = 0; i < menuItems.length; i++) {
-            menuItems[i].className = 'discover-menu-section animated fadeInLeft';
+            menuItems[i].className = 'discover-menu-section animated';
         }
 
         // update current menu item with active class
-        this.state.activeMenu.className = 'discover-menu-section active animated fadeInRight';
+        this.state.activeMenu.className = 'discover-menu-section active animated fadeIn';
     }
 
     render() {
@@ -108,6 +108,7 @@ export default class Landing extends Component {
             <main>
                 <MainNav />
                 <section id="landing">
+                    <h1 id="landing-heading">Create.<br />Simplify.<br />Controll.<br /></h1>
                     <div id="discover-menu">
                         <ul>
                             <li id="prev">Prev</li>

@@ -2,7 +2,7 @@
     background-color: transparent;
     box-shadow: none;
     padding: 25px 50px 15px 50px;
-    line-height: 55px;
+    line-height: 50px;
     position: fixed;
 }
 
@@ -22,6 +22,16 @@
 #sign-up-btn {
     border: 1px solid #e23e57;
     text-align: center;
-    border-bottom-left-radius: 20px;
     min-width: 100px;
+    background-size: 100% 200%;
+    background-image: linear-gradient(to bottom, transparent 50%, #e23e57 50%);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s ease-in-out color;
+    padding: 0px 20px 0px 20px;
+}
+
+#sign-up-btn:hover {
+    background-position: 0% -100%;
+    color: white;
 }
