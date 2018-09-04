@@ -21,6 +21,14 @@ section {
     letter-spacing: 5px;
 }
 
+#mockup {
+    margin-top: 25%;
+    margin-right: 10%;
+    max-height: 450px;
+    width: auto;
+    border-radius: 30px;
+}
+
 .long-shadow{
     color:#fff;
     text-shadow:1px 1px rgba(0,0,0,0.01),

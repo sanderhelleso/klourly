@@ -108,7 +108,16 @@ export default class Landing extends Component {
             <main>
                 <MainNav />
                 <section id="landing">
-                    <h1 id="landing-heading" className="long-shadow">Create.<br />Simplify.<br />Controll.<br /></h1>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col l6 m6 s12">
+                                <h1 id="landing-heading" className="long-shadow">Create.<br />Simplify.<br />Controll.<br /></h1>
+                            </div>
+                            <div className="col l6 m6 s12">
+                                <img id="mockup" className="z-depth-5" src="../img/mockup.png" alt="mockup" />
+                            </div>
+                        </div>
+                    </div>
                     <div id="discover-menu">
                         <ul>
                             <li id="prev">Prev</li>
