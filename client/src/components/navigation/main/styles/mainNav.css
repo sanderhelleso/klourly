@@ -1,7 +1,9 @@
 #main-nav {
     background-color: transparent;
     box-shadow: none;
-    padding: 15px 50px 15px 50px;
+    padding: 25px 50px 15px 50px;
+    line-height: 55px;
+    position: fixed;
 }
 
 #main-nav a {
@@ -14,4 +16,11 @@
 
 #main-nav ul li {
     margin: 0px 10px 0px 10px;
+}
+
+#sign-up-btn {
+    border: 1px solid #e23e57;
+    width: 100px;
+    text-align: center;
+    border-bottom-left-radius: 20px;
 }

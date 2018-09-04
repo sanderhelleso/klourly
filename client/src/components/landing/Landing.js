@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 // import component styles
 import './styles/landing.css';
+import './styles/discoverMenu.css';
 
 // import Main navigation component
 import MainNav from '../navigation/main/MainNav';

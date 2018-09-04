@@ -1,0 +1,16 @@
+#discover-menu {
+    position: fixed;
+    right: 4%;
+    top: 25%;
+}
+
+#discover-menu ul li {
+    font-size: 14px;
+    display: block;
+    padding: 15px 0px 15px 0px;
+    transform: rotate(90deg);
+}
+
+#discover-menu ul li {
+    color: #e23e57;
+}
