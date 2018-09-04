@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './css/main.css';
 import registerServiceWorker from './registerServiceWorker';
 
+// impoort Animate project
+import 'animate.css';
+
 // import js from Materialize project
 import 'materialize-css';
 

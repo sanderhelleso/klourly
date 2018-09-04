@@ -47,7 +47,7 @@ export default class Landing extends Component {
     
     handleScroll() {
 
-        /*let down = true;
+        let down = true;
 
         if (previousPosition > currentPosition) {
             down = false;
@@ -57,7 +57,7 @@ export default class Landing extends Component {
             down = true;
         }
 
-        previousPosition = currentPosition;*/
+        previousPosition = currentPosition;
 
         // variables to keep state, shorten down names
         const menuItems = this.state.menuSections;
@@ -66,21 +66,21 @@ export default class Landing extends Component {
         // current position of page
         let currentPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-        if ((currentPosition) < (sections[0].offsetTop + sections[0].offsetHeight)) {
+        if ((currentPosition + 200) < (sections[0].offsetTop + sections[0].offsetHeight)) {
             this.setState({
                 activeMenu: menuItems[0],
                 activeSection: sections[0]
             });
         }
 
-        else if ((currentPosition) < (sections[1].offsetTop + sections[1].offsetHeight)) {
+        else if ((currentPosition + 200) < (sections[1].offsetTop + sections[1].offsetHeight)) {
             this.setState({
                 activeMenu: menuItems[1],
                 activeSection: sections[1]
             });
         }
 
-        else if ((currentPosition) < (sections[2].offsetTop + sections[2].offsetHeight)) {
+        else if ((currentPosition + 200) < (sections[2].offsetTop + sections[2].offsetHeight)) {
             this.setState({
                 activeMenu: menuItems[2],
                 activeSection: sections[2]
@@ -93,14 +93,14 @@ export default class Landing extends Component {
                 activeSection: sections[3]
             });
         }
-
+        
         // remove old style of menu items
         for (let i = 0; i < menuItems.length; i++) {
-            menuItems[i].className = 'discover-menu-section';
+            menuItems[i].className = 'discover-menu-section animated fadeInLeft';
         }
 
         // update current menu item with active class
-        this.state.activeMenu.className = 'discover-menu-section active';
+        this.state.activeMenu.className = 'discover-menu-section active animated fadeInRight';
     }
 
     render() {
@@ -128,9 +128,6 @@ export default class Landing extends Component {
                 </section>
                 <section>
                     <h2>Section Three</h2>
-                </section>
-                <section>
-                    <h2>Section Four</h2>
                 </section>
             </main>
         )

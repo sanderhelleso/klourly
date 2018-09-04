@@ -13,15 +13,16 @@
 
 #discover-menu #prev, #discover-menu #next {
     color: #88304e;
+    margin: 10px 0px 10px 0px;
 }
 
 #discover-menu ul li {
     color: #522546;
     text-align: center;
-    transition: 0.4s ease-in-out;
 }
 
 #discover-menu .active {
     color: #e23e57;
-    border-top: 0.5px solid #e23e57;
+    border: 1px solid #e23e57;
+    transform: rotate(360deg);
 }
