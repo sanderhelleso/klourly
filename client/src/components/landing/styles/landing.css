@@ -17,4 +17,33 @@ section {
     font-size: 80px;
     line-height: 90px;
     color: #e23e57;
+    font-weight: 600;
+    letter-spacing: 5px;
+}
+
+.long-shadow{
+    color:#fff;
+    text-shadow:1px 1px rgba(0,0,0,0.01),
+    2px 2px rgba(0,0,0,0.03),
+    3px 3px rgba(0,0,0,0.025),
+    4px 4px rgba(0,0,0,0.02),
+    5px 5px rgba(0,0,0,0.015),
+    6px 6px rgba(0,0,0,0.01),
+    7px 6px rgba(0,0,0,0.01),
+    8px 8px rgba(0,0,0,0.01),
+    9px 8px rgba(0,0,0,0.01),
+    10px 10px rgba(0,0,0,0.01),
+    11px 11px rgba(0,0,0,0.01),
+    12px 12px rgba(0,0,0,0.01),
+    13px 13px rgba(0,0,0,0.01),
+    14px 14px rgba(0,0,0,0.01),
+    15px 15px rgba(0,0,0,0.01),
+    16px 16px rgba(0,0,0,0.01),
+    17px 17px rgba(0,0,0,0.01),
+    18px 18px rgba(0,0,0,0.01),
+    19px 19px rgba(0,0,0,0.01),
+    20px 20px rgba(0,0,0,0.01),
+    21px 21px rgba(0,0,0,0.01),
+    22px 22px rgba(0,0,0,0.01),
+    23px 23px rgba(0,0,0,0.01);
 }

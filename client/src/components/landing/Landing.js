@@ -108,7 +108,7 @@ export default class Landing extends Component {
             <main>
                 <MainNav />
                 <section id="landing">
-                    <h1 id="landing-heading">Create.<br />Simplify.<br />Controll.<br /></h1>
+                    <h1 id="landing-heading" className="long-shadow">Create.<br />Simplify.<br />Controll.<br /></h1>
                     <div id="discover-menu">
                         <ul>
                             <li id="prev">Prev</li>
