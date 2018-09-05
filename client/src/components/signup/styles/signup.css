@@ -1,0 +1,17 @@
+#signup-img-cont {
+    background-color: #212121;
+    background: linear-gradient(
+    rgba(121, 85, 72, 0.9), 
+    rgba(0, 0, 0, 0.7)),
+    url("/img/signup/signup.jpg");
+    min-height: 100vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#singup-form-cont h2 {
+    text-align: center;
+}
