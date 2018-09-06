@@ -1,8 +1,8 @@
 #signup-img-cont {
     background-color: #212121;
-    background: linear-gradient(
-    rgba(121, 85, 72, 0.9), 
-    rgba(0, 0, 0, 0.7)),
+    background: 
+    linear-gradient(to right, rgba(49, 29, 63, 0.5),
+    rgb(49, 29, 63)),
     url("/img/signup/signup.jpg");
     min-height: 100vh; 
 
@@ -14,4 +14,17 @@
 
 #singup-form-cont h2 {
     text-align: center;
+}
+
+#signup-logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    color: #e23e57;
+}
+
+body {
+    overflow: hidden;
+    background-color: #311d3f;
 }
