@@ -1,10 +1,10 @@
 #signup-img-cont {
     background-color: #212121;
     background: 
-    linear-gradient(to right, rgba(49, 29, 63, 0.5),
+    linear-gradient(to right, rgba(49, 29, 63, 0.3),
     rgb(49, 29, 63)),
-    url("/img/signup/signup.jpg");
-    min-height: 100vh; 
+    url("/img/signup/signup4.jpg");
+    min-height: 110vh; 
 
     /* Center and scale the image nicely */
     background-position: center;
@@ -12,19 +12,58 @@
     background-size: cover;
 }
 
-#singup-form-cont h2 {
-    text-align: center;
+#signup-form-cont {
+    overflow: auto;
+    max-height: 100vh;
+    padding-top: 17.5%;
+}
+
+#signup-form-cont h4 {
+    text-align: left;
+    font-size: 18px;
+    margin-bottom: 50px;
+    color: #88304e;
 }
 
 #signup-logo {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 50%;
     transform: translate(-50%);
     color: #e23e57;
+    font-size: 30px;
 }
 
 body {
     overflow: hidden;
     background-color: #311d3f;
+}
+
+#signup-btn {
+    margin-top: 15px;
+    width: 100%;
+    height: 60px;
+    background-color: #e23e57;
+}
+
+.disabled-btn {
+    opacity: 0.4;
+}
+
+#signup-form-cont input {
+    color: #88304e;
+}
+
+#signup-form-cont input:focus {
+    border-bottom: 1px solid #e23e57;
+    box-shadow: 0 1px 0 0 #e23e57;
+}
+  
+#signup-form-cont input:focus + label {
+    color: #e23e57;
+}
+
+input[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #e23e57;
+    border-bottom: 2px solid #e23e57;
 }
