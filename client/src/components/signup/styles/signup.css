@@ -13,7 +13,7 @@
 }
 
 #signup-form-cont {
-    overflow: auto;
+    overflow-y: scroll;
     max-height: 100vh;
     padding-top: 17.5%;
 }
@@ -32,6 +32,15 @@
     transform: translate(-50%);
     color: #e23e57;
     font-size: 30px;
+}
+
+#signup-heading {
+    position: fixed;
+    top: 29%;
+    left: 50%;
+    transform: translate(-50%);
+    color: #e23e57;
+    font-size: 55px;
 }
 
 body {
