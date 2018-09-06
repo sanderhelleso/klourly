@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
-
-
 #signup-img-cont {
     background-color: #212121;
     background: 
@@ -47,7 +44,8 @@
     color: #e23e57;
     font-size: 55px;
     z-index: 100;
-    text-transform: uppercase;
+    text-transform: capitalize;
+    letter-spacing: 5px;
 }
 
 #signup-body {
@@ -82,4 +80,16 @@
 input[type="checkbox"]:checked+span:not(.lever):before {
     border-right: 2px solid #e23e57;
     border-bottom: 2px solid #e23e57;
+}
+
+#signup-login {
+    text-align: center;
+    font-size: 12px;
+    margin: 20px auto 0px auto;
+    color: #9e9e9e;
+}
+
+#signup-login a {
+    color: #e23e57;
+    border-bottom: 0.5px solid #e23e57;
 }

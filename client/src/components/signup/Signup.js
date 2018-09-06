@@ -60,9 +60,9 @@ export default class Signup extends Component {
                 <h2 id="signup-logo">Klourly</h2>
                 {this.renderHeading()}
                 <div className="row">
-                    <div id="signup-img-cont" className="col l6 m5 s12 animated fadeInLeft">
+                    <div id="signup-img-cont" className="col l6 m5 s12 animated fadeIn">
                     </div>
-                    <div id="signup-form-cont" className="col l6 m7 s12">
+                    <div id="signup-form-cont" className="col l6 m7 s12 animated fadeIn">
                         <div className="container">
                             <div className="row">
                                 <div className="col s6 offset-s6">
@@ -100,6 +100,7 @@ export default class Signup extends Component {
                                         </div>
                                         <div className="col s8 offset-s2">
                                             <button id="signup-btn" class="btn waves-effect waves-light disabled-btn" disabled type="submit" name="action">Create Account </button>
+                                            <p id="signup-login">Allready have an account? <a href="/login">Login here</a></p>
                                         </div>
                                     </div>
                                 </form>
