@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
+
 #signup-img-cont {
     background-color: #212121;
     background: 
@@ -10,6 +13,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: -1;
 }
 
 #signup-form-cont {
@@ -32,6 +36,7 @@
     transform: translate(-50%);
     color: #e23e57;
     font-size: 30px;
+    z-index: 100;
 }
 
 #signup-heading {
@@ -41,9 +46,11 @@
     transform: translate(-50%);
     color: #e23e57;
     font-size: 55px;
+    z-index: 100;
+    text-transform: uppercase;
 }
 
-body {
+#signup-body {
     overflow: hidden;
     background-color: #311d3f;
 }

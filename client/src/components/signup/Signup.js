@@ -13,8 +13,9 @@ export default class Signup extends Component {
         this.handleScroll = this.handleScroll.bind(this);
     }
 
-    // add scroll event on mount
+    // add scroll event on mount & id to body
     componentDidMount() {
+        document.body.id = "signup-body";
         document.querySelector('#signup-form-cont').addEventListener('scroll', this.handleScroll);
     }
 
@@ -42,6 +43,7 @@ export default class Signup extends Component {
         }
     }
 
+    // render heading depending if scrolled past point, controlled by state
     renderHeading() {
         if (this.state.display_headng === true) {
             return <h1 id="signup-heading" className="animated fadeIn">Sign Up</h1>;
@@ -58,7 +60,7 @@ export default class Signup extends Component {
                 <h2 id="signup-logo">Klourly</h2>
                 {this.renderHeading()}
                 <div className="row">
-                    <div id="signup-img-cont" className="col l6 m5 s12">
+                    <div id="signup-img-cont" className="col l6 m5 s12 animated fadeInLeft">
                     </div>
                     <div id="signup-form-cont" className="col l6 m7 s12">
                         <div className="container">
