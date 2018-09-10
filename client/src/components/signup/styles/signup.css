@@ -93,3 +93,8 @@ input[type="checkbox"]:checked+span:not(.lever):before {
     color: #e23e57;
     border-bottom: 0.5px solid #e23e57;
 }
+
+.signup-error {
+    color: #e53935;
+    font-size: 12px;
+}

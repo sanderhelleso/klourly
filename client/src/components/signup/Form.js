@@ -8,10 +8,12 @@ export default class Form extends Component {
           last_name: '',
           email: '',
           password: '',
-          confirm_password: ''
+          confirm_password: '',
+          password_error: ''
         };
 
         // bind function to class
+        this.checkPasswordEquality = this.checkPasswordEquality.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
@@ -31,22 +33,22 @@ export default class Form extends Component {
         const confirmPassword = inputs[4];
     }
 
+    // validate email
     validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
+
+        // regex pattern for email validation
+        var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regexEmail.test(String(email).toLowerCase());
     }
 
+    // validate password
     validatePassword(password){
+
+        // regex patterns for upper, lower, number and special character
         const anUpperCase = /[A-Z]/;
         const aLowerCase = /[a-z]/; 
         const aNumber = /[0-9]/;
-        var aSpecial = /[!|@|#|$|%|^|&|*|(|)|-|_]/;
-        
-        // if password length is not fulfilled
-        if (password.length < 12) {
-            console.log("Not long enough!");
-            return;
-        }
+        var aSpecial = /[!|@|#|$|%|^|&|*|(|)|-|_]/;        
         
         // check for occurences of characters
         let numUpper = 0;
@@ -70,11 +72,67 @@ export default class Form extends Component {
                 numSpecials++;
             }
         }
-    
-        if (numUpper < 1 || numLower < 1 || numNums < 1 || numSpecials < 1) {
-            console.log("Wrong Format!");
+
+        // if empty password
+        if (password === '') {
+            this.setState({
+                password_error: ''
+            });
             return;
         }
+        
+        // if password dont include atleast 1 uppercase letter
+        if (numUpper < 1) {
+            console.log(this.state)
+            this.setState({
+                password_error: 'Please Include atleast 1 uppercase letter'
+            });
+            return;
+        }
+        
+        // if password dont include atleast 1 lowercase letter
+        else if (numLower < 1) {
+            this.setState({
+                password_error: 'Please Include atleast 1 lowecase letter'
+            });
+            return;
+        }
+        
+        // if password dont include atleast 1 number
+        else if (numNums < 1) {
+            this.setState({
+                password_error: 'Please Include atleast 1 number'
+            });
+            return;
+        }
+        
+        // if password dont include atleast 1 special character
+        else if (numSpecials < 1) {
+            this.setState({
+                password_error: 'Please Include atleast 1 special character'
+            });
+            return;
+        }
+
+        // if password length is not fullfilled
+        else if (password.length < 12) {
+            this.setState({
+                password_error: 'Passsword needs to be atleast 12 characters'
+            });
+            return;
+        }
+
+        // password if fullfiled
+        else {
+            this.setState({
+                password_error: ''
+            });
+        }
+    }
+
+    // check for matching passwords
+    checkPasswordEquality() {
+
     }
 
     // make button available if input fields are filled out
@@ -122,14 +180,15 @@ export default class Form extends Component {
                     console.log("TRUE");
                 }
             break;
-
+            
+            // password validation
             case 'password':
                 this.validatePassword(value);
-                // code for password here
             break;
-
+            
+            // password equality check
             case 'confirm_password':
-                // code for confirm password here
+                this.checkPasswordEquality();
             break;
         }
 
@@ -155,6 +214,7 @@ export default class Form extends Component {
                     <div className="input-field col s12">
                         <input id="password" type="password" name="password" value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="password">Password</label>
+                        <p className="signup-error">{this.state.password_error}</p>
                     </div>
                     <div className="input-field col s12">
                         <input id="confirm-password" type="password" name="confirm_password" value={this.state.confirm_password} onChange={(event) => this.handleUserInput(event)} />
