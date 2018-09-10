@@ -12,6 +12,7 @@ export default class Form extends Component {
         };
 
         // bind function to class
+        this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
     }
@@ -33,6 +34,47 @@ export default class Form extends Component {
     validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
+    }
+
+    validatePassword(password){
+        const anUpperCase = /[A-Z]/;
+        const aLowerCase = /[a-z]/; 
+        const aNumber = /[0-9]/;
+        var aSpecial = /[!|@|#|$|%|^|&|*|(|)|-|_]/;
+        
+        // if password length is not fulfilled
+        if (password.length < 12) {
+            console.log("Not long enough!");
+            return;
+        }
+        
+        // check for occurences of characters
+        let numUpper = 0;
+        let numLower = 0;
+        let numNums = 0;
+        let numSpecials = 0;
+        for (var i = 0; i < password.length; i++) {
+            if (anUpperCase.test(password[i])) {
+                numUpper++;
+            }
+
+            else if (aLowerCase.test(password[i])) {
+                numLower++;
+            }
+
+            else if (aNumber.test(password[i])) {
+                numNums++;
+            }
+
+            else if (aSpecial.test(password[i])) {
+                numSpecials++;
+            }
+        }
+    
+        if (numUpper < 1 || numLower < 1 || numNums < 1 || numSpecials < 1) {
+            console.log("Wrong Format!");
+            return;
+        }
     }
 
     // make button available if input fields are filled out
@@ -82,6 +124,7 @@ export default class Form extends Component {
             break;
 
             case 'password':
+                this.validatePassword(value);
                 // code for password here
             break;
 
