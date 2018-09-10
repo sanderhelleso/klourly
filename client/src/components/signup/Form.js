@@ -4,11 +4,11 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          first_name: null,
-          last_name: null,
-          email: null,
-          password: null,
-          confirm_password: null
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          confirm_password: ''
         };
 
         // bind function to class
@@ -20,36 +20,51 @@ export default class Form extends Component {
     }
 
     validateForm() {
-        console.log(123);
+
+        // get all inputs
         const inputs = document.querySelectorAll('input');
-        for (let i = 0; i < inputs.length; i++) {
-            console.log(inputs[i]);
-        }
+        const firstName = inputs[0];
+        const lastName = inputs[1];
+        const email = inputs[2];
+        const password = inputs[3];
+        const confirmPassword = inputs[4];
+
+        // run checks
     }
 
+    // update inputs and state
+    handleUserInput (e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({
+            [name]: value
+        });
+
+        console.log(this.state);
+      }
 
     render() {
         return (
             <form className="col s12">
                 <div className="row">
                     <div className="input-field col s6">
-                        <input className="browser-default" id="first-name" type="text" className="validate" />
+                        <input id="first-name" type="text" name="first_name" value={this.state.first_name} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="first-name">First Name</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="last-name" type="text" className="validate" />
+                        <input id="last-name" type="text" name="last_name" value={this.state.last_name} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="last-name">Last Name</label>
                     </div>
                     <div className="input-field col s12">
-                        <input id="email" type="email" className="validate" />
+                        <input id="email" type="email" name="email" value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="email">E-Mail</label>
                     </div>
                     <div className="input-field col s12">
-                        <input id="password" type="password" className="validate" />
+                        <input id="password" type="password" name="password" value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="input-field col s12">
-                        <input id="confirm-password" type="password" className="validate" />
+                        <input id="confirm-password" type="password" name="confirm_password" value={this.state.confirm_password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="confirm-password">Confirm Password</label>
                     </div>
                     <div className="col s8 offset-s2">
