@@ -9,7 +9,8 @@ export default class Form extends Component {
           email: '',
           password: '',
           confirm_password: '',
-          password_error: ''
+          password_error: '',
+          password_confirm_error: ''
         };
 
         // bind function to class
@@ -131,8 +132,31 @@ export default class Form extends Component {
     }
 
     // check for matching passwords
-    checkPasswordEquality() {
+    checkPasswordEquality(password) {
+        
+        // if confirm password is empty
+        if (password === '') {
+            this.setState({
+                password_confirm_error: ''
+            });
+            return;
+        }
 
+        // if passwords match
+        if (password === this.state.password) {
+            this.setState({
+                password_confirm_error: ''
+            });
+            return;
+        }
+
+        // if password dont match
+        else {
+            this.setState({
+                password_confirm_error: 'Passwords dont match'
+            });
+            return;
+        }
     }
 
     // make button available if input fields are filled out
@@ -188,7 +212,7 @@ export default class Form extends Component {
             
             // password equality check
             case 'confirm_password':
-                this.checkPasswordEquality();
+                this.checkPasswordEquality(value);
             break;
         }
 
@@ -219,6 +243,7 @@ export default class Form extends Component {
                     <div className="input-field col s12">
                         <input id="confirm-password" type="password" name="confirm_password" value={this.state.confirm_password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="confirm-password">Confirm Password</label>
+                        <p className="signup-error">{this.state.password_confirm_error}</p>
                     </div>
                     <div className="col s8 offset-s2">
                         <button id="signup-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action" >Create Account </button>
