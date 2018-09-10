@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import './styles/signup.css';
 
+import Form from './Form';
+
 export default class Signup extends Component {
     constructor(props) {
         super(props);
@@ -25,10 +27,9 @@ export default class Signup extends Component {
     }
 
     handleScroll() {
-
+        
         // current position of page
         let currentPosition = document.querySelector('#signup-form-cont').scrollTop
-        console.log(this.state, currentPosition);
 
         if (currentPosition > 80) {
             this.setState({
@@ -68,42 +69,7 @@ export default class Signup extends Component {
                                 <div className="col s6 offset-s6">
                                     <h4>You are only a few clicks away from discovering the magic of Klourly</h4>
                                 </div>
-                                <form className="col s12">
-                                    <div className="row">
-                                        <div className="input-field col s6">
-                                            <input className="browser-default" id="first-name" type="text" class="validate" />
-                                            <label for="first-name">First Name</label>
-                                        </div>
-                                        <div className="input-field col s6">
-                                            <input id="last-name" type="text" class="validate" />
-                                            <label for="last-name">Last Name</label>
-                                        </div>
-                                        <div className="input-field col s12">
-                                            <input id="email" type="email" class="validate" />
-                                            <label for="email">E-Mail</label>
-                                        </div>
-                                        <div className="input-field col s12">
-                                            <input id="password" type="password" class="validate" />
-                                            <label for="password">Password</label>
-                                        </div>
-                                        <div className="input-field col s12">
-                                            <input id="confirm-password" type="password" class="validate" />
-                                            <label for="confirm-password">Confirm Password</label>
-                                        </div>
-                                        <div className="col s12">
-                                            <p>
-                                                <label>
-                                                    <input id="signup-checkbox" type="checkbox" />
-                                                    <span>I would like to recieve news and update from Klourly</span>
-                                                </label>
-                                            </p>
-                                        </div>
-                                        <div className="col s8 offset-s2">
-                                            <button id="signup-btn" class="btn waves-effect waves-light disabled-btn" disabled type="submit" name="action">Create Account </button>
-                                            <p id="signup-login">Allready have an account? <a href="/login">Login here</a></p>
-                                        </div>
-                                    </div>
-                                </form>
+                                <Form />
                             </div>
                         </div>
                     </div>
