@@ -10,7 +10,8 @@ export default class Form extends Component {
           password: '',
           confirm_password: '',
           password_error: '',
-          password_confirm_error: ''
+          password_confirm_error: '',
+          email_error: ''
         };
 
         // bind function to class
@@ -39,7 +40,22 @@ export default class Form extends Component {
 
         // regex pattern for email validation
         var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regexEmail.test(String(email).toLowerCase());
+
+        // email is valid 
+        if (regexEmail.test(String(email).toLowerCase())) {
+            this.setState({
+                email_error: ''
+            });
+            return;
+        }
+
+        // email is invalid
+        else {
+            this.setState({
+                email_error: 'Invalid email'
+            });
+            return;
+        }
     }
 
     // validate password
@@ -84,7 +100,6 @@ export default class Form extends Component {
         
         // if password dont include atleast 1 uppercase letter
         if (numUpper < 1) {
-            console.log(this.state)
             this.setState({
                 password_error: 'Please Include atleast 1 uppercase letter'
             });
@@ -191,18 +206,12 @@ export default class Form extends Component {
             [name]: value
         });
 
-        // email check
+        // form validation
         switch (name) {
             case 'email':
-                // email is good
-                if (this.validateEmail(value)) {
-                    console.log("FALSE");
-                }
 
-                // email invalid, show error
-                else {
-                    console.log("TRUE");
-                }
+                // email validation
+                this.validateEmail(value)
             break;
             
             // password validation
@@ -234,6 +243,7 @@ export default class Form extends Component {
                     <div className="input-field col s12">
                         <input id="email" type="email" name="email" value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="email">E-Mail</label>
+                        <p className="signup-error">{this.state.email_error}</p>
                     </div>
                     <div className="input-field col s12">
                         <input id="password" type="password" name="password" value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
