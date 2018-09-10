@@ -32,6 +32,25 @@ export default class Form extends Component {
         // run checks
     }
 
+    availabeButton() {
+        const inputs = document.querySelectorAll('input');
+        const button = document.querySelector('#signup-btn');
+
+        for (let i = 0; i < inputs.length; i++) {
+
+            if (inputs[i].value === '') {
+                button.className = 'btn waves-effect waves-light disabled-btn';
+                button.disabled = true;
+                return;
+            }
+
+            else {
+                button.className = 'btn waves-effect waves-light';
+                button.disabled = false;
+            }
+        }
+    }
+
     // update inputs and state
     handleUserInput (e) {
         const name = e.target.name;
@@ -40,7 +59,7 @@ export default class Form extends Component {
             [name]: value
         });
 
-        console.log(this.state);
+        this.availabeButton();
       }
 
     render() {
