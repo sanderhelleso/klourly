@@ -29,8 +29,12 @@ module.exports = app => {
                 newsletter: false
             });
 
-            // here we send data back to client and login user with localstorage using UID
-            //////////////////////////////////////////////////////////////////////
+            // send data back to client and login user with localstorage using UID
+            res.json({
+                userData: userRecord,
+                message: 'Successfully created new user',
+                success: true
+            });
         })
         // if error, catch and send error to user
         .catch(function(error) {

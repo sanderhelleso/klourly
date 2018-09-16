@@ -262,8 +262,19 @@ export default class Form extends Component {
             });
             // get response from endpoint
             console.log(response);
-            this.notify('success', response.data.message);
-            this.setEnabledMode(e.toElement);
+
+            // success, store UID and redirect to dashboard
+            if (response.data.success) {
+                this.notify('success', response.data.message);
+                localStorage.setItem('user', response.data.userData.uid);
+                window.location.replace('/dashboard');
+            }
+
+            // something went wrong (allready user with email etc..)
+            else {
+                this.notify('error', response.data.message);
+                this.setEnabledMode(e.toElement);
+            }
         }
 
         // catch and display error
