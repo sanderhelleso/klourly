@@ -2,6 +2,11 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/api/singup": {
+      "target": "http://localhost:5000"
+    }
+  },
   "dependencies": {
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",

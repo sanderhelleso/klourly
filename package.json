@@ -1,0 +1,29 @@
+{
+  "name": "klourly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanderhelleso/klourly.git"
+  },
+  "author": "Sander Hellesø",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanderhelleso/klourly/issues"
+  },
+  "homepage": "https://github.com/sanderhelleso/klourly#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4"
+  }
+}
