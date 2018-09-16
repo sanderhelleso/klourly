@@ -44,17 +44,22 @@ export default class Form extends Component {
         // email is valid 
         if (regexEmail.test(String(email).toLowerCase())) {
             this.setState({
-                email_error: '',
-                email_ok: true
+                email_error: ''
             });
             return true;
+        }
+
+        else if (email === "") {
+            this.setState({
+                email_error: ''
+            });
+            return false;
         }
 
         // email is invalid
         else {
             this.setState({
-                email_error: 'Invalid email',
-                email_ok: false
+                email_error: 'Invalid email'
             });
             return false;
         }
