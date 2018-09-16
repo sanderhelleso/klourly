@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
 export default class Form extends Component {
@@ -170,22 +172,22 @@ export default class Form extends Component {
         }
     }
 
+    setDisabledMode(button) {
+        button.className = 'btn waves-effect waves-light disabled-btn';
+        button.disabled = true;
+        return false;
+    }
+
+    setEnabledMode(button) {
+        button.className = 'btn waves-effect waves-light';
+        button.disabled = false;
+        return true;
+    }
+
     // make button available if input fields are filled out and checked
     availabeButton() {
         const inputs = document.querySelectorAll('input');
         const button = document.querySelector('#signup-btn');
-
-        function setDisabledMode() {
-            button.className = 'btn waves-effect waves-light disabled-btn';
-            button.disabled = true;
-            return false;
-        }
-
-        function setEnabledMode() {
-            button.className = 'btn waves-effect waves-light';
-            button.disabled = false;
-            return true;
-        }
 
         let formCounter = 0;
         for (let i = 0; i < inputs.length; i++) {
@@ -195,7 +197,7 @@ export default class Form extends Component {
                 this.setState({
                     validated: false
                 });
-                setDisabledMode();
+                this.setDisabledMode(button);
             }
             
             else {
@@ -207,20 +209,44 @@ export default class Form extends Component {
         if (formCounter === inputs.length) {
             if (this.validateEmail(this.state.email) && this.validatePassword(this.state.password) && this.checkPasswordEquality(this.state.confirm_password)) {
                 button.addEventListener('click', this.validateForm);
-                setEnabledMode();
+                this.setEnabledMode(button);
             }
     
             else {
                 button.removeEventListener('click', this.validateForm);
-                setDisabledMode();
+                this.setDisabledMode(button);
             }
+        }
+    }
+
+    // notify user with signup state
+    notify(status, message) {
+        switch(status) {
+            case 'success':
+                toast(message, {
+                    position: toast.POSITION.TOP_LEFT,
+                    className: 'toast-success'
+                });
+            break;
+
+            case 'error':
+                toast(message, {
+                    position: toast.POSITION.TOP_LEFT,
+                    className: 'toast-error'
+                });
+            break;
         }
     }
 
     async validateForm(e) {
 
+        // disable button
+        this.setDisabledMode(e.toElement);
+
         // prevent form from submiting
         e.preventDefault();
+
+        console.log(e.toElement);
 
         // send data to endpoint and attempt to create user
         try {
@@ -236,11 +262,15 @@ export default class Form extends Component {
             });
             // get response from endpoint
             console.log(response);
+            this.notify('success', response.data.message);
+            this.setEnabledMode(e.toElement);
         }
-        
+
         // catch and display error
         catch (error) {
             console.log(error);
+            this.notify('error', error.message);
+            this.setEnabledMode(e.toElement);
         }
 
         // TODO: try to set values by loop later
@@ -283,6 +313,7 @@ export default class Form extends Component {
     render() {
         return (
             <form className="col s12">
+                <ToastContainer />
                 <div className="row">
                     <div className="input-field col s6">
                         <input id="first-name" type="text" name="first_name" value={this.state.first_name} onChange={(event) => this.handleUserInput(event)} />
