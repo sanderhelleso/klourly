@@ -1,5 +1,5 @@
 // ES6
-'use strict'
+'use strict';
 
 // initialize firebase
 const firebase = require("firebase-admin");

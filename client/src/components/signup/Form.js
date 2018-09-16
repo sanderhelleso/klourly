@@ -217,29 +217,31 @@ export default class Form extends Component {
         }
     }
 
-    validateForm(e) {
+    async validateForm(e) {
 
         // prevent form from submiting
         e.preventDefault();
 
-        // get all inputs
-        /*const inputs = document.querySelectorAll('input');
-        const firstName = inputs[0];
-        const lastName = inputs[1];
-        const email = inputs[2];
-        const password = inputs[3];
-        const confirmPassword = inputs[4];*/
-
-        axios({
-            method: 'post',
-            url: '/api/signup',
-            data: {
-                firstName: this.state.first_name,
-                lastName: this.state.last_name,
-                email: this.state.email,
-                password: this.state.password
-            }
-        });
+        // send data to endpoint and attempt to create user
+        try {
+            const response = await axios({
+                method: 'post',
+                url: '/api/signup',
+                data: {
+                    firstName: this.state.first_name,
+                    lastName: this.state.last_name,
+                    email: this.state.email,
+                    password: this.state.password
+                }
+            });
+            // get response from endpoint
+            console.log(response);
+        }
+        
+        // catch and display error
+        catch (error) {
+            console.log(error);
+        }
 
         // TODO: try to set values by loop later
         //Object.keys(this.state).map(value => console.log(value, ": ", this.state[value]));

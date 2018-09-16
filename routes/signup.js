@@ -32,9 +32,10 @@ module.exports = app => {
             // here we send data back to client and login user with localstorage using UID
             //////////////////////////////////////////////////////////////////////
         })
-        // if error, catch and display error
+        // if error, catch and send error to user
         .catch(function(error) {
             console.log("Error creating new user:", error);
+            res.json(error);
         });
     });
 }
