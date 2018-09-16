@@ -44,17 +44,19 @@ export default class Form extends Component {
         // email is valid 
         if (regexEmail.test(String(email).toLowerCase())) {
             this.setState({
-                email_error: ''
+                email_error: '',
+                email_ok: true
             });
-            return;
+            return true;
         }
 
         // email is invalid
         else {
             this.setState({
-                email_error: 'Invalid email'
+                email_error: 'Invalid email',
+                email_ok: false
             });
-            return;
+            return false;
         }
     }
 
@@ -95,7 +97,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: ''
             });
-            return;
+            return false;
         }
         
         // if password dont include atleast 1 uppercase letter
@@ -103,7 +105,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: 'Please Include atleast 1 uppercase letter'
             });
-            return;
+            return false;
         }
         
         // if password dont include atleast 1 lowercase letter
@@ -111,7 +113,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: 'Please Include atleast 1 lowecase letter'
             });
-            return;
+            return false;
         }
         
         // if password dont include atleast 1 number
@@ -119,7 +121,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: 'Please Include atleast 1 number'
             });
-            return;
+            return false;
         }
         
         // if password dont include atleast 1 special character
@@ -127,7 +129,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: 'Please Include atleast 1 special character'
             });
-            return;
+            return false;
         }
 
         // if password length is not fullfilled
@@ -135,7 +137,7 @@ export default class Form extends Component {
             this.setState({
                 password_error: 'Passsword needs to be atleast 12 characters'
             });
-            return;
+            return false;
         }
 
         // password if fullfiled
@@ -143,57 +145,76 @@ export default class Form extends Component {
             this.setState({
                 password_error: ''
             });
+            return true;
         }
     }
 
     // check for matching passwords
     checkPasswordEquality(password) {
-        
-        // if confirm password is empty
-        if (password === '') {
-            this.setState({
-                password_confirm_error: ''
-            });
-            return;
-        }
 
         // if passwords match
         if (password === this.state.password) {
             this.setState({
+                password_confirm_error: '',
+            });
+            return true;
+        }
+
+        // confirm password is empty
+        else if (password === '') {
+            this.setState({
                 password_confirm_error: ''
             });
-            return;
+            return false;
         }
 
         // if password dont match
         else {
             this.setState({
-                password_confirm_error: 'Passwords dont match'
+                password_confirm_error: 'Passwords dont match',
             });
-            return;
+            return false;
         }
     }
 
-    // make button available if input fields are filled out
+    // make button available if input fields are filled out and checked
     availabeButton() {
         const inputs = document.querySelectorAll('input');
         const button = document.querySelector('#signup-btn');
 
+        function setDisabledMode() {
+            button.className = 'btn waves-effect waves-light disabled-btn';
+            button.disabled = true;
+            return false;
+        }
+
+        function setEnabledMode() {
+            button.className = 'btn waves-effect waves-light';
+            button.disabled = false;
+            return true;
+        }
+
+        let formCounter = 0;
         for (let i = 0; i < inputs.length; i++) {
 
             // keep disabled
             if (inputs[i].value === '') {
-                button.className = 'btn waves-effect waves-light disabled-btn';
-                button.removeEventListener('click', this.validateForm);
-                button.disabled = true;
-                return;
+                setDisabledMode();
             }
-
-            // remove disabled mode and do form validation on click
+            
             else {
-                button.className = 'btn waves-effect waves-light';
-                button.addEventListener('click', this.validateForm);
-                button.disabled = false;
+                formCounter++;
+            }
+        }
+
+        // remove disabled mode and do form validation
+        if (formCounter === inputs.length) {
+            if (this.validateEmail(this.state.email) && this.validatePassword(this.state.password) && this.checkPasswordEquality(this.state.confirm_password)) {
+                setEnabledMode();
+            }
+    
+            else {
+                setDisabledMode();
             }
         }
     }
@@ -225,8 +246,12 @@ export default class Form extends Component {
             break;
         }
 
-        this.availabeButton();
-      }
+        // make button avaiable
+        setTimeout(() => {
+            console.log(this.state);
+            this.availabeButton();
+        }, 10);
+    }
 
     render() {
         return (
