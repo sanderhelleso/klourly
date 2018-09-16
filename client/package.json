@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/api/singup": {
+    "/api/signup": {
       "target": "http://localhost:5000"
     }
   },

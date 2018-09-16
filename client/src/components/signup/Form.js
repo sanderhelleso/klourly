@@ -230,7 +230,19 @@ export default class Form extends Component {
         const password = inputs[3];
         const confirmPassword = inputs[4];*/
 
-        console.log(123);
+        axios({
+            method: 'post',
+            url: '/api/signup',
+            data: {
+                firstName: this.state.first_name,
+                lastName: this.state.last_name,
+                email: this.state.email,
+                password: this.state.password
+            }
+        });
+
+        // TODO: try to set values by loop later
+        //Object.keys(this.state).map(value => console.log(value, ": ", this.state[value]));
     }
 
     // update inputs and state
@@ -262,7 +274,6 @@ export default class Form extends Component {
 
         // make button avaiable
         setTimeout(() => {
-            console.log(this.state);
             this.availabeButton();
         }, 10);
     }
