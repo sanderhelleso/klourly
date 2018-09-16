@@ -16,13 +16,14 @@
 #signup-form-cont {
     overflow-y: scroll;
     max-height: 100vh;
-    padding-top: 17.5%;
+    padding-top: 10%;
 }
 
 #signup-form-cont h4 {
-    text-align: left;
+    text-align: center;
+    max-width: 80%;
     font-size: 18px;
-    margin-bottom: 50px;
+    margin: 50px auto 35px auto;
     color: #88304e;
 }
 
@@ -31,16 +32,16 @@
     top: 0;
     left: 50%;
     transform: translate(-50%);
-    color: #e23e57;
     font-size: 30px;
     z-index: 100;
 }
 
+#signup-logo a {
+    color: #e23e57;
+}
+
 #signup-heading {
-    position: fixed;
-    top: 29%;
-    left: 50%;
-    transform: translate(-50%);
+    text-align: center;
     color: #e23e57;
     font-size: 55px;
     z-index: 100;

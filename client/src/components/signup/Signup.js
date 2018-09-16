@@ -21,6 +21,10 @@ export default class Signup extends Component {
         document.querySelector('#signup-form-cont').addEventListener('scroll', this.handleScroll);
     }
 
+    componentWillMount() {
+        document.title = 'Sign Up - Klourly'
+    }
+
     // remove scroll event on umount
     componentWillUnmount() {
         document.querySelector('#signup-form-cont').removeEventListener('scroll', this.handleScroll);
@@ -31,7 +35,7 @@ export default class Signup extends Component {
         // current position of page
         let currentPosition = document.querySelector('#signup-form-cont').scrollTop
 
-        if (currentPosition > 80) {
+        if (currentPosition > 50) {
             this.setState({
                 display_headng: false
             });
@@ -51,22 +55,22 @@ export default class Signup extends Component {
         }
 
         else {
-            return null;
+            return <h1 id="signup-heading" className="animated fadeOut">Sign Up</h1>;;
         }
     }
 
     render() {
         return (
             <main>
-                <h2 id="signup-logo">Klourly</h2>
-                {this.renderHeading()}
+                <h2 id="signup-logo"><a href="/">Klourly</a></h2>
                 <div className="row">
                     <div id="signup-img-cont" className="col l6 m5 s12 animated fadeIn">
                     </div>
                     <div id="signup-form-cont" className="col l6 m7 s12 animated fadeIn">
                         <div className="container">
                             <div className="row">
-                                <div className="col s6 offset-s6">
+                                <div className="col s12">
+                                    {this.renderHeading()}
                                     <h4>You are only a few clicks away from discovering the magic of Klourly</h4>
                                 </div>
                                 <Form />

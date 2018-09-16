@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Form extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export default class Form extends Component {
           confirm_password: '',
           password_error: '',
           password_confirm_error: '',
-          email_error: ''
+          email_error: '',
+          validated: false
         };
 
         // bind function to class
@@ -19,20 +21,6 @@ export default class Form extends Component {
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
-    }
-
-    validateForm(e) {
-
-        // prevent form from submiting
-        e.preventDefault();
-
-        // get all inputs
-        const inputs = document.querySelectorAll('input');
-        const firstName = inputs[0];
-        const lastName = inputs[1];
-        const email = inputs[2];
-        const password = inputs[3];
-        const confirmPassword = inputs[4];
     }
 
     // validate email
@@ -204,6 +192,9 @@ export default class Form extends Component {
 
             // keep disabled
             if (inputs[i].value === '') {
+                this.setState({
+                    validated: false
+                });
                 setDisabledMode();
             }
             
@@ -215,13 +206,31 @@ export default class Form extends Component {
         // remove disabled mode and do form validation
         if (formCounter === inputs.length) {
             if (this.validateEmail(this.state.email) && this.validatePassword(this.state.password) && this.checkPasswordEquality(this.state.confirm_password)) {
+                button.addEventListener('click', this.validateForm);
                 setEnabledMode();
             }
     
             else {
+                button.removeEventListener('click', this.validateForm);
                 setDisabledMode();
             }
         }
+    }
+
+    validateForm(e) {
+
+        // prevent form from submiting
+        e.preventDefault();
+
+        // get all inputs
+        /*const inputs = document.querySelectorAll('input');
+        const firstName = inputs[0];
+        const lastName = inputs[1];
+        const email = inputs[2];
+        const password = inputs[3];
+        const confirmPassword = inputs[4];*/
+
+        console.log(123);
     }
 
     // update inputs and state
