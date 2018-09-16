@@ -99,3 +99,31 @@ input[type="checkbox"]:checked+span:not(.lever):before {
     color: #e53935;
     font-size: 12px;
 }
+
+@media (max-width: 600px) {
+    #signup-body {
+        overflow-y: auto;
+    }
+
+    #signup-form-cont {
+        overflow-y: auto;
+        max-height: none;
+        margin-top: -85%;
+    }
+
+    #signup-logo {
+        position: absolute;
+    }
+
+    #signup-img-cont {
+        background: linear-gradient(
+        rgba(49, 29, 63, 0.4), 
+        rgba(49, 29, 63, 1)),
+        url("/img/signup/signup4.jpg");
+        min-height: 100vh; 
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
