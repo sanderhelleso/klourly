@@ -3,7 +3,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
-export default class Form extends Component {
+import { connect } from 'react-redux';
+
+import { signupAction } from '../../actions/signupActions';
+import { authentication } from '../middelware/authentication';
+
+class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -238,7 +243,7 @@ export default class Form extends Component {
         }
     }
 
-    async validateForm(e) {
+    validateForm(e) {
 
         // disable button
         this.setDisabledMode(e.toElement);
@@ -248,7 +253,9 @@ export default class Form extends Component {
 
         console.log(e.toElement);
 
-        // send data to endpoint and attempt to create user
+        authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+
+        /*// send data to endpoint and attempt to create user
         try {
             const response = await axios({
                 method: 'post',
@@ -266,7 +273,9 @@ export default class Form extends Component {
             // success, store UID in localstorage and redirect to dashboard
             if (response.data.success) {
                 localStorage.setItem('user', response.data.userData.uid);
-                window.location.replace('/dashboard');
+
+                //signupActions.
+                //window.location.replace('/dashboard');
             }
 
             // something went wrong (allready user with email etc..)
@@ -281,7 +290,7 @@ export default class Form extends Component {
             console.log(error);
             this.notify('error', error.message);
             this.setEnabledMode(e.toElement);
-        }
+        }*/
 
         // TODO: try to set values by loop later
         //Object.keys(this.state).map(value => console.log(value, ": ", this.state[value]));
@@ -357,3 +366,9 @@ export default class Form extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+   return state;
+}
+
+export default connect(mapStateToProps)(Form);
