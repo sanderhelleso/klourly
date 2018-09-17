@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route} from "react-router-dom";
 
 // redux
-import {bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { exampleAction } from '../actions/actions';
