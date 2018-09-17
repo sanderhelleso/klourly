@@ -7,6 +7,7 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+// actions and authentication functions
 import { signupAction } from '../../actions/signupActions';
 import { authentication } from '../middelware/authentication';
 
@@ -261,47 +262,6 @@ class Form extends Component {
                 user: authenticatedUser
             })
         }
-
-
-        /*// send data to endpoint and attempt to create user
-        try {
-            const response = await axios({
-                method: 'post',
-                url: '/api/signup',
-                data: {
-                    firstName: this.state.first_name,
-                    lastName: this.state.last_name,
-                    email: this.state.email,
-                    password: this.state.password
-                }
-            });
-            // get response from endpoint
-            console.log(response);
-
-            // success, store UID in localstorage and redirect to dashboard
-            if (response.data.success) {
-                localStorage.setItem('user', response.data.userData.uid);
-
-                //signupActions.
-                //window.location.replace('/dashboard');
-            }
-
-            // something went wrong (allready user with email etc..)
-            else {
-                this.notify('error', response.data.message);
-                this.setEnabledMode(e.toElement);
-            }
-        }
-
-        // catch and display error
-        catch (error) {
-            console.log(error);
-            this.notify('error', error.message);
-            this.setEnabledMode(e.toElement);
-        }*/
-
-        // TODO: try to set values by loop later
-        //Object.keys(this.state).map(value => console.log(value, ": ", this.state[value]));
     }
 
     // update inputs and state
@@ -376,13 +336,14 @@ class Form extends Component {
     }
 }
 
-
+// set initial store state
 const mapStateToProps = (state) => {
     return {
         user: state.user
     }
 }
 
+// attempt to update state if signup succesfull
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ signupAction }, dispatch);
 }
