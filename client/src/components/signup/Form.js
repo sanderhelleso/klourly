@@ -263,9 +263,8 @@ export default class Form extends Component {
             // get response from endpoint
             console.log(response);
 
-            // success, store UID and redirect to dashboard
+            // success, store UID in localstorage and redirect to dashboard
             if (response.data.success) {
-                this.notify('success', response.data.message);
                 localStorage.setItem('user', response.data.userData.uid);
                 window.location.replace('/dashboard');
             }
