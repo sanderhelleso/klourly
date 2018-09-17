@@ -1,6 +1,6 @@
 export const signupAction = (signupData) => (
     {
-        type: 'SIGN_UP',
+        type: 'SIGNUP_SUCCESS',
         payload: signupData
     }
 )

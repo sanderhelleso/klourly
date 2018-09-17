@@ -8,6 +8,13 @@ export function authentication(state = initialState, action) {
                 loggedIn: true,
                 user: action.user
             };
+        
+        case 'SIGNUP_SUCCESS':
+            console.log(action);
+            return {
+                loggedIn: true,
+                user: action.user
+            }
 
         default:return state
     }

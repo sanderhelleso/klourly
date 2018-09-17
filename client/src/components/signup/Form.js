@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
+// redux
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { signupAction } from '../../actions/signupActions';
@@ -12,15 +14,15 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          first_name: '',
-          last_name: '',
-          email: '',
-          password: '',
-          confirm_password: '',
-          password_error: '',
-          password_confirm_error: '',
-          email_error: '',
-          validated: false
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: '',
+            confirm_password: '',
+            password_error: '',
+            password_confirm_error: '',
+            email_error: '',
+            validated: false
         };
 
         // bind function to class
@@ -253,7 +255,13 @@ class Form extends Component {
 
         console.log(e.toElement);
 
-        authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+        const authenticatedUser = authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+        if (authenticatedUser) {
+            this.setState({
+                user: authenticatedUser
+            })
+        }
+
 
         /*// send data to endpoint and attempt to create user
         try {
@@ -330,6 +338,7 @@ class Form extends Component {
     }
 
     render() {
+        const { signedInUser } = this.props;
         return (
             <form className="col s12">
                 <ToastContainer />
@@ -367,8 +376,15 @@ class Form extends Component {
     }
 }
 
-function mapStateToProps(state) {
-   return state;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ signupAction }, dispatch);
 }
 
 export default connect(mapStateToProps)(Form);

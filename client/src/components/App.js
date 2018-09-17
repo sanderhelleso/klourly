@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { exampleAction } from '../actions/actions';
- 
-// import auth
-import { authenticate } from './middelware/authenticated';
 
 // import Landing component
 import Landing from './landing/Landing';
@@ -23,10 +20,6 @@ class App extends Component {
         this.state = {
 
         }
-    }
-
-    componentWillMount() {
-        authenticate();
     }
 
     render() {

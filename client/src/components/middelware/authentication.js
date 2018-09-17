@@ -26,7 +26,8 @@ async function signup(firstName, lastName, email, password) {
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
             localStorage.setItem('user', response.data.userData.uid);
-
+            
+            return response.data.userData.uid;
             //signupActions.
             //window.location.replace('/dashboard');
         }
@@ -41,6 +42,32 @@ async function signup(firstName, lastName, email, password) {
     catch (error) {
         console.log(error);
     };
+}
+
+async function validateUser() {
+    // send data to endpoint and attempt to authenticate user
+    const uid = localStorage.getItem('user');
+    if (uid === null || uid === undefined || uid === '') {
+        return false;
+    }
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/authenticated',
+            data: {
+                uid: localStorage.getItem('user')
+            }
+        });
+        // get response from endpoint
+        console.log(response);
+    }
+
+    // catch and display error
+    catch (error) {
+        console.log(error);
+        return false;
+    }   
 }
 
 function login(username, password) {
