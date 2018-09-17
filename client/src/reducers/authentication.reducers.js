@@ -1,7 +1,7 @@
 let user = localStorage.getItem('user');
 const initialState = user ? { loggedIn: true, user } : {};
 
-export function authentication(state = initialState, action) {
+const authentication = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {
@@ -19,3 +19,5 @@ export function authentication(state = initialState, action) {
         default:return state
     }
 }
+
+export default authentication;
