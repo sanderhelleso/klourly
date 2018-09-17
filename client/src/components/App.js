@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route} from "react-router-dom";
+ 
+// import auth
+import { authenticate } from './middelware/authenticated';
 
 // import Landing component
 import Landing from './landing/Landing';
@@ -8,6 +11,11 @@ import Landing from './landing/Landing';
 import Signup from './signup/Signup';
 
 export default class App extends Component {
+
+    componentWillMount() {
+        authenticate();
+    }
+
     render() {
         return (
             <BrowserRouter>

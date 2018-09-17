@@ -5,6 +5,9 @@
   "proxy": {
     "/api/signup": {
       "target": "http://localhost:5000"
+    },
+    "/api/authenticated": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
@@ -13,10 +16,12 @@
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
-    "react-toastify": "^4.3.1"
+    "react-toastify": "^4.3.1",
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

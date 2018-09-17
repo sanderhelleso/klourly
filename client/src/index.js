@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './css/main.css';
 import registerServiceWorker from './registerServiceWorker';
 
+// redux
+import { Provider } from 'react-redux';
+import { store } from './store/index';
+
 // impoort Animate project
 import 'animate.css';
 
@@ -15,5 +19,10 @@ import 'materialize-css/dist/css/materialize.min.css';
 // import main App component to be rendered
 import App from "./components/App";
 
-ReactDOM.render(<App />,document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);
 registerServiceWorker();

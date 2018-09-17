@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes go here
 require("./routes/signup")(app);
+require("./routes/authenticated")(app);
 /////////////////////////
 
 // serve out production assets
