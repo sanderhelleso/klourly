@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+// actions and authentication functions
+import { loginAction } from '../../actions/loginActions';
 import { authentication } from '../middelware/authentication';
 
-export default class Form extends Component {
+class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
             password: '',
             error: ''
-        };
+        }
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
@@ -86,3 +92,17 @@ export default class Form extends Component {
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+// attempt to update state if signup succesfull
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ loginAction }, dispatch);
+}
+
+export default connect(mapStateToProps)(Form);

@@ -5,6 +5,7 @@ export const authentication = {
     signup,
     login,
     logout,
+    validateUser
 };
 
 async function signup(firstName, lastName, email, password) {
@@ -28,8 +29,6 @@ async function signup(firstName, lastName, email, password) {
             localStorage.setItem('user', response.data.userData.uid);
             
             return response.data.userData.uid;
-            //signupActions.
-            //window.location.replace('/dashboard');
         }
 
         // something went wrong (allready user with email etc..)
@@ -44,14 +43,16 @@ async function signup(firstName, lastName, email, password) {
     };
 }
 
-async function validateUser() {
+function validateUser() {
+    console.log(123);
+
     // send data to endpoint and attempt to authenticate user
     const uid = localStorage.getItem('user');
     if (uid === null || uid === undefined || uid === '') {
         return false;
     }
 
-    try {
+    /*try {
         const response = await axios({
             method: 'post',
             url: '/api/authenticated',
@@ -59,6 +60,7 @@ async function validateUser() {
                 uid: localStorage.getItem('user')
             }
         });
+
         // get response from endpoint
         console.log(response);
     }
@@ -67,7 +69,7 @@ async function validateUser() {
     catch (error) {
         console.log(error);
         return false;
-    }   
+    }  */ 
 }
 
 async function login(email, password) {

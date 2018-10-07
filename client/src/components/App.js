@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route} from "react-router-dom";
+import { BrowserRouter, Route, Redirect} from "react-router-dom";
+
+import { authentication } from './middelware/authentication';
 
 // import Landing component
 import Landing from './landing/Landing';
@@ -14,6 +16,7 @@ import Login from './login/Login';
 import Dashboard from './dashboard/Dashboard';
 
 export default class App extends Component {
+
     render() {
         return (
             <BrowserRouter>
@@ -25,7 +28,13 @@ export default class App extends Component {
                     <Route exact path="/login" component={Login} />
 
 
-                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/dashboard" render={() => (
+                        authentication.validateUser() ? (
+                            <Dashboard />
+                        ) : (
+                          <Redirect to="/login"/>
+                        )
+                      )}/>
                 </div>
             </BrowserRouter>
         )
