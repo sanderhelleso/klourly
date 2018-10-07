@@ -86,7 +86,8 @@ async function login(email, password) {
 
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
-            localStorage.setItem('user', response.data.userData.uid);
+            console.log(response.data.userData.user.id);
+            localStorage.setItem('user', response.data.userData.user.id);
             
             return response.data.userData.uid;
             //signupActions.
@@ -103,18 +104,6 @@ async function login(email, password) {
     catch (error) {
         console.log(error);
     };
-
-    /*return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // login successful if there's a jwt token in the response
-            if (user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-            }
-
-            return user;
-        });*/
 }
 
 function logout() {
