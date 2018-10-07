@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Redirect} from "react-router-dom";
+import { connect } from "react-redux";
 
 import { authentication } from './middelware/authentication';
 
@@ -15,21 +16,26 @@ import Login from './login/Login';
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
 
-export default class App extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            authenticated: null
-        }       
-    }
+class App extends Component {
 
-    componentDidMount() {
+    /*componentDidMount() {
         const auth = authentication.validateUser()
         .then((data) => {
             this.setState({
                 authenticated: data
             });
         });
+    }*/
+
+    // route for handling authentication on
+    // auth required routes
+    authenticated() {
+         console.log(this.props.state);
+         if (this.props.state.loggedIn) {
+            return <Dashboard />
+        }
+
+        return <Redirect to="/login" />
     }
 
     render() {
@@ -38,25 +44,22 @@ export default class App extends Component {
                 <div>
                     <Route exact path="/" component={Landing} />
 
-
+                    
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
 
 
-                        authentication.validateUser() ? (
-                            <Dashboard />
-                        ) : (
-                          <Redirect to="/login"/>
-                        )
-                      )}/>
-
-                        // authenticted for route
-                        else {
-                            return <Dashboard />
-                        }
-                    }} />
+                    <Route path="/dashboard" render={() => {return this.authenticated() }} />
                 </div>
             </BrowserRouter>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+     state: state.state
+    };
+};
+
+export default connect(mapStateToProps)(App);
