@@ -34,3 +34,19 @@
     margin-top: 0;
     color: #212121;
 }
+
+#login-error {
+    font-size: 1.25rem;
+    color: #e53935;
+}
+
+#login-btn {
+    margin-top: 15px;
+    width: 100%;
+    height: 60px;
+    background-color: #e23e57;
+}
+
+.disabled-btn {
+    opacity: 0.4;
+}

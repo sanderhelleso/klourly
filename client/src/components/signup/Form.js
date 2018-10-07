@@ -37,7 +37,7 @@ class Form extends Component {
     validateEmail(email) {
 
         // regex pattern for email validation
-        var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         // email is valid 
         if (regexEmail.test(String(email).toLowerCase())) {
@@ -77,7 +77,7 @@ class Form extends Component {
         let numLower = 0;
         let numNums = 0;
         let numSpecials = 0;
-        for (var i = 0; i < password.length; i++) {
+        for (let i = 0; i < password.length; i++) {
             if (anUpperCase.test(password[i])) {
                 numUpper++;
             }
@@ -180,6 +180,8 @@ class Form extends Component {
         }
     }
 
+
+    // refactor to own function file
     setDisabledMode(button) {
         button.className = 'btn waves-effect waves-light disabled-btn';
         button.disabled = true;
