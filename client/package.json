@@ -6,6 +6,9 @@
     "/api/signup": {
       "target": "http://localhost:5000"
     },
+    "/api/login": {
+      "target": "http://localhost:5000"
+    },
     "/api/authenticated": {
       "target": "http://localhost:5000"
     }

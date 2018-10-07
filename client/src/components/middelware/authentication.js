@@ -70,11 +70,38 @@ async function validateUser() {
     }   
 }
 
-function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+async function login(email, password) {
+    // send data to endpoint and attempt to login user
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/login',
+            data: {
+                email: email,
+                password: password
+            }
+        });
+        // get response from endpoint
+        console.log(response);
+
+        // success, store UID in localstorage and redirect to dashboard
+        if (response.data.success) {
+            localStorage.setItem('user', response.data.userData.uid);
+            
+            return response.data.userData.uid;
+            //signupActions.
+            //window.location.replace('/dashboard');
+        }
+
+        // something went wrong (allready user with email etc..)
+        else {
+            //this.notify('error', response.data.message);
+        }
+    }
+
+    // catch and display error
+    catch (error) {
+        console.log(error);
     };
 
     /*return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)

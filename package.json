@@ -25,6 +25,8 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "firebase-admin": "^6.0.0",
+    "firebase-auth-node": "^1.0.3",
+    "firebaseauth": "^1.0.0",
     "nodemon": "^1.18.4"
   }
 }

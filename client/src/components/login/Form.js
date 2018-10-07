@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
+import { authentication } from '../middelware/authentication';
 
 export default class Form extends Component {
     constructor(props) {
@@ -10,6 +12,7 @@ export default class Form extends Component {
         };
 
         this.handleUserInput = this.handleUserInput.bind(this);
+        this.login = this.login.bind(this);
     }
 
     // update inputs and state
@@ -26,7 +29,6 @@ export default class Form extends Component {
     }
 
     checkInput() {
-        console.log(this.state);
         const button = document.querySelector('#login-btn');
         if (this.state.email != '' && this.state.password != '') {
             this.setEnabledMode(button);
@@ -41,13 +43,26 @@ export default class Form extends Component {
     setDisabledMode(button) {
         button.className = 'btn waves-effect waves-light disabled-btn';
         button.disabled = true;
+
+        button.removeEventListener('click', this.login);
         return false;
     }
 
     setEnabledMode(button) {
         button.className = 'btn waves-effect waves-light';
         button.disabled = false;
+
+        button.addEventListener('click', this.login);
         return true;
+    }
+
+    login() {
+        const authenticatedUser = authentication.login(this.state.email, this.state.password);
+        if (authenticatedUser) {
+            this.setState({
+                user: authenticatedUser
+            });
+        }
     }
 
     render() {
@@ -63,7 +78,7 @@ export default class Form extends Component {
                     </div>
                     <div className="col s10 offset-s1">
                         <h5 id='login-error'>{this.state.error}</h5>
-                        <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action" >Log In </button>
+                        <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action">Log In </button>
                     </div>
                 </div>
                 <p id="signup-login">Dont have an account? <a href="/signup">Sign up here</a></p>
