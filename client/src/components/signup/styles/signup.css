@@ -1,7 +1,7 @@
 #signup-img-cont {
     background-color: #212121;
     background: 
-    linear-gradient(to right, rgba(49, 29, 63, 0.3),
+    linear-gradient(to right, rgba(49, 29, 63, 0.1),
     rgb(49, 29, 63)),
     url("/img/signup/signup4.jpg");
     min-height: 110vh; 
