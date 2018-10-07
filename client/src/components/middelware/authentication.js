@@ -22,7 +22,6 @@ async function signup(firstName, lastName, email, password) {
             }
         });
         // get response from endpoint
-        console.log(response);
 
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
@@ -43,8 +42,7 @@ async function signup(firstName, lastName, email, password) {
     };
 }
 
-function validateUser() {
-    console.log(123);
+async function validateUser() {
 
     // send data to endpoint and attempt to authenticate user
     const uid = localStorage.getItem('user');
@@ -52,7 +50,7 @@ function validateUser() {
         return false;
     }
 
-    /*try {
+    try {
         const response = await axios({
             method: 'post',
             url: '/api/authenticated',
@@ -62,14 +60,14 @@ function validateUser() {
         });
 
         // get response from endpoint
-        console.log(response);
+        return response.data.success;
     }
 
     // catch and display error
     catch (error) {
         console.log(error);
         return false;
-    }  */ 
+    }
 }
 
 async function login(email, password) {
@@ -84,22 +82,18 @@ async function login(email, password) {
             }
         });
         // get response from endpoint
-        console.log(response);
-
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
             console.log(response.data.userData.user.id);
-            localStorage.setItem('user', response.data.userData.user.id);
-            
-            return response.data.userData.uid;
-            //signupActions.
-            //window.location.replace('/dashboard');
+            localStorage.setItem('user', response.data.userData.user.id);            
         }
 
         // something went wrong (allready user with email etc..)
         else {
             //this.notify('error', response.data.message);
         }
+
+        return response.data;
     }
 
     // catch and display error

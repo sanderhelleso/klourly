@@ -16,6 +16,21 @@ import Login from './login/Login';
 import Dashboard from './dashboard/Dashboard';
 
 export default class App extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            authenticated: null
+        }       
+    }
+
+    componentDidMount() {
+        const auth = authentication.validateUser()
+        .then((data) => {
+            this.setState({
+                authenticated: data
+            });
+        });
+    }
 
     render() {
         return (
@@ -28,13 +43,18 @@ export default class App extends Component {
                     <Route exact path="/login" component={Login} />
 
 
-                    <Route exact path="/dashboard" render={() => (
                         authentication.validateUser() ? (
                             <Dashboard />
                         ) : (
                           <Redirect to="/login"/>
                         )
                       )}/>
+
+                        // authenticted for route
+                        else {
+                            return <Dashboard />
+                        }
+                    }} />
                 </div>
             </BrowserRouter>
         )

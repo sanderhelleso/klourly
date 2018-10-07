@@ -12,9 +12,17 @@ module.exports = app => {
 
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully fetched user data:", userRecord.toJSON());
+            res.json({
+                message: 'Authentication Successful',
+                success: true
+            })
         })
         .catch(function(error) {
             console.log("Error fetching user data:", error);
+            res.json({
+                message: 'Authentication Failed',
+                success: false
+            })
         });
     });
 }
