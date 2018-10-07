@@ -1,0 +1,36 @@
+#login-body {
+    background-color: #311d3f;
+}
+
+#login-logo {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+#login-logo a {
+    color: #e23e57;
+}
+
+#login-form-cont {
+    background-color: #fafafa;
+    max-width: 31.5rem;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 4px;
+    padding: 2rem 0;
+}
+
+#login-form-cont input:focus {
+    border-bottom: 1px solid #e23e57;
+    box-shadow: 0 1px 0 0 #e23e57;
+}
+  
+#login-form-cont input:focus + label {
+    color: #e23e57;
+}
+
+#login-form-cont h4 {
+    font-weight: 100;
+    margin-top: 0;
+    color: #212121;
+}

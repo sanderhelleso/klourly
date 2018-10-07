@@ -10,6 +10,9 @@ import Signup from './signup/Signup';
 // import Login component
 import Login from './login/Login';
 
+// import Dashboard
+import Dashboard from './dashboard/Dashboard';
+
 export default class App extends Component {
     render() {
         return (
@@ -17,8 +20,12 @@ export default class App extends Component {
                 <div>
                     <Route exact path="/" component={Landing} />
 
+
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
+
+
+                    <Route exact path="/dashboard" component={Dashboard} />
                 </div>
             </BrowserRouter>
         )

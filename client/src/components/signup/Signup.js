@@ -17,12 +17,12 @@ export default class Signup extends Component {
 
     // add scroll event on mount & id to body
     componentDidMount() {
-        document.body.id = "signup-body";
         document.querySelector('#signup-form-cont').addEventListener('scroll', this.handleScroll);
     }
 
     componentWillMount() {
-        document.title = 'Sign Up - Klourly'
+        document.title = 'Sign Up - Klourly';
+        document.body.id = "signup-body";
     }
 
     // remove scroll event on umount

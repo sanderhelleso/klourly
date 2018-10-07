@@ -88,11 +88,11 @@ input[type="checkbox"]:checked+span:not(.lever):before {
     font-size: 12px;
     margin: 20px auto 0px auto;
     color: #9e9e9e;
+    padding-top: 0.5rem;
 }
 
 #signup-login a {
     color: #e23e57;
-    border-bottom: 0.5px solid #e23e57;
 }
 
 .signup-error {
