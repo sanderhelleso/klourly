@@ -3,9 +3,35 @@ import React, { Component } from 'react';
 import './styles/settings.css';
 
 export default class Settings extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            settings: {
+                avatar: {
+                    updated: false,
+                    url: 'img/dashboard/stock.jpg'
+                }
+            }
+        }
+
+        this.changeAvatar = this.changeAvatar.bind(this);
+    }
 
     selectAvatar() {
         document.querySelector('#avatar-input').click();
+    }
+
+    changeAvatar(e) {
+        window.URL = window.URL || window.webkitURL || window.mozURL;
+        const file = window.URL.createObjectURL(e.target.files[0]);
+        document.querySelector('#change-avatar').src = file;
+        this.setState({
+            settings: {
+                avatar: {
+                    url: file
+                }
+            }
+        })
     }
 
     render() {
@@ -14,7 +40,7 @@ export default class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
-                    <img id='change-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
+                    <img id='change-avatar' src={this.state.settings.avatar.url} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
                     <h5 id='change-avatar-title'>Change Avatar</h5>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
@@ -22,7 +48,7 @@ export default class Settings extends Component {
                     </div>
                 </div>
                 <form className='dashboard-main-cont'>
-                    <input id='avatar-input' type='file' />
+                    <input id='avatar-input' type='file' onChange={this.changeAvatar}/>
                     <div className='col l10 offset-l1'>
                         <div className="input-field col l12">
                             <input id="display-name" type="text" />

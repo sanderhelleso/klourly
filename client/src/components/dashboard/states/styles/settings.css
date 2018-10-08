@@ -3,7 +3,11 @@
 }
 
 #change-avatar {
-    max-width: 100%;
+    width:  150px;
+    height: 150px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
     margin: 0 auto;
     border-radius: 50%;
     cursor: pointer;
