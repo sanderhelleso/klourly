@@ -1,0 +1,17 @@
+#dashboard-main {
+    margin: 10vh 0 10vh 0;
+    padding: 0 1% 0 5%;
+}
+
+#dashboard-title {
+    margin: 0 0 4rem 0;
+}
+
+.dashboard-main-cont {
+    overflow: auto;
+    max-height: 60vh;
+}
+
+.dashboard-main-cont::-webkit-scrollbar { 
+    display: none;
+}

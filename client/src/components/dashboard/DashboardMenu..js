@@ -25,6 +25,7 @@ class DashboardMenu extends Component {
 
                 // update state with selected option to render main dashboard
                 this.props.dashboardActions(i + 1);
+                //localStorage.setItem('dashboardOption', i + 1);
             }
 
             else {
@@ -55,7 +56,6 @@ class DashboardMenu extends Component {
 
 // update dashboard state
 const mapDispatchToProps = (dispatch) => {
-    console.log(dispatch);
     return bindActionCreators({ dashboardActions }, dispatch);
 }
 

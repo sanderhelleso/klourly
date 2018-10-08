@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
-import DashboardMainNav from './DashboardSettings';
 import DashboardMenu from './DashboardMenu.';
+import DashboardSettings from './DashboardSettings';
+import DashboardMain from './DashboardMain';
 
 export default class Dashboard extends Component {
 
     componentWillMount() {
         document.body.id = 'dashboard';
+        document.body.style.overflow = 'hidden';
         document.title = 'Dashboard - Klourly';
     }
 
@@ -14,8 +16,8 @@ export default class Dashboard extends Component {
         return (
             <div className='row'>
                 <DashboardMenu />
-                <main className='col l7'></main>
-                <DashboardMainNav />
+                <DashboardMain />
+                <DashboardSettings />
             </div>
         )
     }

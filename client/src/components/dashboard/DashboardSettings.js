@@ -12,9 +12,7 @@ import DashboardClock from './DashboardClock';
 import './styles/dashboardSettings.css';
 
 class DashboardMainNav extends Component {
-    componentDidMount() {
-        console.log(this.props);
-    }
+
     render() {
         return (
             <aside id='dashboard-settings' className='col l3'>
