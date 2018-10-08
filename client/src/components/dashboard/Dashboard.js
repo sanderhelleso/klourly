@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import DashboardMainNav from './DashboardSettings';
+import DashboardMenu from './DashboardMenu.';
 
 export default class Dashboard extends Component {
 
@@ -12,7 +13,8 @@ export default class Dashboard extends Component {
     render() {
         return (
             <div className='row'>
-                <main className='col l9'></main>
+                <DashboardMenu />
+                <main className='col l7'></main>
                 <DashboardMainNav />
             </div>
         )

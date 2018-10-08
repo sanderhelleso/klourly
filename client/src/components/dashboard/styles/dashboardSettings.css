@@ -1,4 +1,4 @@
-#dashboard-menu {
+#dashboard-settings {
     background: #8E2DE2;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -6,14 +6,14 @@
     min-height: 100vh;
 }
 
-#dashboard-menu-settings {
+#dashboard-settings-top {
     text-align: center;
     color: #ffffff;
     padding-bottom: 1rem;
     border-bottom: 0.5px solid #ac73ff;
 }
 
-#dashboard-menu-settings svg {
+#dashboard-settings-top svg {
     opacity: 0.5;
     margin-top: 0.5rem;
 }
