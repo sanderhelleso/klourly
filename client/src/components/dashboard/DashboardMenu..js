@@ -3,7 +3,12 @@ import { Map, Clipboard, Activity, Settings} from 'react-feather';
 
 import './styles/dashboardMenu.css';
 
-export default class DashboardMenu extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { dashboardActions } from '../../actions/dashboardActions';
+
+class DashboardMenu extends Component {
     constructor(props) {
         super(props);
         this.toogleMenuOption = this.toogleMenuOption.bind(this);
@@ -17,6 +22,9 @@ export default class DashboardMenu extends Component {
 
             if (options[i] === selectedOption) {
                 options[i].className = 'menu-item menu-item-active';
+
+                // update state with selected option to render main dashboard
+                this.props.dashboardActions(i + 1);
             }
 
             else {
@@ -44,3 +52,11 @@ export default class DashboardMenu extends Component {
         )
     }
 }
+
+// update dashboard state
+const mapDispatchToProps = (dispatch) => {
+    console.log(dispatch);
+    return bindActionCreators({ dashboardActions }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(DashboardMenu);

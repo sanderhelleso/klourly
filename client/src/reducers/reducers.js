@@ -17,11 +17,17 @@ const reducers = (state = initialState, action) => {
                 user: action.payload
             };
         
-            case 'VALIDATE_USER': 
-                return {
-                    ...state,
-                    loggedIn: action.payload
-                }
+        case 'VALIDATE_USER': 
+            return {
+                ...state,
+                loggedIn: action.payload
+            };
+        
+        case 'DASHBOARD_OPTION':
+            return {
+                ...state,
+                dashboardOption: action.payload
+            }
 
         default:
             return state;
