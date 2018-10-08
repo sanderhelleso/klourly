@@ -24,7 +24,7 @@ import MainNav from './navigation/main/MainNav';
 class App extends Component {
 
     // authenticate user
-    async validate() {
+    async componentWillMount() {
         if (localStorage.getItem('user') !== null) {
             const user = JSON.parse(localStorage.getItem('user'));
             this.props.validateAction(await authentication.validateUser(user.id));

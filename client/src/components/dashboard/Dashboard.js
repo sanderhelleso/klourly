@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 
+import DashboardMainNav from '../navigation/main/DashboardMainNav';
+
 export default class Dashboard extends Component {
+
+    componentWillMount() {
+        document.body.id = 'dashboard';
+        document.title = 'Dashboard - Klourly';
+    }
+
     render() {
         return (
-            <div>
-                <h1>Dashboard</h1>
+            <div className='row'>
+                <main className='col l9'></main>
+                <DashboardMainNav />
             </div>
         )
     }
