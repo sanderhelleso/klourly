@@ -34,10 +34,9 @@ export default class DashboardDate extends Component {
 
     render() {
         return (
-            <div id='dashboard-date' className='col l10 offset-l1'>
+            <div id='dashboard-date' className='col l5 offset-l1'>
                 <h3 id='date-name'>{this.state.dateName}</h3>
                 <h5 id='date'>{this.state.date}</h5>
-
             </div>
         )
     }

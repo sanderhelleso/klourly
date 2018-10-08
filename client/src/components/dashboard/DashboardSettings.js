@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import DashboardDate from './DashboardDate';
+import DashboardClock from './DashboardClock';
 
 // import component style
 import './styles/dashboardSettings.css';
@@ -29,7 +30,10 @@ class DashboardMainNav extends Component {
                         <LogOut size={20} />
                     </div>
                 </div>
-                <DashboardDate />
+                <div className='col l12'>
+                    <DashboardDate />
+                    <DashboardClock />
+                </div>
             </aside>
         )
     }

@@ -27,6 +27,8 @@
     "firebase-admin": "^6.0.0",
     "firebase-auth-node": "^1.0.3",
     "firebaseauth": "^1.0.0",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "react": "^16.5.2",
+    "react-live-clock": "^2.0.3"
   }
 }
