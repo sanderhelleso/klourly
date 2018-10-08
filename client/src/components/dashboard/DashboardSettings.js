@@ -15,7 +15,7 @@ class DashboardMainNav extends Component {
 
     render() {
         return (
-            <aside id='dashboard-settings' className='col l3'>
+            <aside id='dashboard-settings' className='col l3 z-depth-2'>
                 <div id='dashboard-settings-top' className='col l12'>
                     <div className='col l2'>
                         <Bell size={20} />

@@ -7,9 +7,14 @@ export default class Settings extends Component {
         return (
             <div>
                 <h3 id='dashboard-title'>Settings</h3>
+                <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
                     <img id='change-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt='Change avatar' />
                     <h5 id='change-avatar-title'>Change Avatar</h5>
+                    <div id='confirm-settings'>
+                        <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
+                        <a id='confirm-settings-btn' className="waves-effect waves-light btn">Save Changes</a>
+                    </div>
                 </div>
                 <form className='dashboard-main-cont'>
                     <div className='col l10 offset-l1'>

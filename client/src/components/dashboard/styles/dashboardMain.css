@@ -4,7 +4,18 @@
 }
 
 #dashboard-title {
-    margin: 0 0 4rem 0;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 5px;
+}
+
+#dashboard-intro {
+    margin: 1rem 0 3rem 0;
+    font-weight: 100;
+    color: #bdbdbd;
+    font-size: 14px;
+    letter-spacing: 2px;
+
 }
 
 .dashboard-main-cont {
