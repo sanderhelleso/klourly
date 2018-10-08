@@ -3,13 +3,18 @@ import React, { Component } from 'react';
 import './styles/settings.css';
 
 export default class Settings extends Component {
+
+    selectAvatar() {
+        document.querySelector('#avatar-input').click();
+    }
+
     render() {
         return (
             <div>
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
-                    <img id='change-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt='Change avatar' />
+                    <img id='change-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
                     <h5 id='change-avatar-title'>Change Avatar</h5>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
@@ -17,6 +22,7 @@ export default class Settings extends Component {
                     </div>
                 </div>
                 <form className='dashboard-main-cont'>
+                    <input id='avatar-input' type='file' />
                     <div className='col l10 offset-l1'>
                         <div className="input-field col l12">
                             <input id="display-name" type="text" />
