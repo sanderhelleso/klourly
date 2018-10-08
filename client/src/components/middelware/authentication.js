@@ -42,10 +42,11 @@ async function signup(firstName, lastName, email, password) {
     };
 }
 
-async function validateUser() {
+async function validateUser(uid) {
+
+    console.log(uid);
 
     // send data to endpoint and attempt to authenticate user
-    const uid = localStorage.getItem('user');
     if (uid === null || uid === undefined || uid === '') {
         return false;
     }
@@ -55,7 +56,7 @@ async function validateUser() {
             method: 'post',
             url: '/api/authenticated',
             data: {
-                uid: localStorage.getItem('user')
+                uid: uid
             }
         });
 
@@ -84,8 +85,8 @@ async function login(email, password) {
         // get response from endpoint
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
-            console.log(response.data.userData.user.id);
-            localStorage.setItem('user', response.data.userData.user.id);            
+            console.log(response.data.userData);
+            localStorage.setItem('user', JSON.stringify(response.data.userData.user));            
         }
 
         // something went wrong (allready user with email etc..)

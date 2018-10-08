@@ -66,12 +66,8 @@ class Form extends Component {
 
     async login() {
         const authenticatedUser = await authentication.login(this.state.email, this.state.password)
-        console.log(authenticatedUser);
         if (authenticatedUser.success) {
-            this.setState({
-                user: authenticatedUser,
-                redirect: true
-            });
+            this.props.loginAction(authenticatedUser.userData.user);
         }
     }
 
@@ -111,9 +107,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// attempt to update state if signup succesfull
+// attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
+    console.log(dispatch);
     return bindActionCreators({ loginAction }, dispatch);
 }
 
-export default connect(mapStateToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

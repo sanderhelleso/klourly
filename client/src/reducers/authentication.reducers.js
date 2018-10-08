@@ -1,23 +1,31 @@
-let user = localStorage.getItem('user');
-const initialState = user ? { loggedIn: true, user } : {};
 
-const authentication = (state = initialState, action) => {
+let user = JSON.parse(localStorage.getItem('user'));
+const initialState = user ? { loggedIn: false, user } : {};
+const authenticationReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {
+                ...state,
                 loggedIn: true,
-                user: action.user
+                user: action.payload
             };
         
         case 'SIGNUP_SUCCESS':
-            console.log(action);
             return {
+                ...state,
                 loggedIn: true,
-                user: action.user
-            }
+                user: action.payload
+            };
+        
+            case 'VALIDATE_USER': 
+                return {
+                    ...state,
+                    loggedIn: action.payload
+                }
 
-        default:return state
+        default:
+            return state;
     }
 }
 
-export default authentication;
+export default authenticationReducer;
