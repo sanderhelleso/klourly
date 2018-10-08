@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore, combineReducers } from 'redux';
-import reducer from '../reducers/authentication.reducers';
+import reducer from '../reducers/reducers';
 
 export const store = createStore(
     combineReducers({

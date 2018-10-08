@@ -17,11 +17,11 @@
 .menu-item-active {
     border-right: 1px solid #b388ff;
     opacity: 1;
+    transition: 0.3s ease-in-out;
 }
 
 .menu-item-active svg {
     stroke: #b388ff !important;
-    transition: 0.3s ease-in-out;
 }
 
 .menu-item svg {

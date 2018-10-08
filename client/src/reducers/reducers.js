@@ -1,7 +1,7 @@
 
 let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggedIn: false, user } : {};
-const authenticationReducer = (state = initialState, action) => {
+const reducers = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return {
@@ -28,4 +28,4 @@ const authenticationReducer = (state = initialState, action) => {
     }
 }
 
-export default authenticationReducer;
+export default reducers;
