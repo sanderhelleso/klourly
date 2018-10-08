@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Redirect} from "react-router-dom";
 
+// animations
+import 'animate.css';
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

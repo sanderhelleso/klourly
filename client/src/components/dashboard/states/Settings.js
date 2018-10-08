@@ -10,7 +10,7 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <div>
+            <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
