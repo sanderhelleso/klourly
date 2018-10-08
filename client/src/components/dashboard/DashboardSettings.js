@@ -5,8 +5,10 @@ import { LogOut, Bell } from 'react-feather';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import DashboardDate from './DashboardDate';
+
 // import component style
-import './styles/dashboardMain.css';
+import './styles/dashboardSettings.css';
 
 class DashboardMainNav extends Component {
     componentDidMount() {
@@ -27,6 +29,7 @@ class DashboardMainNav extends Component {
                         <LogOut size={20} />
                     </div>
                 </div>
+                <DashboardDate />
             </aside>
         )
     }

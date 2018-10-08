@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import DashboardMainNav from '../navigation/main/DashboardMainNav';
+import DashboardMainNav from './DashboardSettings';
 
 export default class Dashboard extends Component {
 

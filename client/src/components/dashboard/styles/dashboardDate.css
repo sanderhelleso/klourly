@@ -1,0 +1,15 @@
+#dashboard-date {
+    color: #ffffff;
+}
+
+#date-name {
+    font-size: 2.3rem;
+    margin-bottom: 0;
+    font-weight: 100;
+}
+
+#date {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}

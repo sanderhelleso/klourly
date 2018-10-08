@@ -9,6 +9,8 @@
 #dashboard-menu-settings {
     text-align: center;
     color: #ffffff;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid #ac73ff;
 }
 
 #dashboard-menu-settings svg {
@@ -33,4 +35,8 @@
     font-size: 14px;
     opacity: 0.8;
     font-weight: 100;
+}
+
+main {
+    background-color: #eeeeee;
 }
