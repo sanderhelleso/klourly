@@ -61,6 +61,7 @@ class Settings extends Component {
 
                 // update local storage
                 localStorage.setItem('user', JSON.stringify(this.props.state.user));
+                
             });
         });
     }
@@ -75,7 +76,7 @@ class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
-                    <img id='change-avatar' src={this.state.settings.avatar.url} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
+                    <img id='change-avatar' src={this.props.state.user.photoUrl} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
                     <h5 id='change-avatar-title'>Change Avatar</h5>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>

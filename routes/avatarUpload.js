@@ -32,17 +32,21 @@ module.exports = app => {
         const name = file.originalname;
 
         // storage bucket
-        const storageLocation = `avatars/${name.split('.')[0]}.png`;
+        const storageLocation = `avatars/${name.split('.')[0]}.png`; // always png
         const bucketFile = bucket.file(storageLocation);
         let avatarUrl;
         bucketFile.save(new Buffer(file.buffer))
         bucketFile.getSignedUrl({
             action: 'read',
             expires: '03-09-2491'
-          })
+        })
+
+        // get url of created file bucket
         .then(signedUrls => {
             avatarUrl = signedUrls[0];
         })
+
+        // send succes data to client
         .then(() => {
             res.status(200).json({
                 status: 'success',

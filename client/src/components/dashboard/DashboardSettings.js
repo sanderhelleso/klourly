@@ -22,14 +22,17 @@ class DashboardMainNav extends Component {
 
     }
 
+    // set the avatar url for user
     setAvatar() {
-        console.log(this.props.state);
+
+        // quick reset to clear cache and reset img avatar on change
+
         const avatar = this.props.state.user.photoUrl;
         if (avatar === '') {
             return 'img/dashboard/stock.jpg';
 
         }
-
+        
         return avatar;
     }
 
