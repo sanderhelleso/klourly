@@ -21,7 +21,7 @@ class Settings extends Component {
             }
         }
 
-        this.changeAvatar = this.updateAvatar.bind(this);
+        this.updateAvatar = this.updateAvatar.bind(this);
         this.confirmSettings = this.confirmSettings.bind(this);
     }
 
@@ -49,7 +49,7 @@ class Settings extends Component {
             const extension = file.name.split('.').pop();
             const fd = new FormData();
             fd.append('file', file, `${this.props.state.user.id}.${extension}`);
-            dashboard.settings(fd);
+            dashboard.avatarUpload(fd);
         });
     }
 

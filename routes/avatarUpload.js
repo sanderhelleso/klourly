@@ -25,7 +25,7 @@ const multer = Multer({
 module.exports = app => {
 
     // get updated settings data from client and attempt to upload
-    app.post('/api/settings', multer.single('file'), (req, res) => {
+    app.post('/api/avatarUpload', multer.single('file'), (req, res) => {
 
         // avatar file
         const file = req.file;

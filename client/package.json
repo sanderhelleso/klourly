@@ -14,6 +14,9 @@
     },
     "/api/settings": {
       "target": "http://localhost:5000"
+    },
+    "/api/avatarUpload": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
