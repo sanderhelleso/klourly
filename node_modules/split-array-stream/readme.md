@@ -5,28 +5,28 @@
 $ npm install --save split-array-stream
 ```
 ```js
-var split = require('split-array-stream');
-var through = require('through2');
+const split = require('split-array-stream');
+const through = require('through2');
 
-var array = [
+const array = [
   { id: 1, user: 'Dave' },
   { id: 2, user: 'Stephen' }
 ];
 
-var stream = through.obj();
+const stream = through.obj();
 
-stream.on('data', function (item) {
+stream.on('data', (item) => {
   // { id: 1, user: 'Dave' }
   // ...later...
   // { id: 2, user: 'Stephen' }
 });
 
-split(array, stream, function (streamEnded) {
+split(array, stream).then((streamEnded) => {
   if (!streamEnded) {
     stream.push(null);
     stream.end();
   }
-});
+}).catch(console.error);
 ```
 
 Before pushing an item to the stream, `split-array-stream` checks that the stream hasn't been ended. This avoids those "push() after EOF" errors.
@@ -47,7 +47,7 @@ function getAllUsers() {
   request(requestOptions, onResponse);
 
   function onResponse(err, response) {
-    split(response.users, stream, function (streamEnded) {
+    split(response.users, stream).then((streamEnded) => {
       if (streamEnded) {
         return;
       }
