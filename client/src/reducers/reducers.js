@@ -27,7 +27,19 @@ const reducers = (state = initialState, action) => {
             return {
                 ...state,
                 dashboardOption: action.payload
-            }
+            };
+
+        case 'AVATAR_UPDATE':
+            Object.keys(state.user).map(key => 
+                console.log(key)
+            ); 
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    photoUrl: action.payload
+                }
+            };
 
         default:
             return state;

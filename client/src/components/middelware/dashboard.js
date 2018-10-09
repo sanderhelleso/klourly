@@ -15,6 +15,9 @@ async function avatarUpload(data) {
             url: '/api/avatarUpload',
             data: data
         });
+
+        // return data recieved from server
+        return response;
     }
 
     catch(error) {

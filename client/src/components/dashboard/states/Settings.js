@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { avatarActions } from '../../../actions/avatarActions';
 
 
 import './styles/settings.css';
@@ -44,12 +45,23 @@ class Settings extends Component {
         // send avatar data to endpoint
         // attempt to update
         () => {
-            // create blob and send to storage
+
+            // create file blob
             const file = this.state.settings.avatar.blob;
             const extension = file.name.split('.').pop();
             const fd = new FormData();
+
+            // send blob to server, store and set avatar and state
             fd.append('file', file, `${this.props.state.user.id}.${extension}`);
-            dashboard.avatarUpload(fd);
+            dashboard.avatarUpload(fd)
+            .then(response => {
+
+                // update state for avatar
+                this.props.avatarActions(response.data.avatarUrl);
+
+                // update local storage
+                localStorage.setItem('user', JSON.stringify(this.props.state.user));
+            });
         });
     }
 
@@ -100,10 +112,15 @@ class Settings extends Component {
     }
 }
 
+// attempt to update state for avatar
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ avatarActions }, dispatch);
+}
+
 const mapStateToProps = state => {
     return {
         state: state.state
     };
 };
 
-export default connect(mapStateToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

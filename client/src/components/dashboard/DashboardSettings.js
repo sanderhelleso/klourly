@@ -19,6 +19,18 @@ class DashboardMainNav extends Component {
         this.setState = {
             redirect:  false
         }
+
+    }
+
+    setAvatar() {
+        console.log(this.props.state);
+        const avatar = this.props.state.user.photoUrl;
+        if (avatar === '') {
+            return 'img/dashboard/stock.jpg';
+
+        }
+
+        return avatar;
     }
 
     logOut() {
@@ -33,7 +45,7 @@ class DashboardMainNav extends Component {
                         <Bell size={20} />
                     </div>
                     <div className='col l8 avatar-cont'>
-                        <img id='user-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt={`${this.props.state.user.displayName} 's avatar`} />
+                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2' alt={`${this.props.state.user.displayName} 's avatar`} />
                         <span id='user-name'>{this.props.state.user.displayName}</span>
                     </div>
                     <div className='col l2 log-out-cont' onClick={this.logOut}>

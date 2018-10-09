@@ -32,16 +32,22 @@ module.exports = app => {
         const name = file.originalname;
 
         // storage bucket
-        const storageLocation = `avatars/${name}`;
+        const storageLocation = `avatars/${name.split('.')[0]}.png`;
         const bucketFile = bucket.file(storageLocation);
+        let avatarUrl;
         bucketFile.save(new Buffer(file.buffer))
+        bucketFile.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+          })
+        .then(signedUrls => {
+            avatarUrl = signedUrls[0];
+        })
         .then(() => {
             res.status(200).json({
                 status: 'success',
-                data: Object.assign({}, bucketFile.metadata, {
-                    avatarUrl: `https://storage.googleapis.com/${bucket.name}/${storageLocation}`,
-                })
-            })
+                avatarUrl: avatarUrl
+            });
         })
 
         // catch any error and send status
