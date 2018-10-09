@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import './styles/settings.css';
 
+import { dashboard } from '../../middelware/dashboard';
+
 export default class Settings extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +17,7 @@ export default class Settings extends Component {
         }
 
         this.changeAvatar = this.changeAvatar.bind(this);
+        this.confirmSettings = this.confirmSettings.bind(this);
     }
 
     selectAvatar() {
@@ -24,14 +27,20 @@ export default class Settings extends Component {
     changeAvatar(e) {
         window.URL = window.URL || window.webkitURL || window.mozURL;
         const file = window.URL.createObjectURL(e.target.files[0]);
-        document.querySelector('#change-avatar').src = file;
         this.setState({
             settings: {
                 avatar: {
+                    updated: true,
                     url: file
                 }
             }
-        })
+        });
+    }
+
+    confirmSettings() {
+        console.log(this.state);
+        dashboard.settings(this.state.settings);
+
     }
 
     render() {
@@ -44,7 +53,7 @@ export default class Settings extends Component {
                     <h5 id='change-avatar-title'>Change Avatar</h5>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
-                        <a id='confirm-settings-btn' className="waves-effect waves-light btn">Save Changes</a>
+                        <a id='confirm-settings-btn' className="waves-effect waves-light btn" onClick={this.confirmSettings} >Save Changes</a>
                     </div>
                 </div>
                 <form className='dashboard-main-cont'>

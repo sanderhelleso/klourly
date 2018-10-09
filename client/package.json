@@ -11,6 +11,9 @@
     },
     "/api/authenticated": {
       "target": "http://localhost:5000"
+    },
+    "/api/settings": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

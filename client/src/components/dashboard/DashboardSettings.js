@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { LogOut, Bell } from 'react-feather';
 
+import { Redirect} from "react-router-dom";
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,6 +14,16 @@ import DashboardClock from './DashboardClock';
 import './styles/dashboardSettings.css';
 
 class DashboardMainNav extends Component {
+    constructor(props) {
+        super(props);
+        this.setState = {
+            redirect:  false
+        }
+    }
+
+    logOut() {
+        localStorage.clear();
+    }
 
     render() {
         return (
@@ -24,7 +36,7 @@ class DashboardMainNav extends Component {
                         <img id='user-avatar' src='img/dashboard/stock.jpg' className='z-depth-2' alt={`${this.props.state.user.displayName} 's avatar`} />
                         <span id='user-name'>{this.props.state.user.displayName}</span>
                     </div>
-                    <div className='col l2'>
+                    <div className='col l2 log-out-cont' onClick={this.logOut}>
                         <LogOut size={20} />
                     </div>
                 </div>

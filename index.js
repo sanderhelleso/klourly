@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // routes go here
 require("./routes/signup")(app);
 require("./routes/login")(app);
+require("./routes/settings")(app);
 require("./routes/authenticated")(app);
 /////////////////////////
 
