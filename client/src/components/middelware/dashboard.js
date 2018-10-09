@@ -2,24 +2,22 @@ import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
 
 export const dashboard = {
-    settings
+    avatarUpload
 };
 
-// update settings for user
-async function settings(data) {
+// update user avatar
+async function avatarUpload(data) {
 
-    // send data to endpoint and attempt to update settings
+    // send data to endpoint and attempt to update avatar
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/settings',
-            data: {
-                avatar: 'test'
-            }
+            url: '/api/avatarUpload',
+            data: data
         });
     }
 
-    catch(e) {
-        console.log(e);
+    catch(error) {
+        console.log(error);
     }
 }
