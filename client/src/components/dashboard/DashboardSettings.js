@@ -13,6 +13,8 @@ import DashboardClock from './DashboardClock';
 // import component style
 import './styles/dashboardSettings.css';
 
+import { dashboard } from '../middelware/dashboard';
+
 class DashboardMainNav extends Component {
     constructor(props) {
         super(props);
@@ -22,10 +24,13 @@ class DashboardMainNav extends Component {
 
     }
 
+    // fetch and store user data 
+    componentWillMount() {
+        dashboard.fetchUserData(this.props.state.user.id);
+    }
+
     // set the avatar url for user
     setAvatar() {
-
-        // quick reset to clear cache and reset img avatar on change
 
         const avatar = this.props.state.user.photoUrl;
         if (avatar === '') {

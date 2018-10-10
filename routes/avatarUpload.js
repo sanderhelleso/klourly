@@ -32,8 +32,13 @@ module.exports = app => {
         const name = file.originalname;
 
         // storage bucket
-        const storageLocation = `avatars/${name.split('.')[0]}.png`; // always png
+        const uid = name.split('.')[0];
+
+        // set unique time stamp to img to remove cache problem
+        // also alow for instant update of avatar for client
+        const storageLocation = `avatars/${uid}.png`; // always png
         const bucketFile = bucket.file(storageLocation);
+
         let avatarUrl;
         bucketFile.save(new Buffer(file.buffer))
         bucketFile.getSignedUrl({

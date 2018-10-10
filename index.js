@@ -25,12 +25,15 @@ const host = process.env.HOST || 'localhost';
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// routes go here
+// routes go here /////////////
+
 require("./routes/signup")(app);
 require("./routes/login")(app);
+require("./routes/userData")(app);
 require("./routes/avatarUpload")(app);
 require("./routes/authenticated")(app);
-/////////////////////////
+
+//////////////////////////////
 
 // serve out production assets
 app.use(express.static("client/build"));

@@ -2,7 +2,8 @@ import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
 
 export const dashboard = {
-    avatarUpload
+    avatarUpload,
+    fetchUserData
 };
 
 // update user avatar
@@ -24,3 +25,20 @@ async function avatarUpload(data) {
         console.log(error);
     }
 }
+
+async function fetchUserData(uid) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/userData',
+            data: uid
+        });
+
+        // return data recieved from server
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+} 

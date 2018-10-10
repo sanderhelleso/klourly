@@ -11,7 +11,6 @@ import Settings from './states/Settings';
 class DashboardMain extends Component {
 
     renderMain() {
-        console.log(this.props.state.dashboardOption);
         switch(this.props.state.dashboardOption) {
             case 1:
                 return "hi";
