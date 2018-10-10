@@ -13,9 +13,10 @@ import DashboardClock from './DashboardClock';
 // import component style
 import './styles/dashboardSettings.css';
 
+import { userDataActions } from '../../actions/userDataActions';
 import { dashboard } from '../middelware/dashboard';
 
-class DashboardMainNav extends Component {
+class DashboardSettings extends Component {
     constructor(props) {
         super(props);
         this.setState = {
@@ -26,7 +27,14 @@ class DashboardMainNav extends Component {
 
     // fetch and store user data 
     componentWillMount() {
-        dashboard.fetchUserData(this.props.state.user.id);
+        dashboard.fetchUserData(this.props.state.user.id)
+        .then(response => {
+
+            const userData = response.data.userData;
+            
+            // set / update user data
+            this.props.userDataActions(userData);
+        });
     }
 
     // set the avatar url for user
@@ -75,4 +83,9 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(DashboardMainNav);
+// attempt to update state if login succesfull
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ userDataActions }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardSettings);

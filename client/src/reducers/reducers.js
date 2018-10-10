@@ -41,6 +41,12 @@ const reducers = (state = initialState, action) => {
                 }
             };
 
+        case 'USER_DATA':
+            return {
+                ...state,
+                userData: action.payload
+            };
+
         default:
             return state;
     }

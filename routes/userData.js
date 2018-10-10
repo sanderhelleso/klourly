@@ -6,10 +6,17 @@ module.exports = app => {
 
     // get user data from client
     app.post('/api/userData', (req, res) => {
-        console.log(req.body.uid);
+
+        // get user reference in database
         const ref = db.ref(`users/${req.body.uid}`);
+
+        // retrieve data and send to client
         ref.once('value', snapshot => {
             console.log(snapshot.val());
-        })
+            res.status(200).json({
+                status: 'success',
+                userData: snapshot.val()
+            });
+        }); // add catch?
     });
 }
