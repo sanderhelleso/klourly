@@ -11,7 +11,6 @@ module.exports = app => {
         .then((userRecord) => {
 
             // See the UserRecord reference doc for the contents of userRecord.
-            console.log("Successfully fetched user data:", userRecord.toJSON());
             res.json({
                 message: 'Authentication Successful',
                 success: true

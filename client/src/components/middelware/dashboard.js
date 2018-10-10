@@ -31,7 +31,9 @@ async function fetchUserData(uid) {
         const response = await axios({
             method: 'post',
             url: '/api/userData',
-            data: uid
+            data: {
+                uid: uid
+            }
         });
 
         // return data recieved from server
