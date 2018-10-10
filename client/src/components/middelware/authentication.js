@@ -21,13 +21,11 @@ async function signup(firstName, lastName, email, password) {
                 password: password
             }
         });
-        // get response from endpoint
 
         // success, store UID in localstorage and redirect to dashboard
-        if (response.data.success) {
-            localStorage.setItem('user', response.data.userData.uid);
-            
-            return response.data.userData.uid;
+        console.log(response.data);
+        if (response.data.success) {            
+            return response.data.success;
         }
 
         // something went wrong (allready user with email etc..)

@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // actions and authentication functions
-import { signupAction } from '../../actions/signupActions';
 import { authentication } from '../middelware/authentication';
 
 class Form extends Component {
@@ -248,7 +247,7 @@ class Form extends Component {
         }
     }
 
-    validateForm(e) {
+async validateForm(e) {
 
         // disable button
         this.setDisabledMode(e.toElement);
@@ -256,14 +255,18 @@ class Form extends Component {
         // prevent form from submiting
         e.preventDefault();
 
-        console.log(e.toElement);
+        // attempt to sign up user with given data
+        const signupSuccess = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+        console.log(signupSuccess);
+        if (signupSuccess) {
 
-        const authenticatedUser = authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
-        if (authenticatedUser) {
-            this.setState({
-                user: authenticatedUser
-            })
-        }
+            // login successfull, login user and redirect to dashboard
+            const loginSuccess = await authentication.login(this.state.email, this.state.password);
+
+            // redirect here ///////////
+            
+            ////////////////////////////
+        };
     }
 
     // update inputs and state
@@ -341,13 +344,8 @@ class Form extends Component {
 // set initial store state
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state
     }
-}
-
-// attempt to update state if signup succesfull
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ signupAction }, dispatch);
 }
 
 export default connect(mapStateToProps)(Form);

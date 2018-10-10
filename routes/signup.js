@@ -18,18 +18,22 @@ module.exports = app => {
         // create new user
         .then(function(userRecord) {
 
-            // See the user UID reference for the contents of user.
+            // set the user UID reference for the contents of user.
             console.log("Successfully created new user:", userRecord.uid);
             const usersRef = signupRef.child(userRecord.uid);
             usersRef.set({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
                 signupDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-                newsletter: false
+                newsletter: false,
+                settings: {
+                    displayName: `${req.body.firstName} ${req.body.lastName}`,
+                    phoneNr: '',
+                    occupation: '',
+                    status: ''
+                }
             });
 
             // send data back to client and login user with localstorage using UID
+            console.log(userRecord);
             res.json({
                 userData: userRecord,
                 message: 'Successfully created new user',
