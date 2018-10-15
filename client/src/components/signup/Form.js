@@ -7,6 +7,8 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import history from '../middelware/history';
+
 // actions and authentication functions
 import { authentication } from '../middelware/authentication';
 
@@ -30,6 +32,10 @@ class Form extends Component {
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
+    }
+
+    redirectLogin() {
+        history.push('/login');
     }
 
     // validate email
@@ -262,10 +268,7 @@ async validateForm(e) {
 
             // login successfull, login user and redirect to dashboard
             const loginSuccess = await authentication.login(this.state.email, this.state.password);
-
-            // redirect here ///////////
-            
-            ////////////////////////////
+            history.push('/dashboard');
         };
     }
 
@@ -303,7 +306,6 @@ async validateForm(e) {
     }
 
     render() {
-        const { signedInUser } = this.props;
         return (
             <form className="col s12">
                 <ToastContainer />
@@ -333,7 +335,7 @@ async validateForm(e) {
                     </div>
                     <div className="col s8 offset-s2">
                         <button id="signup-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action" >Create Account </button>
-                        <p id="signup-login">Allready have an account? <a href="/login">Login here</a></p>
+                        <p id="signup-login">Allready have an account? <a onClick={this.redirectLogin}>Login here</a></p>
                     </div>
                 </div>
             </form>

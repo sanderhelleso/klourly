@@ -54,12 +54,7 @@ class App extends Component {
 
                     
                     <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/login" component={() => {
-                        return this.props.state.state.loggedIn ?
-                        <Dashboard />
-                        :
-                        <Login />
-                    }} />
+                    <Route exact path="/login" component={Login} />
 
 
                     <Route path="/dashboard" component={Dashboard} />

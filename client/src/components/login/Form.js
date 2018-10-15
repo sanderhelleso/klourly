@@ -23,6 +23,10 @@ class Form extends Component {
         this.login = this.login.bind(this);
     }
 
+    redirectSignup() {
+        history.push('/signup');
+    }
+
     // update inputs and state
     handleUserInput(e) {
         const name = e.target.name;
@@ -88,10 +92,6 @@ class Form extends Component {
         }
     }
 
-    renderButton() {
-        
-    }
-
     render() {
         return (
             <form className='col s12'>
@@ -108,7 +108,7 @@ class Form extends Component {
                         <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
                     </div>
                 </div>
-                <p id="signup-login">Dont have an account? <a href="/signup">Sign up here</a></p>
+                <p id="signup-login">Dont have an account? <a onClick={this.redirectSignup}>Sign up here</a></p>
             </form>
         )
     }
