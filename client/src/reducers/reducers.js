@@ -33,14 +33,14 @@ const reducers = (state = initialState, action) => {
             };
 
         case 'AVATAR_UPDATE':
-            Object.keys(state.user).map(key => 
-                console.log(key)
-            ); 
             return {
                 ...state,
-                user: {
-                    ...state.user,
-                    photoUrl: action.payload
+                userData: {
+                    ...state.userData,
+                    settings: {
+                        ...state.userData.settings,
+                        photoUrl: action.payload
+                    }
                 }
             };
 

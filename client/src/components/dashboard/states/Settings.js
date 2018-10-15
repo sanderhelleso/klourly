@@ -18,7 +18,7 @@ class Settings extends Component {
             settings: {
                 avatar: {
                     updated: false,
-                    url: this.props.state.user.photoUrl
+                    url: this.userSettings().photoUrl
                 },
                 displayName: this.userSettings().displayName
             }
@@ -126,7 +126,7 @@ class Settings extends Component {
                 this.props.avatarActions(response.data.avatarUrl);
 
                 // update local storage
-                localStorage.setItem('user', JSON.stringify(this.props.state.user));
+                localStorage.setItem('userData', JSON.stringify(this.props.state.userData));
                 
             });
         });
