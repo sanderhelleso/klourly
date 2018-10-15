@@ -66,22 +66,31 @@ class Form extends Component {
 
     // login user
     async login() {
+        const button = document.querySelector('#login-btn');
+        this.setDisabledMode(button);
+
+        // authenticate login credentials
         const authenticatedUser = await authentication.login(this.state.email, this.state.password);
+
+        // login successfull
         if (authenticatedUser.success) {
 
             // set user state then redirect to dashboard
             this.props.loginAction(authenticatedUser.userData.user);
             history.push('/dashboard');
         }
+
+        // login failed
+        else {
+            setTimeout(() => {
+                this.setEnabledMode(button);
+            }, 500);
+        }
     }
 
-    /*renderRedirect() {
-        if (this.state.redirect) {
-            return <Redirect to='/dashboard' />
-        }
-
-        return null;
-    }*/
+    renderButton() {
+        
+    }
 
     render() {
         return (
@@ -96,7 +105,7 @@ class Form extends Component {
                     </div>
                     <div className="col s10 offset-s1">
                         <h5 id='login-error'>{this.state.error}</h5>
-                        <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action">Log In </button>
+                        <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
                     </div>
                 </div>
                 <p id="signup-login">Dont have an account? <a href="/signup">Sign up here</a></p>
