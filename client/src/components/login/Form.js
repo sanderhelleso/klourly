@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { loginAction } from '../../actions/loginActions';
 import { authentication } from '../middelware/authentication';
 
-import { Redirect} from "react-router-dom";
+import history from '../middelware/history';
 
 class Form extends Component {
     constructor(props) {
@@ -64,18 +64,24 @@ class Form extends Component {
         return true;
     }
 
+    // login user
     async login() {
         const authenticatedUser = await authentication.login(this.state.email, this.state.password);
         if (authenticatedUser.success) {
+
+            // set user state then redirect to dashboard
             this.props.loginAction(authenticatedUser.userData.user);
+            history.push('/dashboard');
         }
     }
 
-    renderRedirect = () => {
+    /*renderRedirect() {
         if (this.state.redirect) {
             return <Redirect to='/dashboard' />
         }
-    }
+
+        return null;
+    }*/
 
     render() {
         return (
@@ -94,7 +100,6 @@ class Form extends Component {
                     </div>
                 </div>
                 <p id="signup-login">Dont have an account? <a href="/signup">Sign up here</a></p>
-                {this.renderRedirect()}
             </form>
         )
     }

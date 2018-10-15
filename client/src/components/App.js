@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect} from "react-router-dom";
+import { Router, Route, Redirect} from "react-router-dom";
+import history from './middelware/history';
 
 // animations
 import 'animate.css';
@@ -47,7 +48,7 @@ class App extends Component {
 
     render() {
         return (
-            <BrowserRouter>
+            <Router history={history}>
                 <div>
                     <Route exact path="/" component={Landing} />
 
@@ -58,7 +59,7 @@ class App extends Component {
 
                     <Route path="/dashboard" component={Dashboard} />
                 </div>
-            </BrowserRouter>
+            </Router>
         )
     }
 }
