@@ -54,7 +54,12 @@ class App extends Component {
 
                     
                     <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/login" component={() => {
+                        return this.props.state.state.loggedIn ?
+                        <Dashboard />
+                        :
+                        <Login />
+                    }} />
 
 
                     <Route path="/dashboard" component={Dashboard} />
@@ -64,9 +69,9 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-     state: state.state
+     state: state
     };
 };
 

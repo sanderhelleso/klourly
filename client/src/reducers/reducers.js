@@ -1,6 +1,8 @@
 
 let user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggedIn: false, user } : {};
+
+// MAIN APP REDUCER
 const reducers = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
