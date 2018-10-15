@@ -29,7 +29,7 @@ module.exports = app => {
                     displayName: `${req.body.firstName} ${req.body.lastName}`,
                     phoneNr: '',
                     occupation: '',
-                    status: `Joined Klourly ${signupDate}`,
+                    status: `Joined Klourly on ${signupDate}`,
                     photoUrl: ''
                 }
             });

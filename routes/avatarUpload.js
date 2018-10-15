@@ -1,10 +1,8 @@
-const dotenv = require('dotenv');
-dotenv.load();
-
 const firebase = require('firebase');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 const admin = require('firebase-admin');
+const db = admin.database();
 
 // CONNECT TO STORAGE
 const serviceAccount = require("../keys/firebaseServiceAccountKey.json");
@@ -73,13 +71,15 @@ module.exports = app => {
 
 // update and set the new photoUrl for user
 function updateUserPhotoURL(uid, url) {
-    admin.auth().updateUser(uid, {
-        photoURL: url
-    })
-    .then(userRecord => {
-        console.log("Successfully updated user");
+
+    // get user reference in database
+    const settingsRef = db.ref(`users/${uid}/settings`);
+
+    // update photoUrl
+    settingsRef.update({
+        'photoUrl': url
     })
     .catch(error => {
-        console.log("Error updating user:", error);
-    });
+        console.log(error);
+    })
 }
