@@ -21,14 +21,16 @@ module.exports = app => {
             // set the user UID reference for the contents of user.
             console.log("Successfully created new user:", userRecord.uid);
             const usersRef = signupRef.child(userRecord.uid);
+            const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
             usersRef.set({
-                signupDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                signupDate: signupDate,
                 newsletter: false,
                 settings: {
                     displayName: `${req.body.firstName} ${req.body.lastName}`,
                     phoneNr: '',
                     occupation: '',
-                    status: ''
+                    status: `Joined Klourly ${signupDate}`,
+                    photoUrl: ''
                 }
             });
 

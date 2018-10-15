@@ -75,7 +75,7 @@ class Form extends Component {
         const anUpperCase = /[A-Z]/;
         const aLowerCase = /[a-z]/; 
         const aNumber = /[0-9]/;
-        var aSpecial = /[!|@|#|$|%|^|&|*|(|)|-|_]/;        
+        const aSpecial = /[!|@|#|$|%|^|&|*|(|)|-|_]/;        
         
         // check for occurences of characters
         let numUpper = 0;
@@ -266,9 +266,9 @@ async validateForm(e) {
         console.log(signupSuccess);
         if (signupSuccess) {
 
-            // login successfull, login user and redirect to dashboard
-            const loginSuccess = await authentication.login(this.state.email, this.state.password);
-            history.push('/dashboard');
+            // signup successfull, send confirmation email
+            // then redirect to login page
+            history.push('/login');
         };
     }
 
