@@ -1,6 +1,7 @@
 
 let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggedIn: false, user } : {};
+let userData = JSON.parse(localStorage.getItem('userData'));
+const initialState = user ? { loggedIn: false, user, userData } : {};
 
 // MAIN APP REDUCER
 const reducers = (state = initialState, action) => {

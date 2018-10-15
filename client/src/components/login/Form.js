@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 // actions and authentication functions
 import { loginAction } from '../../actions/loginActions';
+import { userDataActions } from '../../actions/userDataActions';
+import { dashboard } from '../middelware/dashboard';
 import { authentication } from '../middelware/authentication';
 
 import history from '../middelware/history';
@@ -81,7 +83,11 @@ class Form extends Component {
 
             // set user state then redirect to dashboard
             this.props.loginAction(authenticatedUser.userData.user);
-            history.push('/dashboard');
+            dashboard.fetchUserData(authenticatedUser.userData.user.id)
+            .then(response => {
+                this.props.userDataActions(response.data.userData);
+                history.push('/dashboard');
+            });
         }
 
         // login failed
@@ -124,7 +130,7 @@ const mapStateToProps = (state) => {
 // attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
     console.log(dispatch);
-    return bindActionCreators({ loginAction }, dispatch);
+    return bindActionCreators({ loginAction, userDataActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

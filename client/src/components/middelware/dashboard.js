@@ -36,7 +36,8 @@ async function fetchUserData(uid) {
             }
         });
 
-        // return data recieved from server
+        // set userData as localstorage
+        localStorage.setItem('userData', JSON.stringify(response.data.userData));            
         return response;
     }
 

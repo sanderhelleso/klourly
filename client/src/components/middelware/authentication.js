@@ -80,6 +80,7 @@ async function login(email, password) {
                 password: password
             }
         });
+        
         // get response from endpoint
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {

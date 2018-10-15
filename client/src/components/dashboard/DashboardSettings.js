@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LogOut, Bell } from 'react-feather';
 
-import { Redirect} from "react-router-dom";
+import history from '../middelware/history';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -20,37 +20,29 @@ class DashboardSettings extends Component {
     constructor(props) {
         super(props);
         this.setState = {
-            redirect:  false
+            userData: this.props.state.userData
         }
-
     }
 
-    // fetch and store user data 
-    componentWillMount() {
-        dashboard.fetchUserData(this.props.state.user.id)
-        .then(response => {
-
-            const userData = response.data.userData;
-            
-            // set / update user data
-            this.props.userDataActions(userData);
-        });
-    }
-
-    // set the avatar url for user
+    // set the avatar url of user
     setAvatar() {
-
         const avatar = this.props.state.user.photoUrl;
         if (avatar === '') {
-            return 'img/dashboard/stock.jpg';
-
+            return 'img/dashboard/stock.jpg'; // STOCK PLACEMENT PHOTO HERE
         }
         
         return avatar;
     }
 
+    // set the display name of user
+    setDisplayName() {
+        return this.props.state.userData.settings.displayName;
+    }
+
+    // logout user
     logOut() {
         localStorage.clear();
+        history.push('/login');
     }
 
     render() {
@@ -61,8 +53,8 @@ class DashboardSettings extends Component {
                         <Bell size={20} />
                     </div>
                     <div className='col l8 avatar-cont'>
-                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2' alt={`${this.props.state.user.displayName} 's avatar`} />
-                        <span id='user-name'>{this.props.state.user.displayName}</span>
+                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2' alt={`${this.setDisplayName()} 's avatar`} />
+                        <span id='user-name'>{this.setDisplayName()}</span>
                     </div>
                     <div className='col l2 log-out-cont' onClick={this.logOut}>
                         <LogOut size={20} />
@@ -77,7 +69,7 @@ class DashboardSettings extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         state: state.state
     };

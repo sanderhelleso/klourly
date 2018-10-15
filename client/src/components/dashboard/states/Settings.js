@@ -121,7 +121,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ avatarActions }, dispatch);
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         state: state.state
     };

@@ -47,8 +47,10 @@ module.exports = app => {
         })
 
         // get url of created file bucket
+        // update users photoUrl data
         .then(signedUrls => {
             avatarUrl = signedUrls[0];
+            updateUserPhotoURL(uid, avatarUrl);
         })
 
         // send succes data to client
@@ -66,5 +68,18 @@ module.exports = app => {
                 errors: error
             });
         });
+    });
+}
+
+// update and set the new photoUrl for user
+function updateUserPhotoURL(uid, url) {
+    admin.auth().updateUser(uid, {
+        photoURL: url
+    })
+    .then(userRecord => {
+        console.log("Successfully updated user");
+    })
+    .catch(error => {
+        console.log("Error updating user:", error);
     });
 }
