@@ -65,7 +65,7 @@ class Form extends Component {
     }
 
     async login() {
-        const authenticatedUser = await authentication.login(this.state.email, this.state.password)
+        const authenticatedUser = await authentication.login(this.state.email, this.state.password);
         if (authenticatedUser.success) {
             this.props.loginAction(authenticatedUser.userData.user);
         }
