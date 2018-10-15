@@ -1,3 +1,4 @@
+// firebase setup
 const firebase = require('firebase-admin');
 const db = firebase.database();
 const signupRef = db.ref("users");
@@ -18,11 +19,12 @@ module.exports = app => {
         // create new user
         .then(function(userRecord) {
 
+            // minified URL of default avatar
+            const DEFAULT_AVATAR = 'https://tinyurl.com/ybqewu28';
+
             // set the user UID reference for the contents of user.
-            console.log("Successfully created new user:", userRecord.uid);
             const usersRef = signupRef.child(userRecord.uid);
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-            const defaultAvatar = 'https://tinyurl.com/ybqewu28'; // minified URL of default avatar
             usersRef.set({
                 signupDate: signupDate,
                 newsletter: false,
@@ -31,7 +33,7 @@ module.exports = app => {
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
-                    photoUrl: defaultAvatar
+                    photoUrl: DEFAULT_AVATAR
                 }
             });
 
