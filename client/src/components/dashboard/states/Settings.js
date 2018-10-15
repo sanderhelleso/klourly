@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'materialize-css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -18,12 +19,77 @@ class Settings extends Component {
                 avatar: {
                     updated: false,
                     url: this.props.state.user.photoUrl
-                }
+                },
+                displayName: this.userSettings().displayName
             }
         }
 
         this.updateAvatar = this.updateAvatar.bind(this);
         this.confirmSettings = this.confirmSettings.bind(this);
+    }
+
+    // shorthand function to retrieve settings from state
+    userSettings() {
+        return this.props.state.userData.settings;
+    }
+
+    updateForm() {
+        
+    }
+
+    // render form field for display name
+    renderDisplayName() {
+        const activeField = this.userSettings().displayName ? 'active' : '';
+
+        const FORM_FIELD_DISPLAY_NAME = 
+        <div className="input-field col l12">
+            <input id="display-name" type="text" onChange={this.updateForm} defaultValue={this.userSettings().displayName} />
+            <label htmlFor="display-name" className={activeField}>Display Name</label>
+            <span className='helper-text'>This could be your firstname, or nickname</span>
+        </div>
+
+        return FORM_FIELD_DISPLAY_NAME;
+    }
+
+    // render form field for phone number
+    renderPhoneNumber() {
+        const activeField = this.userSettings().phoneNr ? 'active' : '';
+
+        const FORM_FIELD_PHONE =
+        <div className="input-field col l12">
+            <input id="phone" type="text" onChange={this.updateForm} defaultValue={this.userSettings().phoneNr} />
+            <label htmlFor="phone" className={activeField}>Phone Number</label>
+            <span className='helper-text'>Enter a phone number and let people reach you</span>
+        </div>
+
+        return FORM_FIELD_PHONE;
+    }
+
+    // render form field for occupation
+    renderOccupation() {
+        const activeField = this.userSettings().occupation ? 'active' : '';
+
+        const FORM_FIELD_OCCUPATION =
+        <div className="input-field col l12">
+            <input id='occupation' type="text" onChange={this.updateForm} defaultValue={this.userSettings().occupation} />
+            <label htmlFor="occupation" className={activeField}>Current Occupation</label>
+            <span className='helper-text'>Current school, workplace or any other occupation</span>
+        </div>
+
+        return FORM_FIELD_OCCUPATION;
+    }
+
+    renderStatus() {
+        const activeField = this.userSettings().status ? 'active' : '';
+
+        const FORM_FIELD_STATUS =
+        <div className="input-field col l12">
+            <input id='status' type="text" onChange={this.updateForm} defaultValue={this.userSettings().status} />
+            <label htmlFor="status" className={activeField}>What I Do</label>
+            <span className='helper-text'>Let people know what you are currently up to</span>
+        </div>
+
+        return FORM_FIELD_STATUS;
     }
 
     selectAvatar() {
@@ -39,9 +105,6 @@ class Settings extends Component {
                     updated: true,
                     url: file,
                     blob: e.target.files[0]
-                },
-                data: {
-                    displayName: this.props.state.user.displayName
                 }
             }
         }, 
@@ -89,26 +152,10 @@ class Settings extends Component {
                 <form className='dashboard-main-cont'>
                     <input id='avatar-input' type='file' onChange={this.updateAvatar}/>
                     <div className='col l10 offset-l1'>
-                        <div className="input-field col l12">
-                            <input id="display-name" type="text" />
-                            <label htmlFor="display-name">Display Name</label>
-                            <span className='helper-text'>This could be your firstname, or nickname</span>
-                        </div>
-                        <div className="input-field col l12">
-                            <input id="phone" type="text" />
-                            <label htmlFor="phone">Phone Number</label>
-                            <span className='helper-text'>Enter a phone number and let people reach you</span>
-                        </div>
-                        <div className="input-field col l12">
-                            <input id='occupation' type="text" />
-                            <label htmlFor="occupation">Current Occupation</label>
-                            <span className='helper-text'>Current school, workplace or any other occupation</span>
-                        </div>
-                        <div className="input-field col l12">
-                            <input id='status' type="text" />
-                            <label htmlFor="status">What I Do</label>
-                            <span className='helper-text'>Let people know what you are currently up to</span>
-                        </div>
+                        {this.renderDisplayName()}
+                        {this.renderPhoneNumber()}
+                        {this.renderOccupation()}
+                        {this.renderStatus()}
                     </div>
                 </form>
             </div>
