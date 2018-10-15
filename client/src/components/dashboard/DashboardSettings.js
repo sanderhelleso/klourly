@@ -26,12 +26,7 @@ class DashboardSettings extends Component {
 
     // set the avatar url of user
     setAvatar() {
-        const avatar = this.props.state.user.photoUrl;
-        if (avatar === '') {
-            return 'img/dashboard/stock.jpg'; // STOCK PLACEMENT PHOTO HERE
-        }
-        
-        return avatar;
+        return this.props.state.userData.settings.photoUrl;
     }
 
     // set the display name of user

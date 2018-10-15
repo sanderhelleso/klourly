@@ -92,6 +92,7 @@ class Settings extends Component {
         return FORM_FIELD_STATUS;
     }
 
+    // trigger hidden file input on avatar click
     selectAvatar() {
         document.querySelector('#avatar-input').click();
     }
@@ -122,7 +123,7 @@ class Settings extends Component {
             dashboard.avatarUpload(fd)
             .then(response => {
 
-                // update state for avatar
+                // update state for avatar (userData)
                 this.props.avatarActions(response.data.avatarUrl);
 
                 // update local storage
@@ -142,11 +143,11 @@ class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
-                    <img id='change-avatar' src={this.state.settings.avatar.url} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
+                    <img id='change-avatar' src={this.userSettings().photoUrl} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
                     <h5 id='change-avatar-title'>Change Avatar</h5>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
-                        <a id='confirm-settings-btn' className="waves-effect waves-light btn" onClick={this.confirmSettings} >Save Changes</a>
+                        <a id='confirm-settings-btn' className="waves-effect waves-light btn" disabled={true} onClick={this.confirmSettings} >Save Changes</a>
                     </div>
                 </div>
                 <form className='dashboard-main-cont'>
