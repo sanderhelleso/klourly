@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './styles/signup.css';
+import { redirect } from '../middelware/redirect';
 
 import Form from './Form';
 
@@ -62,7 +63,7 @@ export default class Signup extends Component {
     render() {
         return (
             <main>
-                <h2 id="signup-logo"><a href="/">Klourly</a></h2>
+                <h2 id="signup-logo"><a onClick={redirect.home}>Klourly</a></h2>
                 <div className="row">
                     <div id="signup-img-cont" className="col l6 m5 s12 animated fadeIn">
                     </div>

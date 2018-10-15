@@ -10,7 +10,7 @@ import { userDataActions } from '../../actions/userDataActions';
 import { dashboard } from '../middelware/dashboard';
 import { authentication } from '../middelware/authentication';
 
-import history from '../middelware/history';
+import { redirect } from '../middelware/redirect';
 
 class Form extends Component {
     constructor(props) {
@@ -23,10 +23,6 @@ class Form extends Component {
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
-    }
-
-    redirectSignup() {
-        history.push('/signup');
     }
 
     // update inputs and state
@@ -86,7 +82,7 @@ class Form extends Component {
             dashboard.fetchUserData(authenticatedUser.userData.user.id)
             .then(response => {
                 this.props.userDataActions(response.data.userData);
-                history.push('/dashboard');
+                redirect.dashboard();
             });
         }
 
@@ -114,7 +110,7 @@ class Form extends Component {
                         <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
                     </div>
                 </div>
-                <p id="signup-login">Dont have an account? <a onClick={this.redirectSignup}>Sign up here</a></p>
+                <p id="signup-login">Dont have an account? <a onClick={redirect.signup}>Sign up here</a></p>
             </form>
         )
     }
