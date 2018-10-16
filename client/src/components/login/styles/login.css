@@ -5,6 +5,7 @@
 #login-logo {
     text-align: center;
     font-size: 2.5rem;
+    display: none;
 }
 
 #login-logo a {
@@ -13,11 +14,16 @@
 
 #login-form-cont {
     background-color: #fafafa;
-    max-width: 31.5rem;
+    min-width: 33rem;
+    max-width: 50vw;
     margin: 0 auto;
     text-align: center;
     border-radius: 4px;
     padding: 2rem 0;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 #login-form-cont input:focus {

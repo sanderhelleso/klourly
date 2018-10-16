@@ -15,9 +15,7 @@ export default class Login extends Component {
 		return (
 			<main>
 				<h2 id="login-logo"><a onClick={redirect.home}>Klourly</a></h2>
-				<div id='login-form-cont' className='z-depth-1 row animated fadeIn'>
-					<Form />
-				</div>
+				<Form />
 			</main>
 		)
 	}

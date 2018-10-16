@@ -12,3 +12,29 @@ h1, h2, h3, h4, h5, h6 {
 a {
     cursor: pointer;
 }
+
+.toast-error {
+    background-color: #e53935 !important;
+    color: #ffcdd2 !important;
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    font-weight: 400;
+}
+
+.error-progress-bar {
+    background: #ffcdd2 !important;
+    max-height: 2px;
+}
+
+.toast-success {
+    background-color: #66bb6a !important;
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    font-weight: 400;
+}
+
+.success-progress-bar {
+    background: #ffffff !important;
+    max-height: 2px;
+}

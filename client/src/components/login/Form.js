@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Zoom, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // redux
@@ -32,14 +32,22 @@ class Form extends Component {
 
         // prompt success toast if login was successfull
         if (success) {
-            toast("Login Successfull");
+            toast('Login Successfull! Redirecting...', {
+                position: toast.POSITION.BOTTOM_CENTER,
+                className: 'toast-success',
+                progressClassName: 'success-progress-bar',
+                autoClose: 2000,
+                toastId: 1
+            });
         }
 
         // propmt error toast if login failes
         else {
             toast('Invalid e-mail or password. Please try again', {
                 position: toast.POSITION.BOTTOM_CENTER,
-                className: 'toast-error'
+                className: 'toast-error',
+                progressClassName: 'error-progress-bar',
+                toastId: 2
             });
         }
     }
@@ -95,9 +103,6 @@ class Form extends Component {
 
         // login successfull
         if (authenticatedUser.success) {
-
-            // display toast here //
-            //*********************/
             this.loginNotify(true);
 
             // set user state then redirect to dashboard
@@ -105,7 +110,9 @@ class Form extends Component {
             dashboard.fetchUserData(authenticatedUser.userData.user.id)
             .then(response => {
                 this.props.userDataActions(response.data.userData);
-                //redirect.dashboard();
+                setTimeout(() => {
+                    redirect.dashboard();
+                }, 2500);
             });
         }
 
@@ -120,23 +127,28 @@ class Form extends Component {
 
     render() {
         return (
-            <form className='col s12'>
-                <h4>Log In</h4>
-                <div className='row'>
-                    <div className='input-field col s10 offset-s1'>
-                        <input id='login-email' name='email' type='email' placeholder='Email Address' value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
+            <div>
+                <form id='login-form-cont' className='z-depth-1 row animated fadeIn col s12'>
+                    <h4>Log In</h4>
+                    <div className='row'>
+                        <div className='input-field col s10 offset-s1'>
+                            <input id='login-email' name='email' type='email' placeholder='Email Address' value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
+                        </div>
+                        <div className='input-field col s10 offset-s1'>
+                            <input id='login-password' name='password' type='password' placeholder='Password' value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
+                        </div>
+                        <div className="col s10 offset-s1">
+                            <h5 id='login-error'>{this.state.error}</h5>
+                            <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
+                        </div>
                     </div>
-                    <div className='input-field col s10 offset-s1'>
-                        <input id='login-password' name='password' type='password' placeholder='Password' value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
-                    </div>
-                    <div className="col s10 offset-s1">
-                        <h5 id='login-error'>{this.state.error}</h5>
-                        <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
-                    </div>
-                </div>
-                <p id="signup-login">Dont have an account? <a onClick={redirect.signup}>Sign up here</a></p>
-                <ToastContainer />
-            </form>
+                    <p id="signup-login">Dont have an account? <a onClick={redirect.signup}>Sign up here</a></p>
+                </form>
+                <ToastContainer 
+                    transition={Flip}
+                    closeButton={false}
+                />
+            </div>
         )
     }
 }
