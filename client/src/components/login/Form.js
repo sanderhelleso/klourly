@@ -25,6 +25,18 @@ class Form extends Component {
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
+
+        // trigger login by enter key
+        this.loginOnEnterKey();
+    }
+
+    // allow user to trigger login by pressing enter
+    loginOnEnterKey() {
+        document.body.addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                document.querySelector('#login-btn').click();
+            }
+        });
     }
 
     // notify user of login status
@@ -88,10 +100,11 @@ class Form extends Component {
     setEnabledMode(button) {
         button.className = 'btn waves-effect waves-light';
         button.disabled = false;
-
+        
         button.addEventListener('click', this.login);
         return true;
     }
+
 
     // login user
     async login() {
