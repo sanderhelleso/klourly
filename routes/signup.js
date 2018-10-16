@@ -45,10 +45,14 @@ module.exports = app => {
                 success: true
             });
         })
+        
         // if error, catch and send error to user
-        .catch(function(error) {
+        .catch(error => {
             console.log("Error creating new user:", error);
-            res.json(error);
+            res.json({
+                message: error.message,
+                success: false
+            });
         });
     });
 }

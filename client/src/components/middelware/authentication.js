@@ -22,51 +22,13 @@ async function signup(firstName, lastName, email, password) {
             }
         });
 
-        // success, store UID in localstorage and redirect to dashboard
-        console.log(response.data);
-        if (response.data.success) {            
-            return response.data.success;
-        }
-
-        // something went wrong (allready user with email etc..)
-        else {
-            //this.notify('error', response.data.message);
-        }
+        return response.data;
     }
 
     // catch and display error
     catch (error) {
-        console.log(error);
+        return error;
     };
-}
-
-async function validateUser(uid) {
-
-    console.log(uid);
-
-    // send data to endpoint and attempt to authenticate user
-    if (uid === null || uid === undefined || uid === '') {
-        return false;
-    }
-
-    try {
-        const response = await axios({
-            method: 'post',
-            url: '/api/authenticated',
-            data: {
-                uid: uid
-            }
-        });
-
-        // get response from endpoint
-        return response.data.success;
-    }
-
-    // catch and display error
-    catch (error) {
-        console.log(error);
-        return false;
-    }
 }
 
 async function login(email, password) {
@@ -105,4 +67,33 @@ async function login(email, password) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
+}
+
+async function validateUser(uid) {
+
+    console.log(uid);
+
+    // send data to endpoint and attempt to authenticate user
+    if (uid === null || uid === undefined || uid === '') {
+        return false;
+    }
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/authenticated',
+            data: {
+                uid: uid
+            }
+        });
+
+        // get response from endpoint
+        return response.data.success;
+    }
+
+    // catch and display error
+    catch (error) {
+        console.log(error);
+        return false;
+    }
 }

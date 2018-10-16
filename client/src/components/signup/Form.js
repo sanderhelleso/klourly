@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
@@ -240,14 +240,22 @@ class Form extends Component {
         e.preventDefault();
 
         // attempt to sign up user with given data
-        const signupSuccess = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
-        console.log(signupSuccess);
+        const signupResponse = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+        console.log(signupResponse);
 
         // signup successfull, send confirmation email
         // then redirect to login page
-        if (signupSuccess) {
-            redirect.login();
-        };
+        if (signupResponse.success) {
+            notification.signup(true);
+            setTimeout(() => {
+                redirect.login();
+            }, 2500);
+        }
+
+        else {
+            notification.signup(false, signupResponse.message);
+            this.setEnabledMode(e.toElement);
+        }
     }
 
     // update inputs and state
