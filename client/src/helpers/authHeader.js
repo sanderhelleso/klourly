@@ -3,7 +3,7 @@ export function authHeader() {
     let user = localStorage.getItem('user');
 
     if (user) {
-        return { 'Authorization': 'Bearer ' + user };
+        return { 'Authorization': 'Bearer ' + user.id };
     } else {
         return {};
     }

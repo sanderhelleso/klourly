@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast, Zoom, Flip } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // redux
@@ -13,6 +13,7 @@ import { dashboard } from '../middelware/dashboard';
 import { authentication } from '../middelware/authentication';
 
 import { redirect } from '../middelware/redirect';
+import { notification } from '../../helpers/notification';
 
 class Form extends Component {
     constructor(props) {
@@ -37,31 +38,6 @@ class Form extends Component {
                 document.querySelector('#login-btn').click();
             }
         });
-    }
-
-    // notify user of login status
-    loginNotify(success) {
-
-        // prompt success toast if login was successfull
-        if (success) {
-            toast('Login Successfull! Redirecting...', {
-                position: toast.POSITION.BOTTOM_CENTER,
-                className: 'toast-success',
-                progressClassName: 'success-progress-bar',
-                autoClose: 2000,
-                toastId: 1
-            });
-        }
-
-        // propmt error toast if login failes
-        else {
-            toast('Invalid e-mail or password. Please try again', {
-                position: toast.POSITION.BOTTOM_CENTER,
-                className: 'toast-error',
-                progressClassName: 'error-progress-bar',
-                toastId: 2
-            });
-        }
     }
 
     // update inputs and state
@@ -116,7 +92,7 @@ class Form extends Component {
 
         // login successfull
         if (authenticatedUser.success) {
-            this.loginNotify(true);
+            notification.login(true);
 
             // set user state then redirect to dashboard
             this.props.loginAction(authenticatedUser.userData.user);
@@ -124,7 +100,7 @@ class Form extends Component {
             .then(response => {
                 this.props.userDataActions(response.data.userData);
                 setTimeout(() => {
-                    redirect.dashboard();
+                    redirect.dashboard(); // redirect user after a short delay
                 }, 2500);
             });
         }
@@ -132,7 +108,7 @@ class Form extends Component {
         // login failed
         else {
             setTimeout(() => {
-                this.loginNotify(false);
+                notification.login(false);
                 this.setEnabledMode(button);
             }, 500);
         }
