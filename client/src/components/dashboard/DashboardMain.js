@@ -13,12 +13,15 @@ class DashboardMain extends Component {
     renderMain() {
         switch(this.props.state.dashboardOption) {
             case 1:
+                document.title = "Section 1 - Klouly";
                 return "hi";
 
             case 2:
+                document.title = "Section 2 - Klouly";
                 return "hi there";
 
             case 3:
+                document.title = "Section 3 - Klouly";
                 return "hi again";
 
             // settings

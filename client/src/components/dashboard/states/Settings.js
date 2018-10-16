@@ -29,6 +29,11 @@ class Settings extends Component {
         this.confirmSettings = this.confirmSettings.bind(this);
     }
 
+    // set page title
+    componentWillMount() {
+        document.title = "Settings - Klourly";
+    }
+
     // shorthand function to retrieve settings from state
     userSettings() {
         return this.props.state.userData.settings;
