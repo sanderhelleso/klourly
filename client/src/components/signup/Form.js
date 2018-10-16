@@ -7,10 +7,10 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import history from '../middelware/history';
-
 // actions and authentication functions
 import { authentication } from '../middelware/authentication';
+import { redirect } from '../middelware/redirect';
+import { notification } from '../../helpers/notification';
 
 class Form extends Component {
     constructor(props) {
@@ -32,10 +32,6 @@ class Form extends Component {
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
-    }
-
-    redirectLogin() {
-        history.push('/login');
     }
 
     // validate email
@@ -234,26 +230,8 @@ class Form extends Component {
         }
     }
 
-    // notify user with signup state
-    notify(status, message) {
-        switch(status) {
-            case 'success':
-                toast(message, {
-                    position: toast.POSITION.TOP_LEFT,
-                    className: 'toast-success'
-                });
-            break;
-
-            case 'error':
-                toast(message, {
-                    position: toast.POSITION.TOP_LEFT,
-                    className: 'toast-error'
-                });
-            break;
-        }
-    }
-
-async validateForm(e) {
+    // validate data
+    async validateForm(e) {
 
         // disable button
         this.setDisabledMode(e.toElement);
@@ -264,11 +242,11 @@ async validateForm(e) {
         // attempt to sign up user with given data
         const signupSuccess = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
         console.log(signupSuccess);
-        if (signupSuccess) {
 
-            // signup successfull, send confirmation email
-            // then redirect to login page
-            history.push('/login');
+        // signup successfull, send confirmation email
+        // then redirect to login page
+        if (signupSuccess) {
+            redirect.login();
         };
     }
 
@@ -308,7 +286,6 @@ async validateForm(e) {
     render() {
         return (
             <form className="col s12">
-                <ToastContainer />
                 <div className="row">
                     <div className="input-field col s6">
                         <input id="first-name" type="text" name="first_name" value={this.state.first_name} onChange={(event) => this.handleUserInput(event)} />
@@ -338,6 +315,10 @@ async validateForm(e) {
                         <p id="signup-login">Allready have an account? <a onClick={this.redirectLogin}>Login here</a></p>
                     </div>
                 </div>
+                <ToastContainer 
+                    transition={Flip}
+                    closeButton={false}
+                />
             </form>
         )
     }
