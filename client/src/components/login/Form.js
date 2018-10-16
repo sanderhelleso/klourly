@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -23,6 +25,23 @@ class Form extends Component {
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
+    }
+
+    // notify user of login status
+    loginNotify(success) {
+
+        // prompt success toast if login was successfull
+        if (success) {
+            toast("Login Successfull");
+        }
+
+        // propmt error toast if login failes
+        else {
+            toast('Invalid e-mail or password. Please try again', {
+                position: toast.POSITION.BOTTOM_CENTER,
+                className: 'toast-error'
+            });
+        }
     }
 
     // update inputs and state
@@ -77,18 +96,23 @@ class Form extends Component {
         // login successfull
         if (authenticatedUser.success) {
 
+            // display toast here //
+            //*********************/
+            this.loginNotify(true);
+
             // set user state then redirect to dashboard
             this.props.loginAction(authenticatedUser.userData.user);
             dashboard.fetchUserData(authenticatedUser.userData.user.id)
             .then(response => {
                 this.props.userDataActions(response.data.userData);
-                redirect.dashboard();
+                //redirect.dashboard();
             });
         }
 
         // login failed
         else {
             setTimeout(() => {
+                this.loginNotify(false);
                 this.setEnabledMode(button);
             }, 500);
         }
@@ -111,6 +135,7 @@ class Form extends Component {
                     </div>
                 </div>
                 <p id="signup-login">Dont have an account? <a onClick={redirect.signup}>Sign up here</a></p>
+                <ToastContainer />
             </form>
         )
     }
