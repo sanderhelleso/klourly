@@ -9,11 +9,12 @@ module.exports = app => {
     app.post('/api/signup', (req, res) => {
 
         // attempt to create new user
+        const name = `${capitalize(req.body.firstName)} ${capitalize(req.body.lastName)}`
         firebase.auth().createUser({
-            email: req.body.email,
+            email: req.body.email.toLowerCase(),
             emailVerified: false,
             password: req.body.password,
-            displayName: `${req.body.firstName} ${req.body.lastName}`,
+            displayName: name,
             disabled: false
         })
         // create new user
@@ -29,7 +30,7 @@ module.exports = app => {
                 signupDate: signupDate,
                 newsletter: false,
                 settings: {
-                    displayName: `${req.body.firstName} ${req.body.lastName}`,
+                    displayName: name,
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
@@ -55,4 +56,9 @@ module.exports = app => {
             });
         });
     });
+}
+
+// capitalize given string
+function capitalize(str) {
+    return `${str.charAt(0).toUpperCase()}${str.substr(1).toLowerCase()}`;
 }
