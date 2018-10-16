@@ -42,14 +42,14 @@ class DashboardSettings extends Component {
 
     render() {
         return (
-            <aside id='dashboard-settings' className='col l3 z-depth-2'>
+            <aside id='dashboard-settings' className='col l3 z-depth-2 animated fadeIn'>
                 <div id='dashboard-settings-top' className='col l12'>
                     <div className='col l2'>
                         <Bell size={20} />
                     </div>
-                    <div className='col l8 avatar-cont'>
-                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2' alt={`${this.setDisplayName()} 's avatar`} />
-                        <span id='user-name'>{this.setDisplayName()}</span>
+                    <div className='col l8 avatar-cont animated bounceInDown'>
+                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2 animated bounceInDown' alt={`${this.setDisplayName()} 's avatar`} />
+                        <span id='user-name' className='animated fadeIn'>{this.setDisplayName()}</span>
                     </div>
                     <div className='col l2 log-out-cont' onClick={this.logOut}>
                         <LogOut size={20} />

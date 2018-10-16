@@ -25,7 +25,7 @@ class DashboardMenu extends Component {
 
                 // update state with selected option to render main dashboard
                 this.props.dashboardActions(i + 1);
-                //localStorage.setItem('dashboardOption', i + 1);
+                localStorage.setItem('dashboardOption', i + 1);
             }
 
             else {
@@ -34,19 +34,23 @@ class DashboardMenu extends Component {
         }
     }
 
+    componentDidMount() {
+        document.querySelector('.menu-item-active').click();
+    }
+
     render() {
         return (
             <aside id='dashboard-menu' className='col l2'>
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
-                <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
+                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
                     <Clipboard size={30} />
                 </div>
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
                     <Map size={30} />
                 </div>
-                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
                     <Settings size={30} />
                 </div>
             </aside>

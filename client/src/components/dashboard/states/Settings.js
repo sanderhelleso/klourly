@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Camera } from 'react-feather'
 import 'materialize-css';
 
 // redux
@@ -143,8 +144,12 @@ class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className='col l3 change-avatar-cont'>
-                    <img id='change-avatar' src={this.userSettings().photoUrl} className='z-depth-2' alt='Change avatar' onClick={this.selectAvatar} />
-                    <h5 id='change-avatar-title'>Change Avatar</h5>
+                    <div className='change-avatar-cont-overlay'>
+                        <img id='change-avatar' src={this.userSettings().photoUrl} className='z-depth-2 animated fadeIn' alt='Change avatar' />
+                        <div className='avatar-overlay' onClick={this.selectAvatar}>
+                            <div className='avatar-text'><Camera size={40} /><span>Change Avatar</span></div>
+                        </div>
+                    </div>
                     <div id='confirm-settings'>
                         <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
                         <a id='confirm-settings-btn' className="waves-effect waves-light btn" disabled={true} onClick={this.confirmSettings} >Save Changes</a>
