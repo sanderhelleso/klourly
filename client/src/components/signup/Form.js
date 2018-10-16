@@ -32,6 +32,18 @@ class Form extends Component {
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
+
+        // trigger signup by enter key
+        this.signupOnEnterKey();
+    }
+
+    // allow user to trigger signup by pressing enter
+    signupOnEnterKey() {
+        document.body.addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                document.querySelector('#signup-btn').click();
+            }
+        });
     }
 
     // validate email
@@ -320,7 +332,7 @@ class Form extends Component {
                     </div>
                     <div className="col s8 offset-s2">
                         <button id="signup-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action" >Create Account </button>
-                        <p id="signup-login">Allready have an account? <a onClick={this.redirectLogin}>Login here</a></p>
+                        <p id="signup-login">Allready have an account? <a onClick={redirect.login}>Login here</a></p>
                     </div>
                 </div>
                 <ToastContainer 
