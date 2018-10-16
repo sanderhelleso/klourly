@@ -21,7 +21,10 @@ class Settings extends Component {
                     updated: false,
                     url: this.userSettings().photoUrl
                 },
-                displayName: this.userSettings().displayName
+                displayName: this.userSettings().displayName,
+                phoneNr: this.userSettings().phoneNr,
+                occupation: this.userSettings().occupation,
+                status: this.userSettings().status
             }
         }
 
@@ -39,6 +42,7 @@ class Settings extends Component {
         return this.props.state.userData.settings;
     }
 
+
     updateForm() {
         
     }
@@ -49,7 +53,7 @@ class Settings extends Component {
 
         const FORM_FIELD_DISPLAY_NAME = 
         <div className="input-field col l12">
-            <input id="display-name" type="text" onChange={this.updateForm} defaultValue={this.userSettings().displayName} />
+            <input id="display-name" type="text" onChange={this.updateForm} value={this.state.settings.displayName} />
             <label htmlFor="display-name" className={activeField}>Display Name</label>
             <span className='helper-text'>This could be your firstname, or nickname</span>
         </div>
@@ -63,7 +67,7 @@ class Settings extends Component {
 
         const FORM_FIELD_PHONE =
         <div className="input-field col l12">
-            <input id="phone" type="text" onChange={this.updateForm} defaultValue={this.userSettings().phoneNr} />
+            <input id="phone" type="text" onChange={this.updateForm} value={this.state.settings.phoneNr} />
             <label htmlFor="phone" className={activeField}>Phone Number</label>
             <span className='helper-text'>Enter a phone number and let people reach you</span>
         </div>
@@ -77,7 +81,7 @@ class Settings extends Component {
 
         const FORM_FIELD_OCCUPATION =
         <div className="input-field col l12">
-            <input id='occupation' type="text" onChange={this.updateForm} defaultValue={this.userSettings().occupation} />
+            <input id='occupation' type="text" onChange={this.updateForm} value={this.state.settings.occupation} />
             <label htmlFor="occupation" className={activeField}>Current Occupation</label>
             <span className='helper-text'>Current school, workplace or any other occupation</span>
         </div>
@@ -90,7 +94,7 @@ class Settings extends Component {
 
         const FORM_FIELD_STATUS =
         <div className="input-field col l12">
-            <input id='status' type="text" onChange={this.updateForm} defaultValue={this.userSettings().status} />
+            <input id='status' type="text" onChange={this.updateForm} value={this.state.settings.status} />
             <label htmlFor="status" className={activeField}>What I Do</label>
             <span className='helper-text'>Let people know what you are currently up to</span>
         </div>
