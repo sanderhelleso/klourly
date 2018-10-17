@@ -31,6 +31,7 @@ class Settings extends Component {
 
         this.updateAvatar = this.updateAvatar.bind(this);
         this.updateForm = this.updateForm.bind(this);
+        this.cancelSettings = this.cancelSettings.bind(this);
         this.confirmSettings = this.confirmSettings.bind(this);
     }
 
@@ -102,7 +103,7 @@ class Settings extends Component {
     renderCancelConfirm() {
         const FORM_BUTTONS =
         <div id='confirm-settings'>
-            <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} >Cancel</a>
+            <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} onClick={this.cancelSettings} >Cancel</a>
             <a id='confirm-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} onClick={this.confirmSettings} >Save Changes</a>
         </div>
 
@@ -188,6 +189,30 @@ class Settings extends Component {
         }
     }
 
+    // cancel and reset form to original state
+    cancelSettings() {
+        this.setState({
+            notChanged: true,
+            settings: {
+                ...this.state.settings,
+                displayName: this.userSettings().displayName,
+                phoneNr: this.userSettings().phoneNr,
+                occupation: this.userSettings().occupation,
+                status: this.userSettings().status
+            }
+        },
+
+        // update materialize labels
+        () => {
+            Array.from(document.querySelector('#form-cont')
+            .querySelectorAll('div')).forEach(cont => {
+                if (cont.querySelector('input').value !== '') {
+                    cont.querySelector('label').className = 'active';
+                }
+            });
+        });
+    }
+
     // confirm and save new settings
     confirmSettings() {
         console.log(123);
@@ -209,7 +234,7 @@ class Settings extends Component {
                 </div>
                 <form className='dashboard-main-cont'>
                     <input id='avatar-input' type='file' onChange={this.updateAvatar}/>
-                    <div className='col l10 offset-l1'>
+                    <div id="form-cont" className='col l10 offset-l1'>
                         {this.renderDisplayName()}
                         {this.renderPhoneNumber()}
                         {this.renderOccupation()}

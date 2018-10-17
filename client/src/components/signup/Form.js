@@ -263,7 +263,8 @@ class Form extends Component {
                 redirect.login();
             }, 2500);
         }
-
+        
+        // signup failes, display error to user and enable button
         else {
             notification.signup(false, signupResponse.message);
             this.setEnabledMode(e.toElement);
