@@ -27,22 +27,19 @@
 
 #confirm-settings .btn {
     min-width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     font-weight: 100;
     font-size: 12px;
     letter-spacing: 1px;
 }
 
 #cancel-settings-btn {
-    background-color: transparent;
-    color: #bdbdbd;
-    opacity: 0.5;
-    border: 1px solid #bdbdbd;
+    background-color: #eeeeee;
+    color: #616161;
 }
 
 #confirm-settings-btn {
     background-color: #04d47e;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }
 
 #avatar-input {

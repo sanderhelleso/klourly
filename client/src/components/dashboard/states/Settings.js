@@ -16,6 +16,7 @@ class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            notChanged: true,
             settings: {
                 avatar: {
                     updated: false,
@@ -29,6 +30,7 @@ class Settings extends Component {
         }
 
         this.updateAvatar = this.updateAvatar.bind(this);
+        this.updateForm = this.updateForm.bind(this);
         this.confirmSettings = this.confirmSettings.bind(this);
     }
 
@@ -42,18 +44,13 @@ class Settings extends Component {
         return this.props.state.userData.settings;
     }
 
-
-    updateForm() {
-        
-    }
-
     // render form field for display name
     renderDisplayName() {
         const activeField = this.userSettings().displayName ? 'active' : '';
 
         const FORM_FIELD_DISPLAY_NAME = 
         <div className="input-field col l12">
-            <input id="display-name" type="text" onChange={this.updateForm} value={this.state.settings.displayName} />
+            <input id="display-name" name="displayName" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.displayName} />
             <label htmlFor="display-name" className={activeField}>Display Name</label>
             <span className='helper-text'>This could be your firstname, or nickname</span>
         </div>
@@ -67,7 +64,7 @@ class Settings extends Component {
 
         const FORM_FIELD_PHONE =
         <div className="input-field col l12">
-            <input id="phone" type="text" onChange={this.updateForm} value={this.state.settings.phoneNr} />
+            <input id="phone" name="phoneNr" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.phoneNr} />
             <label htmlFor="phone" className={activeField}>Phone Number</label>
             <span className='helper-text'>Enter a phone number and let people reach you</span>
         </div>
@@ -81,7 +78,7 @@ class Settings extends Component {
 
         const FORM_FIELD_OCCUPATION =
         <div className="input-field col l12">
-            <input id='occupation' type="text" onChange={this.updateForm} value={this.state.settings.occupation} />
+            <input id='occupation' name="occupation" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.occupation} />
             <label htmlFor="occupation" className={activeField}>Current Occupation</label>
             <span className='helper-text'>Current school, workplace or any other occupation</span>
         </div>
@@ -94,12 +91,22 @@ class Settings extends Component {
 
         const FORM_FIELD_STATUS =
         <div className="input-field col l12">
-            <input id='status' type="text" onChange={this.updateForm} value={this.state.settings.status} />
+            <input id='status' name="status" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.status} />
             <label htmlFor="status" className={activeField}>What I Do</label>
             <span className='helper-text'>Let people know what you are currently up to</span>
         </div>
 
         return FORM_FIELD_STATUS;
+    }
+
+    renderCancelConfirm() {
+        const FORM_BUTTONS =
+        <div id='confirm-settings'>
+            <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} >Cancel</a>
+            <a id='confirm-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} onClick={this.confirmSettings} >Save Changes</a>
+        </div>
+
+        return FORM_BUTTONS;
     }
 
     // trigger hidden file input on avatar click
@@ -143,6 +150,45 @@ class Settings extends Component {
         });
     }
 
+    // update form settings with inputed values
+    updateForm(e) {
+        const originalSettings = this.props.state.userData.settings;
+        const name = e.target.name;
+        const value = e.target.value;
+
+        let settings = this.state.settings;
+        this.setState({
+            settings: {
+                ...settings,
+                [name]: value
+            }
+        },
+
+        // check equality of current form state
+        () => {
+            setTimeout(() => {
+                settings = this.state.settings; // refresh state
+                checkChange(this);
+            }, 10);
+        });
+
+        // if forms state is not different, disable update
+        function checkChange(state) {
+            if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status) {
+                state.setState({
+                    notChanged: true
+                });
+            }
+    
+            else {
+                state.setState({
+                    notChanged: false
+                });
+            }
+        }
+    }
+
+    // confirm and save new settings
     confirmSettings() {
         console.log(123);
     }
@@ -159,10 +205,7 @@ class Settings extends Component {
                             <div className='avatar-text'><Camera size={40} /><span>Change Avatar</span></div>
                         </div>
                     </div>
-                    <div id='confirm-settings'>
-                        <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-0" disabled={true} >Cancel</a>
-                        <a id='confirm-settings-btn' className="waves-effect waves-light btn" disabled={true} onClick={this.confirmSettings} >Save Changes</a>
-                    </div>
+                    {this.renderCancelConfirm()}
                 </div>
                 <form className='dashboard-main-cont'>
                     <input id='avatar-input' type='file' onChange={this.updateAvatar}/>
