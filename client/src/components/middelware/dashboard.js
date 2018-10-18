@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const dashboard = {
     avatarUpload,
+    updateSettings,
     fetchUserData
 };
 
@@ -26,6 +27,27 @@ async function avatarUpload(data) {
     }
 }
 
+// update settings
+async function updateSettings(data) {
+
+    // send data to endpoint and attempt to update settings
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/updateSettings',
+            data: data
+        });
+
+        // return data recieved from server
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// fetch user data
 async function fetchUserData(uid) {
     try {
         const response = await axios({

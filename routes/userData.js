@@ -24,7 +24,12 @@ module.exports = app => {
 
         // get user reference in database
         const userSettingsRef = db.ref(`users/${req.body.uid}/settings`);
-        console.log(userSettingsRef);
+        userSettingsRef.once('value', snapshot => {
+            res.status(200).json({
+                status: 'success',
+                userData: snapshot.val()
+            });
+        });
 
         // update settings with new retrieved values
         /*userSettingsRef.update({

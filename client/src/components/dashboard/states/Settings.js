@@ -215,7 +215,17 @@ class Settings extends Component {
 
     // confirm and save new settings
     confirmSettings() {
-        console.log(123);
+        
+        // settings state without avatar and with uid
+        const settings = this.state.settings;
+        settings.uid = this.props.state.user.id;
+        delete settings.avatar;
+
+        // send settings data and update settings
+        dashboard.updateSettings(settings)
+        .then(response => {
+            console.log(response);
+        });
     }
 
     render() {
