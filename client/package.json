@@ -20,6 +20,9 @@
     },
     "/api/userData": {
       "target": "http://localhost:5000"
+    },
+    "/api/updateSettings": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

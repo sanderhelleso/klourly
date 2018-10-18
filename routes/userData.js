@@ -1,6 +1,5 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
-const signupRef = db.ref("users");
 
 module.exports = app => {
 
@@ -18,5 +17,21 @@ module.exports = app => {
                 userData: snapshot.val()
             });
         }); // add catch?
+    });
+
+    // settings
+    app.post('/api/updateSettings', (req, res) => {
+
+        // get user reference in database
+        const userSettingsRef = db.ref(`users/${req.body.uid}/settings`);
+        console.log(userSettingsRef);
+
+        // update settings with new retrieved values
+        /*userSettingsRef.update({
+            displayName: name,
+            phoneNr: '',
+            occupation: '',
+            status: `Joined Klourly on ${signupDate}`
+        });*/
     });
 }
