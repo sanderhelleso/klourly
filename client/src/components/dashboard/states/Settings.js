@@ -6,6 +6,7 @@ import 'materialize-css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { avatarActions } from '../../../actions/avatarActions';
+import { settingsActions } from '../../../actions/settingsActions';
 
 
 import './styles/settings.css';
@@ -153,7 +154,6 @@ class Settings extends Component {
 
     // update form settings with inputed values
     updateForm(e) {
-        const originalSettings = this.props.state.userData.settings;
         const name = e.target.name;
         const value = e.target.value;
 
@@ -169,23 +169,25 @@ class Settings extends Component {
         () => {
             setTimeout(() => {
                 settings = this.state.settings; // refresh state
-                checkChange(this);
+                this.checkChange();
             }, 10);
         });
+    }
 
-        // if forms state is not different, disable update
-        function checkChange(state) {
-            if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status) {
-                state.setState({
-                    notChanged: true
-                });
-            }
-    
-            else {
-                state.setState({
-                    notChanged: false
-                });
-            }
+    // if forms state is not different, disable update
+    checkChange() {
+        const settings = this.state.settings;
+        const originalSettings = this.props.state.userData.settings;
+        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status) {
+            this.setState({
+                notChanged: true
+            });
+        }
+
+        else {
+            this.setState({
+                notChanged: false
+            });
         }
     }
 
@@ -204,12 +206,17 @@ class Settings extends Component {
 
         // update materialize labels
         () => {
-            Array.from(document.querySelector('#form-cont')
-            .querySelectorAll('div')).forEach(cont => {
-                if (cont.querySelector('input').value !== '') {
-                    cont.querySelector('label').className = 'active';
-                }
-            });
+            this.updateLabels();
+        });
+    }
+
+    // update materialize labels
+    updateLabels() {
+        Array.from(document.querySelector('#form-cont')
+        .querySelectorAll('div')).forEach(cont => {
+            if (cont.querySelector('input').value !== '') {
+                cont.querySelector('label').className = 'active';
+            }
         });
     }
 
@@ -218,13 +225,22 @@ class Settings extends Component {
         
         // settings state without avatar and with uid
         const settings = this.state.settings;
-        settings.uid = this.props.state.user.id;
         delete settings.avatar;
+        settings.uid = this.props.state.user.id;
+        settings.photoUrl = this.userSettings().photoUrl;
 
         // send settings data and update settings
         dashboard.updateSettings(settings)
         .then(response => {
+            delete settings.uid; // remove uid
             console.log(response);
+
+            // update state for settings (userData)
+            this.props.settingsActions(settings);
+            localStorage.setItem('userData', JSON.stringify(this.props.state.userData));
+
+            // disable confirm / cancel buttons after update
+            this.checkChange();
         });
     }
 
@@ -256,9 +272,9 @@ class Settings extends Component {
     }
 }
 
-// attempt to update state for avatar
+// attempt to update state for avatar and settings
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ avatarActions }, dispatch);
+    return bindActionCreators({ avatarActions, settingsActions }, dispatch);
 }
 
 const mapStateToProps = (state) => {

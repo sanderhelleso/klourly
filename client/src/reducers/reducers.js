@@ -43,6 +43,15 @@ const reducers = (state = initialState, action) => {
                     }
                 }
             };
+        
+        case 'SETTINGS_UPDATE':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    settings: action.payload
+                }
+            };
 
         case 'USER_DATA':
             return {
