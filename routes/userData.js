@@ -23,20 +23,18 @@ module.exports = app => {
     app.post('/api/updateSettings', (req, res) => {
 
         // get user reference in database
-        const userSettingsRef = db.ref(`users/${req.body.uid}/settings`);
-        userSettingsRef.once('value', snapshot => {
+        const userRef = db.ref(`users/${req.body.uid}`);
+        delete req.body.uid; // remove uid from body data
+
+        // update settings data in database
+        userRef.update({
+            settings: req.body
+        })
+        .then(() => {
             res.status(200).json({
                 status: 'success',
-                userData: snapshot.val()
+                message: 'Successfully updated settings'
             });
-        });
-
-        // update settings with new retrieved values
-        /*userSettingsRef.update({
-            displayName: name,
-            phoneNr: '',
-            occupation: '',
-            status: `Joined Klourly on ${signupDate}`
-        });*/
+        })
     });
 }
