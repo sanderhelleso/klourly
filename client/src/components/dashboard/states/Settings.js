@@ -28,13 +28,15 @@ class Settings extends Component {
                 displayName: this.userSettings().displayName,
                 phoneNr: this.userSettings().phoneNr,
                 occupation: this.userSettings().occupation,
-                status: this.userSettings().status
+                status: this.userSettings().status,
+                newsLetter:  this.userSettings().newsLetter
             }
         }
 
         this.updateAvatar = this.updateAvatar.bind(this);
         this.updateForm = this.updateForm.bind(this);
         this.cancelSettings = this.cancelSettings.bind(this);
+        this.checkNewsletter = this.checkNewsletter.bind(this);
         this.confirmSettings = this.confirmSettings.bind(this);
     }
 
@@ -103,6 +105,20 @@ class Settings extends Component {
         return FORM_FIELD_STATUS;
     }
 
+    renderNewsLetterCheckBox() {
+        const CHECKBOX = 
+        <div className="input-field col s12 news-letter-cont">
+            <p className="center">
+                <label>
+                    <input type="checkbox" checked={this.state.settings.newsLetter} onChange={(event) => this.checkNewsletter(event)} />
+                    <span>subscribe to our newsletter to see whats new!</span>
+                </label>
+            </p>
+        </div>
+
+        return CHECKBOX;
+    }
+
     renderCancelConfirm() {
         const FORM_BUTTONS =
         <div id='confirm-settings'>
@@ -111,6 +127,23 @@ class Settings extends Component {
         </div>
 
         return FORM_BUTTONS;
+    }
+
+    checkNewsletter(e) {
+        let settings = this.state.settings;
+        this.setState({
+            settings: {
+                ...settings,
+                newsLetter: settings.newsLetter ? false : true
+            }
+        },
+
+        // check equality of current form state
+        () => {
+            setTimeout(() => {
+                this.checkChange();
+            }, 10);
+        });
     }
 
     // trigger hidden file input on avatar click
@@ -169,7 +202,6 @@ class Settings extends Component {
         // check equality of current form state
         () => {
             setTimeout(() => {
-                settings = this.state.settings; // refresh state
                 this.checkChange();
             }, 10);
         });
@@ -179,7 +211,7 @@ class Settings extends Component {
     checkChange() {
         const settings = this.state.settings;
         const originalSettings = this.props.state.userData.settings;
-        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status) {
+        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status && settings.newsLetter == originalSettings.newsLetter) {
             this.setState({
                 notChanged: true
             });
@@ -201,7 +233,8 @@ class Settings extends Component {
                 displayName: this.userSettings().displayName,
                 phoneNr: this.userSettings().phoneNr,
                 occupation: this.userSettings().occupation,
-                status: this.userSettings().status
+                status: this.userSettings().status,
+                newsLetter: this.userSettings().newsLetter
             }
         },
 
@@ -270,6 +303,7 @@ class Settings extends Component {
                         {this.renderPhoneNumber()}
                         {this.renderOccupation()}
                         {this.renderStatus()}
+                        {this.renderNewsLetterCheckBox()}
                     </div>
                 </form>
                 <ToastContainer 
