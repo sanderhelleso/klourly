@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js'
 import axios from 'axios';
 
 // redux
@@ -41,19 +42,50 @@ class Form extends Component {
     componentWillMount() {
         axios.get('/api/signup/countries')
         .then(response => {
-            console.log(response);
+            this.setState({
+                countries: response.data.body, // set country state
+                countriesLoaded: true
+            });
         })
         .catch(error => {
             console.log('Error fetching and parsing data', error);
         });
+    }
 
-        /*axios.post({
-            method: 'post',
-            url: '/api/signup/countires'
-        })
-        .then(response => {
-            console.log(response);
-        });*/
+    renderCountryAndState() {
+        if (this.state.countriesLoaded) {
+            const COUNTRY_STATE_CONT =
+            <div className="input-field col s12">
+                <div className="input-field col s6">
+                    <select ref="dropdown" id="select-country">
+                    {this.state.countries.map((data) => {
+                        console.log(data.country);
+                        return <option key={data.country} value={data.country}>{data.country}</option>;
+                    })}
+                    </select>
+                    <label htmlFor="select-country">Country</label>
+                </div>
+                <div className="input-field col s6">
+                    <select id="select-state">
+                        <option defaultValue="1">Option 1</option>
+                        <option defaultValue="2">Option 2</option>
+                        <option defaultValue="3">Option 3</option>
+                    </select>
+                    <label htmlFor="select-state">State</label>
+                </div>
+            </div>
+            setTimeout(() => {
+                M.AutoInit();
+            }, 1000);
+            return COUNTRY_STATE_CONT;
+        }
+
+        return null;
+    }
+
+    // initalize materialize
+    componentDidMount() {
+        M.AutoInit();
     }
 
     // allow user to trigger signup by pressing enter
@@ -324,6 +356,7 @@ class Form extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <form className="col s12">
                 <div className="row">
@@ -340,6 +373,7 @@ class Form extends Component {
                         <label htmlFor="email">E-Mail</label>
                         <p className="signup-error">{this.state.email_error}</p>
                     </div>
+                    {this.renderCountryAndState()}
                     <div className="input-field col s12">
                         <input id="password" type="password" name="password" value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="password">Password</label>
