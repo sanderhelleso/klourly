@@ -11,8 +11,6 @@ import { store } from './store/index';
 import 'animate.css';
 
 // import js from Materialize project
-import 'materialize-css';
-
 // import minified css from Materialize project
 import 'materialize-css/dist/css/materialize.min.css';
 

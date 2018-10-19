@@ -27,8 +27,9 @@ module.exports = app => {
             const usersRef = signupRef.child(userRecord.uid);
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
             usersRef.set({
+                location: req.body.location,
                 signupDate: signupDate,
-                newsletter: false,
+                newsLetter: req.body.newsLetter,
                 settings: {
                     displayName: name,
                     phoneNr: '',

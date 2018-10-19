@@ -8,7 +8,7 @@ export const authentication = {
     validateUser
 };
 
-async function signup(firstName, lastName, email, password) {
+async function signup(firstName, lastName, email, password, location, newsLetter) {
     // send data to endpoint and attempt to create user
     try {
         const response = await axios({
@@ -18,7 +18,9 @@ async function signup(firstName, lastName, email, password) {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: password
+                password: password,
+                location: location,
+                newsLetter: newsLetter
             }
         });
 

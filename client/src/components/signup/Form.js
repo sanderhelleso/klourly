@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js'
+import { materializeJS } from '../../helpers/materialize';
 import axios from 'axios';
 
 // redux
@@ -21,8 +21,6 @@ class Form extends Component {
             last_name: '',
             email: '',
             password: '',
-            country: '',
-            state: '',
             street: '',
             confirm_password: '',
             password_error: '',
@@ -46,9 +44,13 @@ class Form extends Component {
     componentWillMount() {
         axios.get('/api/signup/countries')
         .then(response => {
+
+            // set country state
             this.setState({
-                countries: response.data.body, // set country state
+                countries: response.data.body, 
                 countryStates: response.data.body[0].states,
+                country: response.data.body[0].country,
+                countryState: response.data.body[0].states[0],
                 countriesLoaded: true
             });
         })
@@ -84,7 +86,7 @@ class Form extends Component {
             
             // update select fields after new options added
             setTimeout(() => {
-                M.AutoInit();
+                materializeJS.M.AutoInit();
             }, 10);
 
             // return generated fields
@@ -99,7 +101,6 @@ class Form extends Component {
         const value = e.target.value;
         {this.state.countries.map((data) => {
             if (data.country === value) {
-                console.log(data);
                 this.setState({
                     countryStates: data.states
                 });
@@ -312,6 +313,17 @@ class Form extends Component {
         }
     }
 
+    // create object about user location
+    createUserLocation() {
+        const location = {
+            country: document.querySelector('#select-country').value,
+            state: document.querySelector('#select-state').value,
+            street: this.state.street
+        }
+
+        return location;
+    }
+
     // validate data
     async validateForm(e) {
 
@@ -322,7 +334,7 @@ class Form extends Component {
         e.preventDefault();
 
         // attempt to sign up user with given data
-        const signupResponse = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password);
+        const signupResponse = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password, this.createUserLocation(), false);
         console.log(signupResponse);
 
         // signup successfull, send confirmation email
@@ -375,7 +387,6 @@ class Form extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <form className="col s12">
                 <div className="row">
