@@ -29,13 +29,13 @@ module.exports = app => {
             usersRef.set({
                 location: req.body.location,
                 signupDate: signupDate,
-                newsLetter: req.body.newsLetter,
                 settings: {
                     displayName: name,
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
-                    photoUrl: DEFAULT_AVATAR
+                    photoUrl: DEFAULT_AVATAR,
+                    newsLetter: req.body.newsLetter
                 }
             });
 

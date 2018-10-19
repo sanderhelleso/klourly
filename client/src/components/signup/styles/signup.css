@@ -55,7 +55,7 @@
 }
 
 #signup-btn {
-    margin-top: 15px;
+    margin-top: 2rem;
     width: 100%;
     height: 60px;
     background-color: #e23e57;
@@ -111,6 +111,14 @@ input[type="checkbox"]:checked+span:not(.lever):before {
 
 .dropdown-content li>a, .dropdown-content li>span {
     color: #e23e57;
+}
+
+.news-letter-cont, .news-letter-cont p {
+    margin: 0.4rem;
+}
+
+[type="checkbox"]+span:not(.lever) {
+    font-size: 0.9rem;
 }
 
 @media (max-width: 600px) {

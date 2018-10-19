@@ -26,6 +26,7 @@ class Form extends Component {
             password_error: '',
             password_confirm_error: '',
             email_error: '',
+            newsLetter: true,
             validated: false            
         };
 
@@ -35,6 +36,7 @@ class Form extends Component {
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.updateCountryState = this.updateCountryState.bind(this);
+        this.checkNewsletter = this.checkNewsletter.bind(this);
 
         // trigger signup by enter key
         this.signupOnEnterKey();
@@ -334,11 +336,9 @@ class Form extends Component {
         e.preventDefault();
 
         // attempt to sign up user with given data
-        const signupResponse = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password, this.createUserLocation(), false);
-        console.log(signupResponse);
+        const signupResponse = await authentication.signup(this.state.first_name, this.state.last_name, this.state.email, this.state.password, this.createUserLocation(), this.state.newsLetter);
 
-        // signup successfull, send confirmation email
-        // then redirect to login page
+        // signup successfull, send confirmation email, then redirect to login page
         if (signupResponse.success) {
             notification.signup(true);
             setTimeout(() => {
@@ -386,6 +386,13 @@ class Form extends Component {
         }, 10);
     }
 
+    // update checkbox for newsletter subscription
+    checkNewsletter(e) {
+        this.setState({
+            newsLetter: this.state.newsLetter ? false : true
+        });
+    }
+
     render() {
         return (
             <form className="col s12">
@@ -417,6 +424,14 @@ class Form extends Component {
                         <input id="confirm-password" type="password" name="confirm_password" value={this.state.confirm_password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <p className="signup-error">{this.state.password_confirm_error}</p>
+                    </div>
+                    <div className="input-field col s12 news-letter-cont">
+                        <p className="center">
+                        <label>
+                            <input type="checkbox" checked={this.state.newsLetter} onChange={(event) => this.checkNewsletter(event)} />
+                            <span>subscribe to our newsletter to see whats new!</span>
+                        </label>
+                        </p>
                     </div>
                     <div className="col s8 offset-s2">
                         <button id="signup-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button" name="action" >Create Account </button>
