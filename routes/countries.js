@@ -17,7 +17,6 @@ module.exports = app => {
         // check for error, get JSON data and send to client as respone
         (error, response, body) => {
             if (!error && response.statusCode === 200) {
-                console.log(body) // Print the json response
                 res.status(200).json({
                     status: 'success',
                     body: body

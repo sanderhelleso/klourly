@@ -25,7 +25,7 @@ class Form extends Component {
             password_error: '',
             password_confirm_error: '',
             email_error: '',
-            validated: false
+            validated: false            
         };
 
         // bind function to class
@@ -33,6 +33,7 @@ class Form extends Component {
         this.validatePassword = this.validatePassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.updateCountryState = this.updateCountryState.bind(this);
 
         // trigger signup by enter key
         this.signupOnEnterKey();
@@ -44,6 +45,7 @@ class Form extends Component {
         .then(response => {
             this.setState({
                 countries: response.data.body, // set country state
+                countryStates: response.data.body[0].states,
                 countriesLoaded: true
             });
         })
@@ -57,9 +59,8 @@ class Form extends Component {
             const COUNTRY_STATE_CONT =
             <div className="input-field col s12">
                 <div className="input-field col s6">
-                    <select ref="dropdown" id="select-country">
+                    <select id="select-country" onChange={(event) => this.updateCountryState(event)}>
                     {this.state.countries.map((data) => {
-                        console.log(data.country);
                         return <option key={data.country} value={data.country}>{data.country}</option>;
                     })}
                     </select>
@@ -67,25 +68,32 @@ class Form extends Component {
                 </div>
                 <div className="input-field col s6">
                     <select id="select-state">
-                        <option defaultValue="1">Option 1</option>
-                        <option defaultValue="2">Option 2</option>
-                        <option defaultValue="3">Option 3</option>
+                    {this.state.countryStates.map((countryState) => {
+                        return <option key={countryState} value={countryState}>{countryState}</option>;
+                    })}
                     </select>
                     <label htmlFor="select-state">State</label>
                 </div>
             </div>
             setTimeout(() => {
-                M.AutoInit();
-            }, 1000);
+                M.AutoInit(); // update select fields after new options added
+            }, 10);
             return COUNTRY_STATE_CONT;
         }
 
         return null;
     }
 
-    // initalize materialize
-    componentDidMount() {
-        M.AutoInit();
+    updateCountryState(e) {
+        const value = e.target.value;
+        {this.state.countries.map((data) => {
+            if (data.country === value) {
+                console.log(data);
+                this.setState({
+                    countryStates: data.states
+                });
+            }
+        })}
     }
 
     // allow user to trigger signup by pressing enter
