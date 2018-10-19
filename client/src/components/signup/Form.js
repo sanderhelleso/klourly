@@ -21,6 +21,9 @@ class Form extends Component {
             last_name: '',
             email: '',
             password: '',
+            country: '',
+            state: '',
+            street: '',
             confirm_password: '',
             password_error: '',
             password_confirm_error: '',
@@ -54,10 +57,13 @@ class Form extends Component {
         });
     }
 
+    // render select and options fields
     renderCountryAndState() {
+
+        // check if countires data is ready
         if (this.state.countriesLoaded) {
             const COUNTRY_STATE_CONT =
-            <div className="input-field col s12">
+            <div className="">
                 <div className="input-field col s6">
                     <select id="select-country" onChange={(event) => this.updateCountryState(event)}>
                     {this.state.countries.map((data) => {
@@ -75,15 +81,20 @@ class Form extends Component {
                     <label htmlFor="select-state">State</label>
                 </div>
             </div>
+            
+            // update select fields after new options added
             setTimeout(() => {
-                M.AutoInit(); // update select fields after new options added
+                M.AutoInit();
             }, 10);
+
+            // return generated fields
             return COUNTRY_STATE_CONT;
         }
 
         return null;
     }
 
+    // update country state when selecting country
     updateCountryState(e) {
         const value = e.target.value;
         {this.state.countries.map((data) => {
@@ -382,6 +393,10 @@ class Form extends Component {
                         <p className="signup-error">{this.state.email_error}</p>
                     </div>
                     {this.renderCountryAndState()}
+                    <div className="input-field col s12">
+                        <input id="street" type="text" name="street" value={this.state.street} onChange={(event) => this.handleUserInput(event)} />
+                        <label htmlFor="street">Street Address</label>
+                    </div>
                     <div className="input-field col s12">
                         <input id="password" type="password" name="password" value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
                         <label htmlFor="password">Password</label>
