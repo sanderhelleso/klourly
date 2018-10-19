@@ -2,7 +2,8 @@ import { toast } from 'react-toastify';
 
 export const notification = {
     login,
-    signup
+    signup,
+    settings
 }
 
 // login notification
@@ -40,6 +41,31 @@ function signup(success, message) {
             className: 'toast-success',
             progressClassName: 'success-progress-bar',
             autoClose: 2000,
+            toastId: 1
+        });
+    }
+
+    // propmt error toast if signup failes
+    else {
+        toast(message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            className: 'toast-error',
+            progressClassName: 'error-progress-bar',
+            toastId: 2
+        });
+    }
+}
+
+// signup notification
+function settings(success, message) {
+
+    // prompt success toast if signup was successfull
+    if (success) {
+        toast(message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            className: 'toast-success',
+            progressClassName: 'success-progress-bar',
+            autoClose: 3000,
             toastId: 1
         });
     }

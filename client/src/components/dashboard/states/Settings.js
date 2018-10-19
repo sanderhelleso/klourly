@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Camera } from 'react-feather'
-import 'materialize-css';
+import { Camera } from 'react-feather';
+import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { avatarActions } from '../../../actions/avatarActions';
 import { settingsActions } from '../../../actions/settingsActions';
+import { notification } from '../../../helpers/notification';
 
 
 import './styles/settings.css';
@@ -128,8 +130,7 @@ class Settings extends Component {
                 }
             }
         }, 
-        // send avatar data to endpoint
-        // attempt to update
+        // send avatar data to endpoint and attempt to update
         () => {
 
             // create file blob
@@ -222,10 +223,13 @@ class Settings extends Component {
 
     // confirm and save new settings
     confirmSettings() {
+        this.setState({
+            notChanged: true
+        });
         
         // settings state without avatar and with uid
         const settings = this.state.settings;
-        delete settings.avatar;
+        delete settings.avatar; // remove avatar object
         settings.uid = this.props.state.user.id;
         settings.photoUrl = this.userSettings().photoUrl;
 
@@ -233,7 +237,8 @@ class Settings extends Component {
         dashboard.updateSettings(settings)
         .then(response => {
             delete settings.uid; // remove uid
-            console.log(response);
+            notification.settings(true, response.data.message);
+            console.log(123);
 
             // update state for settings (userData)
             this.props.settingsActions(settings);
@@ -267,6 +272,10 @@ class Settings extends Component {
                         {this.renderStatus()}
                     </div>
                 </form>
+                <ToastContainer 
+                    transition={Flip}
+                    closeButton={false}
+                />
             </div>
         )
     }

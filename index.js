@@ -32,6 +32,7 @@ require("./routes/login")(app);
 require("./routes/userData")(app);
 require("./routes/avatarUpload")(app);
 require("./routes/authenticated")(app);
+require("./routes/countries")(app);
 
 //////////////////////////////
 

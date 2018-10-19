@@ -37,6 +37,25 @@ class Form extends Component {
         this.signupOnEnterKey();
     }
 
+    // fetch state and country data on load
+    componentWillMount() {
+        axios.get('/api/signup/countries')
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log('Error fetching and parsing data', error);
+        });
+
+        /*axios.post({
+            method: 'post',
+            url: '/api/signup/countires'
+        })
+        .then(response => {
+            console.log(response);
+        });*/
+    }
+
     // allow user to trigger signup by pressing enter
     signupOnEnterKey() {
         document.body.addEventListener('keyup', (e) => {

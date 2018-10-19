@@ -23,6 +23,9 @@
     },
     "/api/updateSettings": {
       "target": "http://localhost:5000"
+    },
+    "/api/signup/countries": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
