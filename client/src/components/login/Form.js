@@ -105,8 +105,8 @@ class Form extends Component {
             .then(response => {
                 this.props.userDataActions(response.data.userData);
                 setTimeout(() => {
+                    // redirect user after a short delay
                     this.props.loginAction(authenticatedUser.userData.user);
-                    redirect.dashboard(); // redirect user after a short delay
                 }, 2500);
             });
         }
@@ -157,7 +157,6 @@ const mapStateToProps = (state) => {
 
 // attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
-    console.log(dispatch);
     return bindActionCreators({ loginAction, userDataActions }, dispatch);
 }
 

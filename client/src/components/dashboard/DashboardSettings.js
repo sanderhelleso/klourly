@@ -21,6 +21,8 @@ class DashboardSettings extends Component {
         this.setState = {
             userData: this.props.state.userData
         }
+
+        this.logOut = this.logOut.bind(this);
     }
 
     // set the avatar url of user
@@ -33,9 +35,10 @@ class DashboardSettings extends Component {
         return this.props.state.userData.settings.displayName;
     }
 
+    // logout user, clearing localstorage and state
     logOut() {
+        this.props.logoutActions({});
         authentication.logout();
-        logoutActions({});
     }
 
     render() {
