@@ -1,6 +1,6 @@
 #dashboard-main {
     margin: 7.5vh 0 0 0;
-    padding: 0 1% 0 5%;
+    padding: 0 2.5% 0 2.5%;
 }
 
 #dashboard-title {
@@ -25,4 +25,20 @@
 
 .dashboard-main-cont::-webkit-scrollbar { 
     display: none;
+}
+
+
+/* MOVE TO OWN FILE */
+.card-fab {
+    position: relative;
+    z-index: 1;
+}
+
+.card.small .card-image + .card-content,
+.card.medium .card-image + .card-content,
+.card.large .card-image + .card-content,
+.card.small .card-image + .card-fab + .card-content,
+.card.medium .card-image + .card-fab +.card-content,
+.card.large .card-image + .card-fab + .card-content {
+  max-height: 40%;
 }

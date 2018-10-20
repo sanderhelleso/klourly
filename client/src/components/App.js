@@ -67,7 +67,7 @@ class App extends Component {
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
                     <Route exact path="/login" component={this.loginRoute} />
-                    <Route path="/dashboard" component={this.dashboardRoute} />
+                    <Route path="/dashboard" component={Dashboard} />
                 </div>
             </Router>
         )
