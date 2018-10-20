@@ -1,4 +1,5 @@
 import { authHeader } from '../../helpers/authHeader';
+import history from '../middelware/history';
 import axios from 'axios';
 
 export const authentication = {
@@ -66,9 +67,10 @@ async function login(email, password) {
     };
 }
 
+// remove user from local storage to log user out
 function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    localStorage.clear();
+    history.push('/login');
 }
 
 async function validateUser(uid) {

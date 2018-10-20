@@ -15,6 +15,7 @@ import './styles/dashboardSettings.css';
 
 import { userDataActions } from '../../actions/userDataActions';
 import { dashboard } from '../middelware/dashboard';
+import { authentication } from '../middelware/authentication'; 
 
 class DashboardSettings extends Component {
     constructor(props) {
@@ -34,12 +35,6 @@ class DashboardSettings extends Component {
         return this.props.state.userData.settings.displayName;
     }
 
-    // logout user
-    logOut() {
-        localStorage.clear();
-        history.push('/login');
-    }
-
     render() {
         return (
             <aside id='dashboard-settings' className='col l3 z-depth-2 animated fadeIn'>
@@ -51,7 +46,7 @@ class DashboardSettings extends Component {
                         <img id='user-avatar' src={this.setAvatar()} className='z-depth-2 animated bounceInDown' alt={`${this.setDisplayName()} 's avatar`} />
                         <span id='user-name' className='animated fadeIn'>{this.setDisplayName()}</span>
                     </div>
-                    <div className='col l2 log-out-cont' onClick={this.logOut}>
+                    <div className='col l2 log-out-cont' onClick={authentication.logout}>
                         <LogOut size={20} />
                     </div>
                 </div>
