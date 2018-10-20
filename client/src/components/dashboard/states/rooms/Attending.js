@@ -52,11 +52,13 @@ export default class Attending extends Component {
             <div key={room.name} className="col s4 m6">
                 <div className="card small">
                     <div className="card-image">
-                        <img src={room.cover} />
+                        <div className="card-image-overlay">
+                            <img src={room.cover} />
+                        </div>
                         <span className="card-title room-card-name"><span className="room-card-location">{room.location}</span><br />{room.name}</span>
                     </div>
                     <div className="card-fab">
-                        <a className="btn-floating halfway-fab waves-effect waves-light red btn-large"><ArrowRight size={24} /></a>
+                        <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn"><ArrowRight size={24} /></a>
                     </div>
                     <div className="card-content">
                         {this.renderAttendingRoomTimes(room)}
@@ -78,11 +80,8 @@ export default class Attending extends Component {
         return (
             <div>
                 <h4>Attending</h4>
-                <hr />
                 <div className="row">
-                    <div className="col s12">
-                        {this.renderAttendingRooms()}
-                    </div>
+                    {this.renderAttendingRooms()}
                 </div>
             </div>
         )

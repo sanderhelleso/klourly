@@ -56,3 +56,29 @@
 .room-card-location {
     font-size: 1rem;
 }
+
+.card-image-overlay {
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+.card-image-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right,
+     rgba(118, 0, 255, 0.9),
+    rgb(255, 255, 255, 0.5));
+    /*
+    background: linear-gradient(
+    rgba(118, 0, 255, 0.5), 
+    rgba(118, 0, 255, 0.8));*/
+}
+
+.room-btn {
+    background-color: #7c4dff ;
+}
