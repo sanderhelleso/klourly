@@ -26,18 +26,24 @@ class Form extends Component {
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
-
-        // trigger login by enter key
-        this.loginOnEnterKey();
+        this.loginOnEnterKey = this.loginOnEnterKey.bind(this);
     }
 
-    // allow user to trigger login by pressing enter
-    loginOnEnterKey() {
-        document.body.addEventListener('keyup', (e) => {
-            if (e.keyCode === 13) {
-                document.querySelector('#login-btn').click();
-            }
-        });
+    // trigger login by enter key
+    loginOnEnterKey(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#login-btn').click();
+        }
+    }
+
+    // lifecycle, add event on mount
+    componentDidMount() {
+        document.addEventListener('keyup', this.loginOnEnterKey);
+    }
+
+    // remove event on unmount
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.loginOnEnterKey);
     }
 
     // update inputs and state
