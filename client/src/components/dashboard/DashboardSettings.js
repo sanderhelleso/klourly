@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { LogOut, Bell } from 'react-feather';
-
-import history from '../middelware/history';
+import DashboardDate from './DashboardDate';
+import DashboardClock from './DashboardClock';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import DashboardDate from './DashboardDate';
-import DashboardClock from './DashboardClock';
-
 // import component style
 import './styles/dashboardSettings.css';
 
 import { userDataActions } from '../../actions/userDataActions';
-import { dashboard } from '../middelware/dashboard';
+import { logoutActions } from '../../actions/logoutActions';
 import { authentication } from '../middelware/authentication'; 
+import { dashboard } from '../middelware/dashboard';
 
 class DashboardSettings extends Component {
     constructor(props) {
@@ -35,6 +33,11 @@ class DashboardSettings extends Component {
         return this.props.state.userData.settings.displayName;
     }
 
+    logOut() {
+        authentication.logout();
+        logoutActions({});
+    }
+
     render() {
         return (
             <aside id='dashboard-settings' className='col l3 z-depth-2 animated fadeIn'>
@@ -46,7 +49,7 @@ class DashboardSettings extends Component {
                         <img id='user-avatar' src={this.setAvatar()} className='z-depth-2 animated bounceInDown' alt={`${this.setDisplayName()} 's avatar`} />
                         <span id='user-name' className='animated fadeIn'>{this.setDisplayName()}</span>
                     </div>
-                    <div className='col l2 log-out-cont' onClick={authentication.logout}>
+                    <div className='col l2 log-out-cont' onClick={this.logOut}>
                         <LogOut size={20} />
                     </div>
                 </div>
@@ -67,7 +70,7 @@ const mapStateToProps = (state) => {
 
 // attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ userDataActions }, dispatch);
+    return bindActionCreators({ userDataActions, logoutActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardSettings);

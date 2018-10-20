@@ -13,6 +13,11 @@ const reducers = (state = initialState, action) => {
                 user: action.payload
             };
         
+        case 'LOGOUT_SUCCESS':
+            return {
+                state: action.payload
+            }
+        
         case 'SIGNUP_SUCCESS':
             return {
                 ...state,

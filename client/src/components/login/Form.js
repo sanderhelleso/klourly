@@ -101,11 +101,11 @@ class Form extends Component {
             notification.login(true);
 
             // set user state then redirect to dashboard
-            this.props.loginAction(authenticatedUser.userData.user);
             dashboard.fetchUserData(authenticatedUser.userData.user.id)
             .then(response => {
                 this.props.userDataActions(response.data.userData);
                 setTimeout(() => {
+                    this.props.loginAction(authenticatedUser.userData.user);
                     redirect.dashboard(); // redirect user after a short delay
                 }, 2500);
             });
@@ -151,7 +151,7 @@ class Form extends Component {
 // set initial store state
 const mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.state
     }
 }
 
