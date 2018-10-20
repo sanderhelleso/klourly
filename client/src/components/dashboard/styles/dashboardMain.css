@@ -34,6 +34,12 @@
     z-index: 1;
 }
 
+.card-fab a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .card.small .card-image + .card-content,
 .card.medium .card-image + .card-content,
 .card.large .card-image + .card-content,
@@ -41,4 +47,12 @@
 .card.medium .card-image + .card-fab +.card-content,
 .card.large .card-image + .card-fab + .card-content {
   max-height: 40%;
+}
+
+.card-content {
+    text-transform: capitalize;
+}
+
+.room-card-location {
+    font-size: 1rem;
 }
