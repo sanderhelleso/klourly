@@ -108,7 +108,7 @@ class Settings extends Component {
     renderNewsLetterCheckBox() {
         const CHECKBOX = 
         <div className="input-field col s12 news-letter-cont">
-            <p className="center">
+            <p>
                 <label>
                     <input type="checkbox" checked={this.state.settings.newsLetter} onChange={(event) => this.checkNewsletter(event)} />
                     <span>subscribe to our newsletter to see whats new!</span>

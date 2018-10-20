@@ -37,9 +37,24 @@ class Form extends Component {
         this.validateForm = this.validateForm.bind(this);
         this.updateCountryState = this.updateCountryState.bind(this);
         this.checkNewsletter = this.checkNewsletter.bind(this);
+        this.signupOnEnterKey = this.signupOnEnterKey.bind(this);
+    }
 
-        // trigger signup by enter key
-        this.signupOnEnterKey();
+    // allow user to trigger signup by pressing enter
+    signupOnEnterKey(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#signup-btn').click();
+        }
+    }
+
+    // lifecycle, add event on mount
+    componentDidMount() {
+        document.addEventListener('keyup', this.signupOnEnterKey);
+    }
+
+    // remove event on unmount
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.signupOnEnterKey);
     }
 
     // fetch state and country data on load
@@ -108,15 +123,6 @@ class Form extends Component {
                 });
             }
         })}
-    }
-
-    // allow user to trigger signup by pressing enter
-    signupOnEnterKey() {
-        document.body.addEventListener('keyup', (e) => {
-            if (e.keyCode === 13) {
-                document.querySelector('#signup-btn').click();
-            }
-        });
     }
 
     // validate email
