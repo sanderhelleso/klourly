@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import './styles/dashboardMain.css';
 
 import Settings from './states/Settings';
+import Rooms from './states/Rooms';
 
 class DashboardMain extends Component {
 
@@ -17,8 +18,7 @@ class DashboardMain extends Component {
                 return "hi";
 
             case 2:
-                document.title = "Section 2 - Klouly";
-                return "hi there";
+                return <Rooms />
 
             case 3:
                 document.title = "Section 3 - Klouly";
