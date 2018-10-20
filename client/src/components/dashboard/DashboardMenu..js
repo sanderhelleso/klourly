@@ -44,13 +44,13 @@ class DashboardMenu extends Component {
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
-                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
                     <Clipboard size={30} />
                 </div>
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
                     <Map size={30} />
                 </div>
-                <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
+                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
                     <Settings size={30} />
                 </div>
             </aside>
