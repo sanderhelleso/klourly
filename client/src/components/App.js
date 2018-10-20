@@ -26,6 +26,14 @@ import Dashboard from './dashboard/Dashboard';
 import MainNav from './navigation/main/MainNav';
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.landingRoute = this.landingRoute.bind(this);
+        this.loginRoute = this.loginRoute.bind(this);
+        this.signupRoute = this.signupRoute.bind(this);
+        this.dashboardRoute = this.dashboardRoute.bind(this);
+    }
 
     // authenticate user
     async componentWillMount() {
@@ -35,29 +43,31 @@ class App extends Component {
         }
     }
 
-    // route for handling authentication on
-    // auth required routes
-    /*async authenticated() {
-        await this.validate();
-        if (this.props.state.loggedIn) {
-            return <Dashboard />
-        }
+    // route for handling authentication on auth required routes
+    loginRoute() {
+        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
+    }
 
-        return <Redirect to="/login" />
-    }*/
+    signupRoute() {
+        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
+    }
+
+    landingRoute() {
+        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
+    }
+
+    dashboardRoute() {
+        return this.props.state.loggedIn ? <Dashboard /> : <Redirect to="/" />;
+    }
 
     render() {
         return (
             <Router history={history}>
                 <div>
-                    <Route exact path="/" component={Landing} />
-
-                    
-                    <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/login" component={Login} />
-
-
-                    <Route path="/dashboard" component={Dashboard} />
+                    <Route exact path="/" component={this.landingRoute} />
+                    <Route exact path="/signup" component={this.signupRoute} />
+                    <Route exact path="/login" component={this.loginRoute} />
+                    <Route path="/dashboard" component={this.dashboardRoute} />
                 </div>
             </Router>
         )
@@ -66,7 +76,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-     state: state
+     state: state.state
     };
 };
 
