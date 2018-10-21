@@ -1,0 +1,53 @@
+#new-room-back {
+    margin: 4rem 0;
+}
+
+#new-room-back a {
+    color: #bdbdbd;
+}
+
+#new-room-back svg {
+    stroke: #7c4dff;
+    margin-bottom: -6px;
+    margin-right: 5px;
+}
+
+#new-room-intro h1 {
+    margin-top: 0;
+    font-weight: 800;
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+}
+
+#new-room-intro p {
+    margin: 2.5rem 5.5rem;
+    color: #bdbdbd;
+}
+
+.room-border {
+    min-height: 0.45rem;
+    min-width: 40%;
+    max-width: 40%;
+    margin: 3rem auto 1rem auto;
+    border-radius: 12px;
+    background-color: #00e988;
+}
+
+.room-option {
+    border: 1px solid red;
+    padding: 2rem;
+    text-align: center;
+}
+
+#current-stage-status {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#new-room-stage-cont {
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+    justify-content: center;
+    align-items: center;
+}

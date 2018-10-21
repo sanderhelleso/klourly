@@ -43,6 +43,11 @@ function renderAttendingRoomTimes(room) {
 
 // redirect to specific room
 function enterRoom(props, name, id) {
+
+    /////////////////////////////////////
+    // FETCH AND STORE ROOM DATA HERE //
+    ///////////////////////////////////
+    
     props.enterRoomActions(id);
     redirect.room(name.split(' ').join('-').toLowerCase(), id);
 }
