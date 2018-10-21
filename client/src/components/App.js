@@ -16,6 +16,7 @@ import Landing from './landing/Landing';
 import Signup from './signup/Signup';
 import Login from './login/Login';
 import NewRoom from './dashboard/states/rooms/newRoom/NewRoom';
+import Room from './dashboard/states/rooms/room/Room';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
@@ -65,6 +66,7 @@ class App extends Component {
                     <Route exact path="/login" component={this.loginRoute} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
+                    <Route exact path="/dashboard/rooms/*/*" component={Room} />
                 </div>
             </Router>
         )
