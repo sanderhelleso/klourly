@@ -64,6 +64,12 @@ const reducers = (state = initialState, action) => {
                 userData: action.payload
             };
 
+        case 'ENTER_ROOM_SUCCESS':
+            return {
+                ...state,
+                room: action.payload
+            }
+
         default:
             return state;
     }
