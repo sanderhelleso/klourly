@@ -94,13 +94,12 @@ class Attending extends Component {
     }
 
     render() {
-        console.log(this.state.props);
         return (
             <div>
                 <div className="main-rooms-header">
                 </div>
                 <div className="row main-rooms-cont">
-                    {cards.renderAttendingRooms(mockData)}
+                    {cards.renderAttendingRooms(mockData, this.props)}
                 </div>
             </div>
         )
