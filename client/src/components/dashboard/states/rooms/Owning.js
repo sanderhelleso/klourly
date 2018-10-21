@@ -5,7 +5,7 @@ export default class Owning extends Component {
         return (
             <div>
                 <h4>Owning</h4>
-                <p>qweqeqeqeqw</p>
+                <p>coming soon...</p>
             </div>
         )
     }
