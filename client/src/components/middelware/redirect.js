@@ -5,7 +5,8 @@ export const redirect = {
     signup,
     login,
     dashboard,
-    room
+    room,
+    newRoom
 };
 
 function home() {
@@ -26,4 +27,8 @@ function dashboard() {
 
 function room(name, id) {
     history.push(`/dashboard/rooms/${name}/${id}`);
+}
+
+function newRoom() {
+    history.push('/dashboard/new-room');
 }
