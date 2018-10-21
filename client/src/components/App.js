@@ -12,14 +12,10 @@ import { connect } from 'react-redux';
 import { authentication } from './middelware/authentication';
 import { validateAction } from '../actions/validateActions';
 
-// import Landing component
 import Landing from './landing/Landing';
-
-// import Signup component
 import Signup from './signup/Signup';
-
-// import Login component
 import Login from './login/Login';
+import NewRoom from './dashboard/states/rooms/newRoom/NewRoom';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
@@ -63,11 +59,12 @@ class App extends Component {
     render() {
         return (
             <Router history={history}>
-                <div>
+                <div id="main-app-cont">
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
                     <Route exact path="/login" component={this.loginRoute} />
                     <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/dashboard/new-room" component={NewRoom} />
                 </div>
             </Router>
         )
