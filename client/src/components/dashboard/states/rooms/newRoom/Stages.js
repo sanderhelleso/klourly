@@ -66,13 +66,13 @@ export default class Stages extends Component {
         const STAGE_ONE =
         <div id="room-option-cont" className="col s12">
             <div className="col s6">
-                <div className="room-option animated fadeInLeft" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage1-option1 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
                     <Users size={35} />
                     <h5>Public</h5>
                 </div>
             </div>
             <div className="col s6">
-                <div className="room-option animated fadeInRight" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage1-option2 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
                     <Lock size={35} />
                     <h5>Private</h5>
                 </div>
@@ -82,13 +82,48 @@ export default class Stages extends Component {
         return STAGE_ONE;
     }
 
+    stageTwo() {
+        const STAGE_TWO =
+        <div id="room-option-cont" className="col s12">
+            <div className="col s6">
+                <div className="room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                    <Users size={35} />
+                    <h5>Public</h5>
+                </div>
+            </div>
+            <div className="col s6">
+                <div className="room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                    <Lock size={35} />
+                    <h5>Private</h5>
+                </div>
+            </div>
+        </div>
+
+        return STAGE_TWO;
+    }
+
     selectOption(e) {
         const cont = document.querySelector('#room-option-cont');
+        document.body.style.overflowY = 'hidden';
         Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
-            option.className = "room-option animated fadeIn room-option-deactive";
+            option.classList.remove("fadeIn");
         });
 
-        e.target.className = "room-option animated room-option-active";
+        e.target.classList.add("pulse");
+
+        let timer = 750;
+        Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+            setTimeout(() => {
+                option.classList.remove("pulse");
+                option.classList.add("fadeOutDown");
+            }, timer);
+            timer += 250;
+        });
+
+        setTimeout(() => {
+            document.body.style.overflowY = 'auto';
+            this.setStage();
+        }, 1500);
     }
 
     currentStage() {
@@ -98,38 +133,20 @@ export default class Stages extends Component {
 
             case 1:
                 return this.stageOne();
+
+            case 2:
+                return this.stageTwo();
         }
     }
 
     renderStage() {
         const STAGE = 
         <div id="new-room-stage-cont" className="col s10 offset-s1">
-            {this.renderPrevStage()}
             {this.currentStage()}
-            {this.renderNextStage()}
         </div>
 
         return STAGE;
     }
-
-    renderPrevStage() {
-        const PREV =
-        <div className="col s1 toogle-prev-next animated fadeInLeft">
-            <ArrowLeft size={42} />
-        </div>
-
-        return (this.state.stage > 1) ? PREV : <div className="col s1"></div>;
-    }
-
-    renderNextStage() {
-        const NEXT =
-        <div className="col s1 toogle-prev-next animated fadeInRight">
-            <ArrowRight size={42} />
-        </div>
-
-        return (this.state.stage > 0) ? NEXT : <div className="col s1"></div>;
-    }
-
 
     render() {
         return (

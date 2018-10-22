@@ -63,56 +63,51 @@
     border-radius: 6px;
     cursor: pointer;
     background-color: #ffffff;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     text-align: center;
 }
 
-.room-option:hover svg {
-    stroke: #00e988;
+.room-option-stage1-option1 {
+    background: #ff4b1f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #ff9068, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #ff9068, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.room-option-deactive {
-    transition: 0.5s ease-in-out;
-    opacity: 0.5;
-    box-shadow: none;
-    border: 3px solid #eeeeee;
-    background-color: transparent;
+.room-option-stage1-option2 {
+    background: #834d9b;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #d04ed6, #834d9b);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #d04ed6, #834d9b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.room-option-deactive svg {
-    stroke: #bdbdbd !important;
+.room-option-stage2-option1 {
+    background: #B24592;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+.room-option-stage2-option2 {
+    background: #f46b45;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 
 .room-option-deactive:hover {
     opacity: 1;
 }
 
-.room-option-deactive:hover svg {
-    stroke: #00e988 !important;
-}
-
-.room-option-active {
-    transition: 0.3s ease-in-out;
-    border: 3px solid #00e988;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-}
-
-.room-option-active svg {
-    stroke: #00e988 !important;
-}
-
 .room-option svg {
     transition: 0.3s ease-in-out;
-    stroke: #7c4dff;
+    stroke: #ffffff;
     pointer-events: none;
 }
 
 .room-option h5 {
     font-size: 1.25rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #bdbdbd;
+    letter-spacing: 4px;
+    color: #ffffff;
     pointer-events: none;
+    font-weight: 100;
 }
 
 #current-stage-status {
