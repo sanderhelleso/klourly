@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ArrowLeft, ArrowRight, Lock, Users } from 'react-feather';
+import { ArrowLeft, ArrowRight, Lock, Users, Headphones, PieChart } from 'react-feather';
 
 export default class Stages extends Component {
     constructor(props) {
@@ -43,9 +43,21 @@ export default class Stages extends Component {
     }
 
     displayStageStatus() {
+
+        let stageMessage = '';
+        switch (this.state.stage) {
+            case 1:
+                stageMessage = 'I want the room to be...';
+                break;
+
+            case 2:
+                stageMessage = 'The room will be used for...';
+                break;
+        }
+
         const STATUS = 
-        <div>
-            <h5>I want the room to be...</h5>
+        <div className="animated fadeIn">
+            <h5>{stageMessage}</h5>
         </div>
 
 
@@ -87,14 +99,14 @@ export default class Stages extends Component {
         <div id="room-option-cont" className="col s12">
             <div className="col s6">
                 <div className="room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
-                    <Users size={35} />
-                    <h5>Public</h5>
+                    <PieChart size={35} />
+                    <h5>Education</h5>
                 </div>
             </div>
             <div className="col s6">
                 <div className="room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
-                    <Lock size={35} />
-                    <h5>Private</h5>
+                    <Headphones size={35} />
+                    <h5>Events</h5>
                 </div>
             </div>
         </div>
@@ -123,7 +135,7 @@ export default class Stages extends Component {
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
             this.setStage();
-        }, 1500);
+        }, 2000);
     }
 
     currentStage() {
