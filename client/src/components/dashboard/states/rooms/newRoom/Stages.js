@@ -78,13 +78,13 @@ export default class Stages extends Component {
         const STAGE_ONE =
         <div id="room-option-cont" className="col s12">
             <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage1-option1 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage1-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
                     <Users size={35} />
                     <h5>Public</h5>
                 </div>
             </div>
             <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage1-option2 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage1-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
                     <Lock size={35} />
                     <h5>Private</h5>
                 </div>
@@ -98,13 +98,13 @@ export default class Stages extends Component {
         const STAGE_TWO =
         <div id="room-option-cont" className="col s12">
             <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
                     <PieChart size={35} />
                     <h5>Education</h5>
                 </div>
             </div>
             <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable" onClick={(event) => this.selectOption(event)}>
+                <div className="room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
                     <Headphones size={35} />
                     <h5>Events</h5>
                 </div>
@@ -118,6 +118,7 @@ export default class Stages extends Component {
         const cont = document.querySelector('#room-option-cont');
         document.body.style.overflowY = 'hidden';
         Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+            option.style.pointerEvents = 'none';
             option.classList.remove("fadeIn");
         });
 
@@ -134,6 +135,9 @@ export default class Stages extends Component {
 
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
+            Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+                option.style.pointerEvents = 'auto';
+            });
             this.setStage();
         }, 2000);
     }
@@ -162,7 +166,7 @@ export default class Stages extends Component {
 
     render() {
         return (
-            <div>
+            <div className="no-select">
                 {this.renderIntro()}
                 <div id="current-stage-status" className="col s8 offset-s2">
                     {this.displayStageStatus()}
