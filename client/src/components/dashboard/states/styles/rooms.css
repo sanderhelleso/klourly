@@ -120,11 +120,3 @@ background: linear-gradient(to bottom, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, 
     font-weight: 600;
     float: right;
 }
-
-body {
-    overflow: hidden !important;
-}
-
-.modal { 
-    width: 40% !important ;
-}  /* increase the height and width as you desire */

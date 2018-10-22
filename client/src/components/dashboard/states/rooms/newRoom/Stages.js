@@ -1,0 +1,145 @@
+import React, { Component } from 'react';
+import { ArrowLeft, ArrowRight, Lock, Users } from 'react-feather';
+
+export default class Stages extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            stage: 0,
+            lastStage: 5,
+            selected: false
+        }
+
+        this.renderIntro = this.renderIntro.bind(this);
+        this.selectOption = this.selectOption.bind(this);
+        this.currentStage = this.currentStage.bind(this);
+        this.displayStageStatus = this.displayStageStatus.bind(this);
+        this.renderStage = this.renderStage.bind(this);
+        this.stageOne = this.stageOne.bind(this);
+        this.initialStage = this.initialStage.bind(this);
+        this.setStage = this.setStage.bind(this);
+    }
+
+    renderIntro() {
+        const MAIN_INTRO =
+        <div className="row animated fadeIn">
+            <div id="new-room-intro" className="center col s8 offset-s2">
+                <h1>Lets create a New Room</h1>
+                <p>A room allow you to keep full controll on whats happening. Who is present, when do people show up, who is the least active and much more.</p>
+                <div className="room-borderr"></div>
+            </div>
+        </div>
+
+        const SUB_INTRO =
+        <div className="row">
+            <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
+                <h4>Lets create a New Room</h4>
+                <h5>{`Step ${this.state.stage} / ${this.state.lastStage}`}</h5>
+            </div>
+        </div>
+
+        return this.state.stage === 0 ? MAIN_INTRO : SUB_INTRO;
+    }
+
+    displayStageStatus() {
+        const STATUS = 
+        <div>
+            <h5>I want the room to be...</h5>
+        </div>
+
+
+        return this.state.stage === 0 ? null : STATUS;
+    }
+
+    initialStage() {
+        return <button id="start-new-room" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Create room</button>
+    }
+
+    setStage() {
+        this.setState({
+            stage: this.state.stage + 1
+        });
+    }
+
+    stageOne() {
+        const STAGE_ONE =
+        <div id="room-option-cont" className="col s12">
+            <div className="col s6">
+                <div className="room-option animated fadeInLeft" onClick={(event) => this.selectOption(event)}>
+                    <Users size={35} />
+                    <h5>Public</h5>
+                </div>
+            </div>
+            <div className="col s6">
+                <div className="room-option animated fadeInRight" onClick={(event) => this.selectOption(event)}>
+                    <Lock size={35} />
+                    <h5>Private</h5>
+                </div>
+            </div>
+        </div>
+
+        return STAGE_ONE;
+    }
+
+    selectOption(e) {
+        const cont = document.querySelector('#room-option-cont');
+        Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+            option.className = "room-option animated fadeIn room-option-deactive";
+        });
+
+        e.target.className = "room-option animated room-option-active";
+    }
+
+    currentStage() {
+        switch (this.state.stage) {
+            case 0:
+                return this.initialStage();
+
+            case 1:
+                return this.stageOne();
+        }
+    }
+
+    renderStage() {
+        const STAGE = 
+        <div id="new-room-stage-cont" className="col s10 offset-s1">
+            {this.renderPrevStage()}
+            {this.currentStage()}
+            {this.renderNextStage()}
+        </div>
+
+        return STAGE;
+    }
+
+    renderPrevStage() {
+        const PREV =
+        <div className="col s1 toogle-prev-next animated fadeInLeft">
+            <ArrowLeft size={42} />
+        </div>
+
+        return (this.state.stage > 1) ? PREV : <div className="col s1"></div>;
+    }
+
+    renderNextStage() {
+        const NEXT =
+        <div className="col s1 toogle-prev-next animated fadeInRight">
+            <ArrowRight size={42} />
+        </div>
+
+        return (this.state.stage > 0) ? NEXT : <div className="col s1"></div>;
+    }
+
+
+    render() {
+        return (
+            <div>
+                {this.renderIntro()}
+                <div id="current-stage-status" className="col s8 offset-s2">
+                    {this.displayStageStatus()}
+                </div>
+                {this.renderStage()}
+            </div>
+        )
+    }
+}
