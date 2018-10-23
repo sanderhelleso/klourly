@@ -28,6 +28,7 @@ export default class Stages extends Component {
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
         this.stageOne = this.stageOne.bind(this);
+        this.handleWeek = this.handleWeek.bind(this);
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -230,6 +231,10 @@ export default class Stages extends Component {
         // add times here
         const STAGE_FIVE =
         <div>
+            <div id="starting-from-week-cont" className="center">
+                <h5>Starting from week...</h5>
+                <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
+            </div>
             <div id="repeat-active-switch-cont">
                 <h5>Repeat every week?</h5>
                 <div className="switch">
@@ -256,6 +261,28 @@ export default class Stages extends Component {
         </Dropzone>
 
         return STAGE_SIX;
+    }
+
+    handleWeek(e) {
+        const value = e.target.value;
+        if (value.length > 2) {
+            e.target.value = value.substring(0, 2);
+        }
+
+        if (value > 52) {
+            e.target.value = 52;
+        }
+
+        else if (value < 1) {
+            e.target.value = '';
+        }
+    }
+
+    // get current week
+    getCurrentWeek() {
+        const now = new Date();
+        const onejan = new Date(now.getFullYear(), 0, 1);
+        return Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
     }
 
     displayCoverFileName() {
@@ -315,6 +342,7 @@ export default class Stages extends Component {
 
     currentStage() {
         switch (this.state.stage) {
+
             case 0:
                 return this.initialStage();
 
