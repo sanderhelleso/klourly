@@ -4,6 +4,8 @@ import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { materializeJS } from '../../../../../helpers/materialize';
+import Days from './Days';
 let WORDS = [];
 
 
@@ -17,7 +19,8 @@ export default class Stages extends Component {
             stage: 5,
             lastStage: 7,
             selected: false,
-            cover: null
+            cover: null,
+            daysSelected: 0
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -28,7 +31,9 @@ export default class Stages extends Component {
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
         this.stageOne = this.stageOne.bind(this);
+        this.updateDaysAmount = this.updateDaysAmount.bind(this);
         this.handleWeek = this.handleWeek.bind(this);
+        this.renderSelectDays = this.renderSelectDays.bind(this);
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -231,9 +236,16 @@ export default class Stages extends Component {
         // add times here
         const STAGE_FIVE =
         <div>
+            <div className="col s12 collapsible-cont">
+                <ul className="collapsible popout expandable">
+                    {this.renderSelectDays()}
+                </ul>
+                <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}>Add more</button>
+            </div>
             <div id="starting-from-week-cont" className="center">
                 <h5>Starting from week...</h5>
                 <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
+                <p>Not sure?</p>
             </div>
             <div id="repeat-active-switch-cont">
                 <h5>Repeat every week?</h5>
@@ -247,6 +259,10 @@ export default class Stages extends Component {
                 </div>
             </div>
         </div>
+
+        setTimeout(() => {
+            materializeJS.M.AutoInit();
+        }, 10);
 
         return STAGE_FIVE;
     }
@@ -263,8 +279,27 @@ export default class Stages extends Component {
         return STAGE_SIX;
     }
 
+    updateDaysAmount() {
+        this.setState({
+            daysSelected: this.state.daysSelected += 1
+        }, 
+        () => {
+            Array.from(document.querySelectorAll('.collapsible-header'))[this.state.daysSelected - 1].click();
+        });
+    }
+
+    renderSelectDays() {
+        const collapsibles = [];
+        for (let i = 1; i < this.state.daysSelected + 1; i++) {
+            collapsibles.push(<Days title={`Room days ${i}`} key={i} />);
+        }
+
+        return collapsibles;
+    }
+
     handleWeek(e) {
-        const value = e.target.value;
+        const value = e.target.value.replace(/[^\d]/,'',);        
+        
         if (value.length > 2) {
             e.target.value = value.substring(0, 2);
         }
