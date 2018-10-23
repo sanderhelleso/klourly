@@ -20,7 +20,7 @@ export default class Stages extends Component {
             lastStage: 7,
             selected: false,
             cover: null,
-            daysSelected: 0
+            daysSelected: 1
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -282,16 +282,13 @@ export default class Stages extends Component {
     updateDaysAmount() {
         this.setState({
             daysSelected: this.state.daysSelected += 1
-        }, 
-        () => {
-            Array.from(document.querySelectorAll('.collapsible-header'))[this.state.daysSelected - 1].click();
         });
     }
 
     renderSelectDays() {
         const collapsibles = [];
         for (let i = 1; i < this.state.daysSelected + 1; i++) {
-            collapsibles.push(<Days title={`Room days ${i}`} key={i} />);
+            collapsibles.push(<Days daysID={i} key={i} />);
         }
 
         return collapsibles;
