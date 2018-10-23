@@ -35,6 +35,6 @@ module.exports = app => {
                 status: 'success',
                 message: 'Successfully updated settings'
             });
-        })
+        });
     });
 }

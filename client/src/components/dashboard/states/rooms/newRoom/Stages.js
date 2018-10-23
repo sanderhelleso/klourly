@@ -53,6 +53,9 @@ export default class Stages extends Component {
             case 2:
                 stageMessage = 'The room will be used for...';
                 break;
+
+            case 3:
+                stageMessage = 'Authorized users can check into the room within...';
         }
 
         const STATUS = 
@@ -114,6 +117,38 @@ export default class Stages extends Component {
         return STAGE_TWO;
     }
 
+    stageThree() {
+        const STAGE_THREE =
+        <div id="room-option-cont" className="col s12">
+            <div className="col s3">
+                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <PieChart size={35} />
+                    <h5>Education</h5>
+                </div>
+            </div>
+            <div className="col s3">
+                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Headphones size={35} />
+                    <h5>Events</h5>
+                </div>
+            </div>
+            <div className="col s3">
+                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <PieChart size={35} />
+                    <h5>Education</h5>
+                </div>
+            </div>
+            <div className="col s3">
+                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Headphones size={35} />
+                    <h5>Events</h5>
+                </div>
+            </div>
+        </div>
+
+        return STAGE_THREE;
+    }
+
     selectOption(e) {
         const cont = document.querySelector('#room-option-cont');
         document.body.style.overflowY = 'hidden';
@@ -152,6 +187,9 @@ export default class Stages extends Component {
 
             case 2:
                 return this.stageTwo();
+
+            case 3:
+                return this.stageThree();
         }
     }
 
