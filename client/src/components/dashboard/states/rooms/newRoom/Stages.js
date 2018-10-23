@@ -13,6 +13,7 @@ export default class Stages extends Component {
 
         this.renderIntro = this.renderIntro.bind(this);
         this.selectOption = this.selectOption.bind(this);
+        this.stageFour = this.handleRoomName.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
@@ -47,7 +48,7 @@ export default class Stages extends Component {
         let stageMessage = '';
         switch (this.state.stage) {
             case 1:
-                stageMessage = 'Lets give your room a name...';
+                stageMessage = 'Lets start by give your room a name...';
                 break;
 
             case 2:
@@ -71,6 +72,10 @@ export default class Stages extends Component {
         return this.state.stage === 0 ? null : STATUS;
     }
 
+    handleRoomName(e) {
+        console.log(e.target.value.length);
+    }
+
     initialStage() {
         return <button id="start-new-room" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Create room</button>
     }
@@ -82,7 +87,12 @@ export default class Stages extends Component {
     }
 
     stageOne() {
-        return <h2>Hello</h2>;
+        const STAGE_ONE =
+        <div className="input-field">
+            <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
+        </div>
+
+        return STAGE_ONE;
     }
 
     stageTwo() {

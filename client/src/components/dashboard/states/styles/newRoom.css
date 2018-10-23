@@ -177,3 +177,16 @@
     font-size: 1.5rem;
     font-weight: 600;
 }
+
+#new-room-name-field {
+    min-width: 30rem;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 2px solid #4A00E0;
+    outline: none;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    font-weight: 800;
+}
