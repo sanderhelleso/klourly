@@ -3,12 +3,15 @@ import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+let WORDS = [];
+
 
 export default class Stages extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            word: WORDS[Math.floor(Math.random() * WORDS.length)],
             validName: false,
             stage: 0,
             lastStage: 5,
@@ -25,6 +28,12 @@ export default class Stages extends Component {
         this.stageOne = this.stageOne.bind(this);
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
+
+        // update words when component renders
+    }
+
+    componentWillMount() {
+        WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent'];
     }
 
     renderIntro() {
@@ -70,7 +79,7 @@ export default class Stages extends Component {
 
         const STATUS = 
         <div className="animated fadeIn">
-            <h5>{stageMessage}</h5>
+            <h5>{`${this.state.word}! ${stageMessage}`}</h5>
         </div>
 
 
@@ -101,7 +110,11 @@ export default class Stages extends Component {
     }
 
     setStage() {
+        
+        WORDS.splice(WORDS.indexOf(this.state.word), 1);
+        console.log(WORDS);
         this.setState({
+            word: WORDS[Math.floor(Math.random() * WORDS.length)],
             stage: this.state.stage + 1
         });
     }
