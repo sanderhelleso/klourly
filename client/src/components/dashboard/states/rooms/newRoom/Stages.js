@@ -14,7 +14,7 @@ export default class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             validName: false,
-            stage: 6,
+            stage: 5,
             lastStage: 7,
             selected: false,
             cover: null
@@ -31,12 +31,13 @@ export default class Stages extends Component {
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
+        this.displayCoverFileName = this.displayCoverFileName.bind(this);
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
 
-        // update words when component renders
     }
 
+    // update words when component renders
     componentWillMount() {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
     }
@@ -81,9 +82,14 @@ export default class Stages extends Component {
             case 4:
                 stageMessage = 'Authorized users can check into the room within...';
                 break;
+
+            case 5:
+                stageMessage = 'The room will be active for users at...';
+                break;
             
             case 6:
                 stageMessage = 'What about adding a cover image...';
+                break;
         }
 
         const STATUS = 
@@ -222,17 +228,44 @@ export default class Stages extends Component {
 
     stageFive() {
         // add times here
+        const STAGE_FIVE =
+        <div>
+            <div id="repeat-active-switch-cont">
+                <h5>Repeat every week?</h5>
+                <div className="switch">
+                    <label>
+                    No
+                    <input type="checkbox" defaultChecked={true} />
+                    <span className="lever"></span>
+                    Yes
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        return STAGE_FIVE;
     }
 
     stageSix() {
         const STAGE_SIX =
         <Dropzone id="new-room-cover-upload" className="col s12" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
+            {this.displayCoverFileName()}
             <h4>Drag files here</h4>
             <h5>or</h5>
             <button id="new-room-cover-browse" className="waves-effect waves-light btn animated fadeIn">Browse</button>
         </Dropzone>
 
         return STAGE_SIX;
+    }
+
+    displayCoverFileName() {
+        const file = this.state.cover;
+        const FILE_NAME =
+        <div className="animated fadeIn">
+            <h5 id="new-room-cover-file-name">{file === null ? '' : file[0].name}</h5>
+        </div>
+
+        return this.state.cover === null ? null : FILE_NAME;
     }
 
     onDrop(file) {
@@ -296,6 +329,9 @@ export default class Stages extends Component {
             
             case 4:
                 return this.stageFour();
+
+            case 5:
+                return this.stageFive();
 
             case 6:
                 return this.stageSix();
