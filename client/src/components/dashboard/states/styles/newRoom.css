@@ -183,10 +183,14 @@
     padding: 1rem 2rem;
     text-align: center;
     font-size: 1.5rem;
-    border: 2px solid #4A00E0;
+    border: 2px solid #7c4dff;
     outline: none;
     border-radius: 6px;
     letter-spacing: 2px;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     font-weight: 800;
+    transition: 0.3s ease-in-out;
+}
+
+#new-room-name-field:focus {
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }

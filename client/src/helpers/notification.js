@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 export const notification = {
     login,
     signup,
-    settings
+    settings,
+    newRoomName
 }
 
 // login notification
@@ -79,5 +80,18 @@ function settings(success, message) {
             toastId: 2
         });
     }
+}
+
+// new room name error notification
+function newRoomName() {
+
+    // prompt error if name is longer than 55 characters
+    toast('Room name cant be longer than 55 characters!', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-error',
+        progressClassName: 'error-progress-bar',
+        autoClose: 3000,
+        toastId: 1
+    });
 }
 

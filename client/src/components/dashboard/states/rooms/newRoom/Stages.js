@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
+import { notification } from '../../../../../helpers/notification';
+import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Stages extends Component {
     constructor(props) {
@@ -48,7 +51,7 @@ export default class Stages extends Component {
         let stageMessage = '';
         switch (this.state.stage) {
             case 1:
-                stageMessage = 'Lets start by give your room a name...';
+                stageMessage = 'Lets start by giving your room a name...';
                 break;
 
             case 2:
@@ -74,6 +77,9 @@ export default class Stages extends Component {
 
     handleRoomName(e) {
         console.log(e.target.value.length);
+        if (e.target.value.length === 55) {
+            notification.newRoomName();
+        }
     }
 
     initialStage() {
@@ -231,6 +237,10 @@ export default class Stages extends Component {
                     {this.displayStageStatus()}
                 </div>
                 {this.renderStage()}
+                <ToastContainer 
+                    transition={Flip}
+                    closeButton={false}
+                />
             </div>
         )
     }
