@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dropzone from 'react-dropzone';
 import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
@@ -15,7 +16,8 @@ export default class Stages extends Component {
             validName: false,
             stage: 6,
             lastStage: 7,
-            selected: false
+            selected: false,
+            cover: null
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -28,6 +30,9 @@ export default class Stages extends Component {
         this.stageOne = this.stageOne.bind(this);
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.onDragEnter = this.onDragEnter.bind(this);
+        this.onDragLeave = this.onDragLeave.bind(this);
 
         // update words when component renders
     }
@@ -221,11 +226,30 @@ export default class Stages extends Component {
 
     stageSix() {
         const STAGE_SIX =
-        <div>
-            <h5>Test</h5>
-        </div>
+        <Dropzone id="new-room-cover-upload" className="col s12" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
+            <h4>Drag files here</h4>
+            <h5>or</h5>
+            <button id="new-room-cover-browse" className="waves-effect waves-light btn animated fadeIn">Browse</button>
+        </Dropzone>
 
         return STAGE_SIX;
+    }
+
+    onDrop(file) {
+        this.setState({
+            cover: file
+        });
+        document.querySelector('#new-room-cover-upload').className = 'col s12';
+        console.log(file);
+    }
+
+    onDragEnter(e) {
+        const ele = e.target;
+        ele.id === 'new-room-cover-upload' ? ele.className = 'col s12 dropzone-active' : null;
+    }
+
+    onDragLeave() {
+        document.querySelector('#new-room-cover-upload').className = 'col s12';
     }
 
     selectOption(e) {
