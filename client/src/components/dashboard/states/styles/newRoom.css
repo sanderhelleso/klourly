@@ -166,16 +166,34 @@
     align-items: center;
 }
 
-#start-new-room {
+#start-new-room, #confirm-new-room-name {
     background-color: transparent;
     box-shadow: none;
     border: 2px solid #00e988;
-    color: #00e988;
+    color: #ffffff;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     line-height: 0;
-    padding: 2.5rem;
-    letter-spacing: 1px;
-    font-size: 1.5rem;
+    padding: 1.75rem;
+    letter-spacing: 2px;
+    font-size: 1.25rem;
     font-weight: 600;
+}
+
+#confirm-new-room-name {
+    font-size: 1rem;
+    padding: 1.5rem;
+    display: block;
+    margin: 5rem auto;
+}
+
+.new-room-name-disabled {
+    opacity: 0.5 !important;
+    color: #eeeeee !important;
+    cursor: not-allowed;
+    background-color: transparent !important;
+    border: 2px solid #eeeeee !important;
+    box-shadow: none !important;
 }
 
 #new-room-name-field {

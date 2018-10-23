@@ -113,7 +113,9 @@ background: linear-gradient(to bottom, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, 
     background-color: transparent;
     box-shadow: none;
     border: 2px solid #00e988;
-    color: #00e988;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    color: #ffffff;
     line-height: 0;
     padding: 1.5rem;
     letter-spacing: 1px;

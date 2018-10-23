@@ -9,14 +9,16 @@ export default class Stages extends Component {
         super(props);
 
         this.state = {
-            stage: 1,
+            validName: false,
+            stage: 0,
             lastStage: 5,
             selected: false
         }
 
         this.renderIntro = this.renderIntro.bind(this);
         this.selectOption = this.selectOption.bind(this);
-        this.stageFour = this.handleRoomName.bind(this);
+        this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
+        this.handleRoomName = this.handleRoomName.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
@@ -62,7 +64,7 @@ export default class Stages extends Component {
                 stageMessage = 'The room will be used for...';
                 break;
 
-            case 3:
+            case 4:
                 stageMessage = 'Authorized users can check into the room within...';
         }
 
@@ -76,9 +78,21 @@ export default class Stages extends Component {
     }
 
     handleRoomName(e) {
-        console.log(e.target.value.length);
-        if (e.target.value.length === 55) {
+        const length = e.target.value.length;
+        if (length === 55) {
             notification.newRoomName();
+        }
+
+        if (length >= 2 && length <= 55) {
+            this.setState({
+                validName: true
+            });
+        }
+
+        else {
+            this.setState({
+                validName: false
+            });
         }
     }
 
@@ -92,10 +106,21 @@ export default class Stages extends Component {
         });
     }
 
+    renderConfirmNameBtn() {
+        if (this.state.validName) {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
+        }
+
+        else {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
+        }
+    }
+
     stageOne() {
         const STAGE_ONE =
         <div className="input-field">
-            <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
+            <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default animated fadeIn" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
+            {this.renderConfirmNameBtn()}
         </div>
 
         return STAGE_ONE;
@@ -189,7 +214,7 @@ export default class Stages extends Component {
                 option.classList.remove("pulse");
                 option.classList.add("fadeOutDown");
             }, timer);
-            timer += 250;
+            timer += 150;
         });
 
         setTimeout(() => {
