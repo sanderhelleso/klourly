@@ -13,8 +13,8 @@ export default class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             validName: false,
-            stage: 0,
-            lastStage: 5,
+            stage: 6,
+            lastStage: 7,
             selected: false
         }
 
@@ -33,7 +33,7 @@ export default class Stages extends Component {
     }
 
     componentWillMount() {
-        WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent'];
+        WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
     }
 
     renderIntro() {
@@ -62,7 +62,7 @@ export default class Stages extends Component {
         let stageMessage = '';
         switch (this.state.stage) {
             case 1:
-                stageMessage = 'Lets start by giving your room a name...';
+                stageMessage = 'Lets start by giving your room a fitting name...';
                 break;
 
             case 2:
@@ -75,6 +75,10 @@ export default class Stages extends Component {
 
             case 4:
                 stageMessage = 'Authorized users can check into the room within...';
+                break;
+            
+            case 6:
+                stageMessage = 'What about adding a cover image...';
         }
 
         const STATUS = 
@@ -211,6 +215,19 @@ export default class Stages extends Component {
         return STAGE_FOUR;
     }
 
+    stageFive() {
+        // add times here
+    }
+
+    stageSix() {
+        const STAGE_SIX =
+        <div>
+            <h5>Test</h5>
+        </div>
+
+        return STAGE_SIX;
+    }
+
     selectOption(e) {
         const cont = document.querySelector('#room-option-cont');
         document.body.style.overflowY = 'hidden';
@@ -255,6 +272,9 @@ export default class Stages extends Component {
             
             case 4:
                 return this.stageFour();
+
+            case 6:
+                return this.stageSix();
         }
     }
 
