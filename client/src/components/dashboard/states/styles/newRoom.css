@@ -90,6 +90,31 @@
     background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.room-option-stage3-option1 {
+    background: #EB3349;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F45C43, #EB3349);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.room-option-stage3-option2 {
+    background: #8E2DE2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.room-option-stage3-option3 {
+    background: #00c6ff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #0072ff, #00c6ff);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #0072ff, #00c6ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.room-option-stage3-option4 {
+    background: #f953c6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #b91d73, #f953c6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #b91d73, #f953c6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 
 .room-option-deactive:hover {
     opacity: 1;
@@ -101,13 +126,21 @@
     pointer-events: none;
 }
 
-.room-option h5 {
+.new-room-stage-3 .room-option {
+    padding: 5rem 2rem;
+}
+
+.room-option h5, .new-room-stage-3 h5 {
     font-size: 1.25rem;
     text-transform: uppercase;
     letter-spacing: 4px;
     color: #ffffff;
     pointer-events: none;
     font-weight: 100;
+}
+
+.new-room-stage-3 h5 {
+    font-size: 1rem !important;
 }
 
 #current-stage-status {

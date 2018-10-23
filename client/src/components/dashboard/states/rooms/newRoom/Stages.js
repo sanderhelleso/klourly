@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ArrowLeft, ArrowRight, Lock, Users, Headphones, PieChart } from 'react-feather';
+import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
 
 export default class Stages extends Component {
     constructor(props) {
@@ -119,29 +119,29 @@ export default class Stages extends Component {
 
     stageThree() {
         const STAGE_THREE =
-        <div id="room-option-cont" className="col s12">
+        <div id="room-option-cont" className="col s12 new-room-stage-3">
             <div className="col s3">
-                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
-                    <PieChart size={35} />
-                    <h5>Education</h5>
+                <div className="room-option animated fadeIn room-option-stage3-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Compass size={30} />
+                    <h5>50 meters</h5>
                 </div>
             </div>
             <div className="col s3">
-                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
-                    <Headphones size={35} />
-                    <h5>Events</h5>
+                <div className="room-option animated fadeIn room-option-stage3-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Compass size={30} />
+                    <h5>100 meters</h5>
                 </div>
             </div>
             <div className="col s3">
-                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
-                    <PieChart size={35} />
-                    <h5>Education</h5>
+                <div className="room-option animated fadeIn room-option-stage3-option3 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Compass size={30} />
+                    <h5>150 meters</h5>
                 </div>
             </div>
             <div className="col s3">
-                <div className="room-option animated fadeIn z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
-                    <Headphones size={35} />
-                    <h5>Events</h5>
+                <div className="room-option animated fadeIn room-option-stage3-option4 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event)}>
+                    <Compass size={30} />
+                    <h5>200 meters</h5>
                 </div>
             </div>
         </div>
