@@ -21,7 +21,7 @@ export default class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             stage: 6,
-            lastStage: 7,
+            lastStage: 6,
             validName: false,
             validTimes: false,
             validWeek: false,
@@ -33,6 +33,7 @@ export default class Stages extends Component {
         this.renderIntro = this.renderIntro.bind(this);
         this.updateDayTime = this.updateDayTime.bind(this);
         this.selectOption = this.selectOption.bind(this);
+        this.createRoom = this.createRoom.bind(this);
         this.validateDayTime = this.validateDayTime.bind(this);
         this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
@@ -77,7 +78,19 @@ export default class Stages extends Component {
             </div>
         </div>
 
-        return this.state.stage === 0 ? MAIN_INTRO : SUB_INTRO;
+        if (this.state.stage === 0) {
+            return MAIN_INTRO;
+        }
+
+        else if (this.state.stage > 0 && this.state.stage < 7) {
+            return SUB_INTRO;
+        }
+
+        else {
+            return null;
+        }
+
+        
     }
 
     displayStageStatus() {
@@ -303,6 +316,10 @@ export default class Stages extends Component {
             <div id="cover-preview" className="col s6">
                 <img src={this.setCoverPreview()} alt={this.displayCoverFileName()} className="z-depth-2" />
             </div>
+            <div id="finish-room-creation-cont" className="col s12">
+                <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Finish and create room</button>
+                <p>Default cover image will be selected if no other image is uploaded</p>
+            </div>
         </div>
 
         return STAGE_SIX;
@@ -502,7 +519,14 @@ export default class Stages extends Component {
 
             case 6:
                 return this.stageSix();
+            
+            case 7:
+                return this.createRoom();
         }
+    }
+
+    createRoom() {
+
     }
 
     renderStage() {

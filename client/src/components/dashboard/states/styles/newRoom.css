@@ -378,3 +378,10 @@ input[type=number]::-webkit-outer-spin-button {
     height: auto;
     border-radius: 6px;
 }
+
+#finish-room-creation-cont p {
+    color: #bdbdbd;
+    font-size: 12px;
+    text-align: center;
+    margin-top: -2rem;
+}
