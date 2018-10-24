@@ -20,7 +20,7 @@ export default class Stages extends Component {
             validName: false,
             validTimes: false,
             validWeek: false,
-            daysSelected: 1,
+            daysSelected: 0,
             dayTimes: [],
             cover: null,
         }
@@ -28,6 +28,7 @@ export default class Stages extends Component {
         this.renderIntro = this.renderIntro.bind(this);
         this.updateDayTime = this.updateDayTime.bind(this);
         this.selectOption = this.selectOption.bind(this);
+        this.validateDayTime = this.validateDayTime.bind(this);
         this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
         this.handleRoomName = this.handleRoomName.bind(this);
@@ -304,7 +305,7 @@ export default class Stages extends Component {
                 this.setState({
                     dayTimes: this.updateDayTime()
                 });
-            }, 500);
+            }, 10);
         });
     }
 
@@ -314,27 +315,58 @@ export default class Stages extends Component {
             collapsibles.push(<Days daysID={i} key={i} />);
         }
 
-        console.log(this.state.dayTimes);
         return collapsibles;
+    }
+
+    validateDayTime() {
+        this.setState({
+            dayTimes: this.updateDayTime()
+        }, () => {
+            setTimeout(() => {
+                console.log(this.state.dayTimes);
+            }, 1000);
+        });
     }
 
     updateDayTime() {
         const days = [];
+        let validCount = 0;
         const day = Array.from(document.querySelectorAll('.collapsible-body'));
         day.forEach(day => {
             const inputs = Array.from(day.querySelectorAll('input'));
             const dayObj = {};
+            let valid = false;
             inputs.forEach(input => {
+                input.addEventListener('change', this.validateDayTime);
                 if (input.name !== 'time') {
                     dayObj[input.name] = input.checked;
+                    if (input.checked) {
+                        valid = true;
+                    }
                 }
 
                else {
                     dayObj[input.name] = input.value;
                }
             });
+
+            if (dayObj.time !== '' && valid) {
+                validCount++;
+            }
             days.push(dayObj);
         });
+
+        if (validCount === days.length) {
+            this.setState({
+                validTimes: true
+            });
+        }
+
+        else {
+            this.setState({
+                validTimes: false
+            });
+        }
 
         return days;
     }

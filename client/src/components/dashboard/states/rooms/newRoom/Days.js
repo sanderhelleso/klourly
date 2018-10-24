@@ -11,7 +11,6 @@ export default class Days extends Component {
     }
 
     render() {
-        console.log(this.props.daysID);
         return (
             <li>
                 <div className="collapsible-header">
