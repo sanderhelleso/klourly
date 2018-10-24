@@ -213,6 +213,7 @@
     margin: 1rem auto 0 auto;
     min-width: 10rem;
     max-width: 10rem;
+    z-index: -100;
 }
 
 #new-room-name-field:focus, #select-start-week:focus {
@@ -287,12 +288,21 @@
     text-align: center;
 }
 
+#starting-from-week-cont {
+    position: relative; 
+    z-index: -100000;
+}
+
 #starting-from-week-cont p {
     color: #7c4dff;
     opacity: 0.5;
     padding: 0.5rem;
     cursor: pointer;
     font-weight: 100;
+}
+
+.lever {
+    z-index: -100;
 }
 
 .switch label input[type=checkbox]:checked+.lever:after {
@@ -315,9 +325,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .new-room-select-days {
     min-width: 20rem;
-}
-
-.collapsible-cont {
 }
 
 .collapsible-header h5 span {
