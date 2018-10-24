@@ -53,6 +53,12 @@ export default class Stages extends Component {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
     }
 
+    componentDidMount() {
+        setTimeout(() => {
+            document.querySelector('#add-new-room-time').click();
+        }, 10);
+    }
+
     renderIntro() {
         const MAIN_INTRO =
         <div className="row animated fadeIn">
