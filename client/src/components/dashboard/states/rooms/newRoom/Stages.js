@@ -309,7 +309,7 @@ export default class Stages extends Component {
     }
 
     handleWeek(e) {
-        const value = e.target.value.replace(/[^\d]/,'',);        
+        const value = e.target.value.replace(/[^\d]/,'',);    
         
         if (value.length > 2) {
             e.target.value = value.substring(0, 2);
@@ -319,8 +319,18 @@ export default class Stages extends Component {
             e.target.value = 52;
         }
 
-        else if (value < 1) {
+        else if (value < 1 || value === '') {
             e.target.value = '';
+            this.setState({
+                validWeek: false
+            });
+            return;
+        }
+
+        if (e.target.value != '') {
+            this.setState({
+                validWeek: true
+            });
         }
     }
 
