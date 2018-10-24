@@ -21,10 +21,12 @@ export default class Stages extends Component {
             validTimes: false,
             validWeek: false,
             daysSelected: 1,
+            dayTimes: [],
             cover: null,
         }
 
         this.renderIntro = this.renderIntro.bind(this);
+        this.updateDayTime = this.updateDayTime.bind(this);
         this.selectOption = this.selectOption.bind(this);
         this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
@@ -296,6 +298,13 @@ export default class Stages extends Component {
     updateDaysAmount() {
         this.setState({
             daysSelected: this.state.daysSelected += 1
+        }, 
+        () => {
+            setTimeout(() => {
+                this.setState({
+                    dayTimes: this.updateDayTime()
+                });
+            }, 500);
         });
     }
 
@@ -305,7 +314,29 @@ export default class Stages extends Component {
             collapsibles.push(<Days daysID={i} key={i} />);
         }
 
+        console.log(this.state.dayTimes);
         return collapsibles;
+    }
+
+    updateDayTime() {
+        const days = [];
+        const day = Array.from(document.querySelectorAll('.collapsible-body'));
+        day.forEach(day => {
+            const inputs = Array.from(day.querySelectorAll('input'));
+            const dayObj = {};
+            inputs.forEach(input => {
+                if (input.name !== 'time') {
+                    dayObj[input.name] = input.checked;
+                }
+
+               else {
+                    dayObj[input.name] = input.value;
+               }
+            });
+            days.push(dayObj);
+        });
+
+        return days;
     }
 
     handleWeek(e) {
@@ -327,11 +358,9 @@ export default class Stages extends Component {
             return;
         }
 
-        if (e.target.value != '') {
-            this.setState({
-                validWeek: true
-            });
-        }
+        this.setState({
+            validWeek: true
+        });
     }
 
     // get current week

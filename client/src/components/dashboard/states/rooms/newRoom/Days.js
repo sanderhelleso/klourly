@@ -21,50 +21,50 @@ export default class Days extends Component {
                     <div className="col s12 select-days-cont">
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="monday" name="monday" type="checkbox" />
                             <span>Monday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="tueseday" name="tueseday" type="checkbox" />
                             <span>Tueseday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="wednesday" name="wednesday" type="checkbox" />
                             <span>Wednesday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="thursday" name="thursday" type="checkbox" />
                             <span>Thursday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="friday" name="friday" type="checkbox" />
                             <span>Friday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="saturday" name="saturday" type="checkbox" />
                             <span>Saturday</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input type="checkbox" />
+                            <input value="sunday" name="sunday" type="checkbox" />
                             <span>Sunday</span>
                             </label>
                         </p>
                     </div>
                     <div className="timepicker-cont">
                         <label htmlFor={this.props.daysID}>Test</label>
-                        <input id={this.props.daysID} placeholder="02:30 AM" type="text" className="timepicker" />
+                        <input id={this.props.daysID} name="time" placeholder="02:30 AM" type="text" className="timepicker" />
                     </div>
                 </div>
             </li>
