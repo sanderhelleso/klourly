@@ -201,7 +201,7 @@
     padding: 1rem 2rem;
     text-align: center;
     font-size: 1.5rem;
-    border: 2px solid #7c4dff;
+    border: 2px solid #8E2DE2;
     outline: none;
     border-radius: 6px;
     letter-spacing: 2px;
@@ -288,11 +288,6 @@
     text-align: center;
 }
 
-#starting-from-week-cont {
-    position: relative; 
-    z-index: -100000;
-}
-
 #starting-from-week-cont p {
     color: #7c4dff;
     opacity: 0.5;
@@ -327,6 +322,10 @@ input[type=number]::-webkit-outer-spin-button {
     min-width: 20rem;
 }
 
+.collapsible-cont {
+    min-height: 100vh;
+}
+
 .collapsible-header h5 span {
     text-align: right;
     font-weight: 100;
@@ -340,4 +339,29 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 1.25rem;
     letter-spacing: 2px;
     float: left;
+}
+
+.timepicker-cont {
+    margin: 1rem;
+}
+
+.select-days-cont {
+    margin-bottom: 2rem;
+}
+
+#add-new-room-time {
+    margin: 0 0rem 1rem 1rem;
+    background-color: transparent;
+    color: #00e988;
+    font-size: 1.25rem;
+    box-shadow: none;
+    letter-spacing: 1px;
+}
+
+#add-new-room-time svg {
+    margin-bottom: -5px;
+}
+
+#starting-from-week-cont {
+    margin-top: 7.5rem;
 }

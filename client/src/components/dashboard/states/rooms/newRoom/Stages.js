@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Compass, Lock, Users, Headphones, PieChart } from 'react-feather';
+import { Compass, Lock, Users, Headphones, PieChart, PlusCircle } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,17 +15,19 @@ export default class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            validName: false,
             stage: 5,
             lastStage: 7,
-            selected: false,
+            validName: false,
+            validTimes: false,
+            validWeek: false,
+            daysSelected: 1,
             cover: null,
-            daysSelected: 1
         }
 
         this.renderIntro = this.renderIntro.bind(this);
         this.selectOption = this.selectOption.bind(this);
         this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
+        this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
         this.handleRoomName = this.handleRoomName.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
@@ -232,30 +234,42 @@ export default class Stages extends Component {
         return STAGE_FOUR;
     }
 
+    renderConfirmTimesBtn() {
+        if (this.state.validTimes && this.state.validWeek) {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
+        }
+
+        else {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
+        }
+    }
+
     stageFive() {
-        // add times here
         const STAGE_FIVE =
         <div className="row col s12">
-            <div className="col s8 collapsible-cont">
+            <div className="col s6 collapsible-cont">
+                <button id="add-new-room-time" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}><PlusCircle size ={25}/> Add</button>
                 <ul className="collapsible popout expandable">
                     {this.renderSelectDays()}
                 </ul>
-                <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}>Add more</button>
             </div>
-            <div id="starting-from-week-cont" className="center col s4">
+            <div id="starting-from-week-cont" className="center col s6">
                 <h5>Starting from week...</h5>
                 <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
                 <p>Not sure?</p>
-            </div>
-            <div id="repeat-active-switch-cont" className="col s4">
-                <h5>Repeat every week?</h5>
-                <div className="switch">
-                    <label>
-                    No
-                    <input type="checkbox" defaultChecked={true} />
-                    <span className="lever"></span>
-                    Yes
-                    </label>
+                <div id="repeat-active-switch-cont" className="col s12">
+                    <h5>Repeat every week?</h5>
+                    <div className="switch">
+                        <label>
+                        No
+                        <input type="checkbox" defaultChecked={true} />
+                        <span className="lever"></span>
+                        Yes
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    {this.renderConfirmTimesBtn()}
                 </div>
             </div>
         </div>

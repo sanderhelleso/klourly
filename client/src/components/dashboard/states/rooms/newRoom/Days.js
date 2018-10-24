@@ -15,10 +15,10 @@ export default class Days extends Component {
         return (
             <li>
                 <div className="collapsible-header">
-                    <h5>Room Days <span>#{this.props.daysID}</span></h5>
+                    <h5>Room Times <span>#{this.props.daysID}</span></h5>
                 </div>
                 <div className="collapsible-body row">
-                    <div className="col s6">
+                    <div className="col s12 select-days-cont">
                         <p>
                             <label>
                             <input type="checkbox" />
@@ -62,8 +62,9 @@ export default class Days extends Component {
                             </label>
                         </p>
                     </div>
-                    <div>
-                        <input type="text" className="timepicker" />
+                    <div className="timepicker-cont">
+                        <label htmlFor={this.props.daysID}>Test</label>
+                        <input id={this.props.daysID} placeholder="02:30 AM" type="text" className="timepicker" />
                     </div>
                 </div>
             </li>
