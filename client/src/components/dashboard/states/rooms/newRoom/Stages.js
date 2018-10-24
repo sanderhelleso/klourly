@@ -8,6 +8,11 @@ import { materializeJS } from '../../../../../helpers/materialize';
 import Days from './Days';
 let WORDS = [];
 
+///////////////////////////////////////////////////////////////////////
+//////// THIS FILE WILL BE REFACTORED AFTER INITIAL CODEBASE  ////////
+///////     EACH STAGE SPLIT INTO OWN COMPONENT AND STATE    ////////
+////////////////////////////////////////////////////////////////////
+
 
 export default class Stages extends Component {
     constructor(props) {
@@ -15,7 +20,7 @@ export default class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: 5,
+            stage: 6,
             lastStage: 7,
             validName: false,
             validTimes: false,
@@ -36,6 +41,7 @@ export default class Stages extends Component {
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
         this.stageOne = this.stageOne.bind(this);
+        this.setCoverPreview = this.setCoverPreview.bind(this);
         this.updateDaysAmount = this.updateDaysAmount.bind(this);
         this.handleWeek = this.handleWeek.bind(this);
         this.renderSelectDays = this.renderSelectDays.bind(this);
@@ -51,12 +57,6 @@ export default class Stages extends Component {
     // update words when component renders
     componentWillMount() {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            document.querySelector('#add-new-room-time').click();
-        }, 10);
     }
 
     renderIntro() {
@@ -101,11 +101,11 @@ export default class Stages extends Component {
                 break;
 
             case 5:
-                stageMessage = 'The room will be active for users at...';
+                stageMessage = 'The room will be active for users during...';
                 break;
             
             case 6:
-                stageMessage = 'What about adding a cover image...';
+                stageMessage = 'Lets finish by adding a fitting cover image to the room...';
                 break;
         }
 
@@ -153,6 +153,16 @@ export default class Stages extends Component {
 
     renderConfirmNameBtn() {
         if (this.state.validName) {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
+        }
+
+        else {
+            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
+        }
+    }
+
+    renderConfirmTimesBtn() {
+        if (this.state.validTimes && this.state.validWeek) {
             return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
         }
 
@@ -243,16 +253,6 @@ export default class Stages extends Component {
         return STAGE_FOUR;
     }
 
-    renderConfirmTimesBtn() {
-        if (this.state.validTimes && this.state.validWeek) {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
-        }
-
-        else {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
-        }
-    }
-
     stageFive() {
         const STAGE_FIVE =
         <div className="row col s12">
@@ -292,14 +292,24 @@ export default class Stages extends Component {
 
     stageSix() {
         const STAGE_SIX =
-        <Dropzone id="new-room-cover-upload" className="col s12" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
-            {this.displayCoverFileName()}
-            <h4>Drag files here</h4>
-            <h5>or</h5>
-            <button id="new-room-cover-browse" className="waves-effect waves-light btn animated fadeIn">Browse</button>
-        </Dropzone>
+        <div className="row col s12">
+            <div className="col s6">
+                <Dropzone id="new-room-cover-upload" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
+                    <h4>Drag files here</h4>
+                    <h5>or</h5>
+                    <button id="new-room-cover-browse" className="waves-effect waves-light btn animated fadeIn">Browse</button>
+                </Dropzone>
+            </div>
+            <div id="cover-preview" className="col s6">
+                <img src={this.setCoverPreview()} alt={this.displayCoverFileName()} className="z-depth-2" />
+            </div>
+        </div>
 
         return STAGE_SIX;
+    }
+
+    setCoverPreview() {
+        return this.state.cover ? this.state.cover[0].preview : '../img/dashboard/cover.jpg';
     }
 
     updateDaysAmount() {
@@ -316,11 +326,17 @@ export default class Stages extends Component {
     }
 
     renderSelectDays() {
+
         const collapsibles = [];
         for (let i = 1; i < this.state.daysSelected + 1; i++) {
             collapsibles.push(<Days daysID={i} key={i} />);
         }
 
+        if (this.state.daysSelected === 0) {
+            setTimeout(() => {
+                document.querySelector('#add-new-room-time').click();
+            }, 10);
+        }
         return collapsibles;
     }
 
@@ -422,7 +438,7 @@ export default class Stages extends Component {
         this.setState({
             cover: file
         });
-        document.querySelector('#new-room-cover-upload').className = 'col s12';
+        document.querySelector('#new-room-cover-upload').className = 'col s6';
         console.log(file);
     }
 
