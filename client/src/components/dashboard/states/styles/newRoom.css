@@ -277,7 +277,7 @@
 }
 
 #repeat-active-switch-cont , #starting-from-week-cont {
-    margin-bottom: 5rem;
+    margin-bottom: 2.5rem;
 }
 
 #repeat-active-switch-cont h5, #starting-from-week-cont h5 {
@@ -318,9 +318,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .collapsible-cont {
-    min-width: 30rem;
-    max-width: 30rem;
-    margin: 0 auto 3rem auto;
 }
 
 .collapsible-header h5 span {

@@ -235,19 +235,19 @@ export default class Stages extends Component {
     stageFive() {
         // add times here
         const STAGE_FIVE =
-        <div>
-            <div className="col s12 collapsible-cont">
+        <div className="row col s12">
+            <div className="col s8 collapsible-cont">
                 <ul className="collapsible popout expandable">
                     {this.renderSelectDays()}
                 </ul>
                 <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}>Add more</button>
             </div>
-            <div id="starting-from-week-cont" className="center">
+            <div id="starting-from-week-cont" className="center col s4">
                 <h5>Starting from week...</h5>
                 <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
                 <p>Not sure?</p>
             </div>
-            <div id="repeat-active-switch-cont">
+            <div id="repeat-active-switch-cont" className="col s4">
                 <h5>Repeat every week?</h5>
                 <div className="switch">
                     <label>
