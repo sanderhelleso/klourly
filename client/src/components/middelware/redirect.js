@@ -25,7 +25,7 @@ function dashboard() {
     history.push('/dashboard');
 }
 
-function room(name, id) {
+function room(id) {
     history.push(`/dashboard/rooms/${id}`);
 }
 

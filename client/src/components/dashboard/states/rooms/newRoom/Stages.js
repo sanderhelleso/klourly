@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Compass, Lock, Users, Headphones, PieChart, PlusCircle } from 'react-feather';
+import { Compass, Lock, Users, Headphones, PieChart, PlusCircle ,ArrowLeft } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
 
@@ -11,6 +11,7 @@ import { newRoomActions } from '../../../../../actions/newRoomActions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+import { redirect } from '../../../../middelware/redirect';
 import { dashboard } from '../../../../middelware/dashboard';
 import { materializeJS } from '../../../../../helpers/materialize';
 
@@ -59,11 +60,11 @@ class Stages extends Component {
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
         this.repeatTime = this.repeatTime.bind(this);
-        this.newRoomSuccess = this.newRoomSuccess.bind(this);
         this.setCoverPreview = this.setCoverPreview.bind(this);
         this.updateDaysAmount = this.updateDaysAmount.bind(this);
         this.handleWeek = this.handleWeek.bind(this);
         this.renderSelectDays = this.renderSelectDays.bind(this);
+        this.renderBackToDash = this.renderBackToDash.bind(this);
         this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -592,27 +593,21 @@ class Stages extends Component {
         
         dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
         .then(response => {
-            response.status ? this.setStage() : null;
-            this.setState({
-                newRoomSuccessData: response.data
-            });
-            console.log(response.data);
+
             this.props.newRoomActions(response.data.rooms);
             localStorage.setItem('rooms', 
             JSON.stringify({
                 ...response.data.rooms
             }));
+            redirect.room(response.data.newRoom.id);
         });
-    }
 
-    newRoomSuccess() {
-        const data = this.state.newRoomSuccess;
-        const NEW_ROOM_SUCCESS =
+        const SUCCESS =
         <div>
-            <h2>Success</h2>
+            <h1>TESTTTTTTTTTTTTTTT</h1>
         </div>
 
-        return NEW_ROOM_SUCCESS;
+        return SUCCESS;
     }
 
     renderStage() {
@@ -624,19 +619,32 @@ class Stages extends Component {
         return STAGE;
     }
 
+    renderBackToDash() {
+        const BACK =
+        <div id="new-room-back">
+            <a onClick={redirect.dashboard}><ArrowLeft /> back to dashboard</a>
+        </div>
+
+        return BACK;
+    }
+
     render() {
         return (
-            <div className="no-select">
-                {this.renderIntro()}
-                <div id="current-stage-status" className="col s8 offset-s2">
-                    {this.displayStageStatus()}
+            <div>
+                {this.renderBackToDash()}
+                <div className="no-select row">
+                    {this.renderIntro()}
+                    <div id="current-stage-status" className="col s8 offset-s2">
+                        {this.displayStageStatus()}
+                    </div>
+                    {this.renderStage()}
+                    <ToastContainer 
+                        transition={Flip}
+                        closeButton={false}
+                    />
                 </div>
-                {this.renderStage()}
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
-                />
             </div>
+
         )
     }
 }
