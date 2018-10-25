@@ -26,7 +26,7 @@ function dashboard() {
 }
 
 function room(name, id) {
-    history.push(`/dashboard/rooms/${name}/${id}`);
+    history.push(`/dashboard/rooms/${id}`);
 }
 
 function newRoom() {

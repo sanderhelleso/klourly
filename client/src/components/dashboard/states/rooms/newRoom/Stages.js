@@ -30,6 +30,7 @@ class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
+            newRoomSuccess: {},
             stage: 6,
             lastStage: 6,
             validName: false,
@@ -58,6 +59,7 @@ class Stages extends Component {
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
         this.repeatTime = this.repeatTime.bind(this);
+        this.newRoomSuccess = this.newRoomSuccess.bind(this);
         this.setCoverPreview = this.setCoverPreview.bind(this);
         this.updateDaysAmount = this.updateDaysAmount.bind(this);
         this.handleWeek = this.handleWeek.bind(this);
@@ -572,7 +574,7 @@ class Stages extends Component {
                 return this.createRoom();
             
             case 8:
-                return <h5>Done</h5>;
+                return this.newRoomSuccess();
         }
     }
 
@@ -591,6 +593,9 @@ class Stages extends Component {
         dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
         .then(response => {
             response.status ? this.setStage() : null;
+            this.setState({
+                newRoomSuccessData: response.data
+            });
             console.log(response.data);
             this.props.newRoomActions(response.data.rooms);
             localStorage.setItem('rooms', 
@@ -598,6 +603,16 @@ class Stages extends Component {
                 ...response.data.rooms
             }));
         });
+    }
+
+    newRoomSuccess() {
+        const data = this.state.newRoomSuccess;
+        const NEW_ROOM_SUCCESS =
+        <div>
+            <h2>Success</h2>
+        </div>
+
+        return NEW_ROOM_SUCCESS;
     }
 
     renderStage() {
