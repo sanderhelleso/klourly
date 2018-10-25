@@ -3,10 +3,19 @@ import Dropzone from 'react-dropzone';
 import { Compass, Lock, Users, Headphones, PieChart, PlusCircle } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
+
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { newRoomActions } from '../../../../../actions/newRoomActions';
+
 import 'react-toastify/dist/ReactToastify.css';
+
 import { dashboard } from '../../../../middelware/dashboard';
 import { materializeJS } from '../../../../../helpers/materialize';
+
 import Days from './Days';
+
 let WORDS = [];
 
 ///////////////////////////////////////////////////////////////////////
@@ -15,7 +24,7 @@ let WORDS = [];
 ////////////////////////////////////////////////////////////////////
 
 
-export default class Stages extends Component {
+class Stages extends Component {
     constructor(props) {
         super(props);
 
@@ -580,8 +589,8 @@ export default class Stages extends Component {
             repeat: this.state.repeat,
             cover: this.state.cover
         }
-
-        dashboard.createRoom(JSON.stringify(roomData))
+        
+        dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
         .then(response => console.log(response));
     }
 
@@ -610,3 +619,16 @@ export default class Stages extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        state: state.state
+    };
+};
+
+// update created room state
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ newRoomActions }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stages);

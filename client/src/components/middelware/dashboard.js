@@ -70,12 +70,13 @@ async function fetchUserData(uid) {
 } 
 
 // create new room
-async function createRoom(data) {
+async function createRoom(uid, data) {
     try {
         const response = await axios({
             method: 'post',
             url: '/api/createRoom',
             data: {
+                uid: uid,
                 room: data
             }
         });
