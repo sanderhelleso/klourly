@@ -75,7 +75,7 @@ const reducers = (state = initialState, action) => {
             return {
                 ...state,
                 rooms: {
-                    owning: action.payload
+                    ...action.payload
                 }
             }
 

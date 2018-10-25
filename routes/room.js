@@ -18,12 +18,18 @@ module.exports = app => {
         roomRef.set({
             ...roomData
         })
+
+        // after setting new room data, get all records and send
         .then(() => {
-            res.status(200).json({
-                status: 'success',
-                message: 'Successfully created room',
-                room: roomData
-            });
+            const ref = db.ref(`users/${req.body.uid}/rooms`);
+            ref.once('value', snapshot => {
+                res.status(200).json({
+                    status: 'success',
+                    message: 'Successfully created room',
+                    newRoom: roomData,
+                    rooms: snapshot.val()
+                });
+            }); 
         });
     });
 }

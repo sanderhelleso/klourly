@@ -30,7 +30,7 @@ class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: 1,
+            stage: 6,
             lastStage: 6,
             validName: false,
             validTimes: false,
@@ -144,7 +144,7 @@ class Stages extends Component {
         </div>
 
 
-        return this.state.stage === 0 ? null : STATUS;
+        return this.state.stage < 1 || this.state.stage > 6 ? null : STATUS;
     }
 
     handleRoomName(e) {
@@ -590,12 +590,12 @@ class Stages extends Component {
         
         dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
         .then(response => {
-            this.setStage();
-            console.log(response.data.room);
-            this.props.newRoomActions(response.data.room);
+            response.status ? this.setStage() : null;
+            console.log(response.data);
+            this.props.newRoomActions(response.data.rooms);
             localStorage.setItem('rooms', 
             JSON.stringify({
-                owning: response.data.room
+                ...response.data.rooms
             }));
         });
     }
