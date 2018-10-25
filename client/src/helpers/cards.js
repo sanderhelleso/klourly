@@ -22,7 +22,7 @@ function renderAttendingRooms(data, props) {
                     <span className="card-title room-card-name"><span className="room-card-location">{room.location}</span><br />{room.name}</span>
                 </div>
                 <div className="card-fab">
-                    <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={() => enterRoom(props, room.name, room.id)}><ArrowRight size={24} /></a>
+                    <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={() => enterRoom(props, room.id)}><ArrowRight size={24} /></a>
                 </div>
                 <div className="card-content">
                     {renderAttendingRoomTimes(room)}
@@ -42,12 +42,12 @@ function renderAttendingRoomTimes(room) {
 }
 
 // redirect to specific room
-function enterRoom(props, name, id) {
+function enterRoom(props, id) {
 
     /////////////////////////////////////
     // FETCH AND STORE ROOM DATA HERE //
     ///////////////////////////////////
     
     props.enterRoomActions(id);
-    redirect.room(name.split(' ').join('-').toLowerCase(), id);
+    redirect.room(id);
 }

@@ -32,7 +32,7 @@ class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
-            stage: 6,
+            stage: 0,
             lastStage: 6,
             validName: false,
             validTimes: false,
@@ -77,6 +77,15 @@ class Stages extends Component {
     // update words when component renders
     componentWillMount() {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
+    }
+
+    renderBackToDash() {
+        const BACK =
+        <div id="new-room-back">
+            <a onClick={redirect.dashboard}><ArrowLeft /> back to dashboard</a>
+        </div>
+
+        return this.state.stage !== 7 ? BACK : null;
     }
 
     renderIntro() {
@@ -573,9 +582,6 @@ class Stages extends Component {
             
             case 7:
                 return this.createRoom();
-            
-            case 8:
-                return this.newRoomSuccess();
         }
     }
 
@@ -593,7 +599,7 @@ class Stages extends Component {
         
         dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
         .then(response => {
-
+            this.setStage();
             this.props.newRoomActions(response.data.rooms);
             localStorage.setItem('rooms', 
             JSON.stringify({
@@ -602,12 +608,7 @@ class Stages extends Component {
             redirect.room(response.data.newRoom.id);
         });
 
-        const SUCCESS =
-        <div>
-            <h1>TESTTTTTTTTTTTTTTT</h1>
-        </div>
-
-        return SUCCESS;
+        return <p className="redirecting">Successfully created room! Redirecting...</p>;
     }
 
     renderStage() {
@@ -617,15 +618,6 @@ class Stages extends Component {
         </div>
 
         return STAGE;
-    }
-
-    renderBackToDash() {
-        const BACK =
-        <div id="new-room-back">
-            <a onClick={redirect.dashboard}><ArrowLeft /> back to dashboard</a>
-        </div>
-
-        return BACK;
     }
 
     render() {

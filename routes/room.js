@@ -6,8 +6,6 @@ module.exports = app => {
 
     app.post('/api/createRoom', (req, res) => {
         const roomData = JSON.parse(req.body.room);
-        console.log(roomData);
-        console.log('ID: ' + req.body.uid);
 
         // create room refrence connected to user
         const id = shortid.generate();
@@ -19,10 +17,10 @@ module.exports = app => {
             ...roomData
         })
 
-        // after setting new room data, get all records and send
+        // after setting new room data, get all user rooms and send to client
         .then(() => {
-            const ref = db.ref(`users/${req.body.uid}/rooms`);
-            ref.once('value', snapshot => {
+            const roomsRef = db.ref(`users/${req.body.uid}/rooms`);
+            roomsRef.once('value', snapshot => {
                 res.status(200).json({
                     status: 'success',
                     message: 'Successfully created room',

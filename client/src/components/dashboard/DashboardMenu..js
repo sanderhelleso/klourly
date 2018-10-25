@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, Clipboard, Activity, Settings} from 'react-feather';
+import { Map, Clipboard, Activity, Settings, Grid} from 'react-feather';
 
 import './styles/dashboardMenu.css';
 
@@ -45,7 +45,7 @@ class DashboardMenu extends Component {
                     <Activity size={30} />
                 </div>
                 <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
-                    <Clipboard size={30} />
+                    <Grid size={30} />
                 </div>
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
                     <Map size={30} />

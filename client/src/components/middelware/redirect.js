@@ -1,4 +1,5 @@
 import history from './history';
+import { enterRoomActions } from '../../actions/enterRoomActions';
 
 export const redirect = {
     home,
