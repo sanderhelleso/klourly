@@ -179,10 +179,6 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             stage: this.state.stage + 1
         });
-
-        setTimeout(() => {
-            console.log(this.state);
-        }, 500);
     }
 
     renderConfirmNameBtn() {
@@ -574,11 +570,13 @@ class Stages extends Component {
             
             case 7:
                 return this.createRoom();
+            
+            case 8:
+                return <h5>Done</h5>;
         }
     }
 
     createRoom() {
-
         const roomData = {
             name: this.state.roomName,
             type: this.state.roomType,
@@ -591,7 +589,15 @@ class Stages extends Component {
         }
         
         dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
-        .then(response => console.log(response));
+        .then(response => {
+            this.setStage();
+            console.log(response.data.room);
+            this.props.newRoomActions(response.data.room);
+            localStorage.setItem('rooms', 
+            JSON.stringify({
+                owning: response.data.room
+            }));
+        });
     }
 
     renderStage() {

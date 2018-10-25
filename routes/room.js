@@ -10,7 +10,9 @@ module.exports = app => {
         console.log('ID: ' + req.body.uid);
 
         // create room refrence connected to user
-        const roomRef = db.ref(`users/${req.body.uid}/rooms/owning/${shortid.generate()}/`);
+        const id = shortid.generate();
+        roomData.id = id;
+        const roomRef = db.ref(`users/${req.body.uid}/rooms/owning/${id}/`);
 
         // set roomdata for refrence path
         roomRef.set({
@@ -19,7 +21,8 @@ module.exports = app => {
         .then(() => {
             res.status(200).json({
                 status: 'success',
-                message: 'Successfully created room'
+                message: 'Successfully created room',
+                room: roomData
             });
         });
     });
