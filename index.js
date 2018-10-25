@@ -32,7 +32,7 @@ require("./routes/userData")(app);
 require("./routes/avatarUpload")(app);
 require("./routes/authenticated")(app);
 require("./routes/countries")(app);
-require("./routes/createRoom")(app);
+require("./routes/room")(app);
 //////////////////////////////
 
 // serve out production assets

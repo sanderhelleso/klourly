@@ -30,7 +30,7 @@ class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: 5,
+            stage: 1,
             lastStage: 6,
             validName: false,
             validTimes: false,
