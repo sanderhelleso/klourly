@@ -20,16 +20,20 @@ export default class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: 2,
+            stage: 5,
             lastStage: 6,
             validName: false,
             validTimes: false,
             validWeek: false,
+            startWeek: false,
             daysSelected: 0,
             dayTimes: [],
+            repeat: true,
             cover: null,
             roomName: null,
-            roomType: null
+            roomType: null,
+            roomPurpose: null,
+            roomRadius: null
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -43,7 +47,7 @@ export default class Stages extends Component {
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
-        this.stageOne = this.stageOne.bind(this);
+        this.repeatTime = this.repeatTime.bind(this);
         this.setCoverPreview = this.setCoverPreview.bind(this);
         this.updateDaysAmount = this.updateDaysAmount.bind(this);
         this.handleWeek = this.handleWeek.bind(this);
@@ -288,7 +292,7 @@ export default class Stages extends Component {
                 <p>Not sure?</p>
                 <div id="repeat-active-switch-cont" className="col s12">
                     <h5>Repeat every week?</h5>
-                    <div className="switch">
+                    <div className="switch" onChange={(event) => this.repeatTime(event)}>
                         <label>
                         No
                         <input type="checkbox" defaultChecked={true} />
@@ -330,6 +334,12 @@ export default class Stages extends Component {
         </div>
 
         return STAGE_SIX;
+    }
+
+    repeatTime(e) {
+        this.setState({
+            repeat: e.target.checked
+        });
     }
 
     setCoverPreview() {
@@ -431,13 +441,15 @@ export default class Stages extends Component {
         else if (value < 1 || value === '') {
             e.target.value = '';
             this.setState({
-                validWeek: false
+                validWeek: false,
+                startWeek: null
             });
             return;
         }
 
         this.setState({
-            validWeek: true
+            validWeek: true,
+            startWeek: e.target.value
         });
     }
 
@@ -445,7 +457,8 @@ export default class Stages extends Component {
     getCurrentWeek() {
         const now = new Date();
         const onejan = new Date(now.getFullYear(), 0, 1);
-        return Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
+        const currentWeek = Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
+        return currentWeek === 52 ? 1 : currentWeek + 1; // return upcoming week
     }
 
     displayCoverFileName() {
@@ -476,7 +489,28 @@ export default class Stages extends Component {
     }
 
     selectOption(e, stageOption) {
-        console.log(stageOption);
+        
+        // update state depending on current stage
+        switch (this.state.stage) {
+            case 2: 
+                this.setState({
+                    roomType: stageOption
+                });
+                break;
+
+            case 3:
+                this.setState({
+                    roomPurpose: stageOption
+                });
+                break;
+            
+            case 4:
+                this.setState({
+                    roomRadius: stageOption
+                });
+                break;
+        }
+
         const cont = document.querySelector('#room-option-cont');
         document.body.style.overflowY = 'hidden';
         Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
