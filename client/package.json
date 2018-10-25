@@ -26,6 +26,9 @@
     },
     "/api/signup/countries": {
       "target": "http://localhost:5000"
+    },
+    "/api/createRoom": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

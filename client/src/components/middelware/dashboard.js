@@ -4,7 +4,8 @@ import axios from 'axios';
 export const dashboard = {
     avatarUpload,
     updateSettings,
-    fetchUserData
+    fetchUserData,
+    createRoom
 };
 
 // update user avatar
@@ -60,6 +61,25 @@ async function fetchUserData(uid) {
 
         // set userData as localstorage
         localStorage.setItem('userData', JSON.stringify(response.data.userData));            
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+} 
+
+// create new room
+async function createRoom(data) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/createRoom',
+            data: {
+                room: data
+            }
+        });
+
         return response;
     }
 

@@ -4,6 +4,7 @@ import { Compass, Lock, Users, Headphones, PieChart, PlusCircle } from 'react-fe
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { dashboard } from '../../../../middelware/dashboard';
 import { materializeJS } from '../../../../../helpers/materialize';
 import Days from './Days';
 let WORDS = [];
@@ -569,6 +570,19 @@ export default class Stages extends Component {
 
     createRoom() {
 
+        const roomData = {
+            name: this.state.roomName,
+            type: this.state.roomType,
+            purpose: this.state.roomPurpose,
+            radius: this.state.roomRadius,
+            times: this.state.dayTimes,
+            startWeek: this.state.startWeek,
+            repeat: this.state.repeat,
+            cover: this.state.cover
+        }
+
+        dashboard.createRoom(JSON.stringify(roomData))
+        .then(response => console.log(response));
     }
 
     renderStage() {

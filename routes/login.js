@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.load();
-
 const FirebaseAuth = require('firebaseauth');
 const firebase = new FirebaseAuth(process.env.FIREBASE_API_KEY);
 
