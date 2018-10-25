@@ -20,7 +20,7 @@ export default class Stages extends Component {
 
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: 6,
+            stage: 1,
             lastStage: 6,
             validName: false,
             validTimes: false,
@@ -28,6 +28,7 @@ export default class Stages extends Component {
             daysSelected: 0,
             dayTimes: [],
             cover: null,
+            roomName: null
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -139,13 +140,15 @@ export default class Stages extends Component {
 
         if (length >= 2 && length <= 55) {
             this.setState({
-                validName: true
+                validName: true,
+                roomName: e.target.value
             });
         }
 
         else {
             this.setState({
-                validName: false
+                validName: false,
+                roomName: null
             });
         }
     }
@@ -157,11 +160,14 @@ export default class Stages extends Component {
     setStage() {
         
         WORDS.splice(WORDS.indexOf(this.state.word), 1);
-        console.log(WORDS);
         this.setState({
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             stage: this.state.stage + 1
         });
+
+        setTimeout(() => {
+            console.log(this.state);
+        }, 500);
     }
 
     renderConfirmNameBtn() {
