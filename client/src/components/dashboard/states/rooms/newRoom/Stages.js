@@ -17,6 +17,7 @@ import { dashboard } from '../../../../middelware/dashboard';
 import { materializeJS } from '../../../../../helpers/materialize';
 import { cards } from '../../../../../helpers/cards';
 
+import BackToDash from './../../../BackToDash';
 import Days from './Days';
 
 let WORDS = [];
@@ -83,12 +84,7 @@ class Stages extends Component {
     }
 
     renderBackToDash() {
-        const BACK =
-        <div id="new-room-back">
-            <a onClick={redirect.dashboard}><ArrowLeft /> back to dashboard</a>
-        </div>
-
-        return this.state.stage < 7 ? BACK : null;
+        return this.state.stage < 7 ? <BackToDash /> : null;
     }
 
     renderIntro() {

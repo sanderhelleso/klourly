@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <div className='row'>
+            <div className='row no-select'>
                 <DashboardMenu />
                 <DashboardMain />
                 <DashboardSettings />
