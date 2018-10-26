@@ -73,7 +73,13 @@ const reducers = (state = initialState, action) => {
         case 'NEW_ROOM_SUCCESS':
             return {
                 ...state,
-                rooms: action.payload
+                userData: {
+                    ...state.userData,
+                    rooms: {
+                        ...state.userData.rooms,
+                        ...action.payload
+                    }
+                }
             }
 
         default:
