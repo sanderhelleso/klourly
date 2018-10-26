@@ -111,4 +111,10 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ enterRoomActions }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Attending);
+const mapStateToProps = (state) => {
+    return {
+        state: state.state
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Attending);

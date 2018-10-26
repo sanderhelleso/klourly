@@ -1,8 +1,7 @@
 
 let user = JSON.parse(localStorage.getItem('user'));
 let userData = JSON.parse(localStorage.getItem('userData'));
-let rooms = JSON.parse(localStorage.getItem('rooms'));
-const initialState = user ? { loggedIn: false, user, userData, rooms } : {};
+const initialState = user ? { loggedIn: false, user, userData } : {};
 
 // MAIN APP REDUCER
 const reducers = (state = initialState, action) => {
@@ -74,9 +73,7 @@ const reducers = (state = initialState, action) => {
         case 'NEW_ROOM_SUCCESS':
             return {
                 ...state,
-                rooms: {
-                    ...action.payload
-                }
+                rooms: action.payload
             }
 
         default:

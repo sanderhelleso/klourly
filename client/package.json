@@ -29,6 +29,9 @@
     },
     "/api/createRoom": {
       "target": "http://localhost:5000"
+    },
+    "/api/getRoom": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

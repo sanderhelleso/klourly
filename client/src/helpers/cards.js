@@ -2,6 +2,7 @@ import React from 'react';
 import { redirect } from '../components/middelware/redirect';
 import { ArrowRight } from 'react-feather';
 import { enterRoomActions } from '../actions/enterRoomActions';
+import { dashboard } from '../components/middelware/dashboard';
 
 export const cards = {
     renderAttendingRooms,
@@ -47,7 +48,9 @@ function enterRoom(props, id) {
     /////////////////////////////////////
     // FETCH AND STORE ROOM DATA HERE //
     ///////////////////////////////////
-    
-    props.enterRoomActions(id);
-    redirect.room(id);
+    dashboard.getRoom(props.state.user.id, id)
+    .then(response => {
+        props.enterRoomActions(id);
+        redirect.room(id);
+    })
 }

@@ -5,7 +5,8 @@ export const dashboard = {
     avatarUpload,
     updateSettings,
     fetchUserData,
-    createRoom
+    createRoom,
+    getRoom
 };
 
 // update user avatar
@@ -78,6 +79,26 @@ async function createRoom(uid, data) {
             data: {
                 uid: uid,
                 room: data
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+} 
+
+// get room data for a specific room
+async function getRoom(uid, roomID) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/getRoom',
+            data: {
+                uid: uid,
+                roomID: roomID
             }
         });
 

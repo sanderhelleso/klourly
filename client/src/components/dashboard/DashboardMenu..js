@@ -58,9 +58,16 @@ class DashboardMenu extends Component {
     }
 }
 
+
 // update dashboard state
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ dashboardActions }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(DashboardMenu);
+const mapStateToProps = (state) => {
+    return {
+        state: state.state
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);

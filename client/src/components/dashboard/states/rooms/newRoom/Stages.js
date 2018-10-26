@@ -32,6 +32,7 @@ class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
+            owner: this.props.state.user.id,
             stage: 0,
             lastStage: 6,
             validName: false,
@@ -587,6 +588,7 @@ class Stages extends Component {
 
     createRoom() {
         const roomData = {
+            owner: this.state.owner,
             name: this.state.roomName,
             type: this.state.roomType,
             purpose: this.state.roomPurpose,
@@ -605,7 +607,7 @@ class Stages extends Component {
             JSON.stringify({
                 ...response.data.rooms
             }));
-            redirect.room(response.data.newRoom.id);
+            redirect.room(response.data.id);
         });
 
         return <p className="redirecting">Successfully created room! Redirecting...</p>;
