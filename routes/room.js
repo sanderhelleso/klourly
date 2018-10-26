@@ -35,17 +35,22 @@ module.exports = app => {
 
     app.post('/api/getRoom', (req, res) => {
 
-        const userRef = db.ref(`users/${req.body.uid}/settings`);
+        // get ref to room by id and fetch data
         const roomRef = db.ref(`rooms/${req.body.roomID}`)
         roomRef.once('value', roomSnapshot => {
-            userRef.once('value', userSnapshot => {
+
+            // get ref to owner by id recieved from room data and fetch owner data 
+            const ownerRef = db.ref(`users/${roomSnapshot.val().owner}/settings`);
+            ownerRef.once('value', ownerSnapshot => {
+
+                // once all data are retrieved, send to client and update state
                 res.status(200).json({
                     status: 'success',
                     message: 'Successfully fetched room',
-                    room: roomSnapshot.val(),
-                    user: {
-                        name: userSnapshot.val().displayName,
-                        photoUrl: userSnapshot.val().photoUrl
+                    roomData: roomSnapshot.val(),
+                    ownerData: {
+                        name: ownerSnapshot.val().displayName,
+                        photoUrl: ownerSnapshot.val().photoUrl
                     }
                 });
             });

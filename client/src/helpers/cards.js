@@ -45,13 +45,18 @@ function renderAttendingRoomTimes(room) {
 // redirect to specific room
 function enterRoom(props, id) {
 
-    /////////////////////////////////////
-    // FETCH AND STORE ROOM DATA HERE //
-    ///////////////////////////////////
+    // get room and room owner data
     dashboard.getRoom(props.state.user.id, id)
     .then(response => {
-        console.log(response.data);
-        props.enterRoomActions(response.data.room);
+
+        // create state object with fetched data
+        const roomData = {
+            roomData: response.data.roomData,
+            ownerData: response.data.ownerData
+        }
+
+        // set state and redirect to room
+        props.enterRoomActions(roomData);
         redirect.room(id);
     })
 }
