@@ -17,6 +17,7 @@ module.exports = app => {
 
         // create room
         const roomRef = db.ref(`rooms/${id}`)
+        roomData.id = id;
         roomRef.set({ ...roomData })
         
         // after setting new room data, get all user rooms and send to client
@@ -33,6 +34,7 @@ module.exports = app => {
         });
     });
 
+    // get data for a specific room
     app.post('/api/getRoom', (req, res) => {
 
         // get ref to room by id and fetch data
@@ -55,5 +57,30 @@ module.exports = app => {
                 });
             });
         }); 
+    });
+
+    // get data for an collection of rooms
+    app.post('/api/getRooms', (req, res) => {
+
+        // array to store rooms
+        const rooms = [];
+
+        // itterate over rooms and get data
+        Object.keys(req.body.rooms).forEach((roomID) => {
+            db.ref(`rooms/${roomID}`).once('value', snapshot => {
+                
+                // push room data to array
+                rooms.push(snapshot.val());
+
+                // once all rooms have been stored in array, send to client
+                if (rooms.length === Object.keys(req.body.rooms).length) {
+                    res.status(200).json({
+                        status: 'success',
+                        message: 'Successfully fetched rooms',
+                        roomsData: rooms,
+                    });
+                }
+            });
+        });
     });
 }

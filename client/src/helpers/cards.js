@@ -4,14 +4,15 @@ import { ArrowRight } from 'react-feather';
 import { dashboard } from '../components/middelware/dashboard';
 
 export const cards = {
-    renderAttendingRooms,
-    renderAttendingRoomTimes,
+    renderRooms,
+    renderRoomTimes,
     enterRoom
 }
 
 // render room card
-function renderAttendingRooms(data, props) {
+function renderRooms(data, props) {
     return data.map(room => {
+        console.log(room);
         const CARD = 
         <div key={room.id} className="col s12 m12 l6 animated fadeIn">
             <div className="card small">
@@ -25,7 +26,7 @@ function renderAttendingRooms(data, props) {
                     <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={() => enterRoom(props, room.id)}><ArrowRight size={24} /></a>
                 </div>
                 <div className="card-content">
-                    {renderAttendingRoomTimes(room)}
+                    {renderRoomTimes(room)}
                 </div>
             </div>
         </div>
@@ -35,7 +36,7 @@ function renderAttendingRooms(data, props) {
 }
 
 // render times for a specific room
-function renderAttendingRoomTimes(room) {
+function renderRoomTimes(room) {
     return room.times.map(roomTime => {
         return <p key={`${room.name}-${roomTime.day}`}>{`${roomTime.day} ${roomTime.timeStart} - ${roomTime.timeEnd}`}</p>
     });

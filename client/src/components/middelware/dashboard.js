@@ -6,7 +6,8 @@ export const dashboard = {
     updateSettings,
     fetchUserData,
     createRoom,
-    getRoom
+    getRoom,
+    getRooms
 };
 
 // update user avatar
@@ -99,6 +100,26 @@ async function getRoom(uid, roomID) {
             data: {
                 uid: uid,
                 roomID: roomID
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+} 
+
+// get room data for an array of rooms
+async function getRooms(uid, rooms) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/getRooms',
+            data: {
+                uid: uid,
+                rooms: rooms
             }
         });
 

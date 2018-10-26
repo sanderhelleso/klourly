@@ -27,8 +27,8 @@ export default class Rooms extends Component {
                 <button id="create-new-room" className="waves-effect waves-light btn" onClick={redirect.newRoom}>Create New</button>
                 <div className="col s12">
                     <ul className="tabs tabs-fixed-width">
-                        <li className="tab col s6"><a href="#owning">Rooms im owning</a></li>
-                        <li className="tab col s6"><a className="active" href="#attending">Rooms im attending</a></li>
+                        <li className="tab col s6"><a className="active" href="#owning">Rooms im owning</a></li>
+                        <li className="tab col s6"><a href="#attending">Rooms im attending</a></li>
                     </ul>
                 </div>
                 <div id="owning" className="col s12">
