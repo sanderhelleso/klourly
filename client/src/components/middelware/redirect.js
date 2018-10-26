@@ -26,7 +26,10 @@ function dashboard() {
     history.push('/dashboard');
 }
 
-function room(id) {
+function room(props, roomData, id) {
+
+     // set state and redirect to room
+    props.enterRoomActions(roomData);
     history.push(`/dashboard/rooms/${id}`);
 }
 

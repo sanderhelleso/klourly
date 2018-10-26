@@ -8,12 +8,14 @@ import { ToastContainer, Flip } from 'react-toastify';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { newRoomActions } from '../../../../../actions/newRoomActions';
+import { enterRoomActions } from '../../../../../actions/enterRoomActions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import { redirect } from '../../../../middelware/redirect';
 import { dashboard } from '../../../../middelware/dashboard';
 import { materializeJS } from '../../../../../helpers/materialize';
+import { cards } from '../../../../../helpers/cards';
 
 import Days from './Days';
 
@@ -86,7 +88,7 @@ class Stages extends Component {
             <a onClick={redirect.dashboard}><ArrowLeft /> back to dashboard</a>
         </div>
 
-        return this.state.stage !== 7 ? BACK : null;
+        return this.state.stage < 7 ? BACK : null;
     }
 
     renderIntro() {
@@ -607,7 +609,8 @@ class Stages extends Component {
             JSON.stringify({
                 ...response.data.rooms
             }));
-            redirect.room(response.data.id);
+
+            cards.enterRoom(this.props, response.data.id);
         });
 
         return <p className="redirecting">Successfully created room! Redirecting...</p>;
@@ -651,7 +654,7 @@ const mapStateToProps = (state) => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ newRoomActions }, dispatch);
+    return bindActionCreators({ newRoomActions, enterRoomActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stages);

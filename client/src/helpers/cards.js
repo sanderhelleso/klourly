@@ -1,7 +1,6 @@
 import React from 'react';
 import { redirect } from '../components/middelware/redirect';
 import { ArrowRight } from 'react-feather';
-import { enterRoomActions } from '../actions/enterRoomActions';
 import { dashboard } from '../components/middelware/dashboard';
 
 export const cards = {
@@ -55,8 +54,7 @@ function enterRoom(props, id) {
             ownerData: response.data.ownerData
         }
 
-        // set state and redirect to room
-        props.enterRoomActions(roomData);
-        redirect.room(id);
-    })
+        // redirect and update state with room data
+        redirect.room(props, roomData, id);
+    });
 }

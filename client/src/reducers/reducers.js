@@ -67,7 +67,7 @@ const reducers = (state = initialState, action) => {
         case 'ENTER_ROOM_SUCCESS':
             return {
                 ...state,
-                room: action.payload
+                currentRoom: action.payload
             }
         
         case 'NEW_ROOM_SUCCESS':
