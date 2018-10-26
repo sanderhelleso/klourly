@@ -8,7 +8,7 @@ import { enterRoomActions } from '../../../../actions/enterRoomActions';
 
 const mockData = 
 [
-    {   id: 1,
+    {   id: 'RPw9BpldH',
         name: 'CST-238 CSUMB',
         location: 'BIT Building Room 203',
         cover: 'https://tinyurl.com/yb977afw',

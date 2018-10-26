@@ -50,7 +50,8 @@ function enterRoom(props, id) {
     ///////////////////////////////////
     dashboard.getRoom(props.state.user.id, id)
     .then(response => {
-        props.enterRoomActions(id);
+        console.log(response.data);
+        props.enterRoomActions(response.data.room);
         redirect.room(id);
     })
 }
