@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import { Compass, Lock, Users, Headphones, PieChart, PlusCircle ,ArrowLeft } from 'react-feather';
 import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
+import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -19,6 +20,7 @@ import { cards } from '../../../../../helpers/cards';
 
 import BackToDash from './../../../BackToDash';
 import Days from './Days';
+import MapContainer from '../../../maps/MapContainer';
 
 let WORDS = [];
 
@@ -36,8 +38,8 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.user.id,
-            stage: 0,
-            lastStage: 6,
+            stage: 5,
+            lastStage: 7,
             validName: false,
             validTimes: false,
             validWeek: false,
@@ -84,7 +86,7 @@ class Stages extends Component {
     }
 
     renderBackToDash() {
-        return this.state.stage < 7 ? <BackToDash /> : null;
+        return this.state.stage < 8 ? <BackToDash /> : null;
     }
 
     renderIntro() {
@@ -109,7 +111,7 @@ class Stages extends Component {
             return MAIN_INTRO;
         }
 
-        else if (this.state.stage > 0 && this.state.stage < 7) {
+        else if (this.state.stage > 0 && this.state.stage < 8) {
             return SUB_INTRO;
         }
 
@@ -141,10 +143,14 @@ class Stages extends Component {
                 break;
 
             case 5:
+                stageMessage = 'Whats the location the will the room be held...';
+                break;
+
+            case 6:
                 stageMessage = 'The room will be active for users during...';
                 break;
             
-            case 6:
+            case 7:
                 stageMessage = 'Lets finish by adding a fitting cover image to the room...';
                 break;
         }
@@ -296,6 +302,15 @@ class Stages extends Component {
 
     stageFive() {
         const STAGE_FIVE =
+        <div>
+            <MapContainer />
+        </div>
+
+        return STAGE_FIVE;
+    }
+
+    stageSix() {
+        const STAGE_SIX =
         <div className="row col s12">
             <div className="col s6 collapsible-cont">
                 <button id="add-new-room-time" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}><PlusCircle size ={25}/> Add</button>
@@ -328,11 +343,12 @@ class Stages extends Component {
             materializeJS.M.AutoInit();
         }, 10);
 
-        return STAGE_FIVE;
+        return STAGE_SIX;
     }
 
-    stageSix() {
-        const STAGE_SIX =
+
+    stageSeven() {
+        const STAGE_SEVEN =
         <div className="row col s12">
             <div className="col s6">
                 <Dropzone id="new-room-cover-upload" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
@@ -350,7 +366,7 @@ class Stages extends Component {
             </div>
         </div>
 
-        return STAGE_SIX;
+        return STAGE_SEVEN;
     }
 
     repeatTime(e) {
@@ -580,6 +596,9 @@ class Stages extends Component {
                 return this.stageSix();
             
             case 7:
+                return this.STAGE_SEVEN();
+
+            case 8:
                 return this.createRoom();
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { redirect } from '../components/middelware/redirect';
-import { ArrowRight, Lock, Unlock } from 'react-feather';
+import { ArrowRight, Loader,  Lock, Unlock } from 'react-feather';
 import { dashboard } from '../components/middelware/dashboard';
 
 export const cards = {
@@ -25,7 +25,7 @@ function renderRooms(data, props) {
                     <span className="card-title room-card-name"><span className="room-card-location">{room.location}</span><br />{room.name}</span>
                 </div>
                 <div className="card-fab">
-                    <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={() => enterRoom(props, room.id)}><ArrowRight size={24} /></a>
+                    <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={(e) => enterRoom(props, room.id, e)}><ArrowRight /></a>
                 </div>
                 <div className="card-content room-card-content">
                     {attended()}
@@ -63,7 +63,9 @@ function renderRoomTimes(room) {
 }
 
 // redirect to specific room
-function enterRoom(props, id) {
+function enterRoom(props, id, e) {
+    //console.log(e.target);
+    //e.target.nodeName === 'SVG' ? e.target.innerHTML = <Loader className="card-loading" size={24} /> : e.target.querySelector('svg').innerHTML = <Loader  className="card-loading" size={24}/>;
 
     // get room and room owner data
     dashboard.getRoom(props.state.user.id, id)

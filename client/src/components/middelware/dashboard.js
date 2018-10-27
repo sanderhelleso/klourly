@@ -7,7 +7,8 @@ export const dashboard = {
     fetchUserData,
     createRoom,
     getRoom,
-    getRooms
+    getRooms,
+    getMapKey
 };
 
 // update user avatar
@@ -121,6 +122,22 @@ async function getRooms(uid, rooms) {
                 uid: uid,
                 rooms: rooms
             }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// get map key
+async function getMapKey() {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/maps/key',
         });
 
         return response;

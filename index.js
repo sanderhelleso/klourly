@@ -33,6 +33,7 @@ require("./routes/avatarUpload")(app);
 require("./routes/authenticated")(app);
 require("./routes/countries")(app);
 require("./routes/room")(app);
+require("./routes/maps")(app);
 //////////////////////////////
 
 // serve out production assets

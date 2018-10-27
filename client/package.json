@@ -35,6 +35,9 @@
     },
     "/api/getRooms": {
       "target": "http://localhost:5000"
+    },
+    "/api/maps/key": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
@@ -46,6 +49,7 @@
     "react-dom": "^16.4.2",
     "react-dropzone": "^6.2.4",
     "react-feather": "^1.1.3",
+    "react-google-maps": "^9.4.5",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
