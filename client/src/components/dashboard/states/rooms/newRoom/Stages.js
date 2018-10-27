@@ -302,7 +302,7 @@ class Stages extends Component {
 
     stageFive() {
         const STAGE_FIVE =
-        <div>
+        <div className="col s12 map-cont">
             <MapContainer />
         </div>
 

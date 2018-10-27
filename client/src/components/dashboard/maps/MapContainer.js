@@ -1,33 +1,34 @@
 import React from "react";
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import NewRoomMap from "./NewRoomMap";
 import { dashboard } from '../../middelware/dashboard';
 
-class MapContainer extends React.Component {
+export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            mapKey : ''
+            mapKey: ''
         }
+    }
+
+    async componentWillMount() {
+        await dashboard.getMapKey()
+        .then(response => {
+            this.setState({
+                mapKey: response.data.key
+            });
+        });
     }
 
 	render() {
 		return (
-            <Map google={this.props.google} zoom={14}>
-                <Marker onClick={this.onMarkerClick}
-                    name={'Current location'} 
-                />
-                <InfoWindow onClose={this.onInfoWindowClose}>
-                    <div>
-                        <h1>{'qwewq'}</h1>
-                    </div>
-                    
-                </InfoWindow>
-            </Map>
+			<NewRoomMap
+				results={this.props.results}
+				googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.state.mapKey}&v=3.exp&libraries=geometry,drawing,places`}
+				loadingElement={<div style={{ height: `100%` }} />}
+				containerElement={<div id="main-map-cont" style={{ height: `400px`, width: `800px` }} />}
+				mapElement={<div style={{ height: `100%` }} />}
+			/>
 		);
 	}
 }
-
-export default GoogleApiWrapper({
-    apiKey: ('AIzaSyC6j8XUpTunLXSBXAss4QRtvm7aFvX7j14')
-})(MapContainer);
