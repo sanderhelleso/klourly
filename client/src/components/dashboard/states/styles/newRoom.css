@@ -385,3 +385,8 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     margin-top: -2rem;
 }
+
+#maps-cont {
+    margin: 5rem 0 20rem 0;
+    text-align: center;
+}

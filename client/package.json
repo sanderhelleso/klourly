@@ -43,6 +43,7 @@
   "dependencies": {
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
+    "google-maps-react": "^2.0.2",
     "history": "^4.7.2",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.4.2",
