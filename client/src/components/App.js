@@ -34,6 +34,7 @@ class App extends Component {
 
     // authenticate user
     async componentWillMount() {
+        console.log(this.props);
         if (localStorage.getItem('user') !== null && localStorage.getItem('userData') !== null) {
             const user = JSON.parse(localStorage.getItem('user'));
             this.props.validateAction(await authentication.validateUser(user.id)); // set logged in (true / false)

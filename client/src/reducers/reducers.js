@@ -82,6 +82,12 @@ const reducers = (state = initialState, action) => {
                 }
             }
 
+        case 'FETCH_USER_LOCATION_SUCCESS':
+            return {
+                ...state,
+                userLocation: action.payload
+            }
+
         default:
             return state;
     }

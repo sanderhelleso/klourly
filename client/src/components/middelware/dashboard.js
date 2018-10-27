@@ -8,7 +8,8 @@ export const dashboard = {
     createRoom,
     getRoom,
     getRooms,
-    getMapKey
+    getMapKey,
+    getLocation
 };
 
 // update user avatar
@@ -146,4 +147,10 @@ async function getMapKey() {
     catch(error) {
         console.log(error);
     }
-} 
+}
+
+function getLocation() {
+    return new Promise((res, rej) => {
+        navigator.geolocation.getCurrentPosition(res, rej);
+    });
+}
