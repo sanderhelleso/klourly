@@ -1,6 +1,7 @@
 import React from "react";
 import NewRoomMap from "./NewRoomMap";
 import { dashboard } from '../../middelware/dashboard';
+import GeoLocation from './GeoLocation';
 
 export default class MapContainer extends React.Component {
     constructor(props) {
@@ -22,13 +23,16 @@ export default class MapContainer extends React.Component {
 
 	render() {
 		return (
-			<NewRoomMap
-				results={this.props.results}
-				googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.state.mapKey}&v=3.exp&libraries=geometry,drawing,places`}
-				loadingElement={<div style={{ height: `100%` }} />}
-				containerElement={<div id="main-map-cont" style={{ height: `400px`, width: `800px` }} />}
-				mapElement={<div style={{ height: `100%` }} />}
-			/>
+            <div>
+                <GeoLocation />
+                <NewRoomMap
+                    results={{lat:  42.3601, lng: -71.0589}}
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.state.mapKey}&v=3.exp&libraries=geometry,drawing,places`}
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div id="main-map-cont" style={{ height: `400px`, width: `800px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                />
+            </div>
 		);
 	}
 }
