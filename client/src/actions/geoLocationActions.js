@@ -1,16 +1,15 @@
 
-export function geoLocationActions() {
+export const geoLocationActions = () => {
     return dispatch => {
-     const geolocation = navigator.geolocation;
-     geolocation.getCurrentPosition((position) => {
-         const positionObj = geopositionToObject(position)
-         console.log(positionObj);
-         dispatch({
-             type: 'FETCH_USER_LOCATION_SUCCESS',
-             payload: positionObj
-         });
-     });
-   } 
+        const geolocation = navigator.geolocation;
+        geolocation.getCurrentPosition((position) => {
+            const positionObj = geopositionToObject(position)
+            dispatch({
+                type: 'FETCH_USER_LOCATION_SUCCESS',
+                payload: positionObj
+            });
+        });
+    } 
 };
 
 const geopositionToObject = geoposition => ({

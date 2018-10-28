@@ -12,7 +12,11 @@ class MapContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mapKey: ''
+            mapKey: '',
+            coords: {
+                lat: 0,
+                lng: 0
+            }
         }
     }
 
@@ -21,16 +25,21 @@ class MapContainer extends React.Component {
         await dashboard.getMapKey()
         .then(response => {
             this.setState({
-                mapKey: response.data.key
+                mapKey: response.data.key,
+                coords: {
+                    lat: this.props.state.userLocation.coords.latitude,
+                    lng: this.props.state.userLocation.coords.longitude
+                }
             });
         });
     }
 
 	render() {
+        console.log(this.props.state.userLocation);
 		return (
             <div>
                 <NewRoomMap
-                    results={{lat:  42.3601, lng: -71.0589}}
+                    results={this.state.coords}
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.state.mapKey}&v=3.exp&libraries=geometry,drawing,places`}
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div id="main-map-cont" style={{ height: `400px`, width: `800px` }} />}
