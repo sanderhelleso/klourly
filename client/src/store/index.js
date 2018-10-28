@@ -1,13 +1,10 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import reducer from '../reducers/reducers';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reduxThunk from "redux-thunk";
+import reducers from "../reducers";
 
-const rootReducer = combineReducers({
-    state: reducer
-});
 
 export const store = createStore(
-    rootReducer,
+    reducers,
     compose(
         applyMiddleware(reduxThunk),
         window.devToolsExtension ? window.devToolsExtension() : f => f
