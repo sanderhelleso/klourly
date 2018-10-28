@@ -2,6 +2,8 @@ import React from "react";
 import { compose, withStateHandlers } from "recompose";
 import { InfoWindow, withGoogleMap, withScriptjs, GoogleMap, Marker} from "react-google-maps";
 import MapMarker from './MapMarker';
+import { connect } from 'react-redux';
+import { geoLocationActions } from '../../../actions/geoLocationActions';
 
 const Map = compose(
     withStateHandlers(() => ({
@@ -27,14 +29,29 @@ const Map = compose(
             {props.isMarkerShown ? null : <MapMarker location={{ lat: props.coords.lat, lng: props.coords.lng }} />}
         </GoogleMap>
         <h5>{JSON.stringify(props.markerPosition)}</h5>
+        <div className="input-field col s8 offset-s2">
+          <input placeholder="Placeholder" id="locationName" type="text" />
+          <label htmlFor="locationName">Location Name</label>
+        </div>
+        <div className="col s12">
+            <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={props.geoLocationActions}>Set room location</button>
+        </div>
     </div>
 );
 
-export default Map;
+// update current geolocation state
+const mapDispatchToProps = (dispatch) => {
+    return {
+        geoLocationActions: () => dispatch(geoLocationActions())
+    };
+}
 
-/*function getMapPosOnClick(e) {
-        const lat = e.latLng.lat();
-        const lng = e.latLng.lng();
-        console.log(lat);
-        console.log(lng);
-    }*/
+const mapStateToProps = (state) => {
+    return {
+        state: state.state
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
+
+//export default Map;
