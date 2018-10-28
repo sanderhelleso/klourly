@@ -25,17 +25,26 @@ class MapContainer extends React.Component {
         await dashboard.getMapKey()
         .then(response => {
             this.setState({
-                mapKey: response.data.key,
-                coords: {
-                    lat: this.props.state.userLocation.coords.latitude,
-                    lng: this.props.state.userLocation.coords.longitude
-                }
+                mapKey: response.data.key
             });
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props !== nextProps) {
+            console.log(nextProps.state.userLocation.coords.latitude);
+            this.setState({
+                ...this.state,
+                coords: {
+                    lat: nextProps.state.userLocation.coords.latitude,
+                    lng: nextProps.state.userLocation.coords.longitude
+                }
+            });
+        }
+    }
+
 	render() {
-        console.log(this.props.state.userLocation);
+        console.log(this.state.coords);
 		return (
             <div>
                 <NewRoomMap
