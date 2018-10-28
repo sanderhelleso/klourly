@@ -8,7 +8,8 @@ const Map = compose(
         isMarkerShown: false,
         markerPosition: null
     }), {
-        onMapClick: ({ isMarkerShown }) => (e) => ({
+        onMapClick: ({ isMarkerShown }) => (e) => (console.log(e),
+        {
             markerPosition: e.latLng,
             isMarkerShown: true
         })
@@ -19,12 +20,13 @@ const Map = compose(
     <div id="maps-cont">
         <GoogleMap
             defaultZoom={14}
-            defaultCenter={ { lat: props.coords.lat, lng: props.coords.lng } }
+            center={props.isMarkerShown ? props.markerPosition : { lat: props.coords.lat, lng: props.coords.lng }}
             onClick={props.onMapClick}
         >
             {props.isMarkerShown && <Marker position={props.markerPosition} />}
-            {props.isMarkerShown ? null : <MapMarker location={  { lat: props.coords.lat, lng: props.coords.lng } } />}
+            {props.isMarkerShown ? null : <MapMarker location={{ lat: props.coords.lat, lng: props.coords.lng }} />}
         </GoogleMap>
+        <h5>{JSON.stringify(props.markerPosition)}</h5>
     </div>
 );
 
