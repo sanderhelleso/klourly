@@ -6,7 +6,7 @@ export default class MapMarker extends React.Component {
     render(){
         return(
             <Marker
-            position={this.props.location}
+                position={this.props.location}
             >
             </Marker>
         );

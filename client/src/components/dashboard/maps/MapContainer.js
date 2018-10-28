@@ -1,11 +1,8 @@
 import React from "react";
-import NewRoomMap from "./NewRoomMap";
-import { dashboard } from '../../middelware/dashboard';
-import GeoLocation from './GeoLocation';
+import Map from "./Map";
 import { geoLocationActions } from '../../../actions/geoLocationActions';
 
 // redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class MapContainer extends React.Component {
@@ -22,17 +19,16 @@ class MapContainer extends React.Component {
 
     async componentWillMount() {
         this.props.geoLocationActions();
-        await dashboard.getMapKey()
+        /*await dashboard.getMapKey()
         .then(response => {
             this.setState({
                 mapKey: response.data.key
             });
-        });
+        });*/
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
-            console.log(nextProps.state.userLocation.coords.latitude);
             this.setState({
                 ...this.state,
                 coords: {
@@ -44,12 +40,11 @@ class MapContainer extends React.Component {
     }
 
 	render() {
-        console.log(this.state.coords);
 		return (
             <div>
-                <NewRoomMap
-                    results={this.state.coords}
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.state.mapKey}&v=3.exp&libraries=geometry,drawing,places`}
+                <Map
+                    coords={this.state.coords}
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDNzBiJTuMMvL-t4D4oD9zSBbP6Nx6rbF4&v=3.exp&libraries=geometry,drawing,places`}
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div id="main-map-cont" style={{ height: `400px`, width: `800px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
