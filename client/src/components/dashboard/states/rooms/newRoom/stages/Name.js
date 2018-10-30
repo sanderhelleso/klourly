@@ -40,7 +40,7 @@ export default class Name extends Component {
 
     confirmName() {
         if (this.state.validName) {
-            return <NextStage message={this.state.message} valid={true} />
+            return <NextStage message={this.state.message} valid={true} data={{name: this.state.roomName}}/>
         }
 
         else {

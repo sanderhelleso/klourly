@@ -45,6 +45,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 newRoom: {
+                    ...state.newRoom,
                     ...action.payload
                 }
             }

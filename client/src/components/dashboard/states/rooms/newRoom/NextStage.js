@@ -39,7 +39,10 @@ class NextStage extends Component {
     }
 
     setNextStage() {
-        this.props.nextStageAction(this.props.state.dashboard.newRoom.stage + 1);
+        this.props.nextStageAction({
+            stage: this.props.state.dashboard.newRoom.stage + 1,
+            ...this.props.data
+        });
     }
 
     render() {

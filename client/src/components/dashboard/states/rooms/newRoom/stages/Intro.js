@@ -19,6 +19,14 @@ class Intro extends Component {
         this.renderIntro = this.renderIntro.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+            this.setState({
+                stage: nextProps.state.dashboard.newRoom.stage
+            })
+        }
+    }
+
     renderIntro() {       
         
         if (this.state.stage === 0) {
@@ -40,7 +48,6 @@ class Intro extends Component {
                 <div id="new-room-intro" className="center col s8 offset-s2">
                     <h1>{introTxt.heading}</h1>
                     <p>{introTxt.intro}</p>
-                    <div className="room-borderr"></div>
                 </div>
             </div>
         )
@@ -57,11 +64,12 @@ class Intro extends Component {
         )
     }
 
+
     render() {
         return (
             <div>
                 {this.renderIntro()}
-                <NextStage message={this.state.message} valid={true} />
+                {this.state.stage === 0 ? <NextStage message={this.state.message} valid={true} /> : null}
             </div>
         )
     }

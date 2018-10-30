@@ -75,6 +75,15 @@ class Stages extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+            this.setState({
+                stage: nextProps.state.dashboard.newRoom.stage
+            })
+        }
+    }
+
     // update words when component renders
     componentWillMount() {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
