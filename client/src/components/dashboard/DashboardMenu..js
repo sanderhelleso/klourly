@@ -65,9 +65,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);

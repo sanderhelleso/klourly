@@ -12,7 +12,7 @@ import Rooms from './states/rooms/Rooms';
 class DashboardMain extends Component {
 
     renderMain() {
-        switch(this.props.state.dashboardOption) {
+        switch(this.props.state.dashboard.dashboardOption) {
             case 1:
                 document.title = "Section 1 - Klouly";
                 return "hi";
@@ -41,9 +41,7 @@ class DashboardMain extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps)(DashboardMain);

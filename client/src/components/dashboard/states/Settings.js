@@ -47,7 +47,7 @@ class Settings extends Component {
 
     // shorthand function to retrieve settings from state
     userSettings() {
-        return this.props.state.userData.settings;
+        return this.props.state.dashboard.userData.settings;
     }
 
     // render form field for display name
@@ -172,7 +172,7 @@ class Settings extends Component {
             const fd = new FormData();
 
             // send blob to server, store and set avatar and state
-            fd.append('file', file, `${this.props.state.user.id}.${extension}`);
+            fd.append('file', file, `${this.props.state.auth.user.id}.${extension}`);
             dashboard.avatarUpload(fd)
             .then(response => {
 
@@ -180,7 +180,7 @@ class Settings extends Component {
                 this.props.avatarActions(response.data.avatarUrl);
 
                 // update local storage
-                localStorage.setItem('userData', JSON.stringify(this.props.state.userData));
+                localStorage.setItem('userData', JSON.stringify(this.props.state.dashboard.userData));
                 
             });
         });
@@ -210,7 +210,7 @@ class Settings extends Component {
     // if forms state is not different, disable update
     checkChange() {
         const settings = this.state.settings;
-        const originalSettings = this.props.state.userData.settings;
+        const originalSettings = this.props.state.dashboard.userData.settings;
         if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status && settings.newsLetter == originalSettings.newsLetter) {
             this.setState({
                 notChanged: true
@@ -263,7 +263,7 @@ class Settings extends Component {
         // settings state without avatar and with uid
         const settings = this.state.settings;
         delete settings.avatar; // remove avatar object
-        settings.uid = this.props.state.user.id;
+        settings.uid = this.props.state.auth.user.id;
         settings.photoUrl = this.userSettings().photoUrl;
 
         // send settings data and update settings
@@ -271,11 +271,10 @@ class Settings extends Component {
         .then(response => {
             delete settings.uid; // remove uid
             notification.settings(true, response.data.message);
-            console.log(123);
 
             // update state for settings (userData)
             this.props.settingsActions(settings);
-            localStorage.setItem('userData', JSON.stringify(this.props.state.userData));
+            localStorage.setItem('userData', JSON.stringify(this.props.state.dashboard.userData));
 
             // disable confirm / cancel buttons after update
             this.checkChange();
@@ -321,9 +320,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
