@@ -37,7 +37,7 @@ class Stages extends Component {
         this.state = {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
-            owner: this.props.state.user.id,
+            owner: this.props.state.auth.user.id,
             stage: 5,
             lastStage: 7,
             validName: false,
@@ -662,9 +662,7 @@ class Stages extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 // update created room state

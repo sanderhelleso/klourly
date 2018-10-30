@@ -68,7 +68,7 @@ function enterRoom(props, id, e) {
     //e.target.nodeName === 'SVG' ? e.target.innerHTML = <Loader className="card-loading" size={24} /> : e.target.querySelector('svg').innerHTML = <Loader  className="card-loading" size={24}/>;
 
     // get room and room owner data
-    dashboard.getRoom(props.state.user.id, id)
+    dashboard.getRoom(props.state.auth.user.id, id)
     .then(response => {
 
         // create state object with fetched data

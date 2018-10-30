@@ -34,6 +34,24 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 userData: action.payload
             };
+
+        case 'ENTER_ROOM_SUCCESS':
+            return {
+                ...state,
+                currentRoom: action.payload
+            }
+        
+        case 'NEW_ROOM_SUCCESS':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    rooms: {
+                        ...state.userData.rooms,
+                        ...action.payload
+                    }
+                }
+            }
             
         default:
             return state;
