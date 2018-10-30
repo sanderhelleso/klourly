@@ -20,6 +20,7 @@ import Days from '../Days';
 import MapContainer from '../../../../maps/MapContainer';
 
 // stages
+import Intro from './Intro';
 import Name from './Name';
 
 let WORDS = [];
@@ -52,7 +53,6 @@ class Stages extends Component {
             roomRadius: null
         }
 
-        this.renderIntro = this.renderIntro.bind(this);
         this.updateDayTime = this.updateDayTime.bind(this);
         this.selectOption = this.selectOption.bind(this);
         this.createRoom = this.createRoom.bind(this);
@@ -67,7 +67,6 @@ class Stages extends Component {
         this.handleWeek = this.handleWeek.bind(this);
         this.renderSelectDays = this.renderSelectDays.bind(this);
         this.renderBackToDash = this.renderBackToDash.bind(this);
-        this.initialStage = this.initialStage.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.displayCoverFileName = this.displayCoverFileName.bind(this);
@@ -83,39 +82,6 @@ class Stages extends Component {
 
     renderBackToDash() {
         return this.state.stage < 8 ? <BackToDash /> : null;
-    }
-
-    renderIntro() {
-        const MAIN_INTRO =
-        <div className="row animated fadeIn">
-            <div id="new-room-intro" className="center col s8 offset-s2">
-                <h1>Lets create a New Room</h1>
-                <p>A room allow you to keep full controll on whats happening. Who is present, when do people show up, who is the least active and much more.</p>
-                <div className="room-borderr"></div>
-            </div>
-        </div>
-
-        const SUB_INTRO =
-        <div className="row">
-            <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
-                <h4>Lets create a New Room</h4>
-                <h5>{`Step ${this.state.stage} / ${this.state.lastStage}`}</h5>
-            </div>
-        </div>
-
-        if (this.state.stage === 0) {
-            return MAIN_INTRO;
-        }
-
-        else if (this.state.stage > 0 && this.state.stage < 8) {
-            return SUB_INTRO;
-        }
-
-        else {
-            return null;
-        }
-
-        
     }
 
     displayStageStatus() {
@@ -158,11 +124,6 @@ class Stages extends Component {
 
 
         return this.state.stage < 1 || this.state.stage > 6 ? null : STATUS;
-    }
-
-
-    initialStage() {
-        return <button id="start-new-room" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Create room</button>
     }
 
     setStage() {
@@ -530,9 +491,6 @@ class Stages extends Component {
     currentStage() {
         switch (this.state.stage) {
 
-            case 0:
-                return this.initialStage();
-
             case 1:
                 return <Name />;
 
@@ -556,6 +514,9 @@ class Stages extends Component {
 
             case 8:
                 return this.createRoom();
+
+            default:
+                return null;
         }
     }
 
@@ -601,7 +562,7 @@ class Stages extends Component {
             <div>
                 {this.renderBackToDash()}
                 <div className="no-select row">
-                    {this.renderIntro()}
+                    <Intro />
                     <div id="current-stage-status" className="col s8 offset-s2">
                         {this.displayStageStatus()}
                     </div>
