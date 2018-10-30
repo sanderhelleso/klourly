@@ -9,10 +9,12 @@ export default class Name extends Component {
 
         this.state = {
             validName: false,
-            roomName: null
+            roomName: null,
+            message: 'Continue'
         }
 
         this.handleRoomName = this.handleRoomName.bind(this);
+        this.confirmName = this.confirmName.bind(this);
     }
 
     handleRoomName(e) {
@@ -36,11 +38,21 @@ export default class Name extends Component {
         }
     }
 
+    confirmName() {
+        if (this.state.validName) {
+            return <NextStage message={this.state.message} valid={true} />
+        }
+
+        else {
+            return <NextStage message={this.state.message} valid={false} />
+        }
+    }
+
     render() {
         return (
             <div className="input-field">
                 <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default animated fadeIn" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
-                <NextStage message='Contiune' />
+                {this.confirmName()}
             </div>
         )
     }

@@ -57,7 +57,6 @@ class Stages extends Component {
         this.selectOption = this.selectOption.bind(this);
         this.createRoom = this.createRoom.bind(this);
         this.validateDayTime = this.validateDayTime.bind(this);
-        this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
@@ -173,16 +172,6 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             stage: this.state.stage + 1
         });
-    }
-
-    renderConfirmNameBtn() {
-        if (this.state.validName) {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
-        }
-
-        else {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
-        }
     }
 
     renderConfirmTimesBtn() {
