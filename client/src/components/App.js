@@ -30,6 +30,7 @@ class App extends Component {
         this.loginRoute = this.loginRoute.bind(this);
         this.signupRoute = this.signupRoute.bind(this);
         this.dashboardRoute = this.dashboardRoute.bind(this);
+        console.log(this.props);
     }
 
     // authenticate user
@@ -43,19 +44,19 @@ class App extends Component {
 
     // route for handling authentication on auth required routes
     loginRoute() {
-        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
+        return this.props.state.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
     }
 
     signupRoute() {
-        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
+        return this.props.state.auth.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
     }
 
     landingRoute() {
-        return this.props.state.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
+        return this.props.state.auth.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
     }
 
     dashboardRoute() {
-        return this.props.state.loggedIn ? <Dashboard /> : <Redirect to="/" />;
+        return this.props.state.auth.loggedIn ? <Dashboard /> : <Redirect to="/" />;
     }
 
     render() {
@@ -75,9 +76,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-     state: state.state
-    };
+    return { state };
 };
 
 // attempt to update state if login succesfull
