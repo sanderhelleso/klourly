@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Stages from './Stages';
+import Stages from './stages/Stages';
 
 import '../../styles/newRoom.css';
 

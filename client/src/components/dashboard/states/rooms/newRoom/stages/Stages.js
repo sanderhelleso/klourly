@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { Compass, Lock, Users, Headphones, PieChart, PlusCircle ,ArrowLeft } from 'react-feather';
-import { notification } from '../../../../../helpers/notification';
 import { ToastContainer, Flip } from 'react-toastify';
-import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { newRoomActions } from '../../../../../actions/newRoomActions';
-import { enterRoomActions } from '../../../../../actions/enterRoomActions';
+import { newRoomActions } from '../../../../../../actions/newRoomActions';
+import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import { redirect } from '../../../../middelware/redirect';
-import { dashboard } from '../../../../middelware/dashboard';
-import { materializeJS } from '../../../../../helpers/materialize';
-import { cards } from '../../../../../helpers/cards';
+import { dashboard } from '../../../../../middelware/dashboard';
+import { materializeJS } from '../../../../../../helpers/materialize';
+import { cards } from '../../../../../../helpers/cards';
 
-import BackToDash from './../../../BackToDash';
-import Days from './Days';
-import MapContainer from '../../../maps/MapContainer';
+import BackToDash from '../../../../BackToDash';
+import Days from '../Days';
+import MapContainer from '../../../../maps/MapContainer';
+
+// stages
+import Name from './Name';
 
 let WORDS = [];
 
@@ -38,9 +38,8 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: 5,
+            stage: 0,
             lastStage: 7,
-            validName: false,
             validTimes: false,
             validWeek: false,
             startWeek: false,
@@ -48,7 +47,6 @@ class Stages extends Component {
             dayTimes: [],
             repeat: true,
             cover: null,
-            roomName: null,
             roomType: null,
             roomPurpose: null,
             roomRadius: null
@@ -61,7 +59,6 @@ class Stages extends Component {
         this.validateDayTime = this.validateDayTime.bind(this);
         this.renderConfirmNameBtn = this.renderConfirmNameBtn.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
-        this.handleRoomName = this.handleRoomName.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
@@ -164,26 +161,6 @@ class Stages extends Component {
         return this.state.stage < 1 || this.state.stage > 6 ? null : STATUS;
     }
 
-    handleRoomName(e) {
-        const length = e.target.value.length;
-        if (length === 55) {
-            notification.newRoomName();
-        }
-
-        if (length >= 2 && length <= 55) {
-            this.setState({
-                validName: true,
-                roomName: e.target.value
-            });
-        }
-
-        else {
-            this.setState({
-                validName: false,
-                roomName: null
-            });
-        }
-    }
 
     initialStage() {
         return <button id="start-new-room" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Create room</button>
@@ -216,16 +193,6 @@ class Stages extends Component {
         else {
             return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
         }
-    }
-
-    stageOne() {
-        const STAGE_ONE =
-        <div className="input-field">
-            <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default animated fadeIn" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
-            {this.renderConfirmNameBtn()}
-        </div>
-
-        return STAGE_ONE;
     }
 
     stageTwo() {
@@ -578,7 +545,7 @@ class Stages extends Component {
                 return this.initialStage();
 
             case 1:
-                return this.stageOne();
+                return <Name />;
 
             case 2:
                 return this.stageTwo();
