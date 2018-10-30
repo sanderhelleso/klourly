@@ -1,7 +1,6 @@
 
 let user = JSON.parse(localStorage.getItem('user'));
-let userData = JSON.parse(localStorage.getItem('userData'));
-const initialState = user ? { loggedIn: false, user, userData } : {};
+const initialState = user ? { loggedIn: false, user} : {};
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {

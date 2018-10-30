@@ -25,8 +25,8 @@ class Owning extends Component {
             return;
         }
 
-        const rooms = this.props.state.userData.rooms.owning;
-        await dashboard.getRooms(this.props.state.user.id, rooms)
+        const rooms = this.props.state.dashboard.userData.rooms.owning;
+        await dashboard.getRooms(this.props.state.auth.user.id, rooms)
         .then(response => {
             this.setState({
                 roomsData: response.data.roomsData
@@ -55,9 +55,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Owning);

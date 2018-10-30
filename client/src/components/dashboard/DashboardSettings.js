@@ -19,7 +19,7 @@ class DashboardSettings extends Component {
     constructor(props) {
         super(props);
         this.setState = {
-            userData: this.props.state.userData
+            userData: this.props.state.dashboard.userData
         }
 
         this.logOut = this.logOut.bind(this);
@@ -27,12 +27,12 @@ class DashboardSettings extends Component {
 
     // set the avatar url of user
     setAvatar() {
-        return this.props.state.userData.settings.photoUrl;
+        return this.props.state.dashboard.userData.settings.photoUrl;
     }
 
     // set the display name of user
     setDisplayName() {
-        return this.props.state.userData.settings.displayName;
+        return this.props.state.dashboard.userData.settings.displayName;
     }
 
     // logout user, clearing localstorage and state
@@ -66,9 +66,7 @@ class DashboardSettings extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 // attempt to update state if login succesfull
