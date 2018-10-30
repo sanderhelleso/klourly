@@ -40,6 +40,14 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 currentRoom: action.payload
             }
+
+        case 'NEW_ROOM_STAGE':
+            return {
+                ...state,
+                newRoom: {
+                    ...action.payload
+                }
+            }
         
         case 'NEW_ROOM_SUCCESS':
             return {

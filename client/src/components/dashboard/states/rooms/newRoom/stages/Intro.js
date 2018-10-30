@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import NextStage from '../NextStage';
+import { connect } from 'react-redux';
 
 const introTxt = {
     heading: 'Lets create a New Room',
     intro: 'A room allow you to keep full controll on whats happening. Who is present, when do people show up, who is the least active and much more.'
 }
 
-export default class Intro extends Component {
+class Intro extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stage: 0,
-            lastStage: 7,
-            message: 'Create Room',
+            ...this.props.state.dashboard.newRoom,
+            message: 'Create Room'
         }
 
         this.renderIntro = this.renderIntro.bind(this);
@@ -50,7 +50,7 @@ export default class Intro extends Component {
         return (
             <div className="row">
                 <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
-                    <h4>{introTxt.intro}</h4>
+                    <h4>{introTxt.heading}</h4>
                     <h5>{`Step ${this.state.stage} / ${this.state.lastStage}`}</h5>
                 </div>
             </div>
@@ -66,3 +66,9 @@ export default class Intro extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { state };
+};
+
+export default connect(mapStateToProps, null)(Intro);

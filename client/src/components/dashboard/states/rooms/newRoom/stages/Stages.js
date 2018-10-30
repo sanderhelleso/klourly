@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Compass, Lock, Users, Headphones, PieChart, PlusCircle ,ArrowLeft } from 'react-feather';
+import { Compass, Headphones, PieChart, PlusCircle } from 'react-feather';
 import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { newRoomActions } from '../../../../../../actions/newRoomActions';
+import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
 import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +22,7 @@ import MapContainer from '../../../../maps/MapContainer';
 // stages
 import Intro from './Intro';
 import Name from './Name';
+import Type from './Type';
 
 let WORDS = [];
 
@@ -39,7 +40,7 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: 0,
+            stage: this.props.state.dashboard.newRoom.stage,
             lastStage: 7,
             validTimes: false,
             validWeek: false,
@@ -48,7 +49,6 @@ class Stages extends Component {
             dayTimes: [],
             repeat: true,
             cover: null,
-            roomType: null,
             roomPurpose: null,
             roomRadius: null
         }
@@ -143,26 +143,6 @@ class Stages extends Component {
         else {
             return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
         }
-    }
-
-    stageTwo() {
-        const STAGE_TWO =
-        <div id="room-option-cont" className="col s12">
-            <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 'Public')}>
-                    <Users size={35} />
-                    <h5>Public</h5>
-                </div>
-            </div>
-            <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 'Private')}>
-                    <Lock size={35} />
-                    <h5>Private</h5>
-                </div>
-            </div>
-        </div>
-
-        return STAGE_TWO;
     }
 
     stageThree() {
@@ -495,7 +475,7 @@ class Stages extends Component {
                 return <Name />;
 
             case 2:
-                return this.stageTwo();
+                return <Type />;
 
             case 3:
                 return this.stageThree();
@@ -584,7 +564,7 @@ const mapStateToProps = (state) => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ newRoomActions, enterRoomActions }, dispatch);
+    return bindActionCreators({ newRoomCreatedAction, enterRoomActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stages);

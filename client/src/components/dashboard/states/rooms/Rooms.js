@@ -6,9 +6,19 @@ import Attending from './Attending';
 import { materializeJS } from '../../../../helpers/materialize';
 import { redirect } from '../../../middelware/redirect';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
+
 import '../styles/rooms.css';
 
-export default class Rooms extends Component {
+class Rooms extends Component {
+    constructor(props) {
+        super(props);
+
+        this.initNewRoomCreation = this.initNewRoomCreation.bind(this);
+    }
 
     componentWillMount() {
         document.title = "Rooms - Klouly";
@@ -19,12 +29,20 @@ export default class Rooms extends Component {
         materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
     }
 
+    initNewRoomCreation() {
+        this.props.nextStageAction({
+            stage: 0,
+            lastStage: 7
+        });
+        redirect.newRoom();
+    }
+
     render() {
         return (
             <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>My Rooms</h3>
                 <p id='dashboard-intro'>Create, join and modify rooms</p>
-                <button id="create-new-room" className="waves-effect waves-light btn" onClick={redirect.newRoom}>Create New</button>
+                <button id="create-new-room" className="waves-effect waves-light btn" onClick={this.initNewRoomCreation}>Create New</button>
                 <div className="col s12">
                     <ul className="tabs tabs-fixed-width">
                         <li className="tab col s6"><a className="active" href="#owning">Rooms im owning</a></li>
@@ -41,3 +59,14 @@ export default class Rooms extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { state };
+};
+
+// update created room state
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ nextStageAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
