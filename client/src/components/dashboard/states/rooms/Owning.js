@@ -25,15 +25,22 @@ class Owning extends Component {
             return;
         }
 
-        const rooms = this.props.state.dashboard.userData.rooms.owning;
-        await dashboard.getRooms(this.props.state.auth.user.id, rooms)
-        .then(response => {
-            this.setState({
-                roomsData: response.data.roomsData
-            });
-            localStorage.setItem('roomsOwning', JSON.stringify(response.data.roomsData));
-            console.log(localStorage.getItem('roomsOwning'));
-        });
+        // check that room state is present for user, 
+        // if present fetch users room and render room cards
+        if (this.props.state.dashboard.userData.rooms) {
+            if (this.props.state.dashboard.userData.rooms.owning) {
+
+                const rooms = this.props.state.dashboard.userData.rooms.owning;
+                await dashboard.getRooms(this.props.state.auth.user.id, rooms)
+                .then(response => {
+                    this.setState({
+                        roomsData: response.data.roomsData
+                    });
+                    localStorage.setItem('roomsOwning', JSON.stringify(response.data.roomsData));
+                    console.log(localStorage.getItem('roomsOwning'));
+                });
+            }
+        }
     }
 
     render() {

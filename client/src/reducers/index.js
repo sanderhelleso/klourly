@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import mainReducer from "./mainReducer";
+import locationReducer from './locationReducer';
 import authReducer from "./authReducer";
 import dashboardReducer from './dashboardReducer';
 
 export default combineReducers({
-    state: mainReducer,
+    location: locationReducer,
     auth: authReducer,
     dashboard: dashboardReducer
 });

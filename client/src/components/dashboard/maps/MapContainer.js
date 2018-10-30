@@ -32,8 +32,8 @@ class MapContainer extends React.Component {
             this.setState({
                 ...this.state,
                 coords: {
-                    lat: nextProps.state.userLocation.coords.latitude,
-                    lng: nextProps.state.userLocation.coords.longitude
+                    lat: nextProps.state.location.coords.latitude,
+                    lng: nextProps.state.location.coords.longitude
                 }
             });
         }
@@ -62,9 +62,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer);

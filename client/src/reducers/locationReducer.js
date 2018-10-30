@@ -1,13 +1,10 @@
 
-
-// MAIN APP REDUCER
-const mainReducer = (state = {}, action) => {
+const locationReducer = (state = {}, action) => {
     switch (action.type) {        
 
         case 'FETCH_USER_LOCATION_SUCCESS':
             return {
-                ...state,
-                userLocation: action.payload
+                ...action.payload
             }
 
         default:
@@ -15,4 +12,4 @@ const mainReducer = (state = {}, action) => {
     }
 }
 
-export default mainReducer;
+export default locationReducer;
