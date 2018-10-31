@@ -54,7 +54,6 @@ class Stages extends Component {
         }
 
         this.updateDayTime = this.updateDayTime.bind(this);
-        this.selectOption = this.selectOption.bind(this);
         this.createRoom = this.createRoom.bind(this);
         this.validateDayTime = this.validateDayTime.bind(this);
         this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
@@ -425,56 +424,6 @@ class Stages extends Component {
 
     onDragLeave() {
         document.querySelector('#new-room-cover-upload').className = 'col s12';
-    }
-
-    selectOption(e, stageOption) {
-        
-        // update state depending on current stage
-        switch (this.state.stage) {
-            case 2: 
-                this.setState({
-                    roomType: stageOption
-                });
-                break;
-
-            case 3:
-                this.setState({
-                    roomPurpose: stageOption
-                });
-                break;
-            
-            case 4:
-                this.setState({
-                    roomRadius: stageOption
-                });
-                break;
-        }
-
-        const cont = document.querySelector('#room-option-cont');
-        document.body.style.overflowY = 'hidden';
-        Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
-            option.style.pointerEvents = 'none';
-            option.classList.remove("fadeIn");
-        });
-
-        e.target.classList.add("pulse");
-
-        let timer = 750;
-        Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
-            setTimeout(() => {
-                option.classList.remove("pulse");
-                option.classList.add("fadeOutDown");
-            }, timer);
-            timer += 150;
-        });
-
-        setTimeout(() => {
-            document.body.style.overflowY = 'auto';
-            Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
-                option.style.pointerEvents = 'auto';
-            });
-            this.setStage();
-        }, 2000);
     }
 
     currentStage() {

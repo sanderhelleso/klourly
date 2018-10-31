@@ -32,10 +32,25 @@ class NextStage extends Component {
 
     renderNext() {
         if (this.state.valid) {
-            return <button id={this.state.id} className={this.state.classNameEnabled} onClick={this.setNextStage} >{this.state.message}</button>
+            return(
+                <button 
+                id={this.state.id} 
+                className={this.state.classNameEnabled} 
+                onClick={this.setNextStage}
+                >
+                {this.state.message}
+                </button>
+            )
         }
 
-        return <button id={this.state.id} className={this.state.classNameDisabled}>{this.state.message}</button>
+        return(
+            <button 
+            id={this.state.id} 
+            className={this.state.classNameDisabled}
+            >
+            {this.state.message}
+            </button>
+        )
     }
 
     setNextStage() {

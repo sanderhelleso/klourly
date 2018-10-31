@@ -10,7 +10,12 @@ export default class Name extends Component {
         this.state = {
             validName: false,
             roomName: null,
-            message: 'Continue'
+            message: 'Continue',
+            placeholder: 'Intro to Programming',
+            className: 'browser-default animated fadeIn',
+            id: 'new-room-name-field',
+            type: 'text',
+            maxLength: 55
         }
 
         this.handleRoomName = this.handleRoomName.bind(this);
@@ -40,18 +45,36 @@ export default class Name extends Component {
 
     confirmName() {
         if (this.state.validName) {
-            return <NextStage message={this.state.message} valid={true} data={{name: this.state.roomName}}/>
+            return(
+                <NextStage 
+                message={this.state.message} 
+                valid={true} 
+                data={{name: this.state.roomName}}
+                />
+            )
         }
 
         else {
-            return <NextStage message={this.state.message} valid={false} />
+            return(
+                <NextStage 
+                message={this.state.message} 
+                valid={false} 
+                />
+            )
         }
     }
 
     render() {
         return (
             <div className="input-field">
-                <input id="new-room-name-field" placeholder="Intro to Programming" type="text" className="browser-default animated fadeIn" maxLength="55" onChange={(event) => this.handleRoomName(event)}/>
+                <input 
+                id={this.state.id} 
+                placeholder={this.state.placeholder} 
+                type={this.state.type} 
+                className={this.state.className} 
+                maxLength={this.state.maxLength} 
+                onChange={(event) => this.handleRoomName(event)}
+                />
                 {this.confirmName()}
             </div>
         )
