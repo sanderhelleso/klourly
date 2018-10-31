@@ -2,15 +2,19 @@ import React from "react";
 import { compose, withStateHandlers } from "recompose";
 import { InfoWindow, withGoogleMap, withScriptjs, GoogleMap, Marker} from "react-google-maps";
 import MapMarker from './MapMarker';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geoLocationActions } from '../../../actions/geoLocationActions';
+import { newRoomLocationAction } from '../../../actions/newRoom/newRoomLocationAction';
+
+import { store } from '../../../store';
 
 const Map = compose(
     withStateHandlers(() => ({
         isMarkerShown: false,
         markerPosition: null
     }), {
-        onMapClick: ({ isMarkerShown }) => (e) => (console.log(e),
+        onMapClick: ({ isMarkerShown }) => (e) => (store.dispatch(newRoomLocationAction(JSON.stringify(e.latLng))),
         {
             markerPosition: e.latLng,
             isMarkerShown: true
@@ -32,19 +36,20 @@ const Map = compose(
     </div>
 );
 
+function updateLocation() {
+    
+}
+
 // update current geolocation state
 const mapDispatchToProps = (dispatch) => {
-    return {
-        geoLocationActions: () => dispatch(geoLocationActions())
-    };
+    return bindActionCreators ({
+        geoLocationActions: () => dispatch(geoLocationActions()),
+        newRoomLocationAction
+    }, dispatch);
 }
 
 const mapStateToProps = (state) => {
-    return {
-        state: state.state
-    };
+    return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
-
-//export default Map;

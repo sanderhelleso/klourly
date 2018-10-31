@@ -2,13 +2,19 @@ import React, { Component } from 'react'
 import MapContainer from '../../../../maps/MapContainer';
 import NextStage from '../NextStage';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
 
-export default class Location extends Component {
+
+class Location extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            message: 'Confirm Room Location'
+            message: 'Continue',
+            valid: false
         }
     } 
 
@@ -17,8 +23,19 @@ export default class Location extends Component {
         return (
             <div className="col s12 map-cont">
                 <MapContainer />
-                <NextStage message={this.state.message} valid={true} />
+                <NextStage message={this.state.message} valid={false} />
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { state };
+};
+
+// update created room state
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ nextStageAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Location);

@@ -84,6 +84,3 @@ export default class Name extends Component {
         )
     }
 }
-
-// {this.renderConfirmNameBtn()}
-
