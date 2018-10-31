@@ -415,8 +415,17 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #newRoom-map-geoCoords {
-    margin: 2rem 0 5rem 0;
+    margin: 2.5rem 0 5rem 0;
     font-size: 1rem;
     color: #bdbdbd;
     line-height: 1.5;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+#location-hint {
+    letter-spacing: 1px;
+    margin-top: 1.5rem;
+    font-size: 0.70rem;
+    color: #bdbdbd;
 }

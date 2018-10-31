@@ -7,13 +7,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
 
-
 class Location extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             message: 'Continue',
+            hint: '(You can always change location later)',
             valid: false
         }
     } 
@@ -38,12 +38,13 @@ class Location extends Component {
             <div className="col s12 map-cont">
                 <MapContainer />
                 <div className="switch">
-                <label>
-                    Disable Room Geolocation
-                    <input type="checkbox" defaultChecked={true} onChange={(event) => this.setMapStatus(event)}/>
-                    <span className="lever"></span>
-                    Activate Room Geolocation
-                </label>
+                    <label>
+                        Disable Room Geolocation
+                        <input type="checkbox" defaultChecked={true} onChange={(event) => this.setMapStatus(event)}/>
+                        <span className="lever"></span>
+                        Activate Room Geolocation
+                    </label>
+                    <p id="location-hint">{this.state.hint}</p>
                 </div>
                 <NextStage message={this.state.message} valid={false} />
             </div>

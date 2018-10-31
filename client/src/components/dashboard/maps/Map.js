@@ -35,7 +35,7 @@ const Map = compose(
                 {props.isMarkerShown ? null : <MapMarker location={{ lat: props.coords.lat, lng: props.coords.lng }} />}
                 </GoogleMap>
             </div>
-            <h5 id="newRoom-map-geoCoords">
+            <h5 id="newRoom-map-geoCoords" onClick={(coords) => copyCoords(props.markerPosition ? JSON.parse(JSON.stringify(props.markerPosition)) : props.coords)}>
                 <span>
                 Latitude: { props.markerPosition ? JSON.parse(JSON.stringify(props.markerPosition)).lat :  props.coords.lat }
                 </span>
@@ -46,6 +46,22 @@ const Map = compose(
         </div>
     </div>
 );
+
+// copy passed data to clipboard
+function copyCoords(coords) {
+
+    // create dummy input and append to body
+    const dummy = document.createElement('input');
+    document.body.appendChild(dummy);
+
+    // set attributes of parsed coords
+    dummy.setAttribute('value', `latitude: ${coords.lat}, longitude: ${coords.lng}`);
+    dummy.select();
+
+    // copy content to clipbord and remove from DOM
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+}
 
 // update current geolocation state
 const mapDispatchToProps = (dispatch) => {
