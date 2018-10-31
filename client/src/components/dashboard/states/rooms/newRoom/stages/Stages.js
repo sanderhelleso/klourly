@@ -17,7 +17,6 @@ import { cards } from '../../../../../../helpers/cards';
 
 import BackToDash from '../../../../BackToDash';
 import Days from '../Days';
-import MapContainer from '../../../../maps/MapContainer';
 
 // stages
 import Intro from './Intro';
@@ -25,6 +24,7 @@ import Name from './Name';
 import Type from './Type';
 import Purpose from './Purpose';
 import Radius from './Radius';
+import Location from './Location';
 
 let WORDS = [];
 
@@ -151,15 +151,6 @@ class Stages extends Component {
         else {
             return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
         }
-    }
-
-    stageFive() {
-        const STAGE_FIVE =
-        <div className="col s12 map-cont">
-            <MapContainer />
-        </div>
-
-        return STAGE_FIVE;
     }
 
     stageSix() {
@@ -390,7 +381,7 @@ class Stages extends Component {
                 return <Radius />;
 
             case 5:
-                return this.stageFive();
+                return <Location />;
 
             case 6:
                 return this.stageSix();

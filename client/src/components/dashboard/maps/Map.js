@@ -29,13 +29,6 @@ const Map = compose(
             {props.isMarkerShown ? null : <MapMarker location={{ lat: props.coords.lat, lng: props.coords.lng }} />}
         </GoogleMap>
         <h5>{JSON.stringify(props.markerPosition)}</h5>
-        <div className="input-field col s8 offset-s2">
-          <input placeholder="Placeholder" id="locationName" type="text" />
-          <label htmlFor="locationName">Location Name</label>
-        </div>
-        <div className="col s12">
-            <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={props.geoLocationActions}>Set room location</button>
-        </div>
     </div>
 );
 
