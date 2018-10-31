@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Compass, PlusCircle } from 'react-feather';
 import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
@@ -13,11 +12,9 @@ import { nextStageAction } from '../../../../../../actions/newRoom/nextStageActi
 import 'react-toastify/dist/ReactToastify.css';
 
 import { dashboard } from '../../../../../middelware/dashboard';
-import { materializeJS } from '../../../../../../helpers/materialize';
 import { cards } from '../../../../../../helpers/cards';
 
 import BackToDash from '../../../../BackToDash';
-import Days from '../Days';
 
 // stages
 import Intro from './Intro';
@@ -26,6 +23,7 @@ import Type from './Type';
 import Purpose from './Purpose';
 import Radius from './Radius';
 import Location from './Location';
+import Times from './Times';
 
 let WORDS = [];
 
@@ -43,7 +41,7 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 5,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 6,
             lastStage: 7,
             validTimes: false,
             validWeek: false,
@@ -54,18 +52,11 @@ class Stages extends Component {
             cover: null,
         }
 
-        this.updateDayTime = this.updateDayTime.bind(this);
         this.createRoom = this.createRoom.bind(this);
-        this.validateDayTime = this.validateDayTime.bind(this);
-        this.renderConfirmTimesBtn = this.renderConfirmTimesBtn.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
-        this.repeatTime = this.repeatTime.bind(this);
         this.setCoverPreview = this.setCoverPreview.bind(this);
-        this.updateDaysAmount = this.updateDaysAmount.bind(this);
-        this.handleWeek = this.handleWeek.bind(this);
-        this.renderSelectDays = this.renderSelectDays.bind(this);
         this.renderBackToDash = this.renderBackToDash.bind(this);
         this.setStage = this.setStage.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -154,54 +145,6 @@ class Stages extends Component {
         });
     }
 
-    renderConfirmTimesBtn() {
-        if (this.state.validTimes && this.state.validWeek) {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
-        }
-
-        else {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
-        }
-    }
-
-    stageSix() {
-        const STAGE_SIX =
-        <div className="row col s12">
-            <div className="col s6 collapsible-cont">
-                <button id="add-new-room-time" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}><PlusCircle size ={25}/> Add</button>
-                <ul className="collapsible popout expandable">
-                    {this.renderSelectDays()}
-                </ul>
-            </div>
-            <div id="starting-from-week-cont" className="center col s6">
-                <h5>Starting from week...</h5>
-                <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
-                <p>Not sure?</p>
-                <div id="repeat-active-switch-cont" className="col s12">
-                    <h5>Repeat every week?</h5>
-                    <div className="switch" onChange={(event) => this.repeatTime(event)}>
-                        <label>
-                        No
-                        <input type="checkbox" defaultChecked={true} />
-                        <span className="lever"></span>
-                        Yes
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    {this.renderConfirmTimesBtn()}
-                </div>
-            </div>
-        </div>
-
-        setTimeout(() => {
-            materializeJS.M.AutoInit();
-        }, 10);
-
-        return STAGE_SIX;
-    }
-
-
     stageSeven() {
         const STAGE_SEVEN =
         <div className="row col s12">
@@ -224,129 +167,8 @@ class Stages extends Component {
         return STAGE_SEVEN;
     }
 
-    repeatTime(e) {
-        this.setState({
-            repeat: e.target.checked
-        });
-    }
-
     setCoverPreview() {
         return this.state.cover ? this.state.cover[0].preview : '../img/dashboard/cover.jpg';
-    }
-
-    updateDaysAmount() {
-        this.setState({
-            daysSelected: this.state.daysSelected += 1
-        }, 
-        () => {
-            setTimeout(() => {
-                this.setState({
-                    dayTimes: this.updateDayTime()
-                });
-            }, 10);
-        });
-    }
-
-    renderSelectDays() {
-
-        const collapsibles = [];
-        for (let i = 1; i < this.state.daysSelected + 1; i++) {
-            collapsibles.push(<Days daysID={i} key={i} />);
-        }
-
-        if (this.state.daysSelected === 0) {
-            setTimeout(() => {
-                document.querySelector('#add-new-room-time').click();
-            }, 10);
-        }
-        return collapsibles;
-    }
-
-    validateDayTime() {
-        this.setState({
-            dayTimes: this.updateDayTime()
-        }, () => {
-            setTimeout(() => {
-                console.log(this.state.dayTimes);
-            }, 1000);
-        });
-    }
-
-    updateDayTime() {
-        const days = [];
-        let validCount = 0;
-        const day = Array.from(document.querySelectorAll('.collapsible-body'));
-        day.forEach(day => {
-            const inputs = Array.from(day.querySelectorAll('input'));
-            const dayObj = {};
-            let valid = false;
-            inputs.forEach(input => {
-                input.addEventListener('change', this.validateDayTime);
-                if (input.name !== 'time') {
-                    dayObj[input.name] = input.checked;
-                    if (input.checked) {
-                        valid = true;
-                    }
-                }
-
-               else {
-                    dayObj[input.name] = input.value;
-               }
-            });
-
-            if (dayObj.time !== '' && valid) {
-                validCount++;
-            }
-            days.push(dayObj);
-        });
-
-        if (validCount === days.length) {
-            this.setState({
-                validTimes: true
-            });
-        }
-
-        else {
-            this.setState({
-                validTimes: false
-            });
-        }
-
-        return days;
-    }
-
-    handleWeek(e) {
-        const value = e.target.value.replace(/[^\d]/,'',);    
-        
-        if (value.length > 2) {
-            e.target.value = value.substring(0, 2);
-        }
-
-        if (value > 52) {
-            e.target.value = 52;
-        }
-
-        else if (value < 1 || value === '') {
-            e.target.value = '';
-            this.setState({
-                validWeek: false,
-                startWeek: null
-            });
-            return;
-        }
-
-        this.setState({
-            validWeek: true,
-            startWeek: e.target.value
-        });
-    }
-
-    // get current week
-    getCurrentWeek() {
-        const now = new Date();
-        const onejan = new Date(now.getFullYear(), 0, 1);
-        const currentWeek = Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
-        return currentWeek === 52 ? 1 : currentWeek + 1; // return upcoming week
     }
 
     displayCoverFileName() {
@@ -395,7 +217,7 @@ class Stages extends Component {
                 return <Location />;
 
             case 6:
-                return this.stageSix();
+                return <Times />;
             
             case 7:
                 return this.STAGE_SEVEN();
