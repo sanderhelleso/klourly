@@ -4,6 +4,7 @@ import { PlusCircle } from 'react-feather';
 import { materializeJS } from '../../../../../../helpers/materialize';
 
 import Days from '../Days';
+import NextStage from '../NextStage';
 
 export default class Times extends Component {
     constructor(props) {
@@ -11,10 +12,12 @@ export default class Times extends Component {
 
         this.state = {
             daysSelected: 0,
-            dayTimes: null,
+            dayTimes: [],
             validTimes: false,
             validWeeks: false,
-            repeat: true
+            startWeek: this.getCurrentWeek(),
+            repeat: true,
+            message: 'Continue'
         }
 
         this.updateDayTime = this.updateDayTime.bind(this);
@@ -31,12 +34,6 @@ export default class Times extends Component {
         document.title = 'Creating New Room | Step 6 / 7 | Klourly'
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-            materializeJS.M.AutoInit();
-        }, 10);
-    }
-
     repeatTime(e) {
         this.setState({
             repeat: e.target.checked
@@ -45,11 +42,28 @@ export default class Times extends Component {
 
     renderConfirmTimesBtn() {
         if (this.state.validTimes && this.state.validWeek) {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Continue</button>
+            return(
+                <NextStage 
+                message={this.state.message} 
+                valid={true} 
+                data={{
+                    times: {
+                        ...this.state.dayTimes,
+                        startWeek: this.state.startWeek,
+                        repeat: this.state.repeat
+                    }
+                }}
+                />
+            )
         }
 
         else {
-            return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
+            return(
+                <NextStage 
+                message={this.state.message} 
+                valid={false} 
+                />
+            )
         }
     }
 
@@ -78,6 +92,11 @@ export default class Times extends Component {
                 document.querySelector('#add-new-room-time').click();
             }, 10);
         }
+
+        setTimeout(() => {
+            materializeJS.M.AutoInit();
+        }, 10);
+
         return collapsibles;
     }
 
@@ -127,25 +146,36 @@ export default class Times extends Component {
         const day = Array.from(document.querySelectorAll('.collapsible-body'));
         day.forEach(day => {
             const inputs = Array.from(day.querySelectorAll('input'));
-            const dayObj = {};
+
+            const dayObj = {
+                days: null,
+                time: null
+            };
+
             let valid = false;
             inputs.forEach(input => {
                 input.addEventListener('change', this.validateDayTime);
                 if (input.name !== 'time') {
-                    dayObj[input.name] = input.checked;
                     if (input.checked) {
+                        dayObj.days = {
+                            ...dayObj.days,
+                            [input.name]: input.checked
+                        }
                         valid = true;
                     }
                 }
 
                else {
-                    dayObj[input.name] = input.value;
+                    dayObj.time = {
+                        from: input.value,
+                    }
                }
             });
 
             if (dayObj.time !== '' && valid) {
                 validCount++;
             }
+
             days.push(dayObj);
         });
 
