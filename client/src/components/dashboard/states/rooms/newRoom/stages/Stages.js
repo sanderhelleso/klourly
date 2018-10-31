@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
 import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
+import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,7 +43,7 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom.stage,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 5,
             lastStage: 7,
             validTimes: false,
             validWeek: false,
@@ -74,18 +75,28 @@ class Stages extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
-            this.setState({
-                stage: nextProps.state.dashboard.newRoom.stage
-            })
-        }
-    }
-
     // update words when component renders
     componentWillMount() {
         WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (this.props.state.dashboard.newRoom) {
+            if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+                this.setState({
+                    stage: nextProps.state.dashboard.newRoom.stage
+                })
+            }
+        }
+
+        else {
+            this.props.nextStageAction({
+                stage: 5,
+                lastStage: 7
+            });
+        }
+        
     }
 
     renderBackToDash() {
@@ -459,9 +470,8 @@ const mapStateToProps = (state) => {
     return { state };
 };
 
-// update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ newRoomCreatedAction, enterRoomActions }, dispatch);
+    return bindActionCreators({ nextStageAction, newRoomCreatedAction, enterRoomActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stages);

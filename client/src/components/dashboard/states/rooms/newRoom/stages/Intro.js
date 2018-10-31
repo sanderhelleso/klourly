@@ -24,10 +24,18 @@ class Intro extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+        if (this.props.state.dashboard.newRoom) {
+            if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+                this.setState({
+                    stage: nextProps.state.dashboard.newRoom.stage
+                })
+            }
+        }
+
+        else {
             this.setState({
-                stage: nextProps.state.dashboard.newRoom.stage
-            })
+                stage: 5
+            });
         }
     }
 

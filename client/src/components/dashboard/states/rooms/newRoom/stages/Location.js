@@ -18,6 +18,9 @@ class Location extends Component {
         }
     } 
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 5 / 7 | Klourly'
+    }
 
     render() {
         return (
