@@ -41,7 +41,7 @@ class MapContainer extends React.Component {
 
 	render() {
 		return (
-            <div>
+            <div className="animated fadeIn">
                 <Map
                     coords={this.state.coords}
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDNzBiJTuMMvL-t4D4oD9zSBbP6Nx6rbF4&v=3.exp&libraries=geometry,drawing,places`}

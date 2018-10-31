@@ -19,7 +19,7 @@ const Map = compose(
     withScriptjs,
     withGoogleMap
 ) (props =>
-    <div id="maps-cont">
+    <div id="maps-cont animated fadeIn">
         <GoogleMap
             defaultZoom={14}
             center={props.isMarkerShown ? props.markerPosition : { lat: props.coords.lat, lng: props.coords.lng }}

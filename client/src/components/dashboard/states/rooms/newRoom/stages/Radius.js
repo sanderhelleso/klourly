@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
 
-const className = 'room-option animated fadeIn room-option-stage4-option1 z-depth-2 hoverable no-select';
+const className = 'room-option animated fadeIn z-depth-2 hoverable no-select';
 const radiusOptions = [
     {
         title: '50 Meters',
@@ -35,6 +35,10 @@ class Radius extends Component {
     constructor(props) {
         super(props);
         this.renderRadiusOptions = this.renderRadiusOptions.bind(this);
+    }
+
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 4 / 7 | Klourly'
     }
 
     renderRadiusOptions() {

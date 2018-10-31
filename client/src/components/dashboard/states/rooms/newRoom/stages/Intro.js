@@ -19,6 +19,10 @@ class Intro extends Component {
         this.renderIntro = this.renderIntro.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Klourly'
+    }
+
     componentWillReceiveProps(nextProps) {
         if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
             this.setState({

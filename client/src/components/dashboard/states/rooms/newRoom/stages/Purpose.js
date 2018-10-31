@@ -25,6 +25,10 @@ class Purpose extends Component {
         this.renderEvent = this.renderEvent.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 3 / 7 | Klourly'
+    }
+
     renderEducation() {
         return(
             <div className="col s6">

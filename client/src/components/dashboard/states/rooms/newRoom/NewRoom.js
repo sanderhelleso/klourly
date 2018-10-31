@@ -5,10 +5,6 @@ import '../../styles/newRoom.css';
 
 export default class NewRoom extends Component {
 
-    componentWillMount() {
-        document.title = 'Creating a new room - Klourly';
-    }
-
     render() {
         return (
             <main className="container">

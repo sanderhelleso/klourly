@@ -25,6 +25,10 @@ class Type extends Component {
         this.renderPrivate = this.renderPrivate.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 2 / 7 | Klourly'
+    }
+
     renderPublic() {
         return(
             <div className="col s6">

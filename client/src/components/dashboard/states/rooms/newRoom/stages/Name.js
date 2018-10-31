@@ -22,6 +22,10 @@ export default class Name extends Component {
         this.confirmName = this.confirmName.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 1 / 7 | Klourly'
+    }
+
     handleRoomName(e) {
         const length = e.target.value.length;
         if (length === 55) {
