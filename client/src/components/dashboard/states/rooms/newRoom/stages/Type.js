@@ -17,16 +17,15 @@ class Type extends Component {
         super(props);
 
         this.state = {
-            roomType: null,
             classNamePublic: 'room-option animated fadeIn room-option-stage2-option1 z-depth-2 hoverable no-select',
             classNamePrivate: 'room-option animated fadeIn room-option-stage2-option2 z-depth-2 hoverable no-select'
         }
 
-        this.public = this.public.bind(this);
-        this.private = this.private.bind(this);
+        this.renderPublic = this.renderPublic.bind(this);
+        this.renderPrivate = this.renderPrivate.bind(this);
     }
 
-    public() {
+    renderPublic() {
         return(
             <div className="col s6">
                 <div 
@@ -34,18 +33,19 @@ class Type extends Component {
                 onClick={(event) => helpers.selectOption(event, {type: 'Public'}, this.props)}
                 >
                     <Users size={35} />
-                    <h5>{staticTxt.private}</h5>
+                    <h5>{staticTxt.public}</h5>
                 </div>
             </div>
         )
     }
 
-    private() {
+
+    renderPrivate() {
         return(
             <div className="col s6">
                 <div 
                 className={this.state.classNamePrivate} 
-                onClick={(event) => helpers.selectOption(event, {type: 'Private'}, this.props)}
+                onClick={(event) => helpers.selectOption(event, { type: 'Private' }, this.props)}
                 >
                     <Lock size={35} />
                     <h5>{staticTxt.private}</h5>
@@ -58,8 +58,8 @@ class Type extends Component {
     render() {
         return (
             <div id="room-option-cont" className="col s12">
-                {this.public()}
-                {this.private()}
+                {this.renderPrivate()}
+                {this.renderPublic()}
             </div>
         )
     }

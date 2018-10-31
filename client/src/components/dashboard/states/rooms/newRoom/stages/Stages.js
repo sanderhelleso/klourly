@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { Compass, Headphones, PieChart, PlusCircle } from 'react-feather';
+import { Compass, PlusCircle } from 'react-feather';
 import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
@@ -23,6 +23,8 @@ import MapContainer from '../../../../maps/MapContainer';
 import Intro from './Intro';
 import Name from './Name';
 import Type from './Type';
+import Purpose from './Purpose';
+import Radius from './Radius';
 
 let WORDS = [];
 
@@ -49,8 +51,6 @@ class Stages extends Component {
             dayTimes: [],
             repeat: true,
             cover: null,
-            roomPurpose: null,
-            roomRadius: null
         }
 
         this.updateDayTime = this.updateDayTime.bind(this);
@@ -151,58 +151,6 @@ class Stages extends Component {
         else {
             return <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn new-room-name-disabled">Continue</button>
         }
-    }
-
-    stageThree() {
-        const STAGE_THREE =
-        <div id="room-option-cont" className="col s12">
-            <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage3-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 'Education')}>
-                    <PieChart size={35} />
-                    <h5>Education</h5>
-                </div>
-            </div>
-            <div className="col s6">
-                <div className="room-option animated fadeIn room-option-stage3-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 'Events')}>
-                    <Headphones size={35} />
-                    <h5>Events</h5>
-                </div>
-            </div>
-        </div>
-
-        return STAGE_THREE;
-    }
-
-    stageFour() {
-        const STAGE_FOUR =
-        <div id="room-option-cont" className="col s12 new-room-stage-4">
-            <div className="col s3">
-                <div className="room-option animated fadeIn room-option-stage4-option1 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 50)}>
-                    <Compass size={30} />
-                    <h5>50 meters</h5>
-                </div>
-            </div>
-            <div className="col s3">
-                <div className="room-option animated fadeIn room-option-stage4-option2 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 100)}>
-                    <Compass size={30} />
-                    <h5>100 meters</h5>
-                </div>
-            </div>
-            <div className="col s3">
-                <div className="room-option animated fadeIn room-option-stage4-option3 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 150)}>
-                    <Compass size={30} />
-                    <h5>150 meters</h5>
-                </div>
-            </div>
-            <div className="col s3">
-                <div className="room-option animated fadeIn room-option-stage4-option4 z-depth-2 hoverable no-select" onClick={(event) => this.selectOption(event, 200)}>
-                    <Compass size={30} />
-                    <h5>200 meters</h5>
-                </div>
-            </div>
-        </div>
-
-        return STAGE_FOUR;
     }
 
     stageFive() {
@@ -436,10 +384,10 @@ class Stages extends Component {
                 return <Type />;
 
             case 3:
-                return this.stageThree();
+                return <Purpose />;
             
             case 4:
-                return this.stageFour();
+                return <Radius />;
 
             case 5:
                 return this.stageFive();
