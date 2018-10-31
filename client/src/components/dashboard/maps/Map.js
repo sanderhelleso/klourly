@@ -8,6 +8,7 @@ import { geoLocationActions } from '../../../actions/geoLocationActions';
 import { newRoomLocationAction } from '../../../actions/newRoom/newRoomLocationAction';
 
 import { store } from '../../../store';
+import { notification } from "../../../helpers/notification";
 
 const Map = compose(
     withStateHandlers(() => ({
@@ -61,6 +62,9 @@ function copyCoords(coords) {
     // copy content to clipbord and remove from DOM
     document.execCommand('copy');
     document.body.removeChild(dummy);
+
+    // display message
+    notification.copyToClipboard();
 }
 
 // update current geolocation state

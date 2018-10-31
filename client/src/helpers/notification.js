@@ -4,7 +4,8 @@ export const notification = {
     login,
     signup,
     settings,
-    newRoomName
+    newRoomName,
+    copyToClipboard
 }
 
 // login notification
@@ -90,6 +91,19 @@ function newRoomName() {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-error',
         progressClassName: 'error-progress-bar',
+        autoClose: 3000,
+        toastId: 1
+    });
+}
+
+// new room name error notification
+function copyToClipboard() {
+
+    // prompt error if name is longer than 55 characters
+    toast('Coordinates copied to clipboard!', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-success',
+        progressClassName: 'success-progress-bar',
         autoClose: 3000,
         toastId: 1
     });
