@@ -70,8 +70,7 @@ function copyCoords(coords) {
 // update current geolocation state
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators ({
-        geoLocationActions: () => dispatch(geoLocationActions()),
-        newRoomLocationAction
+        geoLocationActions: () => dispatch(geoLocationActions())
     }, dispatch);
 }
 

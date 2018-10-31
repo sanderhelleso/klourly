@@ -69,6 +69,10 @@ class Location extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+    }
+
     confirmLocation() {
         if (this.state.validLocation) {
             return(
@@ -78,13 +82,12 @@ class Location extends Component {
                 data={this.state.locationDisabled 
                     ?
                     {location: {
-                        ...this.props.state.dashboard.newRoom.location,
+                        geoLocationDisabled: this.state.locationDisabled,
                         name: this.state.locationName
                     }}
                     :
                     {location: {
                         ...this.props.state.dashboard.newRoom.location,
-                        disabled: this.state.locationDisabled,
                         name: this.state.locationName
                     }}}
                 />

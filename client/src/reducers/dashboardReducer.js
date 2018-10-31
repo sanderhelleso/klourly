@@ -50,6 +50,8 @@ const authReducer = (state = initialState, action) => {
                 }
             }
 
+            
+
         case 'NEW_ROOM_LOCATION':
             return {
                 ...state,
