@@ -436,3 +436,11 @@ input[type=number]::-webkit-outer-spin-button {
     letter-spacing: 1px;
     color: #bdbdbd;
 }
+
+.new-room-cover {
+    cursor: pointer;
+}
+
+.new-room-cover-default {
+    cursor: not-allowed;
+}

@@ -5,7 +5,8 @@ export const notification = {
     signup,
     settings,
     newRoomName,
-    copyToClipboard
+    copyToClipboard,
+    invalidFileUpload
 }
 
 // login notification
@@ -96,7 +97,7 @@ function newRoomName() {
     });
 }
 
-// new room name error notification
+// copy to clipboard success notification
 function copyToClipboard() {
 
     // prompt error if name is longer than 55 characters
@@ -104,6 +105,19 @@ function copyToClipboard() {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-success',
         progressClassName: 'success-progress-bar',
+        autoClose: 3000,
+        toastId: 1
+    });
+}
+
+// invalid file upload notification
+function invalidFileUpload(message) {
+
+    // prompt error if name is longer than 55 characters
+    toast(message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-error',
+        progressClassName: 'error-progress-bar',
         autoClose: 3000,
         toastId: 1
     });
