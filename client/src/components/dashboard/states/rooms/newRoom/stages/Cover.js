@@ -39,9 +39,16 @@ export default class Cover extends Component {
     }
 
     onDrop(file) {
-        this.setState({
-            cover: file
-        });
+        console.log(file);
+        if(Array.isArray(file) && file.length) {
+            this.setState({
+                cover: file
+            });
+        }
+
+        else {
+            console.log('INVALID FILE!!')
+        }
         document.querySelector('#new-room-cover-upload').className = 'col s6';
     }
 

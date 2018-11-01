@@ -34,7 +34,7 @@ class Intro extends Component {
 
         else {
             this.setState({
-                stage: 6
+                stage: 1
             });
         }
     }
