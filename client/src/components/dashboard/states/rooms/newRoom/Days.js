@@ -62,8 +62,11 @@ export default class Days extends Component {
                         </p>
                     </div>
                     <div className="timepicker-cont">
-                        <label htmlFor={this.props.daysID}>Time</label>
-                        <input id={this.props.daysID} name="time" placeholder="02:30 AM" type="text" className="timepicker" />
+                        <label htmlFor={`timeFrom${this.props.daysID}`}>Time From</label>
+                        <input id={`timeFrom${this.props.daysID}`} name="timeFrom" placeholder="02:00 AM" type="text" className="timepicker" />
+
+                        <label htmlFor={`timeTo${this.props.daysID}`}>Time To</label>
+                        <input id={`timeTo${this.props.daysID}`} name="timeTo" placeholder="04:00 AM" type="text" className="timepicker" />
                     </div>
                 </div>
             </li>

@@ -149,13 +149,16 @@ export default class Times extends Component {
 
             const dayObj = {
                 days: null,
-                time: null
+                time: {
+                    from: '',
+                    to: ''
+                }
             };
 
             let valid = false;
             inputs.forEach(input => {
                 input.addEventListener('change', this.validateDayTime);
-                if (input.name !== 'time') {
+                if (input.type === 'checkbox') {
                     if (input.checked) {
                         dayObj.days = {
                             ...dayObj.days,
@@ -165,14 +168,17 @@ export default class Times extends Component {
                     }
                 }
 
-               else {
-                    dayObj.time = {
-                        from: input.value,
-                    }
+               else if (input.name === 'timeFrom') {
+                    dayObj.time.from = input.value;
                }
+
+               else if (input.name === 'timeTo') {
+                    dayObj.time.to = input.value
+               }
+
             });
 
-            if (dayObj.time !== '' && valid) {
+            if (dayObj.time.from !== '' && dayObj.time.to !== '' && valid) {
                 validCount++;
             }
 
