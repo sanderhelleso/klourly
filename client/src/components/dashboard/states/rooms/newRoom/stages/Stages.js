@@ -26,12 +26,6 @@ import Cover from './Cover';
 
 let WORDS = [];
 
-///////////////////////////////////////////////////////////////////////
-//////// THIS FILE WILL BE REFACTORED AFTER INITIAL CODEBASE  ////////
-///////     EACH STAGE SPLIT INTO OWN COMPONENT AND STATE    ////////
-////////////////////////////////////////////////////////////////////
-
-
 class Stages extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +34,7 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 7,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 5,
             lastStage: 7
         }
 
@@ -157,23 +151,24 @@ class Stages extends Component {
         }
     }
 
+    normalizeRoom() {
+        const room = this.props.state.dashboard.newRoom;
+        delete room.stage;
+        delete room.lastStage;
+
+        return room;
+    }
+
     createRoom() {
-        const roomData = {
-            owner: this.state.owner,
-            name: this.state.roomName,
-            type: this.state.roomType,
-            purpose: this.state.roomPurpose,
-            radius: this.state.roomRadius,
-            times: this.state.dayTimes,
-            startWeek: this.state.startWeek,
-            repeat: this.state.repeat,
-            cover: this.state.cover
-        }
         
-        dashboard.createRoom(this.props.state.user.id, JSON.stringify(roomData))
+        dashboard.createRoom(this.props.state.auth.user.id,
+        JSON.stringify(this.normalizeRoom()))
         .then(response => {
-            this.setStage();
-            this.props.newRoomActions(response.data.rooms);
+            this.setState({
+                stage: this.state.stage + 1
+            });
+
+            this.props.newRoomCreatedAction(response.data.rooms);
             localStorage.setItem('rooms', 
             JSON.stringify({
                 ...response.data.rooms

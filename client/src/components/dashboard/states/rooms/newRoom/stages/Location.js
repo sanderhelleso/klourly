@@ -69,10 +69,6 @@ class Location extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-    }
-
     confirmLocation() {
         if (this.state.validLocation) {
             return(

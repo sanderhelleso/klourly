@@ -78,6 +78,7 @@ const authReducer = (state = initialState, action) => {
         case 'NEW_ROOM_SUCCESS':
             return {
                 ...state,
+                newRoom: {},
                 userData: {
                     ...state.userData,
                     rooms: {

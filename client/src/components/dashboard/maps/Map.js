@@ -27,9 +27,15 @@ const Map = compose(
     withGoogleMap,
     lifecycle({
 
+        componentDidMount() {
+            getAddressFromCoords(this.props.coords).
+            then(response => {
+                store.dispatch(newRoomAddressAction(response));
+                document.querySelector('#geoCoords-address').innerHTML = response;
+            });
+        },
         componentWillReceiveProps(nextProps) {
             if (this.props.markerPosition !== nextProps.markerPosition) {
-                console.log(this.props);
                 getAddressFromCoords(nextProps.markerPosition 
                 ?
                 JSON.parse(JSON.stringify(nextProps.markerPosition))
