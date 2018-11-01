@@ -26,7 +26,6 @@ const Map = compose(
     withScriptjs,
     withGoogleMap,
     lifecycle({
-
         componentDidMount() {
             getAddressFromCoords(this.props.coords).
             then(response => {

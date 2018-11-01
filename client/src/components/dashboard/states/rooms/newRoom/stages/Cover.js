@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import { XSquare, Trash2 } from 'react-feather';
 
 import NextStage from '../NextStage';
 import { notification } from '../../../../../../helpers/notification';
@@ -57,7 +58,7 @@ export default class Cover extends Component {
             this.setState({
                 cover: file,
                 default: false,
-                previewClassname: 'new-room-cover z-depth-2 hoverable',
+                previewClassname: 'new-room-cover z-depth-2',
             });
         }
 
@@ -101,12 +102,18 @@ export default class Cover extends Component {
                         </button>
                     </Dropzone>
                 </div>
-                <div id="cover-preview" className="col s6">
-                    <img className={this.state.previewClassname}
+                <div id="cover-preview" className={this.state.previewClassname}>
+                    <img
                     src={this.setCoverPreview()}
                     alt={this.displayCoverFileName()}
-                    onClick={this.removeCoverPreview}
                     />
+                    <div className="overlay" onClick={this.removeCoverPreview}>
+                        <div className="cover-preview-text">
+                            <Trash2 size={48} />
+                            <br />
+                            <span>REMOVE</span>
+                        </div>
+                    </div>
                 </div>
                 <div id="finish-room-creation-cont" className="col s12">
                     <NextStage 
