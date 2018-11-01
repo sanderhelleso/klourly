@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
 import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
@@ -24,6 +23,7 @@ import Purpose from './Purpose';
 import Radius from './Radius';
 import Location from './Location';
 import Times from './Times';
+import Cover from './Cover';
 
 let WORDS = [];
 
@@ -41,29 +41,16 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 6,
-            lastStage: 7,
-            validTimes: false,
-            validWeek: false,
-            startWeek: false,
-            daysSelected: 0,
-            dayTimes: [],
-            repeat: true,
-            cover: null,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 7,
+            lastStage: 7
         }
 
         this.createRoom = this.createRoom.bind(this);
         this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
         this.renderStage = this.renderStage.bind(this);
-        this.setCoverPreview = this.setCoverPreview.bind(this);
         this.renderBackToDash = this.renderBackToDash.bind(this);
         this.setStage = this.setStage.bind(this);
-        this.onDrop = this.onDrop.bind(this);
-        this.displayCoverFileName = this.displayCoverFileName.bind(this);
-        this.onDragEnter = this.onDragEnter.bind(this);
-        this.onDragLeave = this.onDragLeave.bind(this);
-
     }
 
     // update words when component renders
@@ -145,59 +132,6 @@ class Stages extends Component {
         });
     }
 
-    stageSeven() {
-        const STAGE_SEVEN =
-        <div className="row col s12">
-            <div className="col s6">
-                <Dropzone id="new-room-cover-upload" onDrop={this.onDrop} onDragEnter={(event) => this.onDragEnter(event)} onDragLeave={this.onDragLeave} accept="image/jpeg, image/png" multiple={false}>
-                    <h4>Drag files here</h4>
-                    <h5>or</h5>
-                    <button id="new-room-cover-browse" className="waves-effect waves-light btn animated fadeIn">Browse</button>
-                </Dropzone>
-            </div>
-            <div id="cover-preview" className="col s6">
-                <img src={this.setCoverPreview()} alt={this.displayCoverFileName()} className="z-depth-2" />
-            </div>
-            <div id="finish-room-creation-cont" className="col s12">
-                <button id="confirm-new-room-name" className="waves-effect waves-light btn animated fadeIn" onClick={this.setStage}>Finish and create room</button>
-                <p>Default cover image will be selected if no other image is uploaded</p>
-            </div>
-        </div>
-
-        return STAGE_SEVEN;
-    }
-
-    setCoverPreview() {
-        return this.state.cover ? this.state.cover[0].preview : '../img/dashboard/cover.jpg';
-    }
-
-    displayCoverFileName() {
-        const file = this.state.cover;
-        const FILE_NAME =
-        <div className="animated fadeIn">
-            <h5 id="new-room-cover-file-name">{file === null ? '' : file[0].name}</h5>
-        </div>
-
-        return this.state.cover === null ? null : FILE_NAME;
-    }
-
-    onDrop(file) {
-        this.setState({
-            cover: file
-        });
-        document.querySelector('#new-room-cover-upload').className = 'col s6';
-        console.log(file);
-    }
-
-    onDragEnter(e) {
-        const ele = e.target;
-        ele.id === 'new-room-cover-upload' ? ele.className = 'col s12 dropzone-active' : null;
-    }
-
-    onDragLeave() {
-        document.querySelector('#new-room-cover-upload').className = 'col s12';
-    }
-
     currentStage() {
         switch (this.state.stage) {
 
@@ -220,7 +154,7 @@ class Stages extends Component {
                 return <Times />;
             
             case 7:
-                return this.STAGE_SEVEN();
+                return <Cover />;
 
             case 8:
                 return this.createRoom();
