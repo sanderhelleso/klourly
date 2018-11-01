@@ -62,6 +62,18 @@ const authReducer = (state = initialState, action) => {
                     }
                 }
             }
+
+        case 'NEW_ROOM_ADDRESS':
+            return {
+                ...state,
+                newRoom: {
+                    ...state.newRoom,
+                    location: {
+                        ...state.newRoom.location,
+                        address: action.payload
+                    }
+                }
+            }
         
         case 'NEW_ROOM_SUCCESS':
             return {

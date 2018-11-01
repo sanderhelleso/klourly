@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geoLocationActions } from '../../../actions/geoLocationActions';
 import { newRoomLocationAction } from '../../../actions/newRoom/newRoomLocationAction';
+import { newRoomAddressAction } from '../../../actions/newRoom/newRoomAddressAction';
 
 import { store } from '../../../store';
 import { notification } from "../../../helpers/notification";
@@ -27,14 +28,18 @@ const Map = compose(
     lifecycle({
 
         componentWillReceiveProps(nextProps) {
-            getAddressFromCoords(nextProps.markerPosition 
-            ?
-            JSON.parse(JSON.stringify(nextProps.markerPosition))
-            : 
-            nextProps.coords).
-            then(response => {
-                document.querySelector('#geoCoords-address').innerHTML = response;
-            });
+            if (this.props.markerPosition !== nextProps.markerPosition) {
+                console.log(this.props);
+                getAddressFromCoords(nextProps.markerPosition 
+                ?
+                JSON.parse(JSON.stringify(nextProps.markerPosition))
+                : 
+                nextProps.coords).
+                then(response => {
+                    store.dispatch(newRoomAddressAction(response));
+                    document.querySelector('#geoCoords-address').innerHTML = response;
+                });
+            }
         }
         
     })
