@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
 import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
 import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
 
-import 'react-toastify/dist/ReactToastify.css';
-
 import { dashboard } from '../../../../../middelware/dashboard';
 import { cards } from '../../../../../../helpers/cards';
-
 import BackToDash from '../../../../BackToDash';
 
 // stages
@@ -41,30 +40,27 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 7,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 5,
             lastStage: 7
         }
 
         this.createRoom = this.createRoom.bind(this);
-        this.currentStage = this.currentStage.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
-        this.renderStage = this.renderStage.bind(this);
-        this.renderBackToDash = this.renderBackToDash.bind(this);
-        this.setStage = this.setStage.bind(this);
     }
 
     // update words when component renders
     componentWillMount() {
-        WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
+       WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+
         if (this.props.state.dashboard.newRoom) {
             if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
+                this.updateWord();
                 this.setState({
                     stage: nextProps.state.dashboard.newRoom.stage
-                })
+                });
             }
         }
 
@@ -73,8 +69,14 @@ class Stages extends Component {
                 stage: 5,
                 lastStage: 7
             });
-        }
-        
+        }   
+    }
+
+    updateWord() {
+        WORDS.splice(WORDS.indexOf(this.state.word), 1);
+        this.setState({
+            word: WORDS[Math.floor(Math.random() * WORDS.length)],
+        });
     }
 
     renderBackToDash() {
@@ -120,16 +122,7 @@ class Stages extends Component {
         </div>
 
 
-        return this.state.stage < 1 || this.state.stage > 6 ? null : STATUS;
-    }
-
-    setStage() {
-        
-        WORDS.splice(WORDS.indexOf(this.state.word), 1);
-        this.setState({
-            word: WORDS[Math.floor(Math.random() * WORDS.length)],
-            stage: this.state.stage + 1
-        });
+        return this.state.stage < 1 || this.state.stage > 7 ? null : STATUS;
     }
 
     currentStage() {

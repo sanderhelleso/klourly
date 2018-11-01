@@ -1,5 +1,5 @@
 import React from "react";
-import { compose, withStateHandlers } from "recompose";
+import { compose, withStateHandlers, lifecycle } from 'recompose';
 import { InfoWindow, withGoogleMap, withScriptjs, GoogleMap, Marker} from "react-google-maps";
 import MapMarker from './MapMarker';
 import { bindActionCreators } from 'redux';
@@ -22,7 +22,12 @@ const Map = compose(
         })
     }),
     withScriptjs,
-    withGoogleMap
+    withGoogleMap,
+    lifecycle({
+        componentDidMount() {
+            getAddressFromCoords();
+        }
+    })
 ) (props =>
     <div className="col s12">
         <div id="newRoom-map-cont">
@@ -47,6 +52,19 @@ const Map = compose(
         </div>
     </div>
 );
+
+function getAddressFromCoords() {
+    let geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode( { 'address': 'Bakerstreet, 2'}, (results, status) => {
+        if (status == 'OK') {
+            console.log('here result of geocoder', results);
+        } 
+        
+        else {
+            console.log('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
 
 // copy passed data to clipboard
 function copyCoords(coords) {
