@@ -81,7 +81,15 @@ class Intro extends Component {
         return (
             <div>
                 {this.renderIntro()}
-                {this.state.stage === 0 ? <NextStage message={this.state.message} valid={true} /> : null}
+                {this.state.stage === 0
+                ?
+                <NextStage
+                message={this.state.message}
+                valid={true} 
+                data={{owner: this.props.state.auth.user.id}}
+                />
+                :
+                null}
             </div>
         )
     }

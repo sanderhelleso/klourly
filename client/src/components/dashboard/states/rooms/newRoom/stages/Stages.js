@@ -40,7 +40,7 @@ class Stages extends Component {
             word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 5,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 7,
             lastStage: 7
         }
 
@@ -66,7 +66,7 @@ class Stages extends Component {
 
         else {
             this.props.nextStageAction({
-                stage: 5,
+                stage: 7,
                 lastStage: 7
             });
         }   
