@@ -26,6 +26,8 @@
 
 #user-avatar {
     margin-right: 0.5rem;
+    min-height: 35px;
+    min-width: 35px;
     max-height: 35px;
     max-width: 35px;
     border-radius: 50%;

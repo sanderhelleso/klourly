@@ -49,7 +49,6 @@ async function login(email, password) {
         // get response from endpoint
         // success, store UID in localstorage and redirect to dashboard
         if (response.data.success) {
-            console.log(response.data.userData);
             localStorage.setItem('user', JSON.stringify(response.data.userData.user));            
         }
 

@@ -30,6 +30,7 @@
     "firebaseauth": "^1.0.0",
     "multer": "^1.4.0",
     "nodemon": "^1.18.4",
+    "npm": "^6.4.1",
     "react": "^16.5.2",
     "react-live-clock": "^2.0.3",
     "request": "^2.88.0",

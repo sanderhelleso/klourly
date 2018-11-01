@@ -13,7 +13,6 @@ import './styles/dashboardSettings.css';
 import { userDataActions } from '../../actions/userDataActions';
 import { logoutActions } from '../../actions/logoutActions';
 import { authentication } from '../middelware/authentication'; 
-import { dashboard } from '../middelware/dashboard';
 
 class DashboardSettings extends Component {
     constructor(props) {

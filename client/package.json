@@ -15,7 +15,7 @@
     "/api/settings": {
       "target": "http://localhost:5000"
     },
-    "/api/avatarUpload": {
+    "/api/upload/photo": {
       "target": "http://localhost:5000"
     },
     "/api/userData": {

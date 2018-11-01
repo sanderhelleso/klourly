@@ -2,7 +2,7 @@ import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
 
 export const dashboard = {
-    avatarUpload,
+    uploadPhoto,
     updateSettings,
     fetchUserData,
     createRoom,
@@ -13,13 +13,13 @@ export const dashboard = {
 };
 
 // update user avatar
-async function avatarUpload(data) {
+async function uploadPhoto(data) {
 
     // send data to endpoint and attempt to update avatar
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/avatarUpload',
+            url: '/api/upload/photo',
             data: data
         });
 

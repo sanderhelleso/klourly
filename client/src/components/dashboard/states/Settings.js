@@ -173,7 +173,7 @@ class Settings extends Component {
 
             // send blob to server, store and set avatar and state
             fd.append('file', file, `${this.props.state.auth.user.id}.${extension}`);
-            dashboard.avatarUpload(fd)
+            dashboard.uploadPhoto(fd)
             .then(response => {
 
                 // update state for avatar (userData)
