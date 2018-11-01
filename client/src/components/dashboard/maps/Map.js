@@ -15,7 +15,8 @@ const Map = compose(
         isMarkerShown: false,
         markerPosition: null
     }), {
-        onMapClick: ({ isMarkerShown }) => (e) => (store.dispatch(newRoomLocationAction(JSON.stringify(e.latLng))),
+        onMapClick: ({ isMarkerShown }) => (e) => 
+        (store.dispatch(newRoomLocationAction(JSON.stringify(e.latLng))),
         {
             markerPosition: e.latLng,
             isMarkerShown: true
@@ -24,9 +25,18 @@ const Map = compose(
     withScriptjs,
     withGoogleMap,
     lifecycle({
-        componentDidMount() {
-            getAddressFromCoords();
+
+        componentWillReceiveProps(nextProps) {
+            getAddressFromCoords(nextProps.markerPosition 
+            ?
+            JSON.parse(JSON.stringify(nextProps.markerPosition))
+            : 
+            nextProps.coords).
+            then(response => {
+                document.querySelector('#geoCoords-address').innerHTML = response;
+            });
         }
+        
     })
 ) (props =>
     <div className="col s12">
@@ -41,28 +51,54 @@ const Map = compose(
                 {props.isMarkerShown ? null : <MapMarker location={{ lat: props.coords.lat, lng: props.coords.lng }} />}
                 </GoogleMap>
             </div>
-            <h5 id="newRoom-map-geoCoords" onClick={(coords) => copyCoords(props.markerPosition ? JSON.parse(JSON.stringify(props.markerPosition)) : props.coords)}>
+            <h5 id='geoCoords-address'></h5>
+            <h5 
+            id="newRoom-map-geoCoords" 
+            onClick={(coords) => copyCoords(props.markerPosition 
+            ? JSON.parse(JSON.stringify(props.markerPosition))
+            :
+            props.coords)}
+            >
                 <span>
-                Latitude: { props.markerPosition ? JSON.parse(JSON.stringify(props.markerPosition)).lat :  props.coords.lat }
+                Latitude: { props.markerPosition
+                ?
+                JSON.parse(JSON.stringify(props.markerPosition)).lat
+                :
+                props.coords.lat }
                 </span>
                 <br />
-                <span>Longitude: { props.markerPosition ? JSON.parse(JSON.stringify(props.markerPosition)).lng :  props.coords.lng }
+                <span>Longitude: { props.markerPosition
+                ?
+                JSON.parse(JSON.stringify(props.markerPosition)).lng
+                :
+                props.coords.lng }
                 </span>
             </h5>
         </div>
     </div>
 );
 
-function getAddressFromCoords() {
-    let geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode( { 'address': 'Bakerstreet, 2'}, (results, status) => {
-        if (status == 'OK') {
-            console.log('here result of geocoder', results);
-        } 
-        
-        else {
-            console.log('Geocode was not successful for the following reason: ' + status);
-        }
+async function getAddressFromCoords(coords) {
+
+    // if coordinates are passed from map event, parse coords and set
+    coords.latLng ? coords = JSON.parse(JSON.stringify(coords.latLng)) : coords;
+    const geocoder = new window.google.maps.Geocoder();
+    const latlng = new window.google.maps.LatLng(coords);
+
+    // fetch geocode from gived coordinates
+    return new Promise((resolve, reject) => {
+        geocoder.geocode({'latLng': latlng}, (results, status) => {
+
+            // location fetch successfull
+            if (status === window.google.maps.GeocoderStatus.OK) {
+                resolve(results[1] ? results[1].formatted_address : 'No address found');
+            }   
+            
+            else {
+                // show alert here?
+                resolve(`Geocoder failed due to: ${status}`);
+            }
+        });
     });
 }
 
