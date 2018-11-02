@@ -172,12 +172,13 @@ class Settings extends Component {
             const fd = new FormData();
 
             // send blob to server, store and set avatar and state
-            fd.append('file', file, `${this.props.state.auth.user.id}.${extension}`);
+            fd.append('file', file, `avatar.${this.props.state.auth.user.id}.${extension}`);
             dashboard.uploadPhoto(fd)
             .then(response => {
 
                 // update state for avatar (userData)
-                this.props.avatarActions(response.data.avatarUrl);
+                console.log(response);
+                this.props.avatarActions(response.data.photoUrl);
 
                 // update local storage
                 localStorage.setItem('userData', JSON.stringify(this.props.state.dashboard.userData));

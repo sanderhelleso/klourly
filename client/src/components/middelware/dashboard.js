@@ -24,6 +24,7 @@ async function uploadPhoto(data) {
         });
 
         // return data recieved from server
+        console.log(response);
         return response;
     }
 

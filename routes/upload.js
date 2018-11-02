@@ -30,14 +30,29 @@ module.exports = app => {
         const name = file.originalname;
 
         // storage bucket
-        const uid = name.split('.')[0];
+        const type = name.split('.')[0]; // avatar / cover
+        const uid = name.split('.')[1];
 
-        // set unique time stamp to img to remove cache problem
-        // also alow for instant update of avatar for client
-        const storageLocation = `avatars/${uid}.png`; // always png
+        // set storage location depending on type of photo upload
+        let storageLocation; // always png
+        if (type === 'avatar') {
+            storageLocation = `avatars/${uid}.png`;
+        }
+
+        else if (type === 'roomCover') {
+            storageLocation = `rooms/${uid}/cover.png`;
+        }
+
+        else {
+            res.status(500).json({
+                status: 'error',
+                error: 'Invalid file type'
+            });
+        }
+        
         const bucketFile = bucket.file(storageLocation);
 
-        let avatarUrl;
+        let url;
         bucketFile.save(new Buffer(file.buffer))
         bucketFile.getSignedUrl({
             action: 'read',
@@ -45,22 +60,23 @@ module.exports = app => {
         })
 
         // get url of created file bucket
-        // update users photoUrl data
+        // update photo data
         .then(signedUrls => {
-            avatarUrl = signedUrls[0];
-            updateUserPhotoURL(uid, avatarUrl);
+            photoUrl = signedUrls[0];
+            updatePhotoURL(uid, photoUrl, type);
         })
 
         // send succes data to client
         .then(() => {
             res.status(200).json({
                 status: 'success',
-                avatarUrl: avatarUrl
+                photoUrl: url
             });
         })
 
         // catch any error and send status
         .catch(error => {
+            console.log(error);
             res.status(500).json({
                 status: 'error',
                 errors: error
@@ -69,15 +85,25 @@ module.exports = app => {
     });
 }
 
-// update and set the new photoUrl for user
-function updateUserPhotoURL(uid, url) {
+// update and set the new photo
+function updatePhotoURL(uid, url, type) {
 
-    // get user reference in database
-    const settingsRef = db.ref(`users/${uid}/settings`);
+    let ref; // db ref to update
+    let key; // key to set to match state key
 
-    // update photoUrl
-    settingsRef.update({
-        'photoUrl': url
+    if (type === 'avatar') {
+        ref = db.ref(`users/${uid}/settings`);
+        key = 'photoUrl';
+    }
+
+    else if (type === 'roomCover') {
+        ref = db.ref(`rooms/${uid}/cover`);
+        key = 'cover';
+    }
+
+    // update photo ref
+    ref.update({
+        [key]: url
     })
     .catch(error => {
         console.log(error);
