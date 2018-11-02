@@ -60,7 +60,7 @@ class Stages extends Component {
 
         else {
             this.props.nextStageAction({
-                stage: 0,
+                stage: 7,
                 lastStage: 7
             });
         }   
@@ -167,14 +167,24 @@ class Stages extends Component {
             this.setState({
                 stage: this.state.stage + 1
             });
+            
+            // create file blob
+            const file = this.normalizeRoom().cover[0];
+            const extension = file.name.split('.').pop();
+            const fd = new FormData();
 
-            this.props.newRoomCreatedAction(response.data.rooms);
-            localStorage.setItem('rooms', 
-            JSON.stringify({
-                ...response.data.rooms
-            }));
+            // send blob to server, store and set cover and state
+            fd.append('file', file, `roomCover.${response.data.id}.${extension}`);
+            dashboard.uploadPhoto(fd)
+            .then(() => {
+                this.props.newRoomCreatedAction(response.data.rooms);
+                localStorage.setItem('rooms', 
+                JSON.stringify({
+                    ...response.data.rooms
+                }));
 
-            cards.enterRoom(this.props, response.data.id);
+                cards.enterRoom(this.props, response.data.id);
+            });
         });
 
         return <p className="redirecting">Successfully created room! Redirecting...</p>;

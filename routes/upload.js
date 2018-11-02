@@ -97,7 +97,7 @@ function updatePhotoURL(uid, url, type) {
     }
 
     else if (type === 'roomCover') {
-        ref = db.ref(`rooms/${uid}/cover`);
+        ref = db.ref(`rooms/${uid}`);
         key = 'cover';
     }
 
