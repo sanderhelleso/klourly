@@ -9,6 +9,7 @@ import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
 
 import { dashboard } from '../../../../../middelware/dashboard';
 import { cards } from '../../../../../../helpers/cards';
+
 import BackToDash from '../../../../BackToDash';
 
 class Create extends Component {
@@ -27,6 +28,10 @@ class Create extends Component {
         this.createRoom = this.createRoom.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating new Room... | Klourly';
+    }
+
     componentDidMount() {
         this.createRoom();
     }
@@ -39,16 +44,6 @@ class Create extends Component {
         return room;
     }
 
-    createFileBlob(id) {
-        const file = this.normalizeRoom().cover[0];
-        const extension = file.name.split('.').pop();
-        const fd = new FormData();
-
-        // send blob to server, store and set cover and state
-        fd.append('file', file, `roomCover.${id}.${extension}`);
-        dashboard.uploadPhoto(fd)
-    }
-
     redirect(response) {
         this.props.newRoomCreatedAction(response.data.rooms);
         localStorage.setItem('rooms', 
@@ -59,23 +54,34 @@ class Create extends Component {
         cards.enterRoom(this.props, response.data.id);
     }
 
+    createFileBlob(id) {
+        const file = this.normalizeRoom().cover[0];
+        const extension = file.name.split('.').pop();
+        const fd = new FormData();
+
+        // send blob to server, store and set cover and state
+        fd.append('file', file, `roomCover.${id}.${extension}`);
+        return dashboard.uploadPhoto(fd)
+    }
+
     createRoom() {
         this.setState({
-            message: 'Creating Room...'
+            message: 'Creating Room...',
+            success: true
         });
 
         dashboard.createRoom(this.props.state.auth.user.id,
         JSON.stringify(this.normalizeRoom()))
         .then(response => {
-
             console.log(response);
             if (response.data.success) {
                 this.setState({
-                    message: 'Successfully created room! Redirecting...'
+                    message: 'Success!'
                 });
                 
                 // create file blob
-                if (this.normalizeRoom().cover === typeof Object) {
+                if (Array.isArray(this.normalizeRoom().cover) && this.normalizeRoom().cover.length) {
+                    console.log(this.normalizeRoom().cover);
                     this.createFileBlob(response.data.id)
                     .then(() => {
                         this.redirect(response);
