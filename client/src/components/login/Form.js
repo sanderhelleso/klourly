@@ -151,7 +151,7 @@ class Form extends Component {
 // set initial store state
 const mapStateToProps = (state) => {
     return {
-        user: state.state
+        user: state
     }
 }
 
