@@ -19,6 +19,17 @@ class NextStage extends Component {
 
         this.renderNext = this.renderNext.bind(this);
         this.setNextStage = this.setNextStage.bind(this);
+        this.nextStageOnEnterKey = this.nextStageOnEnterKey.bind(this);
+    }
+
+    // lifecycle, add event on mount
+    componentDidMount() {
+        document.addEventListener('keyup', this.nextStageOnEnterKey);
+    }
+
+    // remove event on unmount
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.nextStageOnEnterKey);
     }
 
     // update disabled / enabled state depending on props recieved
@@ -27,6 +38,12 @@ class NextStage extends Component {
             this.setState({
                 valid: nextProps.valid
             });
+        }
+    }
+
+    nextStageOnEnterKey(e) {
+        if (e.keyCode === 13) {
+            document.querySelector(`#${this.state.id}`).click();
         }
     }
 
