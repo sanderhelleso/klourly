@@ -32,7 +32,7 @@ export default class Cover extends Component {
     }
 
     setCoverPreview() {
-        return this.state.cover ? this.state.cover[0].preview : '../img/dashboard/cover.jpg';
+        return this.state.cover ? this.state.cover[0].preview : 'https://tinyurl.com/ya5kcp2h';
     }
 
     removeCoverPreview() {
@@ -119,7 +119,7 @@ export default class Cover extends Component {
                     <NextStage 
                     message={this.state.message} 
                     valid={true} 
-                    data={{cover: this.state.cover}}
+                    data={{cover: this.state.cover ? this.state.cover : 'https://tinyurl.com/ya5kcp2h'}}
                     />
                     <p>{staticTxt.hint}</p>
                 </div>

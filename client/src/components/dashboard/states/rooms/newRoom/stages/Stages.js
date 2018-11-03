@@ -159,6 +159,7 @@ class Stages extends Component {
         return room;
     }
 
+    // !! REFACTOR INTO OWN FILE !! //
     createRoom() {
         
         dashboard.createRoom(this.props.state.auth.user.id,
@@ -169,22 +170,35 @@ class Stages extends Component {
             });
             
             // create file blob
-            const file = this.normalizeRoom().cover[0];
-            const extension = file.name.split('.').pop();
-            const fd = new FormData();
+            console.log(this.normalizeRoom().cover);
+            if (this.normalizeRoom().cover === typeof Object) {
+                const file = this.normalizeRoom().cover[0];
+                const extension = file.name.split('.').pop();
+                const fd = new FormData();
 
-            // send blob to server, store and set cover and state
-            fd.append('file', file, `roomCover.${response.data.id}.${extension}`);
-            dashboard.uploadPhoto(fd)
-            .then(() => {
+                // send blob to server, store and set cover and state
+                fd.append('file', file, `roomCover.${response.data.id}.${extension}`);
+                dashboard.uploadPhoto(fd)
+                .then(() => {
+                    this.props.newRoomCreatedAction(response.data.rooms);
+                    localStorage.setItem('rooms', 
+                    JSON.stringify({
+                        ...response.data.rooms
+                    }));
+
+                    cards.enterRoom(this.props, response.data.id);
+                });
+            }
+
+            else {
                 this.props.newRoomCreatedAction(response.data.rooms);
                 localStorage.setItem('rooms', 
-                JSON.stringify({
+                    JSON.stringify({
                     ...response.data.rooms
                 }));
 
                 cards.enterRoom(this.props, response.data.id);
-            });
+            }
         });
 
         return <p className="redirecting">Successfully created room! Redirecting...</p>;
