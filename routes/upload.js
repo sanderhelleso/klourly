@@ -69,17 +69,16 @@ module.exports = app => {
         // send succes data to client
         .then(() => {
             res.status(200).json({
-                status: 'success',
+                'success': true,
                 photoUrl: url
             });
         })
 
         // catch any error and send status
         .catch(error => {
-            console.log(error);
             res.status(500).json({
-                status: 'error',
-                errors: error
+                'success': false,
+                error: error
             });
         });
     });
@@ -106,6 +105,6 @@ function updatePhotoURL(uid, url, type) {
         [key]: url
     })
     .catch(error => {
-        console.log(error);
-    })
+        throw error;
+    });
 }

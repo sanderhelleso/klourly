@@ -52,11 +52,11 @@ a {
 
 .redirecting {
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%);
     text-align: center;
     font-size: 1rem;
     font-weight: 100;
-    color: #bdbdbd;
+    color: #9e9e9e;
 }

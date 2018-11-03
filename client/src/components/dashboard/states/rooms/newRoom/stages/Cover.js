@@ -31,6 +31,10 @@ export default class Cover extends Component {
         this.onDropRejected = this.onDropRejected.bind(this);
     }
 
+    componentWillMount() {
+        document.title = 'Creating New Room | Step 7 / 7 | Klourly'
+    }
+
     setCoverPreview() {
         return this.state.cover ? this.state.cover[0].preview : 'https://tinyurl.com/ya5kcp2h';
     }

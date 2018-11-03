@@ -25,7 +25,7 @@ module.exports = app => {
             const roomsRef = db.ref(`users/${req.body.uid}/rooms`);
             roomsRef.once('value', snapshot => {
                 res.status(200).json({
-                    status: 'success',
+                    success: true,
                     message: 'Successfully created room',
                     id: id,
                     rooms: snapshot.val()
@@ -47,7 +47,7 @@ module.exports = app => {
 
                 // once all data are retrieved, send to client and update state
                 res.status(200).json({
-                    status: 'success',
+                    success: true,
                     message: 'Successfully fetched room',
                     roomData: roomSnapshot.val(),
                     ownerData: {
@@ -75,7 +75,7 @@ module.exports = app => {
                 // once all rooms have been stored in array, send to client
                 if (rooms.length === Object.keys(req.body.rooms).length) {
                     res.status(200).json({
-                        status: 'success',
+                        success: true,
                         message: 'Successfully fetched rooms',
                         roomsData: rooms,
                     });

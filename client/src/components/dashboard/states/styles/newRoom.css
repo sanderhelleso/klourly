@@ -166,7 +166,7 @@
     align-items: center;
 }
 
-#start-new-room, #confirm-new-room-name, #new-room-cover-browse {
+#start-new-room, #confirm-new-room-name, #new-room-cover-browse, #create-room-try-again-btn {
     background-color: transparent;
     box-shadow: none;
     border: 2px solid #00e988;
@@ -186,6 +186,16 @@
     display: block;
     margin: 5rem auto;
 }
+
+#create-room-try-again-btn {
+    background-color: #F15F79 !important;
+    border: 2px solid #F15F79;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 
 .new-room-name-disabled {
     opacity: 0.5 !important;
