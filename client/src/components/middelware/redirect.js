@@ -7,7 +7,8 @@ export const redirect = {
     login,
     dashboard,
     room,
-    newRoom
+    newRoom,
+    joinRoom
 };
 
 function home() {
@@ -35,4 +36,8 @@ function room(props, roomData, id) {
 
 function newRoom() {
     history.push('/dashboard/new-room');
+}
+
+function joinRoom(url) {
+    history.push(url);
 }

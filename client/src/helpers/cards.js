@@ -12,6 +12,7 @@ export const cards = {
 // render room card
 function renderRooms(data, props) {
     return data.map(room => {
+        console.log(room);
         room.cover = './img/dashboard/cover.jpg';
         room.location = 'BIT Building 218';
         const CARD = 

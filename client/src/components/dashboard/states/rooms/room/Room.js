@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import BackToDash from '../../../BackToDash';
+import { redirect } from '../../../../middelware/redirect';
 
 class Room extends Component {
     constructor(props) {
@@ -13,10 +14,16 @@ class Room extends Component {
             room: this.props.state.dashboard.currentRoom.roomData,
             owner: this.props.state.dashboard.currentRoom.ownerData
         }
+
+        this.joinRoom = this.joinRoom.bind(this);
     }
 
     componentWillMount() {
         document.title = `${this.state.room.name} | Klourly`;
+    }
+
+    joinRoom() {
+        redirect.joinRoom(this.state.room.invite.url);
     }
 
     render() {
@@ -25,6 +32,7 @@ class Room extends Component {
                 <BackToDash />
                 <h1>{this.state.room.name}</h1>
                 <h5>{this.state.owner.name}</h5>
+                <p onClick={this.joinRoom}>Invitiation Link</p>
             </div>
         )
     }
