@@ -33,6 +33,7 @@ class Type extends Component {
         return(
             <div className="col s6">
                 <div 
+                tabIndex={0}
                 className={this.state.classNamePublic} 
                 onClick={(event) => helpers.selectOption(event, {type: 'Public'}, this.props)}
                 >
@@ -48,6 +49,7 @@ class Type extends Component {
         return(
             <div className="col s6">
                 <div 
+                tabIndex={0}
                 className={this.state.classNamePrivate} 
                 onClick={(event) => helpers.selectOption(event, { type: 'Private' }, this.props)}
                 >

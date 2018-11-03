@@ -33,6 +33,7 @@ class Purpose extends Component {
         return(
             <div className="col s6">
                 <div 
+                tabIndex={0}
                 className={this.state.classNameEduction} 
                 onClick={(event) => helpers.selectOption(event, {purpose: 'Education'}, this.props)}
                 >
@@ -48,6 +49,7 @@ class Purpose extends Component {
         return(
             <div className="col s6">
                 <div 
+                tabIndex={0}
                 className={this.state.classNameEvents} 
                 onClick={(event) => helpers.selectOption(event, {purpose: 'Event'}, this.props)}
                 >

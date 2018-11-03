@@ -21,6 +21,7 @@ import Room from './dashboard/states/rooms/room/Room';
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
 import MainNav from './navigation/main/MainNav';
+import JoinRoom from './joinRoom/JoinRoom';
 
 class App extends Component {
     constructor(props) {
@@ -69,6 +70,8 @@ class App extends Component {
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/*" component={Room} />
+
+                    <Route exact path="/join-room/*/*" component={JoinRoom} />
                 </div>
             </Router>
         )

@@ -18,6 +18,7 @@ module.exports = app => {
         // create room
         const roomRef = db.ref(`rooms/${id}`)
         roomData.id = id;
+        roomData.invite =  { ...generateInvitationLink(2, id) };
         roomRef.set({ ...roomData })
         
         // after setting new room data, get all user rooms and send to client
@@ -83,4 +84,35 @@ module.exports = app => {
             });
         });
     });
+}
+
+const HOUR = 3600000; // ms for an hour
+function generateInvitationLink(duration, id) {
+
+    switch (duration) {
+
+        // one day
+        case 0:
+            duration = HOUR * 24;
+            break;
+
+        // 3 days
+        case 1:
+           duration = HOUR * 72;
+           break;
+
+        // 1 week (default)
+        case 2:
+            duration = HOUR * 168;
+            break;
+    }
+
+    const timeStamp = new Date().getTime();
+    const invite = {
+        validFrom: timeStamp,
+        validTo: timeStamp + duration,
+        url: `/join-room/${timeStamp}/${id}`
+    }
+
+    return invite;
 }

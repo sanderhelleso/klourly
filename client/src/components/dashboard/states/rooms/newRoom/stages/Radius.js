@@ -46,6 +46,7 @@ class Radius extends Component {
             return (
                 <div key={option.radius} className="col s3">
                     <div 
+                    tabIndex={0}
                     className={`${className} ${option.className}`} 
                     onClick={(event) => helpers.selectOption(event, { radius: option.radius }, this.props)}
                     >
