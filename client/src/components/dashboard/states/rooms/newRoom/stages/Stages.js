@@ -6,12 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
-import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
 import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
-
-import { dashboard } from '../../../../../middelware/dashboard';
-import { cards } from '../../../../../../helpers/cards';
 import BackToDash from '../../../../BackToDash';
 
 // stages
@@ -23,6 +18,7 @@ import Radius from './Radius';
 import Location from './Location';
 import Times from './Times';
 import Cover from './Cover';
+import Create from './Create';
 
 let WORDS = [];
 
@@ -38,7 +34,6 @@ class Stages extends Component {
             lastStage: 7
         }
 
-        this.createRoom = this.createRoom.bind(this);
         this.displayStageStatus = this.displayStageStatus.bind(this);
     }
 
@@ -144,64 +139,11 @@ class Stages extends Component {
                 return <Cover />;
 
             case 8:
-                return this.createRoom();
+                return <Create />;
 
             default:
                 return null;
         }
-    }
-
-    normalizeRoom() {
-        const room = this.props.state.dashboard.newRoom;
-        delete room.stage;
-        delete room.lastStage;
-
-        return room;
-    }
-
-    // !! REFACTOR INTO OWN FILE !! //
-    createRoom() {
-        
-        dashboard.createRoom(this.props.state.auth.user.id,
-        JSON.stringify(this.normalizeRoom()))
-        .then(response => {
-            this.setState({
-                stage: this.state.stage + 1
-            });
-            
-            // create file blob
-            console.log(this.normalizeRoom().cover);
-            if (this.normalizeRoom().cover === typeof Object) {
-                const file = this.normalizeRoom().cover[0];
-                const extension = file.name.split('.').pop();
-                const fd = new FormData();
-
-                // send blob to server, store and set cover and state
-                fd.append('file', file, `roomCover.${response.data.id}.${extension}`);
-                dashboard.uploadPhoto(fd)
-                .then(() => {
-                    this.props.newRoomCreatedAction(response.data.rooms);
-                    localStorage.setItem('rooms', 
-                    JSON.stringify({
-                        ...response.data.rooms
-                    }));
-
-                    cards.enterRoom(this.props, response.data.id);
-                });
-            }
-
-            else {
-                this.props.newRoomCreatedAction(response.data.rooms);
-                localStorage.setItem('rooms', 
-                    JSON.stringify({
-                    ...response.data.rooms
-                }));
-
-                cards.enterRoom(this.props, response.data.id);
-            }
-        });
-
-        return <p className="redirecting">Successfully created room! Redirecting...</p>;
     }
 
     renderStage() {
@@ -239,7 +181,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ nextStageAction, newRoomCreatedAction, enterRoomActions }, dispatch);
+    return bindActionCreators({ nextStageAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stages);
