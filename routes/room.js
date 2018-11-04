@@ -21,11 +21,12 @@ module.exports = app => {
 
         // create room
         const roomRef = db.ref(`rooms/${id}`)
-        roomData.id = id;
-        roomData.invite =  { ...generateInvitationLink(2, id) };
-        roomRef.set({ ...roomData })
-        
+        roomData.id = id; // set id to room
+        roomData.invite =  { ...generateInvitationLink(2, id) }; // create invitation link
+        roomData.members = { ... req.body.id }; // add owner to memberlist
+
         // after setting new room data, get all user rooms and send to client
+        roomRef.set({ ...roomData })
         .then(() => {
             const roomsRef = db.ref(`users/${req.body.uid}/rooms`);
             roomsRef.once('value', snapshot => {
