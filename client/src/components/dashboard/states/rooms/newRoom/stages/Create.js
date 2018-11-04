@@ -46,6 +46,7 @@ class Create extends Component {
 
     redirect(response) {
         this.props.newRoomCreatedAction(response.data.rooms);
+        localStorage.removeItem('roomsOwning');
         localStorage.setItem('rooms', 
         JSON.stringify({
             ...response.data.rooms

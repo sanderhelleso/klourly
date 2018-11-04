@@ -19,6 +19,7 @@ class Owning extends Component {
 
     async componentWillMount() {
         if (localStorage.getItem('roomsOwning') !== null) {
+            
             this.setState({
                 roomsData: JSON.parse(localStorage.getItem('roomsOwning'))
             });

@@ -22,8 +22,8 @@ module.exports = app => {
         // create room
         const roomRef = db.ref(`rooms/${id}`)
         roomData.id = id; // set id to room
-        roomData.invite =  { ...generateInvitationLink(2, id) }; // create invitation link
-        roomData.members = { ... req.body.id }; // add owner to memberlist
+        roomData.invite =  { ...generateInvitationLink(2, id) }; // create invitation link (1 week)
+        roomData.members = req.body.uid; // add owner to memberlist
 
         // after setting new room data, get all user rooms and send to client
         roomRef.set({ ...roomData })
