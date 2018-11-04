@@ -1,0 +1,40 @@
+body {
+    overflow: auto !important;
+}
+
+#room {
+    min-height: 200vh;
+}
+
+#room-cover {
+    position: relative;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+}
+
+#room-owner-avatar {
+    position: absolute;
+    bottom: -20%;
+    right: 10%;
+}
+
+#room-owner-avatar img {
+    border-radius: 50%;
+    max-width: 125px;
+    max-height: 125px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+}
+
+#room-cover-header {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    color: white;
+    max-width: 50%;
+}
+
+#room-cover-header h1 {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 3rem;
+}

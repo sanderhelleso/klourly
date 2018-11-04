@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Parallax, Background } from 'react-parallax';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -9,6 +10,9 @@ import { redirect } from '../../../../middelware/redirect';
 import { dashboard } from '../../../../middelware/dashboard';
 
 import LinearLoader from '../../../../loaders/LinearLoader';
+
+import '../../styles/room.css';
+import { materializeJS } from '../../../../../helpers/materialize';
 
 class Room extends Component {
     constructor(props) {
@@ -23,7 +27,7 @@ class Room extends Component {
         this.renderNotAuthorized = this.renderNotAuthorized.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         console.log(this.props.routes);
         const roomID = this.props.location.pathname.split('/')[3];
         dashboard.getRoom(this.props.state.auth.user.id, roomID)
@@ -50,18 +54,56 @@ class Room extends Component {
         redirect.joinRoom(this.state.room.invite.url);
     }
 
-    renderRoomHeading() {
+    renderLoader() {
         if (!this.state.room) {
             return <LinearLoader />;
         }
 
+        return null;
+    }
+
+    renderRoomHeading() {
         return (
-            <div className="animated fadeIn">
+            <div id="room-cover-header" className="animated fadeIn">
                 <h1>{this.state.room.name}</h1>
-                <h5>{this.state.owner.name}</h5>
-                <p onClick={this.joinRoom}>Invitiation Link</p>
             </div>
         )
+    }
+
+    renderCover() {
+
+        if (this.state.room) {
+            return (
+                <div id="room-cover" className="col s12 animated fadeIn">
+                    <Parallax
+                        blur={{ min: -15, max: 15 }}
+                        bgImage={`${this.state.room.cover}`}
+                        bgImageAlt={`${this.state.room.name} cover image`} 
+                        strength={400}
+                        renderLayer={percentage => (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    background: `linear-gradient(to right,rgba(118, 0, 255, ${percentage * 1.5}),rgb(255, 255, 255, ${percentage * 1}))`,
+                                    left: '0%',
+                                    top: '0%',
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                            />
+                        )}
+                    >
+                        <div style={{ height: '300px' }} />
+                    </Parallax>
+                    {this.renderRoomHeading()}
+                    <div id="room-owner-avatar">
+                        <img className="animated zoomIn" src={this.state.owner.photoUrl} />
+                    </div>
+                </div>
+            )
+        }
+
+        return null;
     }
 
     renderNotAuthorized() {
@@ -74,10 +116,11 @@ class Room extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div id="room" className="container">
                 <BackToDash />
+                {this.renderLoader()}
+                {this.renderCover()}
                 {this.renderNotAuthorized()}
-                {this.renderRoomHeading()}
             </div>
         )
     }
