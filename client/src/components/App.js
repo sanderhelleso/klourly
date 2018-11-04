@@ -31,6 +31,7 @@ class App extends Component {
         this.loginRoute = this.loginRoute.bind(this);
         this.signupRoute = this.signupRoute.bind(this);
         this.dashboardRoute = this.dashboardRoute.bind(this);
+        this.roomRoute = this.roomRoute.bind(this);
     }
 
     // authenticate user
@@ -58,6 +59,10 @@ class App extends Component {
         return this.props.state.auth.loggedIn ? <Dashboard /> : <Redirect to="/" />;
     }
 
+    roomRoute() {
+        return this.props.state.auth.loggedIn ? <Room /> : <Redirect to="/" />;
+    }
+
     render() {
         return (
             <Router history={history}>
@@ -65,7 +70,7 @@ class App extends Component {
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
                     <Route exact path="/login" component={this.loginRoute} />
-                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/dashboard" component={this.dashboardRoute} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/*" component={Room} />
 

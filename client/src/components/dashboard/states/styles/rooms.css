@@ -48,7 +48,6 @@
 }
 
 .card-image-overlay {
-    display: block;
     position: relative;
     cursor: pointer;
 }
@@ -64,6 +63,7 @@
      rgba(118, 0, 255, 0.7),
     rgb(0, 0, 0, 0.3));
     cursor: default;
+
     /*
     background: linear-gradient(
     rgba(118, 0, 255, 0.5), 

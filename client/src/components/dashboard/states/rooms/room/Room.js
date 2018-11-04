@@ -22,39 +22,26 @@ class Room extends Component {
     }
 
     componentWillMount() {
+        console.log(this.props.routes);
+        const roomID = this.props.location.pathname.split('/')[3];
+        dashboard.getRoom(this.props.state.auth.user.id, roomID)
+        .then(response => {
+            if (response.data.success) {
+                this.setState({
+                    room: response.data.roomData,
+                    owner: response.data.ownerData,
+                    authorized: true
+                }, () => {
+                    document.title = `${this.state.room.name} | Klourly`; 
+                });
+            }
 
-        if (this.props.state.dashboard.currentRoom) {
-            this.setState({
-                room: this.props.state.dashboard.currentRoom.roomData,
-                owner: this.props.state.dashboard.currentRoom.ownerData,
-                authorized: true
-            }, 
-            () => {
-                document.title = `${this.state.room.name} | Klourly`;
-            });
-        }
-
-        else {
-            const roomID = this.props.location.pathname.split('/')[3];
-            dashboard.getRoom(this.props.state.auth.user.id, roomID)
-            .then(response => {
-                if (response.data.success) {
-                    this.setState({
-                        room: response.data.roomData,
-                        owner: response.data.ownerData,
-                        authorized: true
-                    }, () => { 
-                        document.title = `${this.state.room.name} | Klourly`; 
-                    });
-                }
-
-                else {
-                    this.setState({
-                        authorized: false
-                    });
-                }
-            });
-        }
+            else {
+                this.setState({
+                    authorized: false
+                });
+            }
+        });     
     }
 
     joinRoom() {

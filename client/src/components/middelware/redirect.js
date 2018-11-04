@@ -1,5 +1,4 @@
 import history from './history';
-import { enterRoomActions } from '../../actions/enterRoomActions';
 
 export const redirect = {
     home,
@@ -27,10 +26,7 @@ function dashboard() {
     history.push('/dashboard');
 }
 
-function room(props, roomData, id) {
-
-     // set state and redirect to room
-    props.enterRoomActions(roomData);
+function room(id) {
     history.push(`/dashboard/rooms/${id}`);
 }
 
