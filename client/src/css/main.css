@@ -60,3 +60,20 @@ a {
     font-weight: 100;
     color: #9e9e9e;
 }
+
+.linear-loader-cont .progress {
+    max-width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
+}
+
+.progress {
+    background-color: #eeeeee !important;
+}
+
+.progress .indeterminate {
+    background-color: #7c4dff !important;
+    
+}

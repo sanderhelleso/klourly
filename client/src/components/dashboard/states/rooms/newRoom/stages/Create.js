@@ -11,6 +11,7 @@ import { dashboard } from '../../../../../middelware/dashboard';
 import { cards } from '../../../../../../helpers/cards';
 
 import BackToDash from '../../../../BackToDash';
+import { redirect } from '../../../../../middelware/redirect';
 
 class Create extends Component {
     constructor(props) {
@@ -51,8 +52,8 @@ class Create extends Component {
         JSON.stringify({
             ...response.data.rooms
         }));
-    
-        cards.enterRoom(this.props, response.data.id);
+        
+        redirect.room(response.data.id);
     }
 
     createFileBlob(id) {

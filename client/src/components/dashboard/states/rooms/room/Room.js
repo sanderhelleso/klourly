@@ -8,6 +8,8 @@ import BackToDash from '../../../BackToDash';
 import { redirect } from '../../../../middelware/redirect';
 import { dashboard } from '../../../../middelware/dashboard';
 
+import LinearLoader from '../../../../loaders/LinearLoader';
+
 class Room extends Component {
     constructor(props) {
         super(props);
@@ -50,11 +52,11 @@ class Room extends Component {
 
     renderRoomHeading() {
         if (!this.state.room) {
-            return null;
+            return <LinearLoader />;
         }
 
         return (
-            <div>
+            <div className="animated fadeIn">
                 <h1>{this.state.room.name}</h1>
                 <h5>{this.state.owner.name}</h5>
                 <p onClick={this.joinRoom}>Invitiation Link</p>
