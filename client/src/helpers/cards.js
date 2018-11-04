@@ -11,30 +11,35 @@ export const cards = {
 
 // render room card
 function renderRooms(data, props) {
+    console.log(data);
+    data = data.sort((a, b) => a.name.localeCompare(b.name));
     return data.map(room => {
-        console.log(room);
-        room.cover = './img/dashboard/cover.jpg';
-        room.location = 'BIT Building 218';
-        const CARD = 
-        <div key={room.id} className="col s12 m12 l6 animated fadeIn">
-            <div className="card small">
-                <div className="card-image">
-                    <div className="card-image-overlay">
-                        <img src={room.cover} />
+        if (room) {
+            room.cover = './img/dashboard/cover.jpg';
+            room.location = 'BIT Building 218';
+            const CARD = 
+            <div key={room.id} className="col s12 m12 l6 animated fadeIn">
+                <div className="card small">
+                    <div className="card-image">
+                        <div className="card-image-overlay">
+                            <img src={room.cover} />
+                        </div>
+                        <span className="room-card-type">{type(room)}</span>
+                        <span className="card-title room-card-name"><span className="room-card-location">{room.location}</span><br />{room.name}</span>
                     </div>
-                    <span className="room-card-type">{type(room)}</span>
-                    <span className="card-title room-card-name"><span className="room-card-location">{room.location}</span><br />{room.name}</span>
-                </div>
-                <div className="card-fab">
-                    <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={(e) => enterRoom(props, room.id, e)}><ArrowRight /></a>
-                </div>
-                <div className="card-content room-card-content">
-                    {attended()}
+                    <div className="card-fab">
+                        <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn" onClick={(e) => enterRoom(props, room.id, e)}><ArrowRight /></a>
+                    </div>
+                    <div className="card-content room-card-content">
+                        {attended()}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        return CARD;
+            return CARD;
+        }
+
+        return null;
     });
 }
 

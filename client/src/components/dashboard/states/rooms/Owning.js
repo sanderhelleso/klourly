@@ -30,7 +30,7 @@ class Owning extends Component {
         // if present fetch users room and render room cards
         if (this.props.state.dashboard.userData.rooms) {
             if (this.props.state.dashboard.userData.rooms.owning) {
-
+                
                 const rooms = this.props.state.dashboard.userData.rooms.owning;
                 await dashboard.getRooms(this.props.state.auth.user.id, rooms)
                 .then(response => {
@@ -38,7 +38,6 @@ class Owning extends Component {
                         roomsData: response.data.roomsData
                     });
                     localStorage.setItem('roomsOwning', JSON.stringify(response.data.roomsData));
-                    console.log(localStorage.getItem('roomsOwning'));
                 });
             }
         }
@@ -50,7 +49,10 @@ class Owning extends Component {
                 <div className="main-rooms-header">
                 </div>
                 <div className="row main-rooms-cont">
-                    {cards.renderRooms(this.state.roomsData, this.props)}
+                    {cards.renderRooms(
+                        this.state.roomsData.filter(n => n),
+                        this.props
+                    )}
                 </div>
             </div>
         )

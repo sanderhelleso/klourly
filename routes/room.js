@@ -29,7 +29,7 @@ module.exports = app => {
         roomRef.set({ ...roomData })
         .then(() => {
             const roomsRef = db.ref(`users/${req.body.uid}/rooms`);
-            roomsRef.once('value', snapshot => {
+            roomsRef.orderByChild('name').once('value', snapshot => {
                 res.status(200).json({
                     success: true,
                     message: 'Successfully created room',
@@ -73,7 +73,8 @@ module.exports = app => {
 
         // itterate over rooms and get data
         Object.keys(req.body.rooms).forEach((roomID) => {
-            db.ref(`rooms/${roomID}`).once('value', snapshot => {
+            const roomRef = db.ref(`rooms/${roomID}`);
+            roomRef.orderByChild('name').once('value', snapshot => {
                 
                 // push room data to array
                 rooms.push(snapshot.val());
