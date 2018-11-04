@@ -31,15 +31,13 @@ class App extends Component {
         this.loginRoute = this.loginRoute.bind(this);
         this.signupRoute = this.signupRoute.bind(this);
         this.dashboardRoute = this.dashboardRoute.bind(this);
-        console.log(this.props);
     }
 
     // authenticate user
-    async componentWillMount() {
-        console.log(this.props);
+    componentWillMount() {
         if (localStorage.getItem('user') !== null && localStorage.getItem('userData') !== null) {
             const user = JSON.parse(localStorage.getItem('user'));
-            this.props.validateAction(await authentication.validateUser(user.id)); // set logged in (true / false)
+            this.props.validateAction(authentication.validateUser(user.id)); // set logged in (true / false)
         }
     }
 
