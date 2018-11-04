@@ -11,9 +11,14 @@ import { dashboard } from '../../../../middelware/dashboard';
 class Room extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            authorized: true
+        }
    
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
+        this.renderNotAuthorized = this.renderNotAuthorized.bind(this);
     }
 
     componentWillMount() {
@@ -21,7 +26,8 @@ class Room extends Component {
         if (this.props.state.dashboard.currentRoom) {
             this.setState({
                 room: this.props.state.dashboard.currentRoom.roomData,
-                owner: this.props.state.dashboard.currentRoom.ownerData
+                owner: this.props.state.dashboard.currentRoom.ownerData,
+                authorized: true
             }, 
             () => {
                 document.title = `${this.state.room.name} | Klourly`;
@@ -30,15 +36,23 @@ class Room extends Component {
 
         else {
             const roomID = this.props.location.pathname.split('/')[3];
-            dashboard.getRoom(123456, roomID)
+            dashboard.getRoom(this.props.state.auth.user.id, roomID)
             .then(response => {
-                console.log(response);
-                this.setState({
-                    room: response.data.roomData,
-                    owner: response.data.ownerData
-                }, () => {
-                    document.title = `${this.state.room.name} | Klourly`;
-                });
+                if (response.data.success) {
+                    this.setState({
+                        room: response.data.roomData,
+                        owner: response.data.ownerData,
+                        authorized: true
+                    }, () => { 
+                        document.title = `${this.state.room.name} | Klourly`; 
+                    });
+                }
+
+                else {
+                    this.setState({
+                        authorized: false
+                    });
+                }
             });
         }
     }
@@ -48,7 +62,7 @@ class Room extends Component {
     }
 
     renderRoomHeading() {
-        if (!this.state) {
+        if (!this.state.room) {
             return null;
         }
 
@@ -61,10 +75,19 @@ class Room extends Component {
         )
     }
 
+    renderNotAuthorized() {
+        if (!this.state.authorized) {
+            return <h1>NOT ALLOWED TO BE HERE</h1>
+        }
+
+        return null;
+    }
+
     render() {
         return (
             <div className="container">
                 <BackToDash />
+                {this.renderNotAuthorized()}
                 {this.renderRoomHeading()}
             </div>
         )

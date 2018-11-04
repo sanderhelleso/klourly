@@ -2,7 +2,11 @@ const firebase = require('firebase-admin');
 const db = firebase.database();
 const shortid = require('shortid');
 
+const authenticate = require('../middelwares/requireRoomAuth');
+
 module.exports = app => {
+
+    app.use(authenticate);
 
     // create new room
     app.post('/api/createRoom', (req, res) => {
