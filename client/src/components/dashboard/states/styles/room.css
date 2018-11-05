@@ -85,8 +85,11 @@ body {
     margin: 2.5rem;
 }
 
-#room-attendence-cont p {
+#room-attendence-cont h5 {
     color: #bdbdbd;
+    font-weight: 100;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
 }
 
 #room-attendence-percentage {
