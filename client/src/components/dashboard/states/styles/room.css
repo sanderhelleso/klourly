@@ -110,3 +110,16 @@ body {
     stroke: #ffffff;
     opacity: 0.5;
 }
+
+#room-announcements {
+    padding: 0 3rem;
+    border-right: 1px solid #eeeeee;
+}
+
+#room-announcements h3 {
+    margin-top: 0;
+}
+
+.announcement {
+    padding: 1rem 0;
+}

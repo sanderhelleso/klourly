@@ -13,8 +13,8 @@ import { dashboard } from '../../../../middelware/dashboard';
 import LinearLoader from '../../../../loaders/LinearLoader';
 
 import '../../styles/room.css';
-import { materializeJS } from '../../../../../helpers/materialize';
 import Checkin from './Checkin';
+import Announcements from './announcements/Announcements';
 
 class Room extends Component {
     constructor(props) {
@@ -132,8 +132,7 @@ class Room extends Component {
                 <div id="room-cont">
                     {this.renderCover()}
                     <div className="row">
-                        <div className="col s8">
-                        </div>
+                        <Announcements />
                         <Checkin />
                     </div>
                 </div>
