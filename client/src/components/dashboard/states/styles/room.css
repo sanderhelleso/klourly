@@ -121,11 +121,12 @@ body {
 }
 
 .announcement {
-    padding: 1rem 0;
+    padding: 0 0 3.25rem 0 !important;
     margin-bottom: 2rem;
+    border-bottom: 1px solid #eeeeee;
 }
 
-.reactions {
+.reactions, .announcement-readmore-cont {
     margin-top: 0.5rem;
     padding: 0 !important;
 }
@@ -143,4 +144,31 @@ body {
 
 .reactions div span {
     font-size: 1rem;
+}
+
+.announcement-readmore-btn {
+    margin-top: 1rem;
+    background-color: transparent;
+    color: #bdbdbd;
+    border: 1.5px solid #eeeeee;
+    line-height: 0;
+    padding: 1rem;
+    box-shadow: none;
+}
+
+.announcement-readmore-btn:hover, .announcement-readmore-btn:focus {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.announcement-title {
+    font-weight: 400;
+}
+
+.announcement-date {
+    color: #bdbdbd;
+}
+
+.announcement-body {
+    color: #757575;
 }
