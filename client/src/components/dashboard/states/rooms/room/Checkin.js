@@ -12,7 +12,7 @@ export default class Attend extends Component {
         super(props);
 
         this.state = {
-            active: false,
+            active: true,
             btnMessage: 'Check In',
             classNameEnabled: 'waves-effect waves-light btn animated fadeIn',
             classNameDisabled: 'waves-effect waves-light btn animated fadeIn new-room-name-disabled'
@@ -30,7 +30,7 @@ export default class Attend extends Component {
                     id='checkin-btn' 
                     className={this.state.classNameEnabled} 
                     >
-                    {this.state.btnMessageEnabled}
+                    {this.state.btnMessage}
                     </button>
                 </div>
             )

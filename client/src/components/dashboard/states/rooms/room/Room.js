@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Parallax, Background } from 'react-parallax';
+import { Settings } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -76,6 +77,7 @@ class Room extends Component {
     renderCover() {
         return (
             <div id="room-cover" className="col s12 animated fadeIn">
+                {this.renderAdmin()}
                 <Parallax
                     blur={{ min: -15, max: 15 }}
                     bgImage={`${this.state.room.cover}`}
@@ -102,6 +104,18 @@ class Room extends Component {
                 </div>
             </div>
         )
+    }
+
+    renderAdmin() {
+        if (this.state.room.owner === this.props.state.auth.user.id) {
+            return (
+                <div id="room-admin-settings-btn">
+                    <Settings size={30} />
+                </div>
+            )
+        }
+
+        return null;
     }
 
     renderNotAuthorized() {

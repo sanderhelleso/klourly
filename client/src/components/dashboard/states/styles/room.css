@@ -98,3 +98,15 @@ body {
     margin-top: 0;
     letter-spacing: 0px;
 }
+
+#room-admin-settings-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10000;
+}
+
+#room-admin-settings-btn svg {
+    stroke: #ffffff;
+    opacity: 0.5;
+}
