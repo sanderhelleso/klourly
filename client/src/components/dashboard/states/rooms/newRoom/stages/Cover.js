@@ -8,7 +8,7 @@ import { notification } from '../../../../../../helpers/notification';
 const staticTxt = {
     uploadBtn: 'Browse',
     hint: 'Default cover image will be selected if no other image is uploaded',
-    uploadError: 'Invalid file or image is to large! Maximum file upload size is 512KB'
+    uploadError: 'Invalid file or image is to large! Maximum file upload size is 1024KB'
 }
 
 export default class Cover extends Component {
@@ -93,7 +93,7 @@ export default class Cover extends Component {
                     onDragLeave={this.onDragLeave} 
                     onDropRejected={this.onDropRejected}
                     accept="image/jpeg, image/png"
-                    maxSize={524288}
+                    maxSize={524288 * 2}
                     multiple={false}
                     >
                         <h4>Drag files here</h4>

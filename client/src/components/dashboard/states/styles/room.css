@@ -3,12 +3,13 @@ body {
 }
 
 #room {
-    min-height: 200vh;
+    min-height: 100vh;
+    margin-bottom: 15vh;
+    padding-bottom: 10vh;
 }
 
 #room-cover {
     position: relative;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }
 
 #room-owner-avatar {
@@ -21,7 +22,6 @@ body {
     border-radius: 50%;
     max-width: 125px;
     max-height: 125px;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }
 
 #room-cover-header {
@@ -34,7 +34,26 @@ body {
 
 #room-cover-header h1 {
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 5px;
     font-size: 3rem;
+    margin: 0;
+}
+
+#room-cover-header h5 {
+    font-size: 1.5rem;
+    opacity: 0.5;
+    letter-spacing: 2px;
+}
+
+#room-cover-header p {
+    text-transform: capitalize;
+    margin-top: 1rem;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+#room-cont {
+    min-height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }

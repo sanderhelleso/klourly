@@ -13,6 +13,7 @@ import LinearLoader from '../../../../loaders/LinearLoader';
 
 import '../../styles/room.css';
 import { materializeJS } from '../../../../../helpers/materialize';
+import Attend from './Attend';
 
 class Room extends Component {
     constructor(props) {
@@ -65,45 +66,42 @@ class Room extends Component {
     renderRoomHeading() {
         return (
             <div id="room-cover-header" className="animated fadeIn">
+                <h5>{this.state.room.location.name}</h5>
                 <h1>{this.state.room.name}</h1>
+                <p>By {this.state.owner.name}</p>
             </div>
         )
     }
 
     renderCover() {
-
-        if (this.state.room) {
-            return (
-                <div id="room-cover" className="col s12 animated fadeIn">
-                    <Parallax
-                        blur={{ min: -15, max: 15 }}
-                        bgImage={`${this.state.room.cover}`}
-                        bgImageAlt={`${this.state.room.name} cover image`} 
-                        strength={400}
-                        renderLayer={percentage => (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    background: `linear-gradient(to right,rgba(118, 0, 255, ${percentage * 1.5}),rgb(255, 255, 255, ${percentage * 1}))`,
-                                    left: '0%',
-                                    top: '0%',
-                                    width: '100%',
-                                    height: '100%',
-                                }}
-                            />
-                        )}
-                    >
-                        <div style={{ height: '300px' }} />
-                    </Parallax>
-                    {this.renderRoomHeading()}
-                    <div id="room-owner-avatar">
-                        <img className="animated zoomIn" src={this.state.owner.photoUrl} />
-                    </div>
+        return (
+            <div id="room-cover" className="col s12 animated fadeIn">
+                <Parallax
+                    blur={{ min: -15, max: 15 }}
+                    bgImage={`${this.state.room.cover}`}
+                    bgImageAlt={`${this.state.room.name} cover image`} 
+                    strength={200}
+                    renderLayer={percentage => (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                background: `linear-gradient(to right,rgba(118, 0, 255, ${percentage * 1.5}),rgb(141, 58, 235, ${percentage * 1}))`,
+                                left: '0%',
+                                top: '0%',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        />
+                    )}
+                >
+                    <div style={{ height: '300px' }} />
+                </Parallax>
+                {this.renderRoomHeading()}
+                <div id="room-owner-avatar">
+                    <img className="animated fadeInUp z-depth-3" src={this.state.owner.photoUrl} />
                 </div>
-            )
-        }
-
-        return null;
+            </div>
+        )
     }
 
     renderNotAuthorized() {
@@ -114,12 +112,30 @@ class Room extends Component {
         return null;
     }
 
+    renderRoom() {
+        if (this.state.room) {
+            return(
+                <div id="room-cont">
+                    {this.renderCover()}
+                    <div className="row">
+                        <div className="col s8">
+                            <h5>qeqeqe</h5>
+                        </div>
+                        <Attend />
+                    </div>
+                </div>
+            )
+        }
+
+        return null;
+    }
+
     render() {
         return (
             <div id="room" className="container">
                 <BackToDash />
+                {this.renderRoom()}
                 {this.renderLoader()}
-                {this.renderCover()}
                 {this.renderNotAuthorized()}
             </div>
         )
