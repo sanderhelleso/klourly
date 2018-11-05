@@ -122,4 +122,25 @@ body {
 
 .announcement {
     padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.reactions {
+    margin-top: 0.5rem;
+    padding: 0 !important;
+}
+
+.reactions, .reactions .col {
+    text-align: center;
+}
+
+.reactions div {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin: 0 0.5rem;
+    padding: 0.5rem !important;
+}
+
+.reactions div span {
+    font-size: 1rem;
 }

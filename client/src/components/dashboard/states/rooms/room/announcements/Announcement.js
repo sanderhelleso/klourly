@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Reactions from './Reactions';
 
 export default class Announcement extends Component {
     constructor() {
@@ -18,6 +19,7 @@ export default class Announcement extends Component {
                 <h5>{this.state.title}</h5>
                 <span>{this.state.date}</span>
                 <p>{this.state.body}</p>
+                <Reactions />
             </div>
         )
     }
