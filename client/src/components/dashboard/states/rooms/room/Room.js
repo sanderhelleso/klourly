@@ -13,7 +13,7 @@ import LinearLoader from '../../../../loaders/LinearLoader';
 
 import '../../styles/room.css';
 import { materializeJS } from '../../../../../helpers/materialize';
-import Attend from './Attend';
+import Checkin from './Checkin';
 
 class Room extends Component {
     constructor(props) {
@@ -119,9 +119,8 @@ class Room extends Component {
                     {this.renderCover()}
                     <div className="row">
                         <div className="col s8">
-                            <h5>qeqeqe</h5>
                         </div>
-                        <Attend />
+                        <Checkin />
                     </div>
                 </div>
             )

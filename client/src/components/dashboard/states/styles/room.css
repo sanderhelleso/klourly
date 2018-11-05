@@ -10,12 +10,13 @@ body {
 
 #room-cover {
     position: relative;
+    margin-bottom: 7.5rem;
 }
 
 #room-owner-avatar {
     position: absolute;
     bottom: -20%;
-    right: 10%;
+    right: 11%;
 }
 
 #room-owner-avatar img {
@@ -54,6 +55,43 @@ body {
 
 #room-cont {
     min-height: 100vh;
+    padding-bottom: 5rem;
     background-color: #ffffff;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+}
+
+#room-checking {
+    text-align: center;
+}
+
+#room-checking h5 {
+    color: #bdbdbd;
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+
+#checkin-btn {
+    background-color: transparent;
+    box-shadow: none;
+    border: 2px solid #00e988;
+    color: #ffffff;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    line-height: 0;
+    padding: 1.75rem 2rem;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 2.5rem;
+}
+
+#room-attendence-cont p {
+    color: #bdbdbd;
+}
+
+#room-attendence-percentage {
+    font-weight: 800;
+    font-size: 5rem;
+    margin-top: 0;
+    letter-spacing: 0px;
 }
