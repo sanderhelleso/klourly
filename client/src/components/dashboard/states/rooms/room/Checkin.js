@@ -55,7 +55,7 @@ export default class Attend extends Component {
 
     render() {
         return (
-            <div id="room-checking" className="col s4">
+            <div id="room-checking" className="col l4 m6 s12">
                 <div className="col s12"> 
                     {this.renderCheckinBtn()}
                 </div>

@@ -131,7 +131,7 @@ class Room extends Component {
             return(
                 <div id="room-cont">
                     {this.renderCover()}
-                    <div className="row">
+                    <div className="row room-flex-s">
                         <Announcements />
                         <Checkin />
                     </div>

@@ -45,7 +45,7 @@ export default class Reactions extends Component {
 
     render() {
         return (
-            <div className="reactions col s10">
+            <div className="reactions col l10 m12 s12">
                 {this.renderReactions()}
             </div>
         )

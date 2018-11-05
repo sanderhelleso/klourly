@@ -140,6 +140,7 @@ body {
     border-radius: 6px;
     margin: 0 0.5rem;
     padding: 0.5rem !important;
+    cursor: pointer;
 }
 
 .reactions div span {
@@ -172,3 +173,24 @@ body {
 .announcement-body {
     color: #757575;
 }
+
+.room-flex-s {
+
+}
+
+@media (max-width: 600px) {
+    .room-flex-s {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #room-attendence-cont {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    #room-announcements {
+        margin-top: 2rem;
+        order: 2;
+    }
+  }
