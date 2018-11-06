@@ -40,7 +40,7 @@ export default class Announcements extends Component {
 
     render() {
         return (
-            <div id="room-announcements" className="col l8 m6 s12">
+            <div id="room-announcements">
                 <h2>Announcements</h2>
                 <div id="announcements-cont">
                     {this.renderAnnouncements()}

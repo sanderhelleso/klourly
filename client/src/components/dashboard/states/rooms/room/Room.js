@@ -46,6 +46,7 @@ class Room extends Component {
                         owner: response.data.ownerData,
                         authorized: true
                     }, () => {
+                        document.body.style.overflowY = 'auto';
                         document.title = `${this.state.room.name} | Klourly`; 
                     });
                 }, 700);
@@ -95,7 +96,9 @@ class Room extends Component {
                         <div
                             style={{
                                 position: 'absolute',
-                                background: `linear-gradient(to right,rgba(118, 0, 255, ${percentage * 1.5}),rgb(141, 58, 235, ${percentage * 1}))`,
+                                background: `linear-gradient(to right,
+                                rgba(118, 0, 255, ${percentage * 1.5}),
+                                rgb(141, 58, 235, ${percentage * 1}))`,
                                 left: '0%',
                                 top: '0%',
                                 width: '100%',
@@ -140,8 +143,12 @@ class Room extends Component {
                 <div id="room-cont" className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
-                        <Announcements />
-                        <Checkin />
+                        <div id="room-main" className="col l8 m6 s12">
+                            <Announcements />
+                        </div>
+                        <div id="room-aside" className="col l4 m6 s12">
+                            <Checkin />
+                        </div>
                     </div>
                 </div>
             )
@@ -167,7 +174,6 @@ const mapStateToProps = (state) => {
     return { state }
 }
 
-// attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ enterRoomActions }, dispatch);
 }

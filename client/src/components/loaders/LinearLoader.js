@@ -4,7 +4,6 @@ export default class componentName extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
         this.state = {
             active: true
         }

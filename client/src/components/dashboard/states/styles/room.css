@@ -1,9 +1,6 @@
-body {
-    overflow: auto !important;
-}
 
 #room {
-    min-height: 100vh;
+    min-height: 75vh;
     margin-bottom: 15vh;
     padding-bottom: 10vh;
 }
@@ -111,9 +108,12 @@ body {
     opacity: 0.5;
 }
 
+#room-main {
+    border-right: 1px solid #eeeeee;
+}
+
 #room-announcements {
     padding: 0 3rem;
-    border-right: 1px solid #eeeeee;
 }
 
 #room-announcements h3 {
