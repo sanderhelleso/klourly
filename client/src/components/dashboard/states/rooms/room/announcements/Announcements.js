@@ -32,7 +32,8 @@ export default class Announcements extends Component {
             return (
                 <Announcement
                 key={mockData.indexOf(announcement)}
-                data={announcement} />
+                data={announcement} 
+                />
             )
         });
     }
@@ -42,6 +43,10 @@ export default class Announcements extends Component {
             <div id="room-announcements" className="col l8 m6 s12">
                 <h2>Announcements</h2>
                 <div id="announcements-cont">
+                    {this.renderAnnouncements()}
+                    {this.renderAnnouncements()}
+                    {this.renderAnnouncements()}
+                    {this.renderAnnouncements()}
                     {this.renderAnnouncements()}
                 </div>
             </div>
