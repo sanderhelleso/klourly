@@ -17,6 +17,7 @@ import '../../styles/room.css';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
+import Location from './location/Location';
 
 class Room extends Component {
     constructor(props) {
@@ -148,11 +149,14 @@ class Room extends Component {
                             <Announcements />
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
-                            <div className="col s12">
+                            <div className="col s12 room-aside-section">
                                 <Checkin />
                             </div>
-                            <div className="col s12">
+                            <div className="col s12 room-aside-section">
                                 <Times />
+                            </div>
+                            <div className="col s12 room-aside-section">
+                                <Location />
                             </div>
                         </div>
                     </div>

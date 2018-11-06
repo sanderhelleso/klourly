@@ -56,7 +56,6 @@ class Times extends Component {
     render() {
         return (
             <div id="room-times-cont" className="center-align">
-                <Clock size={48} />
                 {this.renderTimes()}
             </div>
         )
