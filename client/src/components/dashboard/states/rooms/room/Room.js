@@ -16,6 +16,7 @@ import LinearLoader from '../../../../loaders/LinearLoader';
 import '../../styles/room.css';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
+import Times from './Times';
 
 class Room extends Component {
     constructor(props) {
@@ -147,7 +148,12 @@ class Room extends Component {
                             <Announcements />
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
-                            <Checkin />
+                            <div className="col s12">
+                                <Checkin />
+                            </div>
+                            <div className="col s12">
+                                <Times />
+                            </div>
                         </div>
                     </div>
                 </div>

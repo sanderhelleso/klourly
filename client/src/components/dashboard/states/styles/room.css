@@ -190,6 +190,34 @@
     color: #757575;
 }
 
+#room-times-cont {
+    margin: 4rem 0;
+}
+
+#room-times-cont svg {
+    stroke: #7c4dff;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+.room-times {
+    margin-top: 2rem;
+}
+
+.room-times ul li {
+    display: inline;
+    padding: 0.50rem;
+    color: #bdbdbd;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+.room-times h5 {
+    font-size: 1.65rem;
+    font-weight: 100;
+    color: #212121;
+}
+
 @media (max-width: 600px) {
     .room-flex-s {
         display: flex;
