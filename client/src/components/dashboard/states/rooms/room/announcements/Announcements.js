@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Announcement from './Announcement';
+import AnnouncementPreview from './AnnouncementPreview';
 
 const mockData = [
     {
@@ -30,7 +30,7 @@ export default class Announcements extends Component {
     renderAnnouncements() {
         return mockData.map(announcement => {
             return (
-                <Announcement
+                <AnnouncementPreview
                 key={mockData.indexOf(announcement)}
                 data={announcement} 
                 />

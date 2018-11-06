@@ -23,6 +23,7 @@ import RoomSettings from './dashboard/states/rooms/room/settings/RoomSettings';
 import Dashboard from './dashboard/Dashboard';
 import MainNav from './navigation/main/MainNav';
 import JoinRoom from './joinRoom/JoinRoom';
+import Announcement from './dashboard/states/rooms/room/announcements/Announcement';
 
 class App extends Component {
     constructor(props) {
@@ -74,7 +75,8 @@ class App extends Component {
                     <Route exact path="/dashboard" component={this.dashboardRoute} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/:id" component={Room} />
-                    <Route exact path="/dashboard/rooms/:id/settings" component={RoomSettings} />
+                    <Route exact path="/dashboard/rooms/:roomID/settings" component={RoomSettings} />
+                    <Route exact path="/dashboard/rooms/:roomID/announcements/:postID" component={Announcement} />
 
                     <Route exact path="/join-room/*/*" component={JoinRoom} />
                 </div>
