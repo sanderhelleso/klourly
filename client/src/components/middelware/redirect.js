@@ -8,7 +8,8 @@ export const redirect = {
     room,
     newRoom,
     joinRoom,
-    announcement
+    announcement,
+    roomAdminSettings
 };
 
 function home() {
@@ -29,6 +30,10 @@ function dashboard() {
 
 function room(id) {
     history.push(`/dashboard/rooms/${id}`);
+}
+
+function roomAdminSettings(id) {
+    history.push(`/dashboard/rooms/${id}/settings`);
 }
 
 function announcement(roomId, announcementId) {

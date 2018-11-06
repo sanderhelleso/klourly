@@ -31,6 +31,7 @@ class Room extends Component {
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
         this.renderNotAuthorized = this.renderNotAuthorized.bind(this);
+        this.enterRoomAdminSettings = this.enterRoomAdminSettings.bind(this);
     }
 
     componentDidMount() {
@@ -119,10 +120,17 @@ class Room extends Component {
         )
     }
 
+    enterRoomAdminSettings() {
+        redirect.roomAdminSettings(this.state.room.id);
+    }
+
     renderAdmin() {
         if (this.state.room.owner === this.props.state.auth.user.id) {
             return (
-                <div id="room-admin-settings-btn">
+                <div 
+                id="room-admin-settings-btn"
+                onClick={this.enterRoomAdminSettings}
+                >
                     <Settings size={30} />
                 </div>
             )
