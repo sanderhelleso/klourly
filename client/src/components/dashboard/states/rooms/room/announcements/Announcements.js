@@ -1,14 +1,44 @@
 import React, { Component } from 'react';
 import Announcement from './Announcement';
 
+const mockData = [
+    {
+        title: 'Welcome Students!',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim placerat augue id tristique. Nullam et erat mi. Donec at sagittis odio, nec venenatis nulla. Donec accumsan sagittis metus id feugiat. Aliquam justo risus, egestas non ipsum ac, imperdiet lobortis purus. Aliquam erat volutpat. Cras arcu eros, porttitor id libero a, elementum eleifend tellus. Morbi ullamcorper, felis sit amet lacinia ornare, leo enim fringilla nulla, sed mattis urna nibh in nisi.',
+        date: '04.11.2018'
+    },
+    {
+        title: 'A friendly Remainder...',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        date: '01.11.2018'
+    },
+    {
+        title: 'Quiz Next Tueseday',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim placerat augue id tristique. Nullam et erat mi. Donec at sagittis odio, nec venenatis nulla. Donec accumsan sagittis metus id feugiat. Aliquam justo risus, egestas non ipsum ac, imperdiet lobortis purus. Aliquam erat volutpat. Cras arcu eros, porttitor id libero a, elementum eleifend tellus. Morbi ullamcorper, felis sit amet lacinia ornare, leo enim fringilla nulla, sed mattis urna nibh in nisi.',
+        date: '05.11.2018'
+    }
+]
+
 export default class Announcements extends Component {
+    constructor() {
+        super();
+    }
+
+    renderAnnouncements() {
+        return mockData.map(announcement => {
+            return (
+                <Announcement
+                key={mockData.indexOf(announcement)}
+                data={announcement} />
+            )
+        });
+    }
+
     render() {
         return (
             <div id="room-announcements" className="col l8 m6 s12">
                 <div id="announcements-cont">
-                    <Announcement />
-                    <Announcement />
-                    <Announcement />
+                    {this.renderAnnouncements()}
                 </div>
             </div>
         )
