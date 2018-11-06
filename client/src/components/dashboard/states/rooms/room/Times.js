@@ -17,6 +17,17 @@ class Times extends Component {
         this.renderTimes = this.renderTimes.bind(this);
     }
 
+    sortDays(timeDays) {
+        const days = ['monday', 'tueseday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+        const sortedDays = [];
+        Object.keys(timeDays).forEach(day => {
+            sortedDays[days.indexOf(day)] = day;
+        });
+        
+        return { ...sortedDays.filter(Boolean) };
+    }
+
     renderTimes() {
 
         return Object.keys(this.state.times).map(timeKey => {
@@ -28,8 +39,8 @@ class Times extends Component {
                 return(
                     <div key={timeKey} className="room-times center-align animated fadeIn">
                         <ul>
-                        {
-                            Object.keys(time.days).map(day => {
+                        {  
+                            Object.values(this.sortDays(time.days)).map(day => {
                                 return <li key={day}>{day.substring(0, 3).toUpperCase()}</li>
                             })
                         }

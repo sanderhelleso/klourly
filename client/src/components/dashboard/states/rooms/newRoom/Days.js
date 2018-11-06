@@ -26,7 +26,7 @@ export default class Days extends Component {
                         </p>
                         <p>
                             <label>
-                            <input value="tueseday" name="tueseday" type="checkbox" />
+                            <input value="tuesday" name="tuesday" type="checkbox" />
                             <span>Tueseday</span>
                             </label>
                         </p>
