@@ -150,6 +150,11 @@ body {
     pointer-events: none;
 }
 
+.reacted {
+    background-color: #ede7f6 !important;
+    border: 1px solid #d1c4e9 !important;
+}
+
 .announcement-readmore-btn {
     margin-top: 1rem;
     background-color: transparent;

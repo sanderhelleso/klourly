@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Reactions from './Reactions';
+import Reactions from './reactions/Reactions';
 import { ArrowRight } from 'react-feather';
 
 export default class Announcement extends Component {

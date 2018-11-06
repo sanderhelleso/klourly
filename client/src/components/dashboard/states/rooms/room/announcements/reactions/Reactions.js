@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Reaction from './Reaction';
+
 const mockData = [
     {   name: 'happy',
         emoji: '😄',
@@ -26,15 +28,12 @@ const mockData = [
 export default class Reactions extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            reactions: mockData
-        }
     }
 
     getRGB() {
         return (
-            `rgba(${Math.floor(Math.random() * 255) + 1},
+            `rgba(
+            ${Math.floor(Math.random() * 255) + 1},
             ${Math.floor(Math.random() * 255) + 1},
             ${Math.floor(Math.random() * 255) + 1},
             0.5)`
@@ -42,7 +41,6 @@ export default class Reactions extends Component {
     }
 
     hoverReaction(e) {
-
         e.target.style.backgroundColor = this.getRGB();
     }
 
@@ -51,18 +49,12 @@ export default class Reactions extends Component {
     }
 
     renderReactions() {
-        return this.state.reactions.map(reaction => {
+        return mockData.map(reaction => {
             return (
-                <div 
-                key={this.state.reactions.indexOf(reaction)}
-                className="col s2"
-                onMouseEnter={(event) => this.hoverReaction(event)}
-                onMouseLeave={(event) => this.removeHoverReaction(event)}
-                >
-                    <span>
-                    {`${reaction.emoji} ${reaction.count}`}
-                    </span>
-                </div>
+                <Reaction 
+                key={mockData.indexOf(reaction)}
+                data={reaction}
+                />
             );
         });
     }
