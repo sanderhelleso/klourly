@@ -5,6 +5,7 @@ import { Settings } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { enterRoomActions } from '../../../../../actions/enterRoomActions';
 
 import BackToDash from '../../../BackToDash';
 import { redirect } from '../../../../middelware/redirect';
@@ -30,11 +31,11 @@ class Room extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.routes);
         const roomID = this.props.location.pathname.split('/')[3];
         dashboard.getRoom(this.props.state.auth.user.id, roomID)
         .then(response => {
             if (response.data.success) {
+                this.props.enterRoomActions(response.data.roomData);
                 this.setState({
                     room: response.data.roomData,
                     owner: response.data.ownerData,
@@ -161,7 +162,7 @@ const mapStateToProps = (state) => {
 
 // attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ enterRoomActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

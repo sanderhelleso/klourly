@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
 import Reactions from './reactions/Reactions';
 import { ArrowRight } from 'react-feather';
+import { redirect } from '../../../../../middelware/redirect';
 
-export default class Announcement extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Announcement extends Component {
     constructor(props) {
         super(props);
 
         this.state = props.data;
+
+        this.enterAnnouncement = this.enterAnnouncement.bind(this);
     }
 
+    enterAnnouncement() {
+        redirect.announcement(this.props.state.dashboard.currentRoom.id, this.state.id);
+    }
 
     renderReadMore() {
 
@@ -16,6 +26,7 @@ export default class Announcement extends Component {
             return (
                 <div className="col s12 announcement-readmore-cont">
                     <button 
+                    onClick={this.enterAnnouncement}
                     className="announcement-readmore-btn waves-effect waves-light btn animated fadeIn">
                     Read more
                     </button>
@@ -38,3 +49,14 @@ export default class Announcement extends Component {
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Announcement);

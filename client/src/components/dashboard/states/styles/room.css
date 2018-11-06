@@ -120,6 +120,14 @@ body {
     margin-top: 0;
 }
 
+#room-announcements h2 {
+    color: #bdbdbd;
+    opacity: 0.3;
+    margin: 0 0 3rem 0;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}
+
 .announcement {
     padding: 0 0 3.25rem 0 !important;
     margin-bottom: 2rem;
@@ -197,4 +205,4 @@ body {
         margin-top: 2rem;
         order: 2;
     }
-  }
+}
