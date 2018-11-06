@@ -22,7 +22,8 @@ class Room extends Component {
         super(props);
 
         this.state = {
-            authorized: true
+            authorized: true,
+            loading: true
         }
    
         this.joinRoom = this.joinRoom.bind(this);
@@ -37,17 +38,23 @@ class Room extends Component {
             if (response.data.success) {
                 this.props.enterRoomActions(response.data.roomData);
                 this.setState({
-                    room: response.data.roomData,
-                    owner: response.data.ownerData,
-                    authorized: true
-                }, () => {
-                    document.title = `${this.state.room.name} | Klourly`; 
+                    loading: false
                 });
+                setTimeout(() => {
+                    this.setState({
+                        room: response.data.roomData,
+                        owner: response.data.ownerData,
+                        authorized: true
+                    }, () => {
+                        document.title = `${this.state.room.name} | Klourly`; 
+                    });
+                }, 700);
             }
 
             else {
                 this.setState({
-                    authorized: false
+                    authorized: false,
+                    loading: false
                 });
             }
         });     
@@ -58,16 +65,16 @@ class Room extends Component {
     }
 
     renderLoader() {
-        if (!this.state.room) {
-            return <LinearLoader />;
+        if (this.state.loading) {
+            return <LinearLoader loading={true} />;
         }
 
-        return null;
+        return <LinearLoader loading={false} />;
     }
 
     renderRoomHeading() {
         return (
-            <div id="room-cover-header" className="animated fadeIn">
+            <div id="room-cover-header" className="">
                 <h5>{this.state.room.location.name}</h5>
                 <h1>{this.state.room.name}</h1>
                 <p>By {this.state.owner.name}</p>
@@ -77,7 +84,7 @@ class Room extends Component {
 
     renderCover() {
         return (
-            <div id="room-cover" className="col s12 animated fadeIn">
+            <div id="room-cover" className="col s12">
                 {this.renderAdmin()}
                 <Parallax
                     blur={{ min: -15, max: 15 }}
@@ -101,7 +108,7 @@ class Room extends Component {
                 </Parallax>
                 {this.renderRoomHeading()}
                 <div id="room-owner-avatar">
-                    <img className="animated fadeInUp z-depth-3" src={this.state.owner.photoUrl} />
+                    <img className="animated fadeIn z-depth-3" src={this.state.owner.photoUrl} />
                 </div>
             </div>
         )
@@ -130,7 +137,7 @@ class Room extends Component {
     renderRoom() {
         if (this.state.room) {
             return(
-                <div id="room-cont">
+                <div id="room-cont" className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
                         <Announcements />
