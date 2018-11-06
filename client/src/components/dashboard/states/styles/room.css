@@ -141,10 +141,13 @@ body {
     margin: 0 0.5rem;
     padding: 0.5rem !important;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 .reactions div span {
     font-size: 1rem;
+    z-index: -1000;
+    pointer-events: none;
 }
 
 .announcement-readmore-btn {
@@ -172,10 +175,6 @@ body {
 
 .announcement-body {
     color: #757575;
-}
-
-.room-flex-s {
-
 }
 
 @media (max-width: 600px) {

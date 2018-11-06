@@ -32,11 +32,36 @@ export default class Reactions extends Component {
         }
     }
 
+    getRGB() {
+        return (
+            `rgba(${Math.floor(Math.random() * 255) + 1},
+            ${Math.floor(Math.random() * 255) + 1},
+            ${Math.floor(Math.random() * 255) + 1},
+            0.5)`
+        );
+    }
+
+    hoverReaction(e) {
+
+        e.target.style.backgroundColor = this.getRGB();
+    }
+
+    removeHoverReaction(e) {
+        e.target.style.backgroundColor = 'transparent';
+    }
+
     renderReactions() {
         return this.state.reactions.map(reaction => {
             return (
-                <div key={this.state.reactions.indexOf(reaction)} className="col s2">
-                    <span>{`${reaction.emoji} ${reaction.count}`}</span>
+                <div 
+                key={this.state.reactions.indexOf(reaction)}
+                className="col s2"
+                onMouseEnter={(event) => this.hoverReaction(event)}
+                onMouseLeave={(event) => this.removeHoverReaction(event)}
+                >
+                    <span>
+                    {`${reaction.emoji} ${reaction.count}`}
+                    </span>
                 </div>
             );
         });
