@@ -1,16 +1,41 @@
 import React, { Component } from 'react';
 
-export default class Announcement extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Announcement extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
+        this.state = this.props.state.dashboard.currentRoom.currentAnnouncement;
     }
+
+    renderAnnouncement() {
+        console.log(this.state);
+        return (
+            <div className="animated fadeIn col s12">
+                <h1>{this.state.title}</h1>
+                <h5>{this.state.date}</h5>
+                <p>{this.state.body}</p>
+            </div>
+        )
+    }
+
     render() {
         return (
-            <div>
-                <h1>THIS IS LIBARY</h1>
+            <div className="container">
+                <div className="row">
+                    {this.renderAnnouncement()}
+                </div>
             </div>
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+export default connect(mapStateToProps, null)(Announcement);
