@@ -49,8 +49,7 @@ const authReducer = (state = initialState, action) => {
                     ...action.payload
                 }
             }
-
-            
+   
 
         case 'NEW_ROOM_LOCATION':
             return {
@@ -85,6 +84,15 @@ const authReducer = (state = initialState, action) => {
                         ...state.userData.rooms,
                         ...action.payload
                     }
+                }
+            }
+
+        case 'OPEN_ANNOUNCEMENT':
+            return {
+                ...state,
+                currentRoom: {
+                    ...state.currentRoom,
+                    currentAnnouncement: action.payload
                 }
             }
             

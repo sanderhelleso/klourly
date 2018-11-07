@@ -7,6 +7,8 @@ import { redirect } from '../../../../../middelware/redirect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { openAnnouncementAction } from '../../../../../../actions/room/openAnnouncementAction';
+
 class AnnouncementPreview extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +19,7 @@ class AnnouncementPreview extends Component {
     }
 
     enterAnnouncement() {
+        this.props.openAnnouncementAction(this.state);
         redirect.announcement(this.props.state.dashboard.currentRoom.id, this.state.id);
     }
 
@@ -58,7 +61,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ openAnnouncementAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPreview);
