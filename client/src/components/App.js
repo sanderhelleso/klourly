@@ -17,7 +17,7 @@ import Signup from './signup/Signup';
 import Login from './login/Login';
 import NewRoom from './dashboard/states/rooms/newRoom/NewRoom';
 import Room from './dashboard/states/rooms/room/Room';
-import RoomSettings from './dashboard/states/rooms/room/settings/RoomSettings';
+import RoomAdmin from './dashboard/states/rooms/room/admin/RoomAdmin';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
@@ -75,7 +75,7 @@ class App extends Component {
                     <Route exact path="/dashboard" component={this.dashboardRoute} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/:id" component={Room} />
-                    <Route exact path="/dashboard/rooms/:roomID/settings" component={RoomSettings} />
+                    <Route exact path="/dashboard/rooms/:roomID/admin" component={RoomAdmin} />
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:postID" component={Announcement} />
 
                     <Route exact path="/join-room/*/*" component={JoinRoom} />

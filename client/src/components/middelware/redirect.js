@@ -33,7 +33,7 @@ function room(id) {
 }
 
 function roomAdminSettings(id) {
-    history.push(`/dashboard/rooms/${id}/settings`);
+    history.push(`/dashboard/rooms/${id}/admin`);
 }
 
 function announcement(roomId, announcementId) {
