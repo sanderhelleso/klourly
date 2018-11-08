@@ -13,7 +13,7 @@ import { dashboard } from '../../../../middelware/dashboard';
 
 import LinearLoader from '../../../../loaders/LinearLoader';
 
-import '../../styles/room.css';
+import '../../rooms/styles/room.css';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Stages from './stages/Stages';
 
-import '../../styles/newRoom.css';
+import '../../rooms/styles/newRoom.css';
 
 export default class NewRoom extends Component {
 

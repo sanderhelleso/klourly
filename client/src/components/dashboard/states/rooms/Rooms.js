@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
 
-import '../styles/rooms.css';
+import '../rooms/styles/rooms.css';
 
 class Rooms extends Component {
     constructor(props) {

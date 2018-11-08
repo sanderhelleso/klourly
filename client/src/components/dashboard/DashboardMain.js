@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import './styles/dashboardMain.css';
 
-import Settings from './states/Settings';
+import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
 
 class DashboardMain extends Component {

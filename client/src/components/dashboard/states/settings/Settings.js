@@ -6,14 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { avatarActions } from '../../../actions/avatarActions';
-import { settingsActions } from '../../../actions/settingsActions';
-import { notification } from '../../../helpers/notification';
+import { avatarActions } from '../../../../actions/avatarActions';
+import { settingsActions } from '../../../../actions/settingsActions';
+import { notification } from '../../../../helpers/notification';
 
 
 import './styles/settings.css';
 
-import { dashboard } from '../../middelware/dashboard';
+import { dashboard } from '../../../middelware/dashboard';
 
 class Settings extends Component {
     constructor(props) {
