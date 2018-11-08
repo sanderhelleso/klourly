@@ -7,7 +7,7 @@
 }
 
 .room-admin {
-    padding: 5rem;
+    padding: 5rem 2rem;
 }
 
 .room-admin h3 {
@@ -29,6 +29,7 @@
 
 #room-activate-admin button {
     margin: 5rem 0 7.5rem 0;
+    padding: 2rem 5rem;
 }
 
 #room-activate-admin a {

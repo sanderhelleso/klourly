@@ -3,6 +3,8 @@ import { materializeJS } from '../../../../../../helpers/materialize';
 
 import '../../styles/settings.css';
 
+import Activate from './Activate';
+
 export default class RoomAdmin extends Component {
     constructor(props) {
         super(props);
@@ -13,24 +15,6 @@ export default class RoomAdmin extends Component {
     // initialize tabs
     componentDidMount() {
         materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
-    }
-
-    renderActivateRoom() {
-        return (
-            <div className="room-admin center-align">
-                <h3>Activate Room</h3>
-                <h5>The room will be active for authorized users <span>50M</span> around me</h5>
-                <div>
-                    <button 
-                    id='checkin-btn' 
-                    className="waves-effect waves-light btn animated fadeIn"
-                    >
-                    Activate
-                    </button>
-                </div>
-                <a>Change activation settings?</a>
-            </div>
-        )
     }
 
     render() {
@@ -45,9 +29,7 @@ export default class RoomAdmin extends Component {
                                 <li className="tab col s4"><a href="#room-announcements-admin">Announcements</a></li>
                                 <li className="tab col s4"><a href="#room-settings-admin">Settings</a></li>
                             </ul>
-                            <div id="room-activate-admin" className="col s12 animated fadeIn">
-                                {this.renderActivateRoom()}
-                            </div>
+                            <Activate />
                             <div id="room-statistics-admin" className="col s12 animated fadeIn">
                                 <div className="room-admin">
                                     <h2>Activate Room</h2>
