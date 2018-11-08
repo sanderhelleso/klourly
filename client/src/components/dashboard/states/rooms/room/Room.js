@@ -35,7 +35,7 @@ class Room extends Component {
     }
 
     componentDidMount() {
-        const roomID = this.props.location.pathname.split('/')[3];
+        const roomID = this.props.match.params.id;
         dashboard.getRoom(this.props.state.auth.user.id, roomID)
         .then(response => {
             if (response.data.success) {
