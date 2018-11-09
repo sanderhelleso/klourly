@@ -4,7 +4,7 @@ import { cards } from '../../../../helpers/cards';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { enterRoomActions } from '../../../../actions/enterRoomActions';
+import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
 import { dashboard } from '../../../middelware/dashboard';
 
 class Owning extends Component {
@@ -61,7 +61,7 @@ class Owning extends Component {
 
 // update current room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ enterRoomActions }, dispatch);
+    return bindActionCreators({ enterRoomAction }, dispatch);
 }
 
 const mapStateToProps = (state) => {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import Reactions from './reactions/Reactions';
 import Fade from 'react-reveal/Fade';
-import { redirect } from '../../../../../middelware/redirect';
+import { redirect } from '../../middelware/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { openAnnouncementAction } from '../../../../../../actions/room/openAnnouncementAction';
+import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAction';
 
 class AnnouncementPreview extends Component {
     constructor(props) {

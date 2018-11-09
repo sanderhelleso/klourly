@@ -16,14 +16,14 @@ import Landing from './landing/Landing';
 import Signup from './signup/Signup';
 import Login from './login/Login';
 import NewRoom from './dashboard/states/rooms/newRoom/NewRoom';
-import Room from './dashboard/states/rooms/room/Room';
-import RoomAdmin from './dashboard/states/rooms/room/admin/RoomAdmin';
+import Room from './room/Room';
+import RoomAdmin from './room/admin/RoomAdmin';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
 import MainNav from './navigation/main/MainNav';
 import JoinRoom from './joinRoom/JoinRoom';
-import Announcement from './dashboard/states/rooms/room/announcements/Announcement';
+import Announcement from './room/announcements/Announcement';
 
 class App extends Component {
     constructor(props) {

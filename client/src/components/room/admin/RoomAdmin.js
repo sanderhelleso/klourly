@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { materializeJS } from '../../../../../../helpers/materialize';
+import { materializeJS } from '../../../helpers/materialize';
 
-import '../../styles/settings.css';
+import '../styles/admin.css';
 
 import Activate from './Activate';
+import Settings from './settings/Settings';
 
 export default class RoomAdmin extends Component {
     constructor(props) {
         super(props);
-
 
     }
 
@@ -24,10 +24,10 @@ export default class RoomAdmin extends Component {
                     <div className="col s12">
                         <div id="room-admin-cont">
                             <ul className="tabs tabs-fixed-width">
-                                <li className="tab col s4"><a className="active" href="#room-activate-admin">Activate</a></li>
+                                <li className="tab col s4"><a href="#room-activate-admin">Activate</a></li>
                                 <li className="tab col s4"><a href="#room-statistics-admin">Statistics</a></li>
                                 <li className="tab col s4"><a href="#room-announcements-admin">Announcements</a></li>
-                                <li className="tab col s4"><a href="#room-settings-admin">Settings</a></li>
+                                <li className="tab col s4"><a className="active" href="#room-settings-admin">Settings</a></li>
                             </ul>
                             <Activate />
                             <div id="room-statistics-admin" className="col s12 animated fadeIn">
@@ -40,11 +40,7 @@ export default class RoomAdmin extends Component {
                                     <h1>test3</h1>
                                 </div>
                             </div>
-                            <div id="room-settings-admin" className="col s12 animated fadeIn">
-                                <div className="room-admin">
-                                    <h1>test4</h1>
-                                </div>
-                            </div>
+                            <Settings />
                         </div>
                     </div>
                 </div>

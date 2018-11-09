@@ -5,15 +5,15 @@ import { Settings } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { enterRoomActions } from '../../../../../actions/enterRoomActions';
+import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
-import BackToDash from '../../../BackToDash';
-import { redirect } from '../../../../middelware/redirect';
-import { dashboard } from '../../../../middelware/dashboard';
+import BackToDash from '../dashboard/BackToDash';
+import { redirect } from '../middelware/redirect';
+import { dashboard } from '../middelware/dashboard';
 
-import LinearLoader from '../../../../loaders/LinearLoader';
+import LinearLoader from '../loaders/LinearLoader';
 
-import '../../rooms/styles/room.css';
+import './styles/room.css';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
@@ -40,7 +40,7 @@ class Room extends Component {
         .then(response => {
             if (response.data.success) {
                 localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
-                this.props.enterRoomActions(response.data.roomData);
+                this.props.enterRoomAction(response.data.roomData);
                 this.setState({
                     loading: false
                 });
@@ -194,7 +194,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ enterRoomActions }, dispatch);
+    return bindActionCreators({ enterRoomAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

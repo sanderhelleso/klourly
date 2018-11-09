@@ -5,10 +5,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
-import { enterRoomActions } from '../../../../../../actions/enterRoomActions';
+import { enterRoomAction } from '../../../../../../actions/room/enterRoomAction';
 
 import { dashboard } from '../../../../../middelware/dashboard';
-import { cards } from '../../../../../../helpers/cards';
 
 import BackToDash from '../../../../BackToDash';
 import { redirect } from '../../../../../middelware/redirect';
@@ -75,7 +74,6 @@ class Create extends Component {
         dashboard.createRoom(this.props.state.auth.user.id,
         JSON.stringify(this.normalizeRoom()))
         .then(response => {
-            console.log(response);
             if (response.data.success) {
                 this.setState({
                     message: 'Success!'
@@ -83,7 +81,6 @@ class Create extends Component {
                 
                 // create file blob
                 if (Array.isArray(this.normalizeRoom().cover) && this.normalizeRoom().cover.length) {
-                    console.log(this.normalizeRoom().cover);
                     this.createFileBlob(response.data.id)
                     .then(() => {
                         this.redirect(response);
@@ -142,7 +139,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ newRoomCreatedAction, enterRoomActions }, dispatch);
+    return bindActionCreators({ newRoomCreatedAction, enterRoomAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
