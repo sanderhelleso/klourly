@@ -127,7 +127,10 @@ class Form extends Component {
             <div>
                 <div id="login-bg"></div>
                 <form id='login-form-cont' className='z-depth-3 row animated fadeIn col s12'>
-                    <div id="login-bg-cont"></div>
+                    <div id="login-bg-cont">
+                        <h2 id="logo">Klourly</h2>
+                        <p id="logo-slogan">Attendence tracking with ease</p>
+                    </div>
                     <div className='row login-row'>
                         <div className='input-field col s10 offset-s1'>
                             <input id='login-email' name='email' type='email' placeholder={'Email Address'} value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
