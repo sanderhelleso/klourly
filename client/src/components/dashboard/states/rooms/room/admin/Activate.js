@@ -8,7 +8,7 @@ class Activate extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this.props.state.dashboard.currentRoom;
+        this.state = this.props.state.room.activeRoom;
     }
 
     renderRadius() {

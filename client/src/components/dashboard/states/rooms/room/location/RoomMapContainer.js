@@ -10,8 +10,8 @@ class RoomMapContainer extends React.Component {
 
         this.state = {
             coords: {
-                lat: props.state.dashboard.currentRoom.location.latitude,
-                lng: props.state.dashboard.currentRoom.location.longitude
+                lat: props.state.room.activeRoom.location.latitude,
+                lng: props.state.room.activeRoom.location.longitude
             }
         }
     }

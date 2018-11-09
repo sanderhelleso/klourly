@@ -1,10 +1,6 @@
 let userData = JSON.parse(localStorage.getItem('userData'));
-let roomData = JSON.parse(localStorage.getItem('currentRoom'));
-const initialState = {};
-userData ? initialState.userData = userData : null;
-roomData ? initialState.currentRoom = roomData : null;
-
-const authReducer = (state = initialState, action) => {
+const initialState = userData ? { userData } : {};
+const dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'DASHBOARD_OPTION':
             return {
@@ -38,12 +34,6 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 userData: action.payload
             };
-
-        case 'ENTER_ROOM_SUCCESS':
-            return {
-                ...state,
-                currentRoom: action.payload
-            }
 
         case 'NEW_ROOM_STAGE':
             return {
@@ -91,18 +81,9 @@ const authReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'OPEN_ANNOUNCEMENT':
-            return {
-                ...state,
-                currentRoom: {
-                    ...state.currentRoom,
-                    currentAnnouncement: action.payload
-                }
-            }
-            
         default:
             return state;
     }
 }
 
-export default authReducer;
+export default dashboardReducer;

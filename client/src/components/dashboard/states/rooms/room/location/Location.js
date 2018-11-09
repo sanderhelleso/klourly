@@ -16,7 +16,7 @@ class Location extends Component {
         return (
             <div id="room-location-cont" className="center-align">
                 <RoomMapContainer />
-                <h5>{this.props.state.dashboard.currentRoom.location.address}</h5>
+                <h5>{this.props.state.room.activeRoom.location.address}</h5>
             </div>
         )
     }

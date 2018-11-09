@@ -10,7 +10,7 @@ class Times extends Component {
 
         this.state = {
             times: {
-                ...props.state.dashboard.currentRoom.times
+                ...props.state.room.activeRoom.times
             }
         }
 

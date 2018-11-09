@@ -39,7 +39,7 @@ class Room extends Component {
         dashboard.getRoom(this.props.state.auth.user.id, roomID)
         .then(response => {
             if (response.data.success) {
-                localStorage.setItem('currentRoom', JSON.stringify(response.data.roomData));
+                localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
                 this.props.enterRoomActions(response.data.roomData);
                 this.setState({
                     loading: false
