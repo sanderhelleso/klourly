@@ -1,5 +1,21 @@
-#login-body {
-    background-color: #311d3f;
+
+#login-bg {
+    height: 100%;
+    background: linear-gradient(to right,
+    rgba(141, 58, 235, 0.8),
+    rgb(118, 0, 255, 0.8)),
+    url("/img/login/login.jpg");
+    background-size: cover;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0 100%;
+    filter: blur(6px);
+    -webkit-filter: blur(6px);
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    transform: scale(1.1);
 }
 
 #login-logo {
@@ -12,27 +28,52 @@
     color: #e23e57;
 }
 
+#login-bg-cont {
+    background: linear-gradient(
+    rgba(118, 0, 255, 0.5),
+    rgb(141, 58, 235, 1)),
+    url("/img/login/login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0% 70%; 
+    min-height: 300px;
+    padding-top: 4rem;
+    z-index: 9999;
+}
+
 #login-form-cont {
-    background-color: #fafafa;
-    min-width: 33rem;
-    max-width: 50vw;
+    background: linear-gradient(
+    rgba(141, 58, 235, 1),
+    rgb(141, 58, 235, 1));
+    min-width: 25rem;
+    max-width: 33vw;
     margin: 0 auto;
     text-align: center;
-    border-radius: 4px;
-    padding: 4rem 1.35rem;
     position: absolute;
-    top: 15%;
+    padding-bottom: 2rem;
+    margin-bottom: 5vh;
+    top: 10%;
     left: 50%;
     transform: translate(-50%);
 }
 
+#login-form-cont input {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+#login-form-cont input::placeholder {
+    font-weight: 100;
+    opacity: 0.9;
+}
+
 #login-form-cont input:focus {
-    border-bottom: 1px solid #e23e57;
-    box-shadow: 0 1px 0 0 #e23e57;
+    border-bottom: 1px solid #ffffff;
+    box-shadow: 0 1px 0 0 #ffffff;
 }
   
 #login-form-cont input:focus + label {
-    color: #e23e57;
+    color: #ffffff;
 }
 
 #login-form-cont h4 {
@@ -50,7 +91,25 @@
     margin-top: 15px;
     width: 100%;
     height: 60px;
-    background-color: #e23e57;
+    background: #FF5F6D;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#login-signup {
+    color: #ffffff;
+    font-weight: 100;
+    opacity: 0.5;
+    font-size: 0.9rem;
+}
+
+.login-row {
+    margin-bottom: 3.5rem;
+}
+
+.disabled-btn {
+    opacity: 0.3 !important;
+    background: #ffffff !important;
 }
 
 .disabled-btn {

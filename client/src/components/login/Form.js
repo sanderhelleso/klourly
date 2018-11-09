@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Feather } from 'react-feather';
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -123,11 +125,12 @@ class Form extends Component {
     render() {
         return (
             <div>
-                <form id='login-form-cont' className='z-depth-1 row animated fadeIn col s12'>
-                    <h4>Log In</h4>
-                    <div className='row'>
+                <div id="login-bg"></div>
+                <form id='login-form-cont' className='z-depth-3 row animated fadeIn col s12'>
+                    <div id="login-bg-cont"></div>
+                    <div className='row login-row'>
                         <div className='input-field col s10 offset-s1'>
-                            <input id='login-email' name='email' type='email' placeholder='Email Address' value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
+                            <input id='login-email' name='email' type='email' placeholder={'Email Address'} value={this.state.email} onChange={(event) => this.handleUserInput(event)} />
                         </div>
                         <div className='input-field col s10 offset-s1'>
                             <input id='login-password' name='password' type='password' placeholder='Password' value={this.state.password} onChange={(event) => this.handleUserInput(event)} />
@@ -137,7 +140,7 @@ class Form extends Component {
                             <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
                         </div>
                     </div>
-                    <p id="signup-login">Dont have an account? <a onClick={redirect.signup}>Sign up here</a></p>
+                    <a id="login-signup" onClick={redirect.signup}>Dont have an account?</a>
                 </form>
                 <ToastContainer 
                     transition={Flip}
