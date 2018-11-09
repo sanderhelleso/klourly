@@ -1,5 +1,9 @@
 let userData = JSON.parse(localStorage.getItem('userData'));
-const initialState = userData ? { userData } : {};
+let roomData = JSON.parse(localStorage.getItem('currentRoom'));
+const initialState = {};
+userData ? initialState.userData = userData : null;
+roomData ? initialState.currentRoom = roomData : null;
+
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'DASHBOARD_OPTION':
