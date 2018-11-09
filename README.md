@@ -3,6 +3,7 @@
 A flexible, radius based application for taking attendence
 
 <br>
+
 ## Room Preview
 <img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyroom.png"></img>
 <br>
@@ -33,4 +34,4 @@ A flexible, radius based application for taking attendence
 ## License
 
 This project is licensed under the No License
- * You are permitted to use, modify, or share the software for any purpose.
+ * You are not permitted to use, modify, or share the software for any purpose.
