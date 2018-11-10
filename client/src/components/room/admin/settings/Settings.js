@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import Information from './Information';
 
 export default class Settings extends Component {
