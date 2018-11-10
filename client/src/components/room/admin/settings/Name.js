@@ -13,18 +13,31 @@ export default class Type extends Component {
             classNameEnabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn',
             classNameDisabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn disabled'
         }
+
+        this.updateRoomName = this.updateRoomName.bind(this);
     }
 
     renderUpdateNameBtn() {
         return (
             <div>
                 <button 
-                className={this.state.name !== this.props.name ? this.state.classNameEnabled : this.state.classNameDisabled}
+                className={this.state.name.toLowerCase()
+                !== this.props.name.toLowerCase()
+                && this.state.name.length >= 2
+                ? this.state.classNameEnabled
+                : this.state.classNameDisabled
+                }
                 >
                 Update Name
                 </button>
             </div>
         );
+    }
+
+    updateRoomName(e) {
+        this.setState({
+            name: e.target.value
+        });
     }
 
     renderRoomName() {
@@ -33,7 +46,12 @@ export default class Type extends Component {
                 <h5>Name</h5>
                 <p className="settings-description">Room name of a room is what users will see and use to identify the room. A good room name clearly states what kind of event this room is for.</p>
                 <div className="input-field">
-                    <input placeholder="CST-238 CSUMB" id="room-name" type="text" value={this.state.name} />
+                    <input placeholder="CST-238 CSUMB"
+                    id="room-name"
+                    type="text"
+                    value={this.state.name}
+                    onChange={(event) => this.updateRoomName(event)}
+                    />
                     <label htmlFor="room-name">Room Name</label>
                 </div>
                 {this.renderUpdateNameBtn()}
