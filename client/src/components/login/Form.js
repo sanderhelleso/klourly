@@ -21,6 +21,10 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            classNameEnable: 'btn waves-effect waves-light',
+            classNameEnableDisable: 'btn waves-effect waves-light disabled-btn disabled',
+            loading: false,
+            valid: false,
             email: '',
             password: '',
             error: ''
@@ -62,38 +66,57 @@ class Form extends Component {
     }
 
     checkInput() {
-        const button = document.querySelector('#login-btn');
         if (this.state.email != '' && this.state.password != '') {
-            this.setEnabledMode(button);
+            this.setState({
+                valid: true
+            });
         }
 
         else {
-            this.setDisabledMode(button);
+            this.setState({
+                valid: false
+            });
         }  
     }
-    
-    // refactor to own function file
-    setDisabledMode(button) {
-        button.className = 'btn waves-effect waves-light disabled-btn';
-        button.disabled = true;
 
-        button.removeEventListener('click', this.login);
-        return false;
-    }
+    renderLoginBtn() {
+        if (this.state.valid) {
+            return (
+                <button 
+                id="login-btn" 
+                className={this.state.classNameEnable}
+                type="button"
+                onClick={this.login}
+                >
+                Log In
+                </button>
+            )
+        }
 
-    setEnabledMode(button) {
-        button.className = 'btn waves-effect waves-light';
-        button.disabled = false;
-        
-        button.addEventListener('click', this.login);
-        return true;
+        else if (this.state.loading) {
+            return <p>Loading...</p>;
+        }
+
+        else {
+            return (
+                <button 
+                id="login-btn" 
+                className={this.state.classNameEnableDisable}
+                disabled={true}
+                type="button">
+                Log In
+                </button>
+            )
+        }
     }
 
 
     // login user
     async login() {
-        const button = document.querySelector('#login-btn');
-        this.setDisabledMode(button);
+        this.setState({
+            valid: false,
+            loading: true
+        });
 
         // authenticate login credentials
         const authenticatedUser = await authentication.login(this.state.email, this.state.password);
@@ -107,6 +130,7 @@ class Form extends Component {
             .then(response => {
                 this.props.userDataActions(response.data.userData);
                 setTimeout(() => {
+
                     // redirect user after a short delay
                     this.props.loginAction(authenticatedUser.userData.user);
                 }, 2500);
@@ -117,7 +141,10 @@ class Form extends Component {
         else {
             setTimeout(() => {
                 notification.login(false);
-                this.setEnabledMode(button);
+                this.setState({
+                    valid: true,
+                    loading: false
+                });
             }, 500);
         }
     }
@@ -140,7 +167,7 @@ class Form extends Component {
                         </div>
                         <div className="col s10 offset-s1">
                             <h5 id='login-error'>{this.state.error}</h5>
-                            <button id="login-btn" className="btn waves-effect waves-light disabled-btn" disabled type="button">Log In</button>
+                            {this.renderLoginBtn()}
                         </div>
                     </div>
                     <a id="login-signup" onClick={redirect.signup}>Dont have an account?</a>

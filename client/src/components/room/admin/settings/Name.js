@@ -21,6 +21,7 @@ class Name extends Component {
         }
 
         this.updateRoomNameValue = this.updateRoomNameValue.bind(this);
+        this.updateRoomName = this.updateRoomName.bind(this);
     }
 
     renderUpdateNameBtn() {
@@ -53,7 +54,7 @@ class Name extends Component {
     }
 
     updateRoomName() {
-        console.log(123);
+        this.props.updateRoomNameAction(this.state.name);
     }
 
     updateRoomNameValue(e) {
