@@ -1,15 +1,24 @@
 # klourly
 
 A flexible, radius based application for taking attendence
-
 <br>
 
 ## Room Preview
 <img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyroom.png"></img>
 <br>
 
+
+## Rooms Overview Preview
+<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyRooms.png"></img>
+<br>
+
+## User Settings Preview
+<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlySettings.png"></img>
+<br>
+
 ## Log In Preview
 <img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyLogin.png"></img>
+<br>
 
 ## Features
 * Comming Soon
