@@ -17,6 +17,24 @@ const roomReducer = (state = initialState, action) => {
                     activeAnnouncement: action.payload
                 }
             }
+
+        case 'UPDATE_ROOM_NAME_SUCCESS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    name: action.payload
+                }
+            }
+
+        case 'UPDATE_ROOM_TYPE_SUCCESS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    type: action.payload
+                }
+            }
             
         default:
             return state;

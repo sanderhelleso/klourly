@@ -1,40 +1,62 @@
 import React, { Component } from 'react';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateRoomNameAction } from '../../../../actions/room/settings/updateRoomNameAction';
+
 const staticTxt = {
     heading: 'Type',
     description: 'The type of a room decides who and how users can join and participate. Private rooms are for users with invitation only, while public is for everyone.'
 }
 
-export default class Type extends Component {
+class Name extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            name: props.name,
+            name: this.props.state.room.activeRoom.name,
             classNameEnabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn',
             classNameDisabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn disabled'
         }
 
-        this.updateRoomName = this.updateRoomName.bind(this);
+        this.updateRoomNameValue = this.updateRoomNameValue.bind(this);
     }
 
     renderUpdateNameBtn() {
-        return (
-            <div>
-                <button 
-                className={this.state.name.toLowerCase()
-                !== this.props.name.toLowerCase()
-                && this.state.name.length >= 2
-                ? this.state.classNameEnabled
-                : this.state.classNameDisabled
-                }
-                >
-                Update Name
-                </button>
-            </div>
-        );
+
+        if (this.state.name.toLowerCase() !== this.props.state.room.activeRoom.name.toLowerCase() && this.state.name.length >= 2) {
+            return (
+                <div>
+                    <button 
+                    className={this.state.classNameEnabled}
+                    onClick={this.updateRoomName}
+                    >
+                    Update Name
+                    </button>
+                </div>
+            );
+        }
+
+        else {
+            return (
+                <div>
+                    <button 
+                    className={this.state.classNameDisabled}
+                    disabled={true}
+                    >
+                    Update Name
+                    </button>
+                </div>
+            );
+        }
     }
 
-    updateRoomName(e) {
+    updateRoomName() {
+        console.log(123);
+    }
+
+    updateRoomNameValue(e) {
         this.setState({
             name: e.target.value
         });
@@ -50,7 +72,7 @@ export default class Type extends Component {
                     id="room-name"
                     type="text"
                     value={this.state.name}
-                    onChange={(event) => this.updateRoomName(event)}
+                    onChange={(event) => this.updateRoomNameValue(event)}
                     />
                     <label htmlFor="room-name">Room Name</label>
                 </div>
@@ -65,3 +87,13 @@ export default class Type extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ updateRoomNameAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Name);

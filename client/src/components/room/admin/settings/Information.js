@@ -4,6 +4,9 @@ import { Settings } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateRoomNameAction } from '../../../../actions/room/settings/updateRoomNameAction';
+import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRoomTypeAction';
+
 import Type from './Type';
 import Name from './Name';
 
@@ -16,8 +19,8 @@ class Information extends Component {
         return (
             <div className="row center-align">
                 <div className="s12 m12 l12 settings-row row">
-                    <Name name={this.props.state.room.activeRoom.name} />
-                    <Type type={this.props.state.room.activeRoom.type} />
+                    <Name />
+                    <Type />
                 </div>
             </div>
         )
@@ -29,7 +32,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateRoomNameAction, updateRoomTypeAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Information);

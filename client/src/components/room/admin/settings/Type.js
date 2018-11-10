@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRoomTypeAction';
+
 const staticTxt = {
     heading: 'Type',
     description: 'The type of a room decides who and how users can join and participate. Private rooms are for users with invitation only, while public is for everyone.'
 }
 
-export default class Type extends Component {
+class Type extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: props.type,
+            type: this.props.state.room.activeRoom.type,
             classNameEnabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn',
             classNameDisabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn disabled'
         }
 
         this.selectRoomType = this.selectRoomType.bind(this);
+        this.updateRoomType = this.updateRoomType.bind(this);
     }
 
     // update the rooms type (public / private)
@@ -26,16 +32,37 @@ export default class Type extends Component {
         }
     }
 
+    updateRoomType() {
+        this.props.updateRoomTypeAction(this.state.type);
+    }
+
     renderUpdateTypeBtn() {
-        return (
-            <div>
-                <button 
-                className={this.state.type !== this.props.type ? this.state.classNameEnabled : this.state.classNameDisabled}
-                >
-                Update Type
-                </button>
-            </div>
-        );
+
+        if (this.state.type !== this.props.state.room.activeRoom.type) {
+            return (
+                <div>
+                    <button 
+                    className={this.state.classNameEnabled}
+                    onClick={this.updateRoomType}
+                    >
+                    Update Type
+                    </button>
+                </div>
+            );
+        }
+
+        else {
+            return (
+                <div>
+                    <button 
+                    className={this.state.classNameDisabled}
+                    disabled={true}
+                    >
+                    Update Type
+                    </button>
+                </div>
+            );
+        }
     }
 
     renderRoomType() {
@@ -80,3 +107,13 @@ export default class Type extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ updateRoomTypeAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Type);
