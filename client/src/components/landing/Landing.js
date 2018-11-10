@@ -130,15 +130,17 @@ export default class Landing extends Component {
                     </div>
                 </section>
 
-                <section>
-                    <h2>Section One</h2>
-                </section>
-                <section>
-                    <h2>Section Two</h2>
-                </section>
-                <section>
-                    <h2>Section Three</h2>
-                </section>
+                <div id="landing-sections" className="container center-align">
+                    <section>
+                        <h2>Section One</h2>
+                    </section>
+                    <section>
+                        <h2>Section Two</h2>
+                    </section>
+                    <section>
+                        <h2>Section Three</h2>
+                    </section>
+                </div>
             </main>
         )
     }

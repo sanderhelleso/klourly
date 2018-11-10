@@ -1,18 +1,12 @@
 
 #landing {
-    background-color: #311d3f;
-    min-height: 100vh;
-}
-
-section {
-    min-height: 200vh;
-    text-align: center;
+    min-height: 150vh;
 }
 
 #landing-heading {
     position: absolute;
-    bottom: 20%;
-    left: 15%;
+    top: 22.5%;
+    left: 20%;
     text-align: left;
     font-size: 80px;
     line-height: 90px;
@@ -23,7 +17,7 @@ section {
 
 #mockup {
     margin-top: 25%;
-    margin-right: 10%;
+    margin-left: 7.5rem;
     max-height: 450px;
     width: auto;
     border-radius: 30px;
@@ -54,4 +48,11 @@ section {
     21px 21px rgba(0,0,0,0.01),
     22px 22px rgba(0,0,0,0.01),
     23px 23px rgba(0,0,0,0.01);
+}
+
+#landing-sections section {
+    border-bottom: 1px solid #eeeeee;
+    min-height: 100vh;
+    padding: 2.5rem 0;
+    margin-bottom: 5rem;
 }

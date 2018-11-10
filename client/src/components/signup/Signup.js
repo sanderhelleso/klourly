@@ -29,6 +29,7 @@ export default class Signup extends Component {
     // remove scroll event on umount
     componentWillUnmount() {
         document.querySelector('#signup-form-cont').removeEventListener('scroll', this.handleScroll);
+        document.body.removeAttribute('id');
     }
 
     handleScroll() {

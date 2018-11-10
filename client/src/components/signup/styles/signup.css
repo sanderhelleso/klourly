@@ -1,3 +1,9 @@
+
+#signup-body {
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
 #signup-img-cont {
     background-color: #212121;
     background: 
@@ -22,9 +28,10 @@
 #signup-form-cont h4 {
     text-align: center;
     max-width: 80%;
-    font-size: 18px;
-    margin: 50px auto 35px auto;
-    color: #88304e;
+    font-size: 1.5rem;
+    margin: 4rem auto;
+    color: #9e9e9e;
+    font-weight: 100;
 }
 
 #signup-logo {
@@ -42,23 +49,20 @@
 
 #signup-heading {
     text-align: center;
-    color: #e23e57;
-    font-size: 55px;
     z-index: 100;
+    font-size: 3.25rem;
     text-transform: capitalize;
     letter-spacing: 5px;
-}
-
-#signup-body {
-    overflow: hidden;
-    background-color: #311d3f;
+    font-weight: 800;
 }
 
 #signup-btn {
     margin-top: 2rem;
-    width: 100%;
+    width: 90%;
     height: 60px;
-    background-color: #e23e57;
+    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 100px;
 }
 
 .disabled-btn {
@@ -87,12 +91,12 @@
 }
 
 .select-wrapper .caret {
-    fill: #e23e57;
+    fill: #b388ff;
     opacity: 0.5;
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-    color: #e23e57;
+    color: #b388ff;
 }
 
 .news-letter-cont, .news-letter-cont p {

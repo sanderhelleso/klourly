@@ -12,6 +12,11 @@ export default class Dashboard extends Component {
         document.title = 'Dashboard - Klourly';
     }
 
+    componentWillUnmount() {
+        document.body.removeAttribute('id');
+        document.body.style.overflow = 'scroll';
+    }
+
     render() {
         return (
             <div className='row no-select'>

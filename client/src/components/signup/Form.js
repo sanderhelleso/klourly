@@ -455,9 +455,7 @@ class Form extends Component {
 
 // set initial store state
 const mapStateToProps = (state) => {
-    return {
-        user: state
-    }
+    return { state }
 }
 
-export default connect(mapStateToProps)(Form);
+export default connect(mapStateToProps, null)(Form);
