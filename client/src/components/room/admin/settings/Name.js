@@ -75,7 +75,7 @@ class Name extends Component {
                     value={this.state.name}
                     onChange={(event) => this.updateRoomNameValue(event)}
                     />
-                    <label htmlFor="room-name">Room Name</label>
+                    <label htmlFor="room-name" className="active">Room Name</label>
                 </div>
                 {this.renderUpdateNameBtn()}
             </div>
