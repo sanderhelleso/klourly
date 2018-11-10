@@ -38,3 +38,60 @@
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #7c4dff;
 }
+
+#room-settings-admin .switch {
+    float: left;
+    padding-bottom: 0rem;
+}
+
+#select-room-type p {
+    display: inline-block;
+    margin-right: 2rem;
+}
+
+#room-settings-admin h5 {
+    margin-bottom: 0rem;
+}
+
+#room-settings-admin .room-admin {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+#room-settings-admin .settings-description {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+    font-weight: 100;
+    max-width: 75%;
+    margin: 3rem auto 5rem auto;
+    display: block;
+}
+
+#room-settings-admin p {
+    margin-top: 0;
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.settings-row {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.room-settings-btn {
+    box-shadow: none;
+    color: #ffffff;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    margin: 3rem 0 1rem 0;
+    line-height: 0;
+    padding: 1.75rem 2.5rem;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.room-settings-btn:hover, .room-settings-btn:active, .room-settings-btn:focus {
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+}
