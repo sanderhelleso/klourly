@@ -78,17 +78,28 @@
     border-bottom: 1px solid #eeeeee;
 }
 
+.room-settings-col {
+    position: relative;
+    min-height: 400px !important;
+    width: 100%;
+}
+
 .room-settings-btn {
     box-shadow: none;
     color: #ffffff;
     background-color: #00e988;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    margin: 3rem 0 1rem 0;
+    margin: 3rem auto 1rem auto;
     line-height: 0;
     padding: 1.75rem 2.5rem;
     letter-spacing: 2px;
     font-size: 0.9rem;
     font-weight: 600;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
 }
 
 .room-settings-btn:hover, .room-settings-btn:active, .room-settings-btn:focus {

@@ -93,3 +93,8 @@ input:focus {
 input:focus + label {
     color: #b388ff !important;
 }
+
+input[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #b388ff;
+    border-bottom: 2px solid #b388ff;
+}

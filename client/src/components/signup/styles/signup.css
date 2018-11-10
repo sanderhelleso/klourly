@@ -65,24 +65,6 @@
     opacity: 0.4;
 }
 
-#signup-form-cont input {
-    color: #88304e;
-}
-
-#signup-form-cont input:focus {
-    border-bottom: 1px solid #e23e57;
-    box-shadow: 0 1px 0 0 #e23e57;
-}
-  
-#signup-form-cont input:focus + label {
-    color: #e23e57;
-}
-
-input[type="checkbox"]:checked+span:not(.lever):before {
-    border-right: 2px solid #e23e57;
-    border-bottom: 2px solid #e23e57;
-}
-
 #signup-login {
     text-align: center;
     font-size: 12px;
