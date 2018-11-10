@@ -74,6 +74,22 @@ a {
 }
 
 .progress .indeterminate {
-    background-color: #7c4dff !important;
-    
+    background-color: #7c4dff !important;   
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+    border: 2px solid #b388ff !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color: #b388ff !important;
+}
+
+input:focus {
+    border-bottom: 1px solid #b388ff !important;
+    box-shadow: 0 1px 0 0 #b388ff !important;
+}
+  
+input:focus + label {
+    color: #b388ff !important;
 }
