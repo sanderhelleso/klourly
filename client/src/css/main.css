@@ -77,6 +77,16 @@ a {
     background-color: #7c4dff !important;   
 }
 
+.login-loader-cont {
+    opacity: 0.5 !important;
+    max-width: 85%;
+    margin: 0 auto;
+}
+
+.login-loader-cont .indeterminate {
+    background-color: #b388ff !important;
+}
+
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
     border: 2px solid #b388ff !important;
 }

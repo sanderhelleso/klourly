@@ -17,11 +17,13 @@ import { authentication } from '../middelware/authentication';
 import { redirect } from '../middelware/redirect';
 import { notification } from '../../helpers/notification';
 
+import LinearLoader from '../loaders/LinearLoader';
+
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            classNameEnable: 'btn waves-effect waves-light',
+            classNameEnable: 'btn waves-effect waves-light animated fadeIn',
             classNameEnableDisable: 'btn waves-effect waves-light disabled-btn disabled',
             loading: false,
             valid: false,
@@ -81,6 +83,7 @@ class Form extends Component {
 
     renderLoginBtn() {
         if (this.state.valid) {
+            document.addEventListener('keyup', this.loginOnEnterKey);
             return (
                 <button 
                 id="login-btn" 
@@ -94,7 +97,14 @@ class Form extends Component {
         }
 
         else if (this.state.loading) {
-            return <p>Loading...</p>;
+            document.removeEventListener('keyup', this.loginOnEnterKey);
+            return (
+                <div className="login-loader login-loader-cont">
+                    <div className="progress">
+                        <div className="indeterminate"></div>
+                    </div>
+                </div>
+            )
         }
 
         else {

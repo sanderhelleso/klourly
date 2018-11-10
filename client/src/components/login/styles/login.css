@@ -62,8 +62,8 @@
     background: linear-gradient(
     rgba(141, 58, 235, 1),
     rgb(141, 58, 235, 1));
-    min-width: 25rem;
-    max-width: 33vw;
+    min-width: 30rem;
+    max-width: 30rem;
     margin: 0 auto;
     text-align: center;
     position: absolute;
@@ -106,7 +106,7 @@
 
 #login-btn {
     margin-top: 15px;
-    width: 100%;
+    width: 90%;
     height: 60px;
     background: #FF5F6D;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
@@ -132,4 +132,8 @@
 
 .disabled-btn {
     opacity: 0.4;
+}
+
+.login-loader {
+    margin-top: 72.5px;
 }
