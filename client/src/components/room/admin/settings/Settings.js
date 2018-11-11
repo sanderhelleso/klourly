@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Information from './Information';
+import Save from './Save';
 
 export default class Settings extends Component {
     render() {
@@ -9,6 +10,7 @@ export default class Settings extends Component {
                 <div className="room-admin">
                     <Information />
                 </div>
+                <Save />
             </div>
         )
     }
