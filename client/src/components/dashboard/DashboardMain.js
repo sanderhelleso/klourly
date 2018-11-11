@@ -8,6 +8,7 @@ import './styles/dashboardMain.css';
 
 import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
+import { redirect } from '../middelware/redirect';
 
 class DashboardMain extends Component {
 
@@ -18,6 +19,7 @@ class DashboardMain extends Component {
                 return "hi";
 
             case 2:
+                redirect.rooms;
                 return <Rooms />
 
             case 3:
@@ -26,6 +28,7 @@ class DashboardMain extends Component {
 
             // settings
             case 4:
+                redirect.settings;
                 return <Settings />
    
         }

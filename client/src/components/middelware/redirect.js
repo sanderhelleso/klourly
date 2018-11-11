@@ -5,6 +5,8 @@ export const redirect = {
     signup,
     login,
     dashboard,
+    rooms,
+    settings,
     room,
     newRoom,
     joinRoom,
@@ -26,6 +28,14 @@ function login() {
 
 function dashboard() {
     history.push('/dashboard');
+}
+
+function settings() {
+    history.push('/dashboard/settings');
+}
+
+function rooms() {
+    history.push('/dashboard/rooms');
 }
 
 function room(id) {
