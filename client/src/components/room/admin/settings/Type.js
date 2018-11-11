@@ -15,12 +15,9 @@ class Type extends Component {
         super(props);
         this.state = {
             type: this.props.state.room.activeRoom.type,
-            classNameEnabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn',
-            classNameDisabled: 'waves-effect waves-light btn animated fadeIn room-settings-btn disabled'
         }
 
         this.selectRoomType = this.selectRoomType.bind(this);
-        this.updateRoomType = this.updateRoomType.bind(this);
     }
 
     // update the rooms type (public / private)
@@ -29,39 +26,6 @@ class Type extends Component {
             this.setState({
                 type: `${e.target.id.charAt(0).toUpperCase()}${e.target.id.substring(1).toLowerCase()}`
             });
-        }
-    }
-
-    updateRoomType() {
-        this.props.updateRoomTypeAction(this.state.type);
-    }
-
-    renderUpdateTypeBtn() {
-
-        if (this.state.type !== this.props.state.room.activeRoom.type) {
-            return (
-                <div>
-                    <button 
-                    className={this.state.classNameEnabled}
-                    onClick={this.updateRoomType}
-                    >
-                    Update Type
-                    </button>
-                </div>
-            );
-        }
-
-        else {
-            return (
-                <div>
-                    <button 
-                    className={this.state.classNameDisabled}
-                    disabled={true}
-                    >
-                    Update Type
-                    </button>
-                </div>
-            );
         }
     }
 
@@ -96,7 +60,6 @@ class Type extends Component {
                         <span>Public</span>
                     </label>
                 </p>
-                {this.renderUpdateTypeBtn()}
             </div>
         )
     }

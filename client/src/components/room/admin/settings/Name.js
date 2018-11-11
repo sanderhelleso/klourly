@@ -21,40 +21,6 @@ class Name extends Component {
         }
 
         this.updateRoomNameValue = this.updateRoomNameValue.bind(this);
-        this.updateRoomName = this.updateRoomName.bind(this);
-    }
-
-    renderUpdateNameBtn() {
-
-        if (this.state.name.toLowerCase() !== this.props.state.room.activeRoom.name.toLowerCase() && this.state.name.length >= 2) {
-            return (
-                <div>
-                    <button 
-                    className={this.state.classNameEnabled}
-                    onClick={this.updateRoomName}
-                    >
-                    Update Name
-                    </button>
-                </div>
-            );
-        }
-
-        else {
-            return (
-                <div>
-                    <button 
-                    className={this.state.classNameDisabled}
-                    disabled={true}
-                    >
-                    Update Name
-                    </button>
-                </div>
-            );
-        }
-    }
-
-    updateRoomName() {
-        this.props.updateRoomNameAction(this.state.name);
     }
 
     updateRoomNameValue(e) {
@@ -77,7 +43,6 @@ class Name extends Component {
                     />
                     <label htmlFor="room-name" className="active">Room Name</label>
                 </div>
-                {this.renderUpdateNameBtn()}
             </div>
         )
     }
