@@ -108,3 +108,20 @@
     background-color: #00e988;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }
+
+.room-settings-col .room-option {
+    padding: 3rem 1rem 3.5rem 1rem;
+}
+
+.room-settings-col .room-option h5 {
+    font-size: 1rem;
+}
+
+.disabled-radius-option {
+    opacity: 0.3;
+    transition: 0.3s ease-in-out;
+}
+
+.disabled-radius-option:hover {
+    opacity: 1;
+}

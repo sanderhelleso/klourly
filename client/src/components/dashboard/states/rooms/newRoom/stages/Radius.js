@@ -44,7 +44,7 @@ class Radius extends Component {
     renderRadiusOptions() {
         return radiusOptions.map((option) => {
             return (
-                <div key={option.radius} className="col s3">
+                <div key={option.radius} className="col s12 m6 l3">
                     <div 
                     tabIndex={0}
                     className={`${className} ${option.className}`} 
@@ -55,7 +55,7 @@ class Radius extends Component {
                     </div>
                 </div>
             );
-        })
+        });
     }
 
     render() {

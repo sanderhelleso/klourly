@@ -67,7 +67,7 @@ class Type extends Component {
 
     renderRoomType() {
         return (
-            <div className="col s12 m6 l6 room-settings-col">
+            <div className="col s12 m12 l6 room-settings-col">
                 <h5>{staticTxt.heading}</h5>
                 <p className="settings-description">{staticTxt.description}</p>
                 <p>
