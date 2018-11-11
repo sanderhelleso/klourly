@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Headphones, PieChart, } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -10,6 +11,18 @@ const staticTxt = {
     description: 'The type of a room decides who and how users can join and participate. Private rooms are for users with invitation only, while public is for everyone.'
 }
 
+const className = 'room-option z-depth-2 hoverable no-select';
+const typeOptions = [
+    {
+        type: 'Private',
+        className: 'room-option-stage3-option1'
+    },
+    {
+        type: 'Public',
+        className: 'room-option-stage3-option2'
+    }
+];
+
 class Type extends Component {
     constructor(props) {
         super(props);
@@ -17,56 +30,44 @@ class Type extends Component {
             type: this.props.state.room.activeRoom.type,
         }
 
-        this.selectRoomType = this.selectRoomType.bind(this);
+        this.selectType = this.selectType.bind(this);
     }
 
     // update the rooms type (public / private)
-    selectRoomType(e) {
-        if (e.target.id !== this.state.type.toLowerCase()) {
-            this.setState({
-                type: `${e.target.id.charAt(0).toUpperCase()}${e.target.id.substring(1).toLowerCase()}`
-            });
-        }
+    selectType(e, type) {
+        this.setState({
+            type: type
+        });
     }
 
-    renderRoomType() {
-        return (
-            <div className="col s12 m12 l6 room-settings-col">
-                <h5>{staticTxt.heading}</h5>
-                <p className="settings-description">{staticTxt.description}</p>
-                <p>
-                    <label>
-                        <input
-                        id="private"
-                        name="group1"
-                        className="with-gap"    
-                        type="radio"
-                        checked={this.state.type === 'Private' ? true : false} 
-                        onChange={(event) => this.selectRoomType(event)}
-                        />
-                        <span>Private</span>
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input
-                        id="public"
-                        name="group1"
-                        className="with-gap"
-                        type="radio"
-                        checked={this.state.type === 'Public' ? true : false} 
-                        onChange={(event) => this.selectRoomType(event)}
-                        />
-                        <span>Public</span>
-                    </label>
-                </p>
-            </div>
-        )
+    renderTypeOptions() {
+        return typeOptions.map((option) => {
+            return (
+                <div key={option.type} className="col s12 m6 l6">
+                    <div 
+                    tabIndex={0}
+                    className={`${className} ${option.className} ${this.state.type.toLowerCase() === option.type.toLowerCase() ? '' : 'disabled-option'}`}
+                    onClick={(event) => this.selectType(event, option.type)}
+                    >
+                        {option.type === 'Private' ? <PieChart size={25} /> : <Headphones size={25} />}
+                        <h5>{option.type}</h5>
+                    </div>
+                </div>
+            );
+        })
     }
 
     render() {
         return(
-            this.renderRoomType()
+            <div className="col s12 m12 l12 room-settings-col">
+                <h5>{staticTxt.heading}</h5>
+                <p className="settings-description">{staticTxt.description}</p>
+                <div className="row">
+                    <div className="col s12 m12 l10 offset-l1">
+                        {this.renderTypeOptions()}
+                    </div>
+                </div>
+            </div> 
         );
     }
 }

@@ -66,7 +66,7 @@ body {
     font-size: 0.9rem;
     color: #bdbdbd;
     font-weight: 100;
-    max-width: 75%;
+    max-width: 70%;
     margin: 3rem auto 5rem auto;
     display: block;
 }
@@ -83,19 +83,20 @@ body {
 }
 
 .room-settings-col .room-option {
-    padding: 3rem 1rem 3.5rem 1rem;
+    padding: 4rem 1rem 4.5rem 1rem;
+    transform: scale(1.01);
 }
 
 .room-settings-col .room-option h5 {
     font-size: 1rem;
 }
 
-.disabled-radius-option {
+.disabled-option {
     opacity: 0.3;
     transition: 0.3s ease-in-out;
 }
 
-.disabled-radius-option:hover {
+.disabled-option:hover {
     opacity: 1;
 }
 

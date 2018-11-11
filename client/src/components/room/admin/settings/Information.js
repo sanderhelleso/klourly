@@ -10,6 +10,7 @@ import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRo
 import Type from './Type';
 import Name from './Name';
 import Radius from './Radius';
+import Purpose from './Purpose';
 
 class Information extends Component {
     constructor(props) {
@@ -21,10 +22,15 @@ class Information extends Component {
             <div className="row center-align">
                 <div className="s12 m12 l12 settings-row row">
                     <Name />
+                </div>
+                <div className="s12 m12 l12 settings-row row">
                     <Type />
                 </div>
                 <div className="s12 m12 l12 settings-row row">
                     <Radius />
+                </div>
+                <div className="s12 m12 l12 settings-row row">
+                    <Purpose />
                 </div>
             </div>
         )

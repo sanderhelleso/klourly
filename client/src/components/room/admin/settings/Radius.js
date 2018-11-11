@@ -60,7 +60,7 @@ class Radius extends Component {
                 <div key={option.radius} className="col s12 m6 l3">
                     <div 
                     tabIndex={0}
-                    className={`${className} ${option.className} ${this.state.radius === option.radius ? '' : 'disabled-radius-option'}`}
+                    className={`${className} ${option.className} ${this.state.radius === option.radius ? '' : 'disabled-option'}`}
                     onClick={(event) => this.selectRadius(event, option.radius)}
                     >
                         <Compass size={25} />

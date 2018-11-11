@@ -31,10 +31,10 @@ class Name extends Component {
 
     renderRoomName() {
         return (
-            <div className="col s12 m12 l6 room-settings-col">
+            <div className="col s12 m12 l12 room-settings-col">
                 <h5>Name</h5>
                 <p className="settings-description">Room name of a room is what users will see and use to identify the room. A good room name clearly states what kind of event this room is for.</p>
-                <div className="input-field">
+                <div className="input-field col s12 m12 l8 offset-l2">
                     <input placeholder="CST-238 CSUMB"
                     id="room-name"
                     type="text"
@@ -49,7 +49,9 @@ class Name extends Component {
 
     render() {
         return(
-            this.renderRoomName()
+            <div className="col s12 m12 l10 offset-l1">
+                {this.renderRoomName()}
+            </div>
         );
     }
 }
