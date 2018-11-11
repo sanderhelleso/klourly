@@ -132,3 +132,14 @@ body {
     color: #bdbdbd;
     opacity: 0.5;
 }
+
+#room-settings-admin .collapsible-header h5 {
+    margin: 0;
+    opacity: 0.5;
+    padding: 1rem;
+    text-align: left;
+}
+
+#room-settings-admin .select-days-cont p {
+
+}

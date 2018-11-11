@@ -11,7 +11,7 @@ import Type from './Type';
 import Name from './Name';
 import Radius from './Radius';
 import Purpose from './Purpose';
-import Time from './Time';
+import Times from './Times';
 
 class Information extends Component {
     constructor(props) {
@@ -52,7 +52,7 @@ class Information extends Component {
                     <Purpose />
                 </div>
                 <div className="s12 m12 l12 settings-row row">
-                    <Time />
+                    <Times />
                 </div>
             </div>
         )
