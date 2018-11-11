@@ -23,6 +23,7 @@ export default class Days extends Component {
 
         this.setDays =  this.setDays.bind(this);
         this.dayIsSelected = this.dayIsSelected.bind(this);
+        this.updateChecked = this.updateChecked.bind(this);
     }
 
     setDays() {
@@ -42,6 +43,10 @@ export default class Days extends Component {
         }, 100);
     }
 
+    updateChecked() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+
     renderDays() {
         const settings = this.state.days ? true : false;
         return DAYS.map((day) => {
@@ -49,7 +54,13 @@ export default class Days extends Component {
                 <div key={day} className="row">
                     <p>
                         <label>
-                        <input value={day} name={day} type="checkbox" checked={this.dayIsSelected(day)} />
+                        <input
+                        value={day}
+                        name={day}
+                        type="checkbox"
+                        defaultChecked={this.dayIsSelected(day)} 
+                        onChange={this.updateChecked}
+                        />
                         <span>{`${day[0].toUpperCase()}${day.substring(1).toLowerCase()}`}</span>
                         </label>
                     </p>
@@ -60,8 +71,6 @@ export default class Days extends Component {
 
     dayIsSelected(day) {
         if (this.state.days) {
-            console.log(this.state.days.includes(day));
-            console.log(day);
             return this.state.days.includes(day) ? true : false;
         }
 
@@ -90,32 +99,36 @@ export default class Days extends Component {
                 <div className="collapsible-header">
                     <h5>Room Times <span>#{this.props.daysID}</span></h5>
                 </div>
-                <div className="collapsible-body row">
-                    <div className="col s12 m12 l12 select-days-cont left-align">
+                <div className="collapsible-body row left-align">
+                    <div className="col s12 m12 l12 select-days-cont">
                         {this.renderDays()}
                     </div>
                     <div className="timepicker-cont">
-                        <label htmlFor={`timeFrom${this.props.daysID}`}>Time From</label>
-                        <input 
-                        id={`timeFrom${this.props.daysID}`}
-                        name="timeFrom"
-                        placeholder="02:00 AM"
-                        type="text"
-                        className="timepicker"
-                        onChange={(event) => this.updateTime(event)}
-                        value={this.state.timeFrom}
-                        />
+                        <div className="col s12 m12 l6">
+                            <label htmlFor={`timeFrom${this.props.daysID}`}>Time From</label>
+                            <input 
+                            id={`timeFrom${this.props.daysID}`}
+                            name="timeFrom"
+                            placeholder="02:00 AM"
+                            type="text"
+                            className="timepicker"
+                            onChange={(event) => this.updateTime(event)}
+                            value={this.state.timeFrom}
+                            />
+                        </div>
 
-                        <label htmlFor={`timeTo${this.props.daysID}`}>Time To</label>
-                        <input
-                        id={`timeTo${this.props.daysID}`}
-                        name="timeTo"
-                        placeholder="04:00 AM"
-                        type="text"
-                        className="timepicker"
-                        onChange={(event) => this.updateTime(event)}
-                        value={this.state.timeTo}
-                        />
+                        <div className="col s12 m12 l6">
+                            <label htmlFor={`timeTo${this.props.daysID}`}>Time To</label>
+                            <input
+                            id={`timeTo${this.props.daysID}`}
+                            name="timeTo"
+                            placeholder="04:00 AM"
+                            type="text"
+                            className="timepicker"
+                            onChange={(event) => this.updateTime(event)}
+                            value={this.state.timeTo}
+                            />
+                        </div>
                     </div>
                 </div>
             </li>

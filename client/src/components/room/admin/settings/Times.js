@@ -19,8 +19,12 @@ class Times extends Component {
         super(props);
 
         this.state = {
-            times: this.getCurrentTimes()
+            dayTimes: this.getCurrentTimes(),
+            daysSelected: this.getCurrentTimes().length,
+            validTimes: true
         }
+
+        this.updateDaysAmount = this.updateDaysAmount.bind(this);
     }
 
     getCurrentTimes() {
@@ -36,11 +40,68 @@ class Times extends Component {
         return times;
     }
 
+    updateDaysAmount() {
+        this.setState({
+            daysSelected: this.state.daysSelected += 1,
+            dayTimes: this.updateDayTime()
+        });
+    }
+
+    updateDayTime() {
+        const days = [];
+        let validCount = 0;
+        const day = Array.from(document.querySelectorAll('.collapsible-body'));
+        day.forEach(day => {
+            const inputs = Array.from(day.querySelectorAll('input'));
+
+            const dayObj = {
+                days: {},
+                time: {
+                    from: '',
+                    to: ''
+                }
+            };
+
+            let valid = false;
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    if (input.checked) {
+                        dayObj.days = {
+                            ...dayObj.days,
+                            [input.name]: input.checked
+                        }
+                        valid = true;
+                    }
+                }
+
+               else if (input.name === 'timeFrom') {
+                    dayObj.time.from = input.value;
+               }
+
+               else if (input.name === 'timeTo') {
+                    dayObj.time.to = input.value
+               }
+
+            });
+
+            if (dayObj.time.from !== '' && dayObj.time.to !== '' && valid) {
+                validCount++;
+            }
+
+            days.push(dayObj);
+        });
+
+        return days;
+    }
+
+
     renderSelectDays() {
 
         const collapsibles = [];
-        for (let i = 1; i < this.state.times.length + 1; i++) {
-            collapsibles.push(<Days data={this.state.times[i - 1]} daysID={i} key={i} />);
+        for (let i = 1; i < this.state.daysSelected + 1; i++) {
+            collapsibles.push(
+                <Days data={this.state.dayTimes[i - 1]} daysID={i} key={i} />
+            );
         }
 
         setTimeout(() => {
@@ -52,11 +113,18 @@ class Times extends Component {
 
     renderTimes() {
         return (
-            <div className="col s12 m12 l10 offset-l1 collapsible-cont">
+            <div className="col s12 m12 l8 offset-l2 collapsible-cont">
                 <h5>{staticTxt.heading}</h5>
                 <p className="settings-description">{staticTxt.description}</p>
                 <div className="row left-align">
-                    <button id="add-new-room-time" className="waves-effect waves-light btn animated fadeIn"><PlusCircle size ={25}/> Add</button>
+                    <button 
+                    id="add-new-room-time"
+                    className="waves-effect waves-light btn animated fadeIn"
+                    onClick={this.updateDaysAmount}
+                    >
+                        <PlusCircle size ={25} />
+                        Add
+                    </button>
                 </div>
                 <ul className="collapsible popout expandable">
                     {this.renderSelectDays()}
