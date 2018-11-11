@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { updateRoomNameAction } from '../../../../actions/room/settings/updateRoomNameAction';
 import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRoomTypeAction';
 
+import Save from './Save';
 import Type from './Type';
 import Name from './Name';
 import Radius from './Radius';
@@ -38,22 +39,27 @@ class Information extends Component {
 
     render() {
         return (
-            <div className="row center-align">
-                <div className="s12 m12 l12 settings-row row">
-                    <Name />
+            <div id="room-settings-admin" className="col s12 animated fadeIn">
+                <div className="room-admin">
+                    <div className="row center-align">
+                        <div className="s12 m12 l12 settings-row row">
+                            <Name />
+                        </div>
+                        <div className="s12 m12 l12 settings-row row">
+                            <Type />
+                        </div>
+                        <div className="s12 m12 l12 settings-row row">
+                            <Radius />
+                        </div>
+                        <div className="s12 m12 l12 settings-row row">
+                            <Purpose />
+                        </div>
+                        <div className="s12 m12 l12 settings-row row">
+                            <Times />
+                        </div>
+                    </div>
                 </div>
-                <div className="s12 m12 l12 settings-row row">
-                    <Type />
-                </div>
-                <div className="s12 m12 l12 settings-row row">
-                    <Radius />
-                </div>
-                <div className="s12 m12 l12 settings-row row">
-                    <Purpose />
-                </div>
-                <div className="s12 m12 l12 settings-row row">
-                    <Times />
-                </div>
+                <Save />
             </div>
         )
     }

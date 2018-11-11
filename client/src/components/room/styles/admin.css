@@ -1,5 +1,9 @@
 body {
-    overflow-y: hidden;
+    overflow: hidden;
+}
+
+#room-admin-cont .tabs li a svg {
+    margin-top: 0.75rem;
 }
 
 #room-admin-cont {
@@ -85,6 +89,7 @@ body {
 .room-settings-col .room-option {
     padding: 4rem 1rem 4.5rem 1rem;
     transform: scale(1.01);
+    margin-bottom: 2rem;
 }
 
 .room-settings-col .room-option h5 {
@@ -142,4 +147,10 @@ body {
 
 #room-settings-admin .select-days-cont p {
 
+}
+
+@media (max-width: 600px) {
+    #room-settings-admin .room-admin {
+        padding: 2.5rem;
+    }
 }
