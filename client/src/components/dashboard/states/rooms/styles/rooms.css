@@ -94,6 +94,9 @@ background: linear-gradient(to bottom, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, 
     display: none;
 }
 
+#rooms-tabs {
+}
+
 .main-rooms-header {
 }
 

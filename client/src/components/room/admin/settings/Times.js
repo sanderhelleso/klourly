@@ -100,7 +100,7 @@ class Times extends Component {
         const collapsibles = [];
         for (let i = 1; i < this.state.daysSelected + 1; i++) {
             collapsibles.push(
-                <Days data={this.state.dayTimes[i - 1]} daysID={i} key={i} />
+                <Days data={this.state.dayTimes[i - 1]} settings={true} daysID={i} key={i} />
             );
         }
 

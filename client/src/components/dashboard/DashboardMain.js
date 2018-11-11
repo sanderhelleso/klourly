@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 // redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import './styles/dashboardMain.css';

@@ -5,6 +5,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+body {
+    overflow-x: hidden !important;
+}
+
 /* class for text not to be selected or focused */
 .no-select {
     -webkit-touch-callout: none; /* iOS Safari */

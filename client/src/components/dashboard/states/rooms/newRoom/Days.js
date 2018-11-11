@@ -48,7 +48,6 @@ export default class Days extends Component {
     }
 
     renderDays() {
-        const settings = this.state.days ? true : false;
         return DAYS.map((day) => {
             return (
                 <div key={day} className="row">
@@ -59,7 +58,7 @@ export default class Days extends Component {
                         name={day}
                         type="checkbox"
                         defaultChecked={this.dayIsSelected(day)} 
-                        onChange={this.updateChecked}
+                        onChange={this.props.settings ? this.updateChecked : null}
                         />
                         <span>{`${day[0].toUpperCase()}${day.substring(1).toLowerCase()}`}</span>
                         </label>
@@ -78,7 +77,6 @@ export default class Days extends Component {
     }
 
     updateTime(e) {
-
         if (e.target.name === 'timeFrom') {
             this.setState({
                 timeFrom: e.target.value
@@ -90,6 +88,8 @@ export default class Days extends Component {
                 timeTo: e.target.value
             });
         }
+
+        console.log(e.target.name , e.target.value);
     }
 
     render() {

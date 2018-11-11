@@ -35,6 +35,7 @@ class Rooms extends Component {
             lastStage: 7
         });
         redirect.newRoom();
+        document.body.overFlow = 'none';
     }
 
     render() {
@@ -43,7 +44,7 @@ class Rooms extends Component {
                 <h3 id='dashboard-title'>My Rooms</h3>
                 <p id='dashboard-intro'>Create, join and modify rooms</p>
                 <button id="create-new-room" className="waves-effect waves-light btn" onClick={this.initNewRoomCreation}>Create New</button>
-                <div className="col s12">
+                <div id="rooms-tabs" className="col s12">
                     <ul className="tabs tabs-fixed-width">
                         <li className="tab col s6"><a className="active" href="#owning">Rooms im owning</a></li>
                         <li className="tab col s6"><a href="#attending">Rooms im attending</a></li>
