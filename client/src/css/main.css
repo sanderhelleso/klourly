@@ -108,3 +108,16 @@ input[type="checkbox"]:checked+span:not(.lever):before {
     border-right: 2px solid #b388ff;
     border-bottom: 2px solid #b388ff;
 }
+
+::-webkit-scrollbar {
+    width: 0.65em;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  outline: 1px solid #9e9e9e;
+}
