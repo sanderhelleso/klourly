@@ -28,7 +28,6 @@ class Times extends Component {
         Object.entries(this.props.state.room.activeRoom.times).forEach(
             ([key, value]) => {
                 if (Number.isInteger(parseInt(key))) {
-                    console.log(value);
                     times.push(value);
                 }
             }

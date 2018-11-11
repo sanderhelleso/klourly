@@ -30,12 +30,12 @@ export default class RoomAdmin extends Component {
                                 <li className="tab col s4"><a className="active" href="#room-settings-admin">Settings</a></li>
                             </ul>
                             <Activate />
-                            <div id="room-statistics-admin" className="col s12 animated fadeIn">
+                            <div id="room-statistics-admin" className="col s12">
                                 <div className="room-admin">
                                     <h2>Activate Room</h2>
                                 </div>
                             </div>
-                            <div id="room-announcements-admin" className="col s12 animated fadeIn">
+                            <div id="room-announcements-admin" className="col s12">
                                 <div className="room-admin">
                                     <h1>test3</h1>
                                 </div>

@@ -8,11 +8,30 @@ export default class Days extends Component {
 
         if (props.data) {
             this.state = {
-                times: props.data
+                days: this.setDays(),
+                timeFrom: props.data.time.from,
+                timeTo: props.data.time.from
             }
         }
 
-        console.log(DAYS);
+        else {
+            this.state = {
+                timeFrom: '',
+                timeTo: ''
+            }
+        }
+
+        this.setDays =  this.setDays.bind(this);
+        this.dayIsSelected = this.dayIsSelected.bind(this);
+    }
+
+    setDays() {
+        const days = [];
+        Object.keys(this.props.data.days).forEach(day => {
+            days.push(day);
+        });
+
+        return days;
     }
 
     // open collapsible on mount
@@ -24,12 +43,13 @@ export default class Days extends Component {
     }
 
     renderDays() {
+        const settings = this.state.days ? true : false;
         return DAYS.map((day) => {
             return (
-                <div className="row">
+                <div key={day} className="row">
                     <p>
                         <label>
-                        <input value={day} name={day} type="checkbox" />
+                        <input value={day} name={day} type="checkbox" checked={this.dayIsSelected(day)} />
                         <span>{`${day[0].toUpperCase()}${day.substring(1).toLowerCase()}`}</span>
                         </label>
                     </p>
@@ -38,9 +58,33 @@ export default class Days extends Component {
         });
     }
 
+    dayIsSelected(day) {
+        if (this.state.days) {
+            console.log(this.state.days.includes(day));
+            console.log(day);
+            return this.state.days.includes(day) ? true : false;
+        }
+
+        return false;
+    }
+
+    updateTime(e) {
+
+        if (e.target.name === 'timeFrom') {
+            this.setState({
+                timeFrom: e.target.value
+            });
+        }
+
+        else if (e.target.name === 'timeTo') {
+            this.setState({
+                timeTo: e.target.value
+            });
+        }
+    }
+
     render() {
 
-        console.log(this.state);
         return (
             <li>
                 <div className="collapsible-header">
@@ -52,10 +96,26 @@ export default class Days extends Component {
                     </div>
                     <div className="timepicker-cont">
                         <label htmlFor={`timeFrom${this.props.daysID}`}>Time From</label>
-                        <input id={`timeFrom${this.props.daysID}`} name="timeFrom" placeholder="02:00 AM" type="text" className="timepicker" />
+                        <input 
+                        id={`timeFrom${this.props.daysID}`}
+                        name="timeFrom"
+                        placeholder="02:00 AM"
+                        type="text"
+                        className="timepicker"
+                        onChange={(event) => this.updateTime(event)}
+                        value={this.state.timeFrom}
+                        />
 
                         <label htmlFor={`timeTo${this.props.daysID}`}>Time To</label>
-                        <input id={`timeTo${this.props.daysID}`} name="timeTo" placeholder="04:00 AM" type="text" className="timepicker" />
+                        <input
+                        id={`timeTo${this.props.daysID}`}
+                        name="timeTo"
+                        placeholder="04:00 AM"
+                        type="text"
+                        className="timepicker"
+                        onChange={(event) => this.updateTime(event)}
+                        value={this.state.timeTo}
+                        />
                     </div>
                 </div>
             </li>
