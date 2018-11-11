@@ -10,7 +10,7 @@ const staticTxt = {
     description: 'The purpose of the room describes what kind of room purpose the room serves and allows users to more easily understand the content of the room.'
 }
 
-const className = 'room-option z-depth-2 hoverable no-select';
+const className = 'room-option z-depth-2 no-select';
 const purposeOptions = [
     {
         purpose: 'Education',
@@ -48,7 +48,7 @@ class Purpose extends Component {
                 <div key={option.purpose} className="col s12 m6 l6">
                     <div 
                     tabIndex={0}
-                    className={`${className} ${option.className} ${this.state.purpose === option.purpose ? '' : 'disabled-option'}`}
+                    className={`${className} ${option.className} ${this.state.purpose === option.purpose ? 'z-depth-3' : 'disabled-option'}`}
                     onClick={(event) => this.selectPurpose(event, option.purpose)}
                     >
                         {option.purpose === 'Education' ? <PieChart size={25} /> : <Headphones size={25} />}

@@ -11,7 +11,7 @@ const staticTxt = {
     description: 'The radius of a room is what controlls where and how close a user need to be to be able to checkin into a room. The radius is spreading from the location the room became active.'
 }
 
-const className = 'room-option z-depth-2 hoverable no-select';
+const className = 'room-option z-depth-2 no-select';
 const radiusOptions = [
     {
         title: '50 Meters',
@@ -60,7 +60,7 @@ class Radius extends Component {
                 <div key={option.radius} className="col s12 m6 l3">
                     <div 
                     tabIndex={0}
-                    className={`${className} ${option.className} ${this.state.radius === option.radius ? '' : 'disabled-option'}`}
+                    className={`${className} ${option.className} ${this.state.radius === option.radius ? 'z-depth-3' : 'disabled-option'}`}
                     onClick={(event) => this.selectRadius(event, option.radius)}
                     >
                         <Compass size={25} />

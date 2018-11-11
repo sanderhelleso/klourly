@@ -17,6 +17,24 @@ class Information extends Component {
         super(props);
     }
 
+    // lifecycle, add event on mount
+    componentDidMount() {
+        document.addEventListener('keyup', this.setOptionByEnterKey);
+    }
+
+    // remove event on unmount
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.setOptionByEnterKey);
+    }
+
+    setOptionByEnterKey(e) {
+        if (e.keyCode === 13) {
+            if (document.activeElement.classList.contains('room-option')) {
+                document.activeElement.click();
+            }
+        }
+    }
+
     render() {
         return (
             <div className="row center-align">
