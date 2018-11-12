@@ -15,7 +15,6 @@ export default class RoomAdmin extends Component {
         this.state = {
             width: window.innerWidth || document.documentElement.clientWidt || document.body.clientWidth
         }
-
     }
 
     // initialize tabs and screen width listener

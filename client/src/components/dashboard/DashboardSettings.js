@@ -42,7 +42,7 @@ class DashboardSettings extends Component {
 
     render() {
         return (
-            <aside id='dashboard-settings' className='col l3 z-depth-2 animated fadeIn'>
+            <aside id='dashboard-settings' className='col s12 m12 l3 z-depth-2 animated fadeIn'>
                 <div id='dashboard-settings-top' className='col l12'>
                     <div className='col l2'>
                         <Bell size={20} />

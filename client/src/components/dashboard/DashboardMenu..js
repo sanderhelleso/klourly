@@ -40,7 +40,7 @@ class DashboardMenu extends Component {
 
     render() {
         return (
-            <aside id='dashboard-menu' className='col l2'>
+            <aside id='dashboard-menu' className='col s12 m12 l2'>
                 <div className='col l12 menu-item' onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
