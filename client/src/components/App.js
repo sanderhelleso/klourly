@@ -82,12 +82,16 @@ class App extends Component {
 
     renderRoutes() {
 
-        if (this.props.state.auth.loggedIn) {
+        if (this.props.state.auth.loggedIn === null) {
+            return null;
+        }
+
+        else if (this.props.state.auth.loggedIn) {
             return (
                 <div id="main-app-cont">
-                    <Route exact path="/" component={Dashboard} />
-                    <Route exact path="/signup" component={Dashboard} />
-                    <Route exact path="/login" component={redirect.dashboard} />
+                    <Route exact path="/" component={redirect.dashboard()} />
+                    <Route exact path="/signup" component={redirect.dashboard()} />
+                    <Route exact path="/login" component={redirect.dashboard()} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/:id" component={Room} />
@@ -105,7 +109,7 @@ class App extends Component {
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
-                    <Route path="/dashboard" component={redirect.login()} />
+                    <Route exact path="/dashboard" component={null} />
                 </div>
             )
         }
