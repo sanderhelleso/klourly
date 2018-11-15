@@ -10,13 +10,12 @@ module.exports = app => {
         firebase.auth().getUser(req.body.uid)
         .then((userRecord) => {
 
-            // See the UserRecord reference doc for the contents of userRecord.
             res.json({
                 message: 'Authentication Successful',
                 success: true
             })
         })
-        .catch(function(error) {
+        .catch((error) => {
             console.log("Error fetching user data:", error);
             res.json({
                 message: 'Authentication Failed',

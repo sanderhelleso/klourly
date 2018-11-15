@@ -1,6 +1,5 @@
 import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
-import { redirect } from '../middelware/redirect';
 
 export const dashboard = {
     uploadPhoto,
@@ -19,6 +18,7 @@ async function uploadPhoto(data) {
     // send data to endpoint and attempt to update avatar
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/upload/photo',
             data: data
@@ -40,6 +40,7 @@ async function updateSettings(data) {
     // send data to endpoint and attempt to update settings
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/updateSettings',
             data: data
@@ -58,6 +59,7 @@ async function updateSettings(data) {
 async function fetchUserData(uid) {
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/userData',
             data: {
@@ -79,6 +81,7 @@ async function fetchUserData(uid) {
 async function createRoom(uid, data) {
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/createRoom',
             data: {
@@ -99,6 +102,7 @@ async function createRoom(uid, data) {
 async function getRoom(uid, roomID) {
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/getRoom',
             data: {
@@ -112,7 +116,6 @@ async function getRoom(uid, roomID) {
 
     catch(error) {
         console.log(error);
-        redirect.login();
     }
 } 
 
@@ -120,7 +123,7 @@ async function getRoom(uid, roomID) {
 async function getRooms(uid, rooms) {
     try {
         const response = await axios({
-            headers: authHeader,
+            headers: authHeader(),
             method: 'post',
             url: '/api/getRooms',
             data: {

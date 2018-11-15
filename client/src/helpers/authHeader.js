@@ -1,11 +1,10 @@
-export function authHeader() {
+export const authHeader = () => {
 
     // return authorization header user UID
     const user = localStorage.getItem('user');
-
+    console.log(JSON.parse(user).id);
     if (user) {
-        console.log(user);
-        return { 'Authorization': 'Bearer ' + user.id };
+        return { 'Authorization': 'Bearer ' + JSON.parse(user).id };
     } else {
         return {};
     }

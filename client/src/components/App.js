@@ -24,6 +24,7 @@ import Dashboard from './dashboard/Dashboard';
 import MainNav from './navigation/main/MainNav';
 import JoinRoom from './joinRoom/JoinRoom';
 import Announcement from './room/announcements/Announcement';
+import { redirect } from './middelware/redirect';
 
 class App extends Component {
     constructor(props) {
@@ -38,9 +39,19 @@ class App extends Component {
 
     // authenticate user
     componentWillMount() {
-        if (localStorage.getItem('user') !== null && localStorage.getItem('userData') !== null) {
-            const user = JSON.parse(localStorage.getItem('user'));
-            this.props.validateAction(authentication.validateUser(user.id)); // set logged in (true / false)
+        this.validateUser();
+    }
+
+    async validateUser() {
+        const user = localStorage.getItem('user');
+        if (user !== null) {
+            const auth = await authentication.validateUser(JSON.parse(user).id);
+            console.log(auth);
+            this.props.validateAction(auth);
+        }
+
+        else {
+            this.props.validateAction(false);
         }
     }
 
@@ -65,14 +76,19 @@ class App extends Component {
         return this.props.state.auth.loggedIn ? <Room /> : <Redirect to="/" />;
     }
 
-    render() {
-        return (
-            <Router history={history}>
+    login() {
+        return <Redirect to="/login" />
+    }
+
+    renderRoutes() {
+
+        if (this.props.state.auth.loggedIn) {
+            return (
                 <div id="main-app-cont">
-                    <Route exact path="/" component={this.landingRoute} />
-                    <Route exact path="/signup" component={this.signupRoute} />
-                    <Route exact path="/login" component={this.loginRoute} />
-                    <Route exact path="/dashboard" component={this.dashboardRoute} />
+                    <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/signup" component={Dashboard} />
+                    <Route exact path="/login" component={redirect.dashboard} />
+                    <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route exact path="/dashboard/rooms/:id" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin" component={RoomAdmin} />
@@ -80,6 +96,25 @@ class App extends Component {
 
                     <Route exact path="/join-room/:timestamp/:roomID" component={JoinRoom} />
                 </div>
+            )
+        }
+
+        else {
+            return (
+                <div id="main-app-cont">
+                    <Route exact path="/" component={Landing} />
+                    <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/login" component={Login} />
+                    <Route path="/dashboard" component={redirect.login()} />
+                </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <Router history={history}>
+                {this.renderRoutes()}
             </Router>
         )
     }

@@ -2,9 +2,6 @@ const firebase = require('firebase-admin');
 
 module.exports = (req, res, next) => {
 
-    console.log(req.body.uid);
-    console.log(req.headers);
-
     // get auth header value
     const bearerHeader = req.headers['authorization'];
 
@@ -18,7 +15,7 @@ module.exports = (req, res, next) => {
             req.token = bearerToken;
 
             // go next
-            next();
+            authenticateUser(req.token);
     }
 
     // forbidden
@@ -26,18 +23,20 @@ module.exports = (req, res, next) => {
         res.sendStatus(403);
     }
 
-    /*// attempt to authenticate user
-    firebase.auth().getUser(req.body.uid)
-    .then(() => {
-        next();
-    })
-    .catch((error) => {
-
-        // forbidden, not authorized
-        res.status(403).json({ 
-            success: false,
-            error: 'You are not authorized to enter this room',
-            reason: error.errorInfo.code
+    // attempt to authenticate user
+    function authenticateUser(uid) {
+        firebase.auth().getUser(uid)
+        .then(() => {
+            next();
+        })
+        .catch((error) => {
+    
+            // forbidden, not authorized
+            res.status(403).json({ 
+                success: false,
+                error: 'You are not authorized',
+                reason: error.errorInfo.code
+            });
         });
-    });*/
+    }
 };
