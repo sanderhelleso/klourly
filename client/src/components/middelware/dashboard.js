@@ -1,5 +1,6 @@
 import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
+import { redirect } from '../middelware/redirect';
 
 export const dashboard = {
     uploadPhoto,
@@ -111,6 +112,7 @@ async function getRoom(uid, roomID) {
 
     catch(error) {
         console.log(error);
+        redirect.login();
     }
 } 
 
@@ -118,6 +120,7 @@ async function getRoom(uid, roomID) {
 async function getRooms(uid, rooms) {
     try {
         const response = await axios({
+            headers: authHeader,
             method: 'post',
             url: '/api/getRooms',
             data: {

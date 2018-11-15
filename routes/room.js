@@ -6,10 +6,8 @@ const authenticate = require('../middelwares/requireRoomAuth');
 
 module.exports = app => {
 
-    app.use(authenticate);
-
     // create new room
-    app.post('/api/createRoom', (req, res) => {
+    app.post('/api/createRoom', authenticate, (req, res) => {
         const roomData = JSON.parse(req.body.room);
 
         // create room refrence connected to user
@@ -41,7 +39,7 @@ module.exports = app => {
     });
 
     // get data for a specific room
-    app.post('/api/getRoom', (req, res) => {
+    app.post('/api/getRoom', authenticate, (req, res) => {
 
         // get ref to room by id and fetch data
         const roomRef = db.ref(`rooms/${req.body.roomID}`)
@@ -66,7 +64,7 @@ module.exports = app => {
     });
 
     // get data for an collection of rooms
-    app.post('/api/getRooms', (req, res) => {
+    app.post('/api/getRooms', authenticate, (req, res) => {
 
         // array to store rooms
         const rooms = [];
