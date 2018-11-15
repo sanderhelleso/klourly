@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ArrowLeft } from 'react-feather';
-import { redirect } from '../middelware/redirect';
+import { redirect } from '../../helpers/redirect';
 
 export default class BackToDash extends Component {
     render() {

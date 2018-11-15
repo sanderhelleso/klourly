@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import BackToDash from '../dashboard/BackToDash';
-import { redirect } from '../middelware/redirect';
-import { dashboard } from '../middelware/dashboard';
+import { redirect } from '../../helpers/redirect';
+import { dashboard } from '../../api/dashboard/dashboard';
 
 import LinearLoader from '../loaders/LinearLoader';
 

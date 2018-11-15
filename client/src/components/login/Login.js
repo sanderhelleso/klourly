@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from './Form';
 
 import './styles/login.css';
-import { redirect } from '../middelware/redirect';
+import { redirect } from '../../helpers/redirect';
 
 export default class Login extends Component {
 

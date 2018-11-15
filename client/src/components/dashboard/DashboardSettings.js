@@ -12,7 +12,7 @@ import './styles/dashboardSettings.css';
 
 import { userDataActions } from '../../actions/userDataActions';
 import { logoutActions } from '../../actions/logoutActions';
-import { authentication } from '../middelware/authentication'; 
+import { authentication } from '../../api/authentication/authentication'; 
 
 class DashboardSettings extends Component {
     constructor(props) {

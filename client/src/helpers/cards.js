@@ -1,5 +1,5 @@
 import React from 'react';
-import { redirect } from '../components/middelware/redirect';
+import { redirect } from './redirect';
 import { ArrowRight, Loader,  Lock, Unlock } from 'react-feather';
 
 export const cards = {

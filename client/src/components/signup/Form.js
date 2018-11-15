@@ -5,12 +5,11 @@ import { materializeJS } from '../../helpers/materialize';
 import axios from 'axios';
 
 // redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // actions and authentication functions
-import { authentication } from '../middelware/authentication';
-import { redirect } from '../middelware/redirect';
+import { authentication } from '../../api/authentication/authentication';
+import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
 
 class Form extends Component {

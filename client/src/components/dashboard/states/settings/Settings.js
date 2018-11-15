@@ -13,7 +13,7 @@ import { notification } from '../../../../helpers/notification';
 
 import './styles/settings.css';
 
-import { dashboard } from '../../../middelware/dashboard';
+import { dashboard } from '../../../../api/dashboard/dashboard';
 
 class Settings extends Component {
     constructor(props) {
@@ -212,7 +212,7 @@ class Settings extends Component {
     checkChange() {
         const settings = this.state.settings;
         const originalSettings = this.props.state.dashboard.userData.settings;
-        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation == originalSettings.occupation && settings.status == originalSettings.status && settings.newsLetter == originalSettings.newsLetter) {
+        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation === originalSettings.occupation && settings.status === originalSettings.status && settings.newsLetter === originalSettings.newsLetter) {
             this.setState({
                 notChanged: true
             });

@@ -5,7 +5,7 @@ import { cards } from '../../../../helpers/cards';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
-import { dashboard } from '../../../middelware/dashboard';
+import { dashboard } from '../../../../api/dashboard/dashboard';
 
 class Owning extends Component {
     constructor(props) {

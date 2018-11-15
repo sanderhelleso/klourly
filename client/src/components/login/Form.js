@@ -11,10 +11,9 @@ import { connect } from 'react-redux';
 // actions and authentication functions
 import { loginAction } from '../../actions/loginActions';
 import { userDataActions } from '../../actions/userDataActions';
-import { dashboard } from '../middelware/dashboard';
-import { authentication } from '../middelware/authentication';
-
-import { redirect } from '../middelware/redirect';
+import { dashboard } from '../../api/dashboard/dashboard';
+import { authentication } from '../../api/authentication/authentication';
+import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
 
 import LinearLoader from '../loaders/LinearLoader';

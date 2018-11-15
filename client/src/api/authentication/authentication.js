@@ -1,5 +1,5 @@
 import { authHeader } from '../../helpers/authHeader';
-import history from '../middelware/history';
+import history from '../../helpers/history';
 import axios from 'axios';
 
 export const authentication = {

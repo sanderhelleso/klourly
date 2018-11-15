@@ -7,7 +7,7 @@ import './styles/dashboardMain.css';
 
 import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
-import { redirect } from '../middelware/redirect';
+import { redirect } from '../../helpers/redirect';
 
 class DashboardMain extends Component {
 

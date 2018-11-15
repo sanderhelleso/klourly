@@ -23,10 +23,6 @@ const mockData = [
 ]
 
 export default class Announcements extends Component {
-    constructor() {
-        super();
-    }
-
     renderAnnouncements() {
         return mockData.map(announcement => {
             return (

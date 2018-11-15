@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './styles/signup.css';
-import { redirect } from '../middelware/redirect';
+import { redirect } from '../../helpers/redirect';
 
 import Form from './Form';
 

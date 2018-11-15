@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Reactions from './reactions/Reactions';
 import Fade from 'react-reveal/Fade';
-import { redirect } from '../../middelware/redirect';
+import { redirect } from '../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';

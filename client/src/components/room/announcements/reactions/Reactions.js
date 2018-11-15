@@ -26,10 +26,6 @@ const mockData = [
 ];
 
 export default class Reactions extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     getRGB() {
         return (
             `rgba(

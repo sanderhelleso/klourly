@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { redirect } from '../../middelware/redirect';
+import { redirect } from '../../../helpers/redirect';
 
 // import components styles
 import './styles/mainNav.css';

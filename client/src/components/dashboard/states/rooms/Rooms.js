@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Owning from './Owning';
 import Attending from './Attending';
 import { materializeJS } from '../../../../helpers/materialize';
-import { redirect } from '../../../middelware/redirect';
+import { redirect } from '../../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';

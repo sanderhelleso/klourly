@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route, Redirect} from "react-router-dom";
-import history from './middelware/history';
+import history from '../helpers/history';
 
 // animations
 import 'animate.css';
@@ -9,7 +9,7 @@ import 'animate.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { authentication } from './middelware/authentication';
+import { authentication } from '../api/authentication/authentication';
 import { validateAction } from '../actions/validateActions';
 
 import Landing from './landing/Landing';
