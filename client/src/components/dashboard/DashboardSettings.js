@@ -47,8 +47,8 @@ class DashboardSettings extends Component {
                     <div className='col l2'>
                         <Bell size={20} />
                     </div>
-                    <div className='col l8 avatar-cont animated bounceInDown'>
-                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2 animated bounceInDown' alt={`${this.setDisplayName()} 's avatar`} />
+                    <div className='col l8 avatar-cont animated fadeIn'>
+                        <img id='user-avatar' src={this.setAvatar()} className='z-depth-2 animated fadeIn' alt={`${this.setDisplayName()} 's avatar`} />
                         <span id='user-name' className='animated fadeIn'>{this.setDisplayName()}</span>
                     </div>
                     <div className='col l2 log-out-cont' onClick={this.logOut}>

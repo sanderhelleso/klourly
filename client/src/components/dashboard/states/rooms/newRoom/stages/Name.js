@@ -12,7 +12,7 @@ export default class Name extends Component {
             roomName: null,
             message: 'Continue',
             placeholder: 'Intro to Programming',
-            className: 'browser-default animated fadeIn',
+            className: 'animated fadeIn',
             id: 'new-room-name-field',
             type: 'text',
             maxLength: 55

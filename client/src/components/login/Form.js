@@ -133,17 +133,12 @@ class Form extends Component {
 
         // login successfull
         if (authenticatedUser.success) {
-            notification.login(true);
 
             // set user state then redirect to dashboard
             dashboard.fetchUserData(authenticatedUser.userData.user.id)
             .then(response => {
                 this.props.userDataActions(response.data.userData);
-                setTimeout(() => {
-
-                    // redirect user after a short delay
-                    this.props.loginAction(authenticatedUser.userData.user);
-                }, 2500);
+                this.props.loginAction(authenticatedUser.userData.user);
             });
         }
 
