@@ -4,12 +4,12 @@ import { InfoWindow, withGoogleMap, withScriptjs, GoogleMap, Marker} from "react
 import MapMarker from './MapMarker';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { geoLocationActions } from '../../../actions/geoLocationActions';
-import { newRoomLocationAction } from '../../../actions/newRoom/newRoomLocationAction';
-import { newRoomAddressAction } from '../../../actions/newRoom/newRoomAddressAction';
+import { geoLocationActions } from '../../actions/geoLocationActions';
+import { newRoomLocationAction } from '../../actions/newRoom/newRoomLocationAction';
+import { newRoomAddressAction } from '../../actions/newRoom/newRoomAddressAction';
 
-import { store } from '../../../store';
-import { notification } from "../../../helpers/notification";
+import { store } from '../../store';
+import { notification } from "../../helpers/notification";
 
 const Map = compose(
     withStateHandlers(() => ({

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { materializeJS } from '../../../helpers/materialize';
 
-import Days from '../../dashboard/states/rooms/newRoom/Days';
+import Days from '../../newRoom/Days';
 
 const staticTxt = {
     heading: 'Times',

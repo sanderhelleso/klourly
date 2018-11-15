@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { notification } from '../../../../../../helpers/notification';
+import { notification } from '../../../helpers/notification';
 import NextStage from '../NextStage';
 
 export default class Name extends Component {

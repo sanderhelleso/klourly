@@ -15,7 +15,7 @@ import { validateAction } from '../actions/validateActions';
 import Landing from './landing/Landing';
 import Signup from './signup/Signup';
 import Login from './login/Login';
-import NewRoom from './dashboard/states/rooms/newRoom/NewRoom';
+import NewRoom from './newRoom/NewRoom';
 import Room from './room/Room';
 import RoomAdmin from './room/admin/RoomAdmin';
 

@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import { XSquare, Trash2 } from 'react-feather';
 
 import NextStage from '../NextStage';
-import { notification } from '../../../../../../helpers/notification';
+import { notification } from '../../../helpers/notification';
 
 const staticTxt = {
     uploadBtn: 'Browse',

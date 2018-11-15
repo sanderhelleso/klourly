@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { nextStageAction } from '../../../../../actions/newRoom/nextStageAction';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 class NextStage extends Component {
     constructor(props) {

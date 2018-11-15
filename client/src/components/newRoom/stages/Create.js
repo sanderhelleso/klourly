@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { newRoomCreatedAction } from '../../../../../../actions/newRoom/newRoomCreatedAction';
-import { enterRoomAction } from '../../../../../../actions/room/enterRoomAction';
+import { newRoomCreatedAction } from '../../../actions/newRoom/newRoomCreatedAction';
+import { enterRoomAction } from '../../../actions/room/enterRoomAction';
 
-import { dashboard } from '../../../../../../api/dashboard/dashboard';
+import { dashboard } from '../../../api/dashboard/dashboard';
 
-import BackToDash from '../../../../BackToDash';
-import { redirect } from '../../../../../../helpers/redirect';
+import BackToDash from '../../dashboard/BackToDash';
+import { redirect } from '../../../helpers/redirect';
 
 class Create extends Component {
     constructor(props) {

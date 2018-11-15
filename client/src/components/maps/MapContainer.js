@@ -1,6 +1,6 @@
 import React from "react";
 import Map from "./Map";
-import { geoLocationActions } from '../../../actions/geoLocationActions';
+import { geoLocationActions } from '../../actions/geoLocationActions';
 
 // redux
 import { connect } from 'react-redux';

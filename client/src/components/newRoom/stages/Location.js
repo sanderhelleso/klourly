@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import MapContainer from '../../../../maps/MapContainer';
+import MapContainer from '../../maps/MapContainer';
 import NextStage from '../NextStage';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
-import { notification } from '../../../../../../helpers/notification';
+
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
+import { notification } from '../../../helpers/notification';
 
 class Location extends Component {
     constructor(props) {

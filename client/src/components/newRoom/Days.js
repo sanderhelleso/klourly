@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { DAYS } from '../../../../../helpers/days';
+import { DAYS } from '../../helpers/days';
 
 export default class Days extends Component {
     constructor(props) {

@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
-import BackToDash from '../../../../BackToDash';
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
+import BackToDash from '../../dashboard/BackToDash';
 
 // stages
 import Intro from './Intro';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PlusCircle } from 'react-feather';
 
-import { materializeJS } from '../../../../../../helpers/materialize';
+import { materializeJS } from '../../../helpers/materialize';
 
 import Days from '../Days';
 import NextStage from '../NextStage';

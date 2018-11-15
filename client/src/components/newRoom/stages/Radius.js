@@ -5,7 +5,7 @@ import { helpers } from '../helpers/helpers';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 
 const className = 'room-option animated fadeIn z-depth-2 hoverable no-select';
 const radiusOptions = [

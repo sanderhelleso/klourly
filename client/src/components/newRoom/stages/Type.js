@@ -5,7 +5,7 @@ import { helpers } from '../helpers/helpers';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { nextStageAction } from '../../../../../../actions/newRoom/nextStageAction';
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 
 const staticTxt = {
     public: 'Public',

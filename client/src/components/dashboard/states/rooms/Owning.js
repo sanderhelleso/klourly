@@ -5,7 +5,7 @@ import { cards } from '../../../../helpers/cards';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
-import { dashboard } from '../../../../api/dashboard/dashboard';
+import { room } from '../../../../api/room/room';
 
 class Owning extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class Owning extends Component {
             if (this.props.state.dashboard.userData.rooms.owning) {
                 
                 const rooms = this.props.state.dashboard.userData.rooms.owning;
-                await dashboard.getRooms(this.props.state.auth.user.id, rooms)
+                await room.getRooms(this.props.state.auth.user.id, rooms)
                 .then(response => {
                     this.setState({
                         roomsData: response.data.roomsData
