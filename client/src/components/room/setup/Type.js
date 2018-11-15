@@ -4,7 +4,7 @@ import { Lock, Users } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRoomTypeAction';
+import { updateRoomTypeAction } from '../../../actions/room/settings/updateRoomTypeAction';
 
 const staticTxt = {
     heading: 'Type',

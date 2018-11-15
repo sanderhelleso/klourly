@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { Trash2 } from 'react-feather';
 
-import { notification } from '../../../../helpers/notification';
+import { notification } from '../../../helpers/notification';
 
 // redux
 import { bindActionCreators } from 'redux';

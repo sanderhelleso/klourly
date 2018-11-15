@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Settings } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -7,15 +6,15 @@ import { connect } from 'react-redux';
 import { updateRoomNameAction } from '../../../../actions/room/settings/updateRoomNameAction';
 import { updateRoomTypeAction } from '../../../../actions/room/settings/updateRoomTypeAction';
 
-import Save from './Save';
-import Type from './Type';
-import Name from './Name';
-import Radius from './Radius';
-import Purpose from './Purpose';
-import Times from './Times';
-import Cover from './Cover';
+import Save from '../../setup/Save';
+import Type from '../../setup/Type';
+import Name from '../../setup/Name';
+import Radius from '../../setup/Radius';
+import Purpose from '../../setup/Purpose';
+import Times from '../../setup/Times';
+import Cover from '../../setup/Cover';
 
-class Information extends Component {
+class RoomSettings extends Component {
     constructor(props) {
         super(props);
     }
@@ -77,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ updateRoomNameAction, updateRoomTypeAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Information);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomSettings);

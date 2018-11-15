@@ -4,8 +4,8 @@ import { materializeJS } from '../../../helpers/materialize';
 
 import '../styles/admin.css';
 
-import Activate from './Activate';
-import Information from './settings/Information';
+import Activate from './activate/Activate';
+import RomSettings from './settings/RoomSettings';
 
 export default class RoomAdmin extends Component {
     constructor(props) {
@@ -84,7 +84,7 @@ export default class RoomAdmin extends Component {
                                     <h1>test3</h1>
                                 </div>
                             </div>
-                            <Information />
+                            <RomSettings />
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateRoomNameAction } from '../../../../actions/room/settings/updateRoomNameAction';
+import { updateRoomNameAction } from '../../../actions/room/settings/updateRoomNameAction';
 
 const staticTxt = {
     heading: 'Type',

@@ -5,9 +5,9 @@ import { PlusCircle } from 'react-feather';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { materializeJS } from '../../../../helpers/materialize';
+import { materializeJS } from '../../../helpers/materialize';
 
-import Days from '../../../dashboard/states/rooms/newRoom/Days';
+import Days from '../../dashboard/states/rooms/newRoom/Days';
 
 const staticTxt = {
     heading: 'Times',
