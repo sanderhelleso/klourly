@@ -1,10 +1,12 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
 
+const authenticate = require('../middelwares/requireLogin');
+
 module.exports = app => {
 
     // get user data from client
-    app.post('/api/userData', (req, res) => {
+    app.post('/api/userData', authenticate, (req, res) => {
 
         // get user reference in database
         const ref = db.ref(`users/${req.body.uid}`);
@@ -20,7 +22,7 @@ module.exports = app => {
     });
 
     // settings
-    app.post('/api/updateSettings', (req, res) => {
+    app.post('/api/updateSettings', authenticate, (req, res) => {
 
         // get user reference in database
         const userRef = db.ref(`users/${req.body.uid}`);

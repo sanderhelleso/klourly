@@ -77,12 +77,13 @@ async function validateUser(uid) {
     console.log(uid);
 
     // send data to endpoint and attempt to authenticate user
-    if (uid === null || uid === undefined || uid === '') {
+    if (!uid) {
         return false;
     }
 
     try {
         const response = await axios({
+            headers: authHeader(),
             method: 'post',
             url: '/api/authenticated',
             data: {

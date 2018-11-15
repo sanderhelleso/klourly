@@ -21,10 +21,8 @@ import RoomAdmin from './room/admin/RoomAdmin';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
-import MainNav from './navigation/main/MainNav';
 import JoinRoom from './joinRoom/JoinRoom';
 import Announcement from './room/announcements/Announcement';
-import { redirect } from './middelware/redirect';
 
 class App extends Component {
     constructor(props) {

@@ -26,14 +26,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes go here /////////////
+require("./routes/authenticated")(app);
 require("./routes/signup")(app);
 require("./routes/login")(app);
 require("./routes/userData")(app);
 require("./routes/upload")(app);
-require("./routes/authenticated")(app);
 require("./routes/countries")(app);
 require("./routes/room")(app);
-require("./routes/maps")(app);
 require("./routes/algolia")(app);
 //////////////////////////////
 

@@ -2,7 +2,7 @@ const firebase = require('firebase-admin');
 const db = firebase.database();
 const shortid = require('shortid');
 
-const authenticate = require('../middelwares/requireRoomAuth');
+const authenticate = require('../middelwares/requireLogin');
 
 module.exports = app => {
 

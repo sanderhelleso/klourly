@@ -1,26 +1,13 @@
-const firebase = require('firebase-admin');
-const db = firebase.database();
+const authenticate = require('../middelwares/requireLogin');
 
 module.exports = app => {
 
     // get authentication data from client
-    app.post('/api/authenticated', (req, res) => {
+    app.post('/api/authenticated',  authenticate, (req, res) => {
 
-        // attempt to authenticate user
-        firebase.auth().getUser(req.body.uid)
-        .then((userRecord) => {
-
-            res.json({
-                message: 'Authentication Successful',
-                success: true
-            })
-        })
-        .catch((error) => {
-            console.log("Error fetching user data:", error);
-            res.json({
-                message: 'Authentication Failed',
-                success: false
-            })
+        res.status(200).json({
+            message: 'Authentication Successful',
+            success: true
         });
     });
 }

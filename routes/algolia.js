@@ -1,4 +1,4 @@
-const authenticate = require('../middelwares/requireRoomAuth');
+const authenticate = require('../middelwares/requireLogin');
 
 module.exports = app => {
 

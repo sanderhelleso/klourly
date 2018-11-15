@@ -20,10 +20,12 @@ const multer = Multer({
     }
 });
 
+const authenticate = require('../middelwares/requireLogin');
+
 module.exports = app => {
 
     // get updated settings data from client and attempt to upload
-    app.post('/api/upload/photo', multer.single('file'), (req, res) => {
+    app.post('/api/upload/photo', authenticate, multer.single('file'), (req, res) => {
 
         // avatar file
         const file = req.file;
