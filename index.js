@@ -34,6 +34,7 @@ require("./routes/authenticated")(app);
 require("./routes/countries")(app);
 require("./routes/room")(app);
 require("./routes/maps")(app);
+require("./routes/algolia")(app);
 //////////////////////////////
 
 // serve out production assets
