@@ -13,6 +13,7 @@ import Name from './Name';
 import Radius from './Radius';
 import Purpose from './Purpose';
 import Times from './Times';
+import Cover from './Cover';
 
 class Information extends Component {
     constructor(props) {
@@ -56,6 +57,9 @@ class Information extends Component {
                         </div>
                         <div className="s12 m12 l12 settings-row row">
                             <Times />
+                        </div>
+                        <div className="s12 m12 l12 settings-row row">
+                            <Cover />
                         </div>
                     </div>
                 </div>

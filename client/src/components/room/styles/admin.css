@@ -46,7 +46,6 @@
 
 #room-settings-admin {
     position: relative;
-    padding: 0;
 }
 
 #room-settings-admin .switch {
@@ -144,6 +143,13 @@
 
 #room-settings-admin .select-days-cont p {
 
+}
+
+.cover-preview-admin {
+    min-height: 25rem !important;
+    width: 75% !important;
+    cursor: pointer;
+    margin: 0 auto;
 }
 
 @media (max-width: 600px) {

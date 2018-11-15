@@ -14,13 +14,12 @@ class AnnouncementPreview extends Component {
         super(props);
 
         this.state = props.data;
-
         this.enterAnnouncement = this.enterAnnouncement.bind(this);
     }
 
     enterAnnouncement() {
         this.props.openAnnouncementAction(this.state);
-        redirect.announcement(this.props.state.dashboard.currentRoom.id, this.state.id);
+        redirect.announcement(this.props.state.room.activeRoom.id, this.state.id);
     }
 
     renderReadMore() {

@@ -113,22 +113,24 @@ class Times extends Component {
 
     renderTimes() {
         return (
-            <div className="col s12 m12 l8 offset-l2 collapsible-cont">
+            <div className="col s12 m12 l12">
                 <h5>{staticTxt.heading}</h5>
                 <p className="settings-description">{staticTxt.description}</p>
-                <div className="row left-align">
-                    <button 
-                    id="add-new-room-time"
-                    className="waves-effect waves-light btn animated fadeIn"
-                    onClick={this.updateDaysAmount}
-                    >
-                        <PlusCircle size ={25} />
-                        Add
-                    </button>
+                <div className="col s12 m12 l8 offset-l2 collapsible-cont">
+                    <div className="row left-align">
+                        <button 
+                        id="add-new-room-time"
+                        className="waves-effect waves-light btn animated fadeIn"
+                        onClick={this.updateDaysAmount}
+                        >
+                            <PlusCircle size ={25} />
+                            Add
+                        </button>
+                    </div>
+                    <ul className="collapsible popout expandable">
+                        {this.renderSelectDays()}
+                    </ul>
                 </div>
-                <ul className="collapsible popout expandable">
-                    {this.renderSelectDays()}
-                </ul>
             </div>
         );
     }

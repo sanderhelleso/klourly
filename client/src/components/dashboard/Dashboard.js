@@ -13,7 +13,6 @@ export default class Dashboard extends Component {
     }
 
     componentWillUnmount() {
-        document.body.removeAttribute('id');
         document.body.style.overflow = 'auto';
     }
 

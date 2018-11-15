@@ -8,11 +8,10 @@ class Announcement extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this.props.state.dashboard.currentRoom.currentAnnouncement;
+        this.state = this.props.state.room.activeRoom.activeAnnouncement;
     }
 
     renderAnnouncement() {
-        console.log(this.state);
         return (
             <div className="animated fadeIn col s12">
                 <h1>{this.state.title}</h1>

@@ -9,7 +9,6 @@ module.exports = (req, res, next) => {
     if (typeof bearerHeader !== 'undefined') {
 
             // split at the space and get token from array
-
             const bearerToken = bearerHeader.split(' ')[1];
 
             req.token = bearerToken;
