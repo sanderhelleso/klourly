@@ -14,7 +14,6 @@ import Purpose from '../../setup/Purpose';
 import Times from '../../setup/Times';
 import Cover from '../../setup/Cover';
 import Algolia from '../../../algolia/Algolia';
-import LeafletMap from '../../../maps/LeafletMap';
 
 class RoomSettings extends Component {
     constructor(props) {
@@ -61,9 +60,6 @@ class RoomSettings extends Component {
                         </div>
                         <div className="s12 m12 l12 settings-row row">
                             <Cover />
-                        </div>
-                        <div className="s12 m12 l12 settings-row row">
-                            <LeafletMap />
                         </div>
                         <div className="s12 m12 l12 settings-row row">
                             <Algolia />

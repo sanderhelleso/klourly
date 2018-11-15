@@ -9,7 +9,7 @@ import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import BackToDash from '../dashboard/BackToDash';
 import { redirect } from '../../helpers/redirect';
-import { room } from '../../api/room/room';
+import { dashboard } from '../../api/dashboard/dashboard';
 
 import LinearLoader from '../loaders/LinearLoader';
 
@@ -36,7 +36,7 @@ class Room extends Component {
 
     componentDidMount() {
         const roomID = this.props.match.params.id;
-        room.getRoom(this.props.state.auth.user.id, roomID)
+        dashboard.getRoom(this.props.state.auth.user.id, roomID)
         .then(response => {
             if (response.data.success) {
                 localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));

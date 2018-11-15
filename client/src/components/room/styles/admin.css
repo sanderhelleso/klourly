@@ -152,10 +152,6 @@
     margin: 0 auto;
 }
 
-#leaflet-map-cont {
-    height: 180px;
-}
-
 @media (max-width: 600px) {
     #room-settings-admin .room-admin {
         padding: 2.5rem;
