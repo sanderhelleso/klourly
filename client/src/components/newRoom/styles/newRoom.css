@@ -506,3 +506,33 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.3s ease-in-out;
     background-color: rgba(20, 20, 20, 0.9);
 }
+
+.step {
+    display: inline-block;
+    padding: 0.75rem;
+    border-radius: 50%;
+    min-width: 3rem;
+    color: #ffffff;
+}
+
+.step-enabled {
+    cursor: pointer;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    background: #11998e;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.step-disabled {
+    color: #eeeeee;
+    border: 1px solid #eeeeee;
+    cursor: not-allowed;
+}
+
+.step-line {
+    min-height: 1px;
+    min-width: 75px;
+    background-color: #bdbdbd;
+    display: inline-block;
+    margin: 0 0.5rem;
+}

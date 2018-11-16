@@ -19,6 +19,7 @@ import Location from './Location';
 import Times from './Times';
 import Cover from './Cover';
 import Create from './Create';
+import Stepper from '../../stepper/Stepper';
 
 let WORDS = [];
 
@@ -165,6 +166,7 @@ class Stages extends Component {
                 {this.renderBackToDash()}
                 <div id="new-room-stage" className="no-select row">
                     <Intro />
+                    <Stepper steps={7} />
                     <div id="current-stage-status" className="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                         {this.displayStageStatus()}
                     </div>

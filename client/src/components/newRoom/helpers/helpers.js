@@ -7,27 +7,26 @@ export const helpers = {
 function selectOption(e, stageOption, props) {
         
     // animate cards
+    console.log(e.target);
     const cont = document.querySelector('#room-option-cont');
+    const options = Array.from(cont.querySelectorAll('.room-option'));
     document.body.style.overflowY = 'hidden';
-    Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+    options.forEach(option => {
         option.style.pointerEvents = 'none';
         option.classList.remove("fadeIn");
     });
 
-    e.target.classList.add("pulse");
-
-    let timer = 750;
-    Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+    let timer = 250;
+    options.forEach(option => {
         setTimeout(() => {
-            option.classList.remove("pulse");
-            option.classList.add("fadeOutDown");
+            option.classList.add('fadeOut');
         }, timer);
         timer += 150;
     });
 
     setTimeout(() => {
         document.body.style.overflowY = 'auto';
-        Array.from(cont.querySelectorAll('.room-option')).forEach(option => {
+        options.forEach(option => {
             option.style.pointerEvents = 'auto';
         });
 
@@ -36,5 +35,5 @@ function selectOption(e, stageOption, props) {
             stage: props.state.dashboard.newRoom.stage + 1,
             ...stageOption
         });
-    }, 2000);
+    }, 1200);
 }

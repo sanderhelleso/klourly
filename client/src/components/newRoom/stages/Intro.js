@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NextStage from '../NextStage';
 import { connect } from 'react-redux';
+import Stepper from '../../stepper/Stepper';
 
 const introTxt = {
     heading: 'Lets create a New Room',
