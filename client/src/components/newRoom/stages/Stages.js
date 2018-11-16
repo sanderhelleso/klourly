@@ -49,6 +49,10 @@ class Stages extends Component {
                 this.updateWord();
                 this.setState({
                     stage: nextProps.state.dashboard.newRoom.stage
+                }, () => {
+                    if (document.querySelector('input[type="text"]')) {
+                        document.querySelector('input[type="text"]').focus();
+                    }
                 });
             }
         }
@@ -159,9 +163,9 @@ class Stages extends Component {
         return (
             <div>
                 {this.renderBackToDash()}
-                <div className="no-select row">
+                <div id="new-room-stage" className="no-select row">
                     <Intro />
-                    <div id="current-stage-status" className="col s8 offset-s2">
+                    <div id="current-stage-status" className="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                         {this.displayStageStatus()}
                     </div>
                     {this.renderStage()}

@@ -20,7 +20,7 @@ class Location extends Component {
             locationDisabled: false,
             locationName: null,
             placeholder: 'BIT Building Room 215',
-            className: 'browser-default animated fadeIn',
+            className: 'animated fadeIn',
             id: 'new-room-name-field',
             type: 'text',
             maxLength: 55
@@ -34,7 +34,6 @@ class Location extends Component {
         document.title = 'Creating New Room | Step 5 / 7 | Klourly'
     }
 
-    
     setMapStatus(e) {
         if (e.target.checked) {
             document.querySelector('#main-map-cont').className = 'newRoom-maps-cont-active';

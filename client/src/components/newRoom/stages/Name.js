@@ -70,16 +70,18 @@ export default class Name extends Component {
 
     render() {
         return (
-            <div className="input-field">
-                <input 
-                id={this.state.id} 
-                placeholder={this.state.placeholder} 
-                type={this.state.type} 
-                className={this.state.className} 
-                maxLength={this.state.maxLength} 
-                onChange={(event) => this.handleRoomName(event)}
-                />
-                {this.confirmName()}
+            <div className="input-field col s12">
+                <div className="center-align">
+                    <input 
+                    id={this.state.id} 
+                    placeholder={this.state.placeholder} 
+                    type={this.state.type} 
+                    className={this.state.className} 
+                    maxLength={this.state.maxLength} 
+                    onChange={(event) => this.handleRoomName(event)}
+                    />
+                    {this.confirmName()}
+                </div>
             </div>
         )
     }

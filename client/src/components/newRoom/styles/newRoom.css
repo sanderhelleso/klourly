@@ -203,23 +203,19 @@
     box-shadow: none !important;
 }
 
-#new-room-name-field, #select-start-week {
-    min-width: 30rem;
-    padding: 1rem 2rem;
-    text-align: center;
+#new-room-stage input {
+    max-width: 30rem;
     font-size: 1.5rem;
-    border: 2px solid #8E2DE2;
     outline: none;
-    border-radius: 6px;
     letter-spacing: 2px;
     font-weight: 800;
     transition: 0.3s ease-in-out;
 }
 
-#select-start-week {
+#new-room-stage #select-start-week {
     margin: 1rem auto 0 auto;
-    min-width: 10rem;
-    max-width: 10rem;
+    min-width: 15rem;
+    max-width: 15rem;
     z-index: -100;
 }
 

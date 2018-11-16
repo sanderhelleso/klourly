@@ -211,7 +211,7 @@ export default class Times extends Component {
                 </div>
                 <div id="starting-from-week-cont" className="center col s6">
                     <h5>Starting from week...</h5>
-                    <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="browser-default animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
+                    <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
                     <p>Not sure?</p>
                     <div id="repeat-active-switch-cont" className="col s12">
                         <h5>Repeat every week?</h5>
