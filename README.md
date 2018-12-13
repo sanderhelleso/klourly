@@ -1,4 +1,6 @@
 # klourly
+[![HitCount](http://hits.dwyl.io/sanderhelleso/klourly.svg)](http://hits.dwyl.io/sanderhelleso/klourly)
+
 
 A flexible, radius based application for taking attendence
 <br>
