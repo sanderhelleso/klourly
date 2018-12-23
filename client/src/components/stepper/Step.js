@@ -12,7 +12,7 @@ export default class Step extends Component {
 
     render() {
         return (
-            <div className={`step ${this.state.disabled ? 'step-disabled' : 'step-enabled hoverable'}`}>
+            <div className={`step ${this.state.disabled ? 'step-disabled' : 'step-enabled'}`}>
                 <span>{this.state.stepNumber}</span>
             </div>
         )

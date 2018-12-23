@@ -7,16 +7,25 @@ export default class Stepper extends Component {
 
         this.state = {
             steps: props.steps,
-            current: 1
+            current: props.currentStep
         }
+    }
 
-        console.log(props);
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            current: nextProps.currentStep
+        });
     }
 
     renderSteps() {
         const steps = [];
+        console.log(this.state.current);
         for (let i = 0; i < this.state.steps; i++) {
-            steps.push(<Step key={i} number={i + 1} disabled={i === 0 ? false : true} />);
+
+            // set disabled state depending on current stage
+            let disabled = (i + 1) <= this.state.current ? false : true;
+
+            steps.push(<Step key={i} number={i + 1} disabled={disabled} />);
 
             if (i + 1 !== this.state.steps) {
                 steps.push(<span key={`step-line-${i + 1}`} className="step-line"></span>);

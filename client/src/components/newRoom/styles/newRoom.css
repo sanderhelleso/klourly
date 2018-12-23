@@ -511,22 +511,22 @@ input[type=number]::-webkit-outer-spin-button {
     display: inline-block;
     padding: 0.75rem;
     border-radius: 50%;
-    min-width: 3rem;
-    color: #ffffff;
+    min-width: 3.2rem;
+    background-color: transparent;
+    font-weight: 800;
 }
 
 .step-enabled {
     cursor: pointer;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    background: #11998e;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border: 1px solid #00e988;
+    color: #00e988;
 }
 
 .step-disabled {
-    color: #eeeeee;
-    border: 1px solid #eeeeee;
+    color: #bdbdbd;
+    border: 1px solid #bdbdbd;
     cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .step-line {
@@ -535,4 +535,5 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #bdbdbd;
     display: inline-block;
     margin: 0 0.5rem;
+    opacity: 0.8;
 }

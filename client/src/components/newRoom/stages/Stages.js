@@ -160,13 +160,18 @@ class Stages extends Component {
         return STAGE;
     }
 
+    renderStepper() {
+        console.log(this.state.stage);
+        return this.state.stage > 0 ? <Stepper steps={7} currentStep={this.state.stage} /> : null;
+
+    }
+
     render() {
         return (
             <div>
                 {this.renderBackToDash()}
                 <div id="new-room-stage" className="no-select row">
                     <Intro />
-                    <Stepper steps={7} />
                     <div id="current-stage-status" className="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                         {this.displayStageStatus()}
                     </div>
