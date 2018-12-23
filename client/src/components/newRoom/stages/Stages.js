@@ -19,35 +19,25 @@ import Location from './Location';
 import Times from './Times';
 import Cover from './Cover';
 import Create from './Create';
-import Stepper from '../../stepper/Stepper';
-
-let WORDS = [];
 
 class Stages extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            word: WORDS[Math.floor(Math.random() * WORDS.length)],
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 7,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 1,
             lastStage: 7
         }
 
         this.displayStageStatus = this.displayStageStatus.bind(this);
     }
 
-    // update words when component renders
-    componentWillMount() {
-       WORDS = ['Awesome', 'Cool', 'Great', 'Nice', 'Sweet', 'Good Job', 'Magnificent', 'Incredible'];
-    }
-
     componentWillReceiveProps(nextProps) {
 
         if (this.props.state.dashboard.newRoom) {
             if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
-                this.updateWord();
                 this.setState({
                     stage: nextProps.state.dashboard.newRoom.stage
                 }, () => {
@@ -64,13 +54,6 @@ class Stages extends Component {
                 lastStage: 7
             });
         }   
-    }
-
-    updateWord() {
-        WORDS.splice(WORDS.indexOf(this.state.word), 1);
-        this.setState({
-            word: WORDS[Math.floor(Math.random() * WORDS.length)],
-        });
     }
 
     renderBackToDash() {
@@ -112,7 +95,7 @@ class Stages extends Component {
 
         const STATUS = 
         <div className="animated fadeIn">
-            <h5>{`${this.state.word}! ${stageMessage}`}</h5>
+            <h5>{`${stageMessage}`}</h5>
         </div>
 
 
@@ -158,12 +141,6 @@ class Stages extends Component {
         </div>
 
         return STAGE;
-    }
-
-    renderStepper() {
-        console.log(this.state.stage);
-        return this.state.stage > 0 ? <Stepper steps={7} currentStep={this.state.stage} /> : null;
-
     }
 
     render() {
