@@ -24,6 +24,7 @@ export default class Days extends Component {
         this.setDays =  this.setDays.bind(this);
         this.dayIsSelected = this.dayIsSelected.bind(this);
         this.updateChecked = this.updateChecked.bind(this);
+        this.updateTime = this.updateTime.bind(this);
     }
 
     setDays() {
@@ -54,11 +55,11 @@ export default class Days extends Component {
                     <p>
                         <label>
                         <input
-                        value={day}
-                        name={day}
-                        type="checkbox"
-                        defaultChecked={this.dayIsSelected(day)} 
-                        onChange={this.props.settings ? this.updateChecked : null}
+                            value={day}
+                            name={day}
+                            type="checkbox"
+                            defaultChecked={this.dayIsSelected(day)} 
+                            onChange={this.props.settings ? this.updateChecked : null}
                         />
                         <span>{`${day[0].toUpperCase()}${day.substring(1).toLowerCase()}`}</span>
                         </label>
@@ -77,6 +78,7 @@ export default class Days extends Component {
     }
 
     updateTime(e) {
+        console.log(e);
         if (e.target.name === 'timeFrom') {
             this.setState({
                 timeFrom: e.target.value
@@ -93,7 +95,6 @@ export default class Days extends Component {
     }
 
     render() {
-
         return (
             <li>
                 <div className="collapsible-header">
@@ -107,26 +108,26 @@ export default class Days extends Component {
                         <div className="col s12 m12 l6">
                             <label htmlFor={`timeFrom${this.props.daysID}`}>Time From</label>
                             <input 
-                            id={`timeFrom${this.props.daysID}`}
-                            name="timeFrom"
-                            placeholder="02:00 AM"
-                            type="text"
-                            className="timepicker"
-                            onChange={(event) => this.updateTime(event)}
-                            value={this.state.timeFrom}
+                                id={`timeFrom${this.props.daysID}`}
+                                name="timeFrom"
+                                placeholder="02:00 AM"
+                                type="text"
+                                className="timepicker"
+                                onChange={(event) => this.updateTime(event)}
+                                value={this.state.timeFrom}
                             />
                         </div>
 
                         <div className="col s12 m12 l6">
                             <label htmlFor={`timeTo${this.props.daysID}`}>Time To</label>
                             <input
-                            id={`timeTo${this.props.daysID}`}
-                            name="timeTo"
-                            placeholder="04:00 AM"
-                            type="text"
-                            className="timepicker"
-                            onChange={(event) => this.updateTime(event)}
-                            value={this.state.timeTo}
+                                id={`timeTo${this.props.daysID}`}
+                                name="timeTo"
+                                placeholder="04:00 AM"
+                                type="text"
+                                className="timepicker"
+                                onChange={(event) => this.updateTime(event)}
+                                value={this.state.timeTo}
                             />
                         </div>
                     </div>

@@ -27,7 +27,7 @@ class Stages extends Component {
         this.state = {
             newRoomSuccess: {},
             owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 1,
+            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 6,
             lastStage: 7
         }
 

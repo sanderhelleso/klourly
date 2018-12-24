@@ -6,6 +6,7 @@ import '../styles/admin.css';
 
 import Activate from './activate/Activate';
 import RomSettings from './settings/RoomSettings';
+import RoomAnnouncements from './announcements/RoomAnnouncements';
 
 export default class RoomAdmin extends Component {
     constructor(props) {
@@ -81,7 +82,7 @@ export default class RoomAdmin extends Component {
                             </div>
                             <div id="room-announcements-admin" className="col s12">
                                 <div className="room-admin">
-                                    <h1>test3</h1>
+                                    <RoomAnnouncements />
                                 </div>
                             </div>
                             <RomSettings />

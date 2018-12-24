@@ -60,8 +60,8 @@ export default class Times extends Component {
         else {
             return(
                 <NextStage 
-                message={this.state.message} 
-                valid={false} 
+                    message={this.state.message} 
+                    valid={false} 
                 />
             )
         }
@@ -146,7 +146,7 @@ export default class Times extends Component {
         const day = Array.from(document.querySelectorAll('.collapsible-body'));
         day.forEach(day => {
             const inputs = Array.from(day.querySelectorAll('input'));
-
+            console.log(inputs);
             const dayObj = {
                 days: null,
                 time: {
@@ -204,18 +204,33 @@ export default class Times extends Component {
         return (
             <div className="row col s12">
                 <div className="col s6 collapsible-cont">
-                    <button id="add-new-room-time" className="waves-effect waves-light btn animated fadeIn" onClick={this.updateDaysAmount}><PlusCircle size ={25}/> Add</button>
+                    <button 
+                        id="add-new-room-time" 
+                        className="waves-effect waves-light btn animated fadeIn" 
+                        onClick={this.updateDaysAmount}>
+                        <PlusCircle size ={25}/> Add
+                    </button>
                     <ul className="collapsible popout expandable">
                         {this.renderSelectDays()}
                     </ul>
                 </div>
                 <div id="starting-from-week-cont" className="center col s6">
                     <h5>Starting from week...</h5>
-                    <input id="select-start-week" placeholder={this.getCurrentWeek()} type="number" className="animated fadeIn" min="1" max="52" maxLength="2" onChange={(event) => this.handleWeek(event)}/>
+                    <input id="select-start-week" 
+                        placeholder={this.getCurrentWeek()} 
+                        type="number" className="animated fadeIn" 
+                        min="1" 
+                        max="52" 
+                        maxLength="2" 
+                        onChange={(event) => this.handleWeek(event)}
+                    />
                     <p>Not sure?</p>
                     <div id="repeat-active-switch-cont" className="col s12">
                         <h5>Repeat every week?</h5>
-                        <div className="switch" onChange={(event) => this.repeatTime(event)}>
+                        <div 
+                            className="switch" 
+                            onChange={(event) => this.repeatTime(event)}
+                        >
                             <label>
                             No
                             <input type="checkbox" defaultChecked={true} />

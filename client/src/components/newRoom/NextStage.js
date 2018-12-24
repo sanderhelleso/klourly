@@ -62,10 +62,10 @@ class NextStage extends Component {
 
         return(
             <button 
-            id={this.state.id} 
-            className={this.state.classNameDisabled}
+                id={this.state.id} 
+                className={this.state.classNameDisabled}
             >
-            {this.state.message}
+                {this.state.message}
             </button>
         )
     }
