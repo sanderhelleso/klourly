@@ -54,7 +54,6 @@ class Room extends Component {
                         document.body.style.overflowY = 'auto';
                         document.title = `${this.state.room.name} | Klourly`; 
                         materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
-                            hover: true
                         });
                     });
                 }, 10);
