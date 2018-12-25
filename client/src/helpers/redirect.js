@@ -11,7 +11,9 @@ export const redirect = {
     newRoom,
     joinRoom,
     announcement,
-    roomAdminSettings
+    roomAdminSettings,
+    roomAdminMembers,
+    roomAdminReports
 };
 
 function home() {
@@ -43,7 +45,15 @@ function room(id) {
 }
 
 function roomAdminSettings(id) {
-    history.push(`/dashboard/rooms/${id}/admin`);
+    history.push(`/dashboard/rooms/${id}/settings`);
+}
+
+function roomAdminMembers(id) {
+    history.push(`/dashboard/rooms/${id}/members`);
+}
+
+function roomAdminReports(id) {
+    history.push(`/dashboard/rooms/${id}/reports`);
 }
 
 function announcement(roomId, announcementId) {

@@ -59,12 +59,12 @@ export default class RoomAdmin extends Component {
                                     </a>
                                 </li>
                                 <li className="tab col s4">
-                                    <a href="#room-announcements-admin">
+                                    <a className="active" href="#room-announcements-admin">
                                         {this.state.width <= 900 ? <MessageSquare /> : 'Announcements'}
                                     </a>
                                 </li>
                                 <li className="tab col s4">
-                                    <a className="active" href="#room-settings-admin">
+                                    <a href="#room-settings-admin">
                                         {this.state.width <= 900 ? <Settings /> : 'Settings'}
                                     </a>
                                 </li>

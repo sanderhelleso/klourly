@@ -4,7 +4,12 @@ export default class RoomAnnouncements extends Component {
     render() {
         return (
             <div>
-                <h1>Announcements</h1>
+                <h3>Announcements</h3>
+                <button 
+                    id="new-room-announcement-btn" 
+                    className="waves-effect waves-light btn animated fadeIn">
+                    New Announcement
+                </button>
             </div>
         )
     }

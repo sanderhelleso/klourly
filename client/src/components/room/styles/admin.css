@@ -112,7 +112,7 @@
     background-color: #f5f5f5;
 }
 
-#save-room-admin-settings-btn, #cancel-room-admin-settings-btn {
+#save-room-admin-settings-btn, #cancel-room-admin-settings-btn, #new-room-announcement-btn {
     box-shadow: none;
     border: 2px solid #00e988;
     color: #ffffff;
@@ -150,6 +150,24 @@
     width: 75% !important;
     cursor: pointer;
     margin: 0 auto;
+}
+
+#new-room-announcement-btn {
+    min-width: 250px;
+}
+
+#room-menu {
+    z-index: 13377;
+}
+
+#room-menu li a {
+    text-align: center;
+}
+
+#room-menu svg {
+    display: block;
+    margin: 0.1rem auto;
+    opacity: 0.5;
 }
 
 @media (max-width: 600px) {

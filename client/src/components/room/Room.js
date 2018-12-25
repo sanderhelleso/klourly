@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Parallax, Background } from 'react-parallax';
 import { Settings } from 'react-feather';
+import { materializeJS } from '../../helpers/materialize';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -18,6 +19,7 @@ import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Location from './location/Location';
+import Menu from './Menu';
 
 class Room extends Component {
     constructor(props) {
@@ -31,7 +33,6 @@ class Room extends Component {
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
         this.renderNotAuthorized = this.renderNotAuthorized.bind(this);
-        this.enterRoomAdminSettings = this.enterRoomAdminSettings.bind(this);
     }
 
     componentDidMount() {
@@ -52,8 +53,11 @@ class Room extends Component {
                     }, () => {
                         document.body.style.overflowY = 'auto';
                         document.title = `${this.state.room.name} | Klourly`; 
+                        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
+                            hover: true
+                        });
                     });
-                }, 700);
+                }, 10);
             }
 
             else {
@@ -121,18 +125,17 @@ class Room extends Component {
         )
     }
 
-    enterRoomAdminSettings() {
-        redirect.roomAdminSettings(this.state.room.id);
-    }
-
     renderAdmin() {
+        console.log(this.state.room);
         if (this.state.room.owner === this.props.state.auth.user.id) {
             return (
                 <div 
-                id="room-admin-settings-btn"
-                onClick={this.enterRoomAdminSettings}
+                    id="room-admin-settings-btn"
+                    className="dropdown-trigger"
+                    data-target="room-menu"
                 >
-                    <Settings size={30} />
+                    <Settings size={35} />
+                    <Menu id={this.state.room.id}/>
                 </div>
             )
         }
