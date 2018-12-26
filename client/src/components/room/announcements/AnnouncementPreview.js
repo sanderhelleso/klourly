@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Reactions from './reactions/Reactions';
 import Fade from 'react-reveal/Fade';
 import { redirect } from '../../../helpers/redirect';
+import { format } from '../../../helpers/format';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -44,7 +45,7 @@ class AnnouncementPreview extends Component {
             <Fade>
                 <div className="col s12 announcement">
                     <h5 className="announcement-title">{this.state.title}</h5>
-                    <span className="announcement-date">{this.state.timestamp}</span>
+                    <span className="announcement-date">{format.tsToDate(this.state.timestamp)}</span>
                     <p className="announcement-body">{this.state.message.substring(0, 355)}</p>
                     <Reactions id={this.props.id} data={this.state.reactions} />
                     {this.renderReadMore()}
