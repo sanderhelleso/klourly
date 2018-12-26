@@ -5,6 +5,7 @@ export const room = {
     createRoom,
     getRoom,
     getRooms,
+    publishAnnouncement
 }
 
 // create new room
@@ -59,6 +60,27 @@ async function getRooms(uid, rooms) {
             data: {
                 uid: uid,
                 rooms: rooms
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// add a new announcement to coresponding room
+async function publishAnnouncement(uid, roomID) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/publishAnnouncement',
+            data: {
+                uid: uid,
+                roomID: roomID
             }
         });
 

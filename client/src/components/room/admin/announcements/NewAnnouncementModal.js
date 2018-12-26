@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
+import { notification } from '../../../../helpers/notification';
 
 export default class NewAnnouncementModal extends Component {
     constructor() {
@@ -10,8 +11,12 @@ export default class NewAnnouncementModal extends Component {
             title: '',
             message: '',
             maxLengthTitle: 50,
-            maxLengthMessage: 2000
+            maxLengthMessage: 2000,
+            titleError: `Invalid title formatting. Length must be between 1 - 50`,
+            messageError: ''
         }
+
+        this.publishAnnouncement = this.publishAnnouncement.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +30,22 @@ export default class NewAnnouncementModal extends Component {
         });
     }
 
+    publishAnnouncement() {
+
+        // validate title
+        if (this.state.title === '' || this.state.title.length > this.state.maxLengthTitle) {
+            notification.error(this.state.titleError);
+            return;
+        }
+
+        // validate message
+        if (this.state.message === '' || this.state.message.length > this.state.maxLengthMessage) {
+
+            return;
+
+        }
+    }
+
     render() {
         return (
             <div id="new-announcement-modal" className="modal modal-fixed-footer">
@@ -34,7 +55,7 @@ export default class NewAnnouncementModal extends Component {
                         <p>Publish a New Announcement</p>
                     </StyledHeader>
                     <div className="row">
-                        <form className="col s12 m8 offset-m2">
+                        <div className="col s12 m8 offset-m2">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <input 
@@ -44,9 +65,10 @@ export default class NewAnnouncementModal extends Component {
                                         type="text" 
                                         min-length={1} 
                                         maxLength={this.state.maxLengthTitle}
+                                        value={this.state.title}
                                         onChange={(e) => this.updateAnnouncement(e)}
                                     />
-                                    <label for="new-announcement-title">Title</label>
+                                    <label htmlFor="new-announcement-title">Title</label>
                                     <StyledMessage>{this.state.title.length} / {this.state.maxLengthTitle}</StyledMessage>
                                 </div>
                                 <div class="input-field col s12">
@@ -57,18 +79,23 @@ export default class NewAnnouncementModal extends Component {
                                         className="materialize-textarea" 
                                         minLength={1} 
                                         maxLength={this.state.maxLengthMessage}
+                                        value={this.state.message}
                                         onChange={(e) => this.updateAnnouncement(e)}
                                     ></textarea>
-                                    <label for="new-announcement-body">Message</label>
+                                    <label htmlFor="new-announcement-body">Message</label>
                                     <StyledMessage>{this.state.message.length} / {this.state.maxLengthMessage}</StyledMessage>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                    <a class="waves-effect waves-green btn-flat">Publish</a>
+                    <button 
+                        class="waves-effect waves-green btn-flat" 
+                        onClick={this.publishAnnouncement}>
+                        Publish
+                    </button>
                 </div>
             </div>
         )

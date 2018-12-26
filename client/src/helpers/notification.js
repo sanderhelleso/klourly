@@ -1,12 +1,26 @@
 import { toast } from 'react-toastify';
 
 export const notification = {
+    error,
     login,
     signup,
     settings,
     newRoomName,
     copyToClipboard,
-    invalidFileUpload
+    invalidFileUpload,
+}
+
+// default error
+function error(message) {
+
+    // prompt error if condition is not meet
+    toast(message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-error',
+        progressClassName: 'error-progress-bar',
+        autoClose: 3000,
+        toastId: 1
+    });
 }
 
 // login notification
@@ -122,4 +136,6 @@ function invalidFileUpload(message) {
         toastId: 1
     });
 }
+
+
 

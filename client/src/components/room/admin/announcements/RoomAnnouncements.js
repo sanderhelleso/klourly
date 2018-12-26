@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -12,7 +13,6 @@ import NewAnnouncementModal from './NewAnnouncementModal';
 class RoomAnnouncements extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
     }
 
     render() {
@@ -32,6 +32,10 @@ class RoomAnnouncements extends Component {
                     </StyledButton>
                 </StyledHeader> 
                 <NewAnnouncementModal />
+                <ToastContainer 
+                    transition={Flip}
+                    closeButton={false}
+                />
             </main>
         )
     }
