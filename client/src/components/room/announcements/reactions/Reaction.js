@@ -56,6 +56,8 @@ class Reactions extends Component {
             });
         }
 
+        console.log(this.props);
+
         // attempt to update selected emoji
         const response = await room.updateAnnouncementReaction(
             this.props.state.auth.user.id,

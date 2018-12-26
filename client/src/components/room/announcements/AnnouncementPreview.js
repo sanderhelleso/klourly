@@ -14,7 +14,11 @@ class AnnouncementPreview extends Component {
     constructor(props) {
         super(props);
 
-        this.state = props.data;
+        console.log(props);
+        this.state =  { 
+            ...props.data,
+            id: props.id
+        };
         this.enterAnnouncement = this.enterAnnouncement.bind(this);
     }
 
