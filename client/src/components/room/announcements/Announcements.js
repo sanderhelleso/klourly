@@ -23,12 +23,25 @@ const mockData = [
 ]
 
 export default class Announcements extends Component {
+    constructor(props) {
+        super(props);
+
+    }
+
     renderAnnouncements() {
-        return mockData.map(announcement => {
+
+        Object.values(this.props.announcements).map(announcement => {
+            console.log(announcement);
+        })
+
+
+
+        return Object.entries(this.props.announcements).map(announcement => {
             return (
                 <AnnouncementPreview
-                key={mockData.indexOf(announcement)}
-                data={announcement} 
+                    key={announcement[0]}
+                    id={announcement[0]}
+                    data={announcement[1]} 
                 />
             )
         });
@@ -39,10 +52,6 @@ export default class Announcements extends Component {
             <div id="room-announcements">
                 <h2>Announcements</h2>
                 <div id="announcements-cont">
-                    {this.renderAnnouncements()}
-                    {this.renderAnnouncements()}
-                    {this.renderAnnouncements()}
-                    {this.renderAnnouncements()}
                     {this.renderAnnouncements()}
                 </div>
             </div>

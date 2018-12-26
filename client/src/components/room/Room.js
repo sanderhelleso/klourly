@@ -156,7 +156,7 @@ class Room extends Component {
                     {this.renderCover()}
                     <div className="row room-flex-s">
                         <div id="room-main" className="col l8 m6 s12">
-                            <Announcements />
+                            <Announcements announcements={this.state.room.announcements}/>
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
                             <div className="col s12 room-aside-section">

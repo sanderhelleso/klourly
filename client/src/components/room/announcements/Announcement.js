@@ -15,8 +15,8 @@ class Announcement extends Component {
         return (
             <div className="animated fadeIn col s12">
                 <h1>{this.state.title}</h1>
-                <h5>{this.state.date}</h5>
-                <p>{this.state.body}</p>
+                <h5>{this.state.timestamp}</h5>
+                <p>{this.state.message}</p>
             </div>
         )
     }

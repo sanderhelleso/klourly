@@ -124,8 +124,7 @@ module.exports = app => {
             }
         });
 
-        console.log(setAnnouncement);
-
+        // send back response
         res.status(200).json({
             success: true,
             message: 'Successfully published announcement'

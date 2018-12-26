@@ -19,12 +19,12 @@ class AnnouncementPreview extends Component {
 
     enterAnnouncement() {
         this.props.openAnnouncementAction(this.state);
-        redirect.announcement(this.props.state.room.activeRoom.id, this.state.id);
+        redirect.announcement(this.props.state.room.activeRoom.id, this.props.id);
     }
 
     renderReadMore() {
 
-        if (this.state.body.length > 355) {
+        if (this.state.message.length > 355) {
             return (
                 <div className="col s12 announcement-readmore-cont">
                     <button 
@@ -44,9 +44,9 @@ class AnnouncementPreview extends Component {
             <Fade>
                 <div className="col s12 announcement">
                     <h5 className="announcement-title">{this.state.title}</h5>
-                    <span className="announcement-date">{this.state.date}</span>
-                    <p className="announcement-body">{this.state.body.substring(0, 355)}</p>
-                    <Reactions />
+                    <span className="announcement-date">{this.state.timestamp}</span>
+                    <p className="announcement-body">{this.state.message.substring(0, 355)}</p>
+                    <Reactions id={this.props.id} data={this.state.reactions} />
                     {this.renderReadMore()}
                 </div>
             </Fade>

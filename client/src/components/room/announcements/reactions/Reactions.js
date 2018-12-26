@@ -1,31 +1,12 @@
 import React, { Component } from 'react';
-
 import Reaction from './Reaction';
 
-const mockData = [
-    {   name: 'happy',
-        emoji: '😄',
-        count: 4
-    },
-    {   name: 'love',
-        emoji: '😍',
-        count: 1
-    },
-    {   name: 'upset',
-        emoji: '😓',
-        count: 0
-    },
-    {   name: 'shocked',
-        emoji: '😨',
-        count: 2
-    },
-    {   name: 'wow',
-        emoji: '😲',
-        count: 1
-    }
-];
-
 export default class Reactions extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+
     getRGB() {
         return (
             `rgba(
@@ -45,11 +26,14 @@ export default class Reactions extends Component {
     }
 
     renderReactions() {
-        return mockData.map(reaction => {
+
+        return Object.entries(this.props.data).map(reaction => {
             return (
                 <Reaction 
-                key={mockData.indexOf(reaction)}
-                data={reaction}
+                    key={reaction[0]}
+                    id={this.props.id}
+                    name={reaction[0]}
+                    data={reaction[1]}
                 />
             );
         });
