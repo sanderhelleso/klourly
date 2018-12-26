@@ -39,6 +39,9 @@
     "/api/publishAnnouncement": {
       "target": "http://localhost:5000"
     },
+    "/api/updateAnnouncementReaction": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }

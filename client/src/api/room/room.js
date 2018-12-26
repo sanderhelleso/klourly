@@ -5,7 +5,8 @@ export const room = {
     createRoom,
     getRoom,
     getRooms,
-    publishAnnouncement
+    publishAnnouncement,
+    updateAnnouncementReaction
 }
 
 // create new room
@@ -82,6 +83,29 @@ async function publishAnnouncement(uid, roomID, announcement) {
                 uid,
                 roomID,
                 announcement
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// update an announcements reaction
+async function updateAnnouncementReaction(uid, roomID, announcementID, reactionName) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/updateAnnouncementReaction',
+            data: {
+                uid,
+                roomID,
+                announcementID,
+                reactionName
             }
         });
 

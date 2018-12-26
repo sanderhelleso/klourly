@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { room } from '../../../../api/room/room';
 
-export default class Reactions extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Reactions extends Component {
     constructor(props) {
         super(props);
 
@@ -8,6 +13,8 @@ export default class Reactions extends Component {
             ...props.data,
             reacted: false
         }
+
+        this.updateReaction = this.updateReaction.bind(this);
     }
 
     getRGB() {
@@ -28,7 +35,7 @@ export default class Reactions extends Component {
         e.target.style.backgroundColor = 'transparent';
     }
 
-    updateReaction(e) {
+    async updateReaction() {
         if (!this.state.reacted) {
             this.setState({
                 count: this.state.count + 1,
@@ -42,6 +49,16 @@ export default class Reactions extends Component {
                 reacted: false
             });
         }
+
+        // attempt to update selected emoji
+        const response = await room.updateAnnouncementReaction(
+            this.props.state.auth.user.id,
+            this.props.state.room.activeRoom.id,
+            this.props.id,
+            this.props.name
+        );
+
+        //console.log(response);
     }
 
     render() {
@@ -59,3 +76,14 @@ export default class Reactions extends Component {
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reactions);

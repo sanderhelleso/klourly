@@ -103,23 +103,23 @@ module.exports = app => {
             reactions: {
                 happy: {
                     emoji: '😄',
-                    count: 0
+                    count: 0,
                 },
                 love: {
                     emoji: '😍',
-                    count: 0
+                    count: 0,
                 },
                 upset: {
                     emoji: '😓',
-                    count: 0
+                    count: 0,
                 },
                 shocked: {
                     emoji: '😨',
-                    count: 0
+                    count: 0,
                 },
                 wow: {
                     emoji: '😲',
-                    count: 0
+                    count: 0,
                 }
             }
         });
@@ -130,6 +130,45 @@ module.exports = app => {
             message: 'Successfully published announcement'
         });
 
+    });
+
+    // update announcement reaction
+    app.post('/api/updateAnnouncementReaction', authenticate, async (req, res) => {
+
+        // get annoucement ref
+        const announcementRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`);
+
+        // get the value and proceed to updte counter
+        announcementRef.once('value', snapshot => {
+
+            // if first reaction, add user and update counter
+            if (snapshot.val().reacted === undefined) {
+                announcementRef.update({
+                    reacted: [req.body.uid],
+                    count: snapshot.val().count += 1
+                });
+            }
+
+            // if reaction is already present, check if user has reacted before
+            else {
+
+                // not reacted, increase
+                if (snapshot.val().reacted.indexOf(req.body.uid) === -1) {
+                    announcementRef.update({
+                        reacted: [...snapshot.val().reacted, req.body.uid],
+                        count: snapshot.val().count += 1
+                    });
+                }
+
+                // reacted, decrease
+                else {
+                    announcementRef.update({
+                        reacted: snapshot.val().reacted.slice(1, snapshot.val().reacted.indexOf(req.body.id)),
+                        count: snapshot.val().count -= 1
+                    });
+                }
+            }
+        });
     });
 }
 

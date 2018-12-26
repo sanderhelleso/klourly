@@ -30,21 +30,19 @@ export default class Announcements extends Component {
 
     renderAnnouncements() {
 
-        Object.values(this.props.announcements).map(announcement => {
-            console.log(announcement);
-        })
+        if (this.props.announcements) {
+            return Object.entries(this.props.announcements).map(announcement => {
+                return (
+                    <AnnouncementPreview
+                        key={announcement[0]}
+                        id={announcement[0]}
+                        data={announcement[1]} 
+                    />
+                )
+            });
+        }
 
-
-
-        return Object.entries(this.props.announcements).map(announcement => {
-            return (
-                <AnnouncementPreview
-                    key={announcement[0]}
-                    id={announcement[0]}
-                    data={announcement[1]} 
-                />
-            )
-        });
+        return <p>No announcements has been posted in this room</p>
     }
 
     render() {
