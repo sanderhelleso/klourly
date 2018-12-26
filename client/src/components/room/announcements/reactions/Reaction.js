@@ -66,7 +66,7 @@ class Reactions extends Component {
             this.props.name
         );
 
-        //console.log(response);
+        console.log(response);
     }
 
     render() {

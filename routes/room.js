@@ -139,11 +139,11 @@ module.exports = app => {
         const announcementRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`);
 
         // get the value and proceed to updte counter
-        announcementRef.once('value', snapshot => {
+        await announcementRef.once('value', async snapshot => {
 
             // if first reaction, add user and update counter
             if (snapshot.val().reacted === undefined) {
-                announcementRef.update({
+                await announcementRef.update({
                     reacted: [req.body.uid],
                     count: snapshot.val().count += 1
                 });
@@ -154,7 +154,7 @@ module.exports = app => {
 
                 // not reacted, increase
                 if (snapshot.val().reacted.indexOf(req.body.uid) === -1) {
-                    announcementRef.update({
+                    await announcementRef.update({
                         reacted: [...snapshot.val().reacted, req.body.uid],
                         count: snapshot.val().count += 1
                     });
@@ -162,12 +162,21 @@ module.exports = app => {
 
                 // reacted, decrease
                 else {
-                    announcementRef.update({
+                    await announcementRef.update({
                         reacted: snapshot.val().reacted.slice(1, snapshot.val().reacted.indexOf(req.body.id)),
                         count: snapshot.val().count -= 1
                     });
                 }
             }
+        });
+
+        // send back response containing updated reaction
+        announcementRef.once('value', snapshot => {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully reacted to announcement',
+                ...snapshot.val()
+            });
         });
     });
 }
