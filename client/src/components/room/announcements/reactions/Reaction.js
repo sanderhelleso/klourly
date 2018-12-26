@@ -42,7 +42,13 @@ class Reactions extends Component {
         e.target.style.backgroundColor = 'transparent';
     }
 
-    async updateReaction() {
+    async updateReaction(e) {
+
+        // disable mouse event to avoid spam
+        const ele = e.target;
+        ele.style.cursorEvent = 'none';
+
+
         if (!this.state.reacted) {
             this.setState({
                 count: this.state.count += 1,
@@ -65,23 +71,24 @@ class Reactions extends Component {
             this.props.name
         );
 
-        console.log(response);
-
         // update announcement reaction
         this.props.updateAnnouncementReactionAction({
             id: this.props.id,
             name: this.props.name,
             updatedReaction: response.data.updated
         });
+
+        // enable mouse event
+        ele.style.cursorEvent = 'default';
     }
 
     render() {
         return (
             <div 
             className={this.state.reacted ? "col s2 no-select reacted animated flipInX" : "col s2 no-select animated flipInY"}
-            onClick={(event) => this.updateReaction(event)}
-            onMouseEnter={(event) => this.hoverReaction(event)}
-            onMouseLeave={(event) => this.removeHoverReaction(event)}
+            onClick={(e) => this.updateReaction(e)}
+            onMouseEnter={(e) => this.hoverReaction(e)}
+            onMouseLeave={(e) => this.removeHoverReaction(e)}
             >
                 <span>
                 {`${this.state.emoji} ${this.state.count}`}
