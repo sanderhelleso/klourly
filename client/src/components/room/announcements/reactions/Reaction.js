@@ -9,9 +9,15 @@ class Reactions extends Component {
     constructor(props) {
         super(props);
 
+        
+        let reacted = false;
+        if (props.data.reacted) {
+            reacted = props.data.reacted.indexOf(props.state.auth.user.id) === -1 ? false : true;
+        }
+
         this.state = {
             ...props.data,
-            reacted: false
+            reacted: reacted
         }
 
         this.updateReaction = this.updateReaction.bind(this);
@@ -38,14 +44,14 @@ class Reactions extends Component {
     async updateReaction() {
         if (!this.state.reacted) {
             this.setState({
-                count: this.state.count + 1,
+                count: this.state.count += 1,
                 reacted: true
             });
         }
 
         else {
             this.setState({
-                count: this.state.count - 1,
+                count: this.state.count -= 1,
                 reacted: false
             });
         }
