@@ -100,7 +100,7 @@ export default class NewAnnouncementModal extends Component {
                                     <label htmlFor="new-announcement-title">Title</label>
                                     <StyledMessage>{this.state.title.length} / {this.state.maxLengthTitle}</StyledMessage>
                                 </div>
-                                <div class="input-field col s12">
+                                <div className="input-field col s12">
                                     <textarea 
                                         required
                                         name="message"

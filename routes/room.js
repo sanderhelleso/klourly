@@ -99,7 +99,29 @@ module.exports = app => {
         const setAnnouncement = await roomRef.set({
             ...req.body.announcement,
             timestamp: new Date().getTime(),
-            author: req.body.uid
+            author: req.body.uid,
+            reactions: {
+                happy: {
+                    emoji: '😄',
+                    count: 0
+                },
+                love: {
+                    emoji: '😍',
+                    count: 0
+                },
+                upset: {
+                    emoji: '😓',
+                    count: 0
+                },
+                shocked: {
+                    emoji: '😨',
+                    count: 0
+                },
+                wow: {
+                    emoji: '😲',
+                    count: 0
+                }
+            }
         });
 
         console.log(setAnnouncement);
