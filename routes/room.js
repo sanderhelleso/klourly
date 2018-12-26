@@ -88,6 +88,28 @@ module.exports = app => {
             });
         });
     });
+
+    // publish a new room announcement
+    app.post('/api/publishAnnouncement', authenticate, async (req, res) => {
+
+        // get room announcement
+        const roomRef = db.ref(`rooms/${req.body.roomID}/announcements/${shortid.generate()}`);
+        
+        // set room announcement
+        const setAnnouncement = await roomRef.set({
+            ...req.body.announcement,
+            timestamp: new Date().getTime(),
+            author: req.body.uid
+        });
+
+        console.log(setAnnouncement);
+
+        res.status(200).json({
+            success: true,
+            message: 'Successfully published announcement'
+        });
+
+    });
 }
 
 const HOUR = 3600000; // ms for an hour

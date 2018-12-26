@@ -26,12 +26,16 @@ class RoomAnnouncements extends Component {
                         id="new-room-announcement-btn" 
                         className="waves-effect waves-light btn animated fadeIn modal-trigger"
                         data-target="new-announcement-modal"
-                        onClick={() => { document.querySelector('input').focus() }}
+                        onClick={() => { 
+                            setTimeout(() => {
+                                document.querySelector('input').focus();
+                            }, 150);
+                        }}
                     >
                         New Announcement
                     </StyledButton>
                 </StyledHeader> 
-                <NewAnnouncementModal />
+                <NewAnnouncementModal uid={this.props.state.auth.user.id} roomID={this.props.state.room.activeRoom.id}/>
                 <ToastContainer 
                     transition={Flip}
                     closeButton={false}

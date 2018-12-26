@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
 
 export default class NewAnnouncementModal extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
+        const MAX_LENGTH_TITLE =    50;
+        const MAX_LENGTH_MESSAGE =  2000;
         this.state = {
             title: '',
             message: '',
-            maxLengthTitle: 50,
-            maxLengthMessage: 2000,
-            titleError: `Invalid title formatting. Length must be between 1 - 50`,
-            messageError: ''
+            maxLengthTitle: MAX_LENGTH_TITLE,
+            maxLengthMessage: MAX_LENGTH_MESSAGE,
+            titleError: `Title must be between 1 - ${MAX_LENGTH_TITLE} characters`,
+            messageError: `Message must be between 1 - ${MAX_LENGTH_MESSAGE} characters`
         }
 
+        console.log(props);
         this.publishAnnouncement = this.publishAnnouncement.bind(this);
     }
 
@@ -30,7 +35,7 @@ export default class NewAnnouncementModal extends Component {
         });
     }
 
-    publishAnnouncement() {
+    async publishAnnouncement() {
 
         // validate title
         if (this.state.title === '' || this.state.title.length > this.state.maxLengthTitle) {
@@ -40,9 +45,33 @@ export default class NewAnnouncementModal extends Component {
 
         // validate message
         if (this.state.message === '' || this.state.message.length > this.state.maxLengthMessage) {
-
+            notification.error(this.state.messageError);
             return;
 
+        }
+
+        // create announcement data
+        const data = {
+            title: this.state.title,
+            message: this.state.message
+        }
+
+        // attempt to publish announcement
+        const response = await room.publishAnnouncement(this.props.uid, this.props.roomID, data);
+
+        if (response.data.success) {
+            notification.success(response.data.message);
+            this.setState({
+                title: '',
+                message: ''
+            });
+
+            // close modal
+            document.querySelector('.modal-close').click();
+        }
+
+        else {
+            notification.error(response.data.message);
         }
     }
 
@@ -89,10 +118,10 @@ export default class NewAnnouncementModal extends Component {
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                <div className="modal-footer">
+                    <a className="modal-close waves-effect waves-green btn-flat">Cancel</a>
                     <button 
-                        class="waves-effect waves-green btn-flat" 
+                        className="waves-effect waves-green btn-flat" 
                         onClick={this.publishAnnouncement}>
                         Publish
                     </button>

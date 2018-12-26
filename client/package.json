@@ -36,6 +36,9 @@
     "/api/getRooms": {
       "target": "http://localhost:5000"
     },
+    "/api/publishAnnouncement": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 
 export const notification = {
+    success,
     error,
     login,
     signup,
@@ -10,10 +11,23 @@ export const notification = {
     invalidFileUpload,
 }
 
+// default success
+function success(message) {
+
+    // prompt success if condition is met
+    toast(message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-success',
+        progressClassName: 'success-progress-bar',
+        autoClose: 3000,
+        toastId: 1
+    });
+}
+
 // default error
 function error(message) {
 
-    // prompt error if condition is not meet
+    // prompt error if condition is not met
     toast(message, {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-error',

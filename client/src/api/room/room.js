@@ -16,7 +16,7 @@ async function createRoom(uid, data) {
             method: 'post',
             url: '/api/createRoom',
             data: {
-                uid: uid,
+                uid,
                 room: data
             }
         });
@@ -37,8 +37,8 @@ async function getRoom(uid, roomID) {
             method: 'post',
             url: '/api/getRoom',
             data: {
-                uid: uid,
-                roomID: roomID
+                uid,
+                roomID
             }
         });
 
@@ -58,8 +58,8 @@ async function getRooms(uid, rooms) {
             method: 'post',
             url: '/api/getRooms',
             data: {
-                uid: uid,
-                rooms: rooms
+                uid,
+                rooms
             }
         });
 
@@ -72,15 +72,16 @@ async function getRooms(uid, rooms) {
 }
 
 // add a new announcement to coresponding room
-async function publishAnnouncement(uid, roomID) {
+async function publishAnnouncement(uid, roomID, announcement) {
     try {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
             url: '/api/publishAnnouncement',
             data: {
-                uid: uid,
-                roomID: roomID
+                uid,
+                roomID,
+                announcement
             }
         });
 
