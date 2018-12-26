@@ -175,7 +175,7 @@ module.exports = app => {
             res.status(200).json({
                 success: true,
                 message: 'Successfully reacted to announcement',
-                ...snapshot.val()
+                updated: snapshot.val()
             });
         });
     });

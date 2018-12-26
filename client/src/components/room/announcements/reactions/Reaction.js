@@ -4,6 +4,7 @@ import { room } from '../../../../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateAnnouncementReactionAction } from '../../../../actions/room/updateAnnouncementReactionAction';
 
 class Reactions extends Component {
     constructor(props) {
@@ -56,8 +57,6 @@ class Reactions extends Component {
             });
         }
 
-        console.log(this.props);
-
         // attempt to update selected emoji
         const response = await room.updateAnnouncementReaction(
             this.props.state.auth.user.id,
@@ -67,6 +66,13 @@ class Reactions extends Component {
         );
 
         console.log(response);
+
+        // update announcement reaction
+        this.props.updateAnnouncementReactionAction({
+            id: this.props.id,
+            name: this.props.name,
+            updatedReaction: response.data.updated
+        });
     }
 
     render() {
@@ -91,7 +97,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateAnnouncementReactionAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reactions);

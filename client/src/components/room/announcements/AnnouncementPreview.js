@@ -14,12 +14,18 @@ class AnnouncementPreview extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
         this.state =  { 
             ...props.data,
             id: props.id
         };
+
         this.enterAnnouncement = this.enterAnnouncement.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) { 
+        this.setState({
+            ...nextProps.state.room.activeRoom.announcements[this.state.id]
+        })
     }
 
     enterAnnouncement() {
