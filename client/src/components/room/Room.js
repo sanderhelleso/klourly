@@ -125,7 +125,6 @@ class Room extends Component {
     }
 
     renderAdmin() {
-        console.log(this.state.room);
         if (this.state.room.owner === this.props.state.auth.user.id) {
             return (
                 <div 

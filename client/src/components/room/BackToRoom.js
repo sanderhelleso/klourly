@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ArrowLeft } from 'react-feather';
 import { redirect } from '../../helpers/redirect';
 
-const BackToDash = () => (
+const BackToRoom = props => (
     <StyledBack>
-        <a onClick={redirect.dashboard}><ArrowLeft /> Back to Dashboard</a>
+        <a onClick={() => { redirect.room(props.id)}}><ArrowLeft /> Back to Room</a>
     </StyledBack>
 )
 
-export default BackToDash;
-
+export default BackToRoom;
 
 const StyledBack = styled.div`
 

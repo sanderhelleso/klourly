@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { redirect } from '../../helpers/redirect';
 import { Settings, Users, BarChart2, MessageSquare } from 'react-feather';
 

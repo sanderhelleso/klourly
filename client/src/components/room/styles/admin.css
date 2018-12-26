@@ -112,7 +112,7 @@
     background-color: #f5f5f5;
 }
 
-#save-room-admin-settings-btn, #cancel-room-admin-settings-btn, #new-room-announcement-btn {
+#save-room-admin-settings-btn, #cancel-room-admin-settings-btn {
     box-shadow: none;
     border: 2px solid #00e988;
     color: #ffffff;
