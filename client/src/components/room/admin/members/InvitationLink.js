@@ -36,7 +36,7 @@ class InvitationLink extends Component {
 
     render() {
         return (
-            <div className="col s12 m6 l6">
+            <div className="col s12 m6 l6 animated fadeIn">
                 {this.renderLink()}
             </div>
         )
@@ -58,7 +58,7 @@ const StyledInvite = styled.div`
 
     h4 {
         color: #bdbdbd;
-        opacity: 0.5;
+        opacity: 0.7;
         font-weight: 100;
         margin-top: 0;
     }

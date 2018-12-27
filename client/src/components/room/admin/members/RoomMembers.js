@@ -9,6 +9,32 @@ import BackToRoom from '../../BackToRoom';
 import InvitationLink from './InvitationLink';
 
 class RoomMembers extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            linkHidden: false
+        }
+    }
+
+    renderLink() {
+        return this.state.linkHidden ? null : <InvitationLink />
+    }
+
+    renderLinkBtn() {
+
+        return (
+            <RenderLinkBtn 
+                className="waves-effect waves-teal btn-flat"
+                onClick={() => 
+                this.setState({
+                    linkHidden: this.state.linkHidden ? false : true
+                })}>
+                {this.state.linkHidden ? 'Show' : 'Hide'} Invitation Link
+            </RenderLinkBtn>
+        );
+    }
+
     render() {
         return (
             <main className="container">
@@ -17,8 +43,9 @@ class RoomMembers extends Component {
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Members</h3>
                         <p>Invite, remove and see memebers of the room</p>
+                        {this.renderLinkBtn()}
                     </StyledHeader>
-                    <InvitationLink />
+                    {this.renderLink()}
                 </div>
             </main>
         )
@@ -48,5 +75,21 @@ const StyledHeader = styled.div`
         color: #bdbdbd;
         font-weight: 400;
         margin-bottom: 2rem;
+    }
+`;
+
+const RenderLinkBtn = styled.button`
+
+    font-weight: 600;
+    background-color: #eeeeee;
+    border-radius: 4px;
+
+    &:focus, &:active {
+        background-color: #eeeeee;
+    }
+
+    svg {
+        margin-bottom: -3.5px;
+        margin-right: 5px;
     }
 `;
