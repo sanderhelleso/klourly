@@ -29,6 +29,7 @@ class RoomMembers extends Component {
         return (
             <RenderLinkBtn 
                 className="waves-effect waves-purple btn-flat"
+                
                 onClick={() => 
                 this.setState({
                     linkHidden: this.state.linkHidden ? false : true

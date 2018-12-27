@@ -13,7 +13,10 @@ class InvitationLink extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this.props.state.room.activeRoom.invite;
+        this.state = {
+            ...this.props.state.room.activeRoom.invite,
+            loadingNewInvite: false
+        }
 
         this.generateNewLink = this.generateNewLink.bind(this);
     }
@@ -27,6 +30,7 @@ class InvitationLink extends Component {
                 {this.renderAvailableBadge(this.state.validTo)}
                 <GenerateNewBtn 
                     className="waves-effect waves-purple btn-flat"
+                    disabled={this.state.loadingNewInvite}
                     onClick={this.generateNewLink}
                 >
                     <RefreshCw size={17}/> 
@@ -48,20 +52,32 @@ class InvitationLink extends Component {
 
     async generateNewLink() {
         
+        // disable button whie loading new invite
+        this.setState({
+            loadingNewInvite: true
+        });
+
         const response = await room.updateRoomInvite(
                         this.props.state.auth.user.id, 
                         this.props.state.room.activeRoom.id);
 
+        // new invite generation successfull
         if (response.data.success) {
             notification.success(response.data.message);
             this.setState({
-                ...response.data.newInvitation
+                ...response.data.newInvitation,
             });
         }
 
+        // new invite generation failed
         else {
             notification.error(response.data.message);
         }
+
+        // loading of new invite finished, enable button
+        this.setState({
+            loadingNewInvite: false
+        });
 
     }
 
