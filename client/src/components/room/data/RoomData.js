@@ -14,8 +14,7 @@ class RoomData extends Component {
         super(props);
 
         this.state = {
-            loading: true,
-            authorized: true
+            loading: true
         }
     }
 
@@ -42,13 +41,11 @@ class RoomData extends Component {
             this.props.enterRoomAction(roomData);
             this.setState({
                 loading: false,
-                authorized: true
             });
         }
 
         else {
             this.setState({
-                authorized: false,
                 loading: false
             });
         }

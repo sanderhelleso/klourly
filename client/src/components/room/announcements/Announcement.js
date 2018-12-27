@@ -65,20 +65,15 @@ class Announcement extends Component {
         return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
     }
 
-    loadAnnouncementData() {
-
-    }
-
     renderAnnouncement() {
 
         if (this.state.dataLoaded) {
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
-                    <BackToRoom id={this.props.state.room.activeRoom.id} />
                     <h1>{this.state.title}</h1>
                     <h5>{format.tsToDate(this.state.timestamp)}</h5>
                     <p>{this.state.message}</p>
-                    <Reactions id={this.state.id} data={this.state.reactions} />
+                    <Reactions id={this.props.match.params.announcementID} data={this.state.reactions} />
                 </StyledAnnouncement>
             )
         }
@@ -89,6 +84,7 @@ class Announcement extends Component {
     render() {
         return (
             <main className="container">
+                <BackToRoom id={this.props.match.params.roomID} />
                 <div className="row">
                     {this.renderAnnouncement()}
                 </div>

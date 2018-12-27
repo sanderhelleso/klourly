@@ -143,7 +143,7 @@ class Room extends Component {
             )
         }
 
-        return null;
+        return this.loadData();
     }
 
     loadData() {
@@ -154,7 +154,6 @@ class Room extends Component {
         return (
             <div id="room" className="container">
                 <BackToDash />
-                {this.loadData()}
                 {this.renderRoom()}
             </div>
         )
