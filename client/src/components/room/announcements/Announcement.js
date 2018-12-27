@@ -65,9 +65,15 @@ class Announcement extends Component {
         return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
     }
 
+    setTitle() {
+        document.body.style.overflowY = 'auto';
+        document.title = `${this.state.title} | ${this.props.state.room.activeRoom.name} | Klourly`; 
+    }
+
     renderAnnouncement() {
 
         if (this.state.dataLoaded) {
+            this.setTitle();
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
                     <h1>{this.state.title}</h1>
