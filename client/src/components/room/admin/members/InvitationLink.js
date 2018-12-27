@@ -7,22 +7,24 @@ import { room } from '../../../../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { notification } from '../../../../helpers/notification';
 
 class InvitationLink extends Component {
     constructor(props) {
         super(props);
 
+        this.state = this.props.state.room.activeRoom.invite;
+
         this.generateNewLink = this.generateNewLink.bind(this);
     }
 
     renderLink() {
-        const invite = this.props.state.room.activeRoom.invite;
         return (
             <StyledInvite>
                 <h4>Invitation Link</h4>
-                <h5>{invite.url}</h5>
-                <p>Valid from {format.tsToDate(invite.validFrom)} to {format.tsToDate(invite.validTo)}</p>
-                {this.renderAvailableBadge(invite.validTo)}
+                <h5>{this.state.url}</h5>
+                <p>Valid from {format.tsToDate(this.state.validFrom)} to {format.tsToDate(this.state.validTo)}</p>
+                {this.renderAvailableBadge(this.state.validTo)}
                 <GenerateNewBtn 
                     className="waves-effect waves-purple btn-flat"
                     onClick={this.generateNewLink}
@@ -49,6 +51,17 @@ class InvitationLink extends Component {
         const response = await room.updateRoomInvite(
                         this.props.state.auth.user.id, 
                         this.props.state.room.activeRoom.id);
+
+        if (response.data.success) {
+            notification.success(response.data.message);
+            this.setState({
+                ...response.data.newInvitation
+            });
+        }
+
+        else {
+            notification.error(response.data.message);
+        }
 
     }
 
