@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RefreshCw } from 'react-feather';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { format } from '../../../../helpers/format';
 import { room } from '../../../../api/room/room';
 
@@ -33,11 +33,21 @@ class InvitationLink extends Component {
                     disabled={this.state.loadingNewInvite}
                     onClick={this.generateNewLink}
                 >
-                    <RefreshCw size={17}/> 
+                    {this.renderLoadingIcon()}
                     Generate New
                 </GenerateNewBtn>
             </StyledInvite>
         )
+    }
+
+    renderLoadingIcon() {
+        return this.state.loadingNewInvite 
+        ? 
+        <Rotate>
+            <RefreshCw size={17} /> 
+        </Rotate>
+        : 
+        <RefreshCw size={17}/>;
     }
 
     renderAvailableBadge(validTo) {
@@ -140,6 +150,7 @@ const AvailableBadge = styled.span`
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 `;
 
 const ExpiredBadge = styled.span`
@@ -148,6 +159,7 @@ const ExpiredBadge = styled.span`
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 `;
 
 const GenerateNewBtn = styled.button`
@@ -157,6 +169,7 @@ const GenerateNewBtn = styled.button`
     color: #757575;
     background-color: #eeeeee;
     border-radius: 4px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 
     &:focus, &:active {
         background-color: #eeeeee;
@@ -166,6 +179,18 @@ const GenerateNewBtn = styled.button`
         margin-bottom: -3.5px;
         margin-right: 5px;
     }
-
-
 `;
+
+const rotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+const Rotate = styled.div`
+  animation: ${rotate} 1s linear infinite;
+`
