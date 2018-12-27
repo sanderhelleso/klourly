@@ -45,15 +45,19 @@ function room(id) {
 }
 
 function roomAdminSettings(id) {
-    history.push(`/dashboard/rooms/${id}/settings`);
+    history.push(`/dashboard/rooms/${id}/admin/settings`);
 }
 
 function roomAdminMembers(id) {
-    history.push(`/dashboard/rooms/${id}/members`);
+    history.push(`/dashboard/rooms/${id}/admin/members`);
 }
 
 function roomAdminReports(id) {
-    history.push(`/dashboard/rooms/${id}/reports`);
+    history.push(`/dashboard/rooms/${id}/admin/reports`);
+}
+
+function roomAdminAnnouncements(id) {
+    history.push(`/dashboard/rooms/${id}/admin/announcements`);
 }
 
 function announcement(roomId, announcementId) {
