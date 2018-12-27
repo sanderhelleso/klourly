@@ -36,6 +36,15 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+            case 'UPDATE_ROOM_INVITE':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    invite: action.payload
+                }
+            }
+
         case 'UPDATE_ROOM_NAME_SUCCESS':
             return {
                 ...state,

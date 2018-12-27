@@ -7,6 +7,8 @@ import { room } from '../../../../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateRoomInviteAction } from '../../../../actions/room/updateRoomInviteAction';
+
 import { notification } from '../../../../helpers/notification';
 
 class InvitationLink extends Component {
@@ -73,10 +75,13 @@ class InvitationLink extends Component {
 
         // new invite generation successfull
         if (response.data.success) {
-            notification.success(response.data.message);
+
+            this.props.updateRoomInviteAction(response.data.newInvitation);
             this.setState({
                 ...response.data.newInvitation,
             });
+
+            notification.success(response.data.message);
         }
 
         // new invite generation failed
@@ -106,7 +111,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateRoomInviteAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvitationLink);
