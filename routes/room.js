@@ -20,7 +20,7 @@ module.exports = app => {
         // create room
         const roomRef = db.ref(`rooms/${id}`)
         roomData.id = id; // set id to room
-        roomData.invite =  { ...generateInvitationLink(2, id) }; // create invitation link (1 week)
+        roomData.invite =  { ...generateInvitationLink(id) }; // create invitation link (1 week)
         roomData.members = req.body.uid; // add owner to memberlist
 
         // after setting new room data, get all user rooms and send to client
@@ -179,34 +179,39 @@ module.exports = app => {
             });
         });
     });
+
+    // get data for an collection of rooms
+    app.post('/api/updateRoomInvite', authenticate, async (req, res) => {
+
+        // get ref to room by id
+        const roomInviteRef = db.ref(`rooms/${req.body.roomID}/invite`);
+
+        // generate a new invitation link
+        const newInvitation =  generateInvitationLink(req.body.roomID);
+        await roomInviteRef.update({
+            ...newInvitation
+        });
+
+        // send back response with updated invitation link
+        res.status(200).json({
+            success: true,
+            message: 'Successfully updated room invite link',
+            newInvitation
+        });
+    });
 }
 
-const HOUR = 3600000; // ms for an hour
-function generateInvitationLink(duration, id) {
 
-    switch (duration) {
+function generateInvitationLink(id) {
 
-        // one day
-        case 0:
-            duration = HOUR * 24;
-            break;
-
-        // 3 days
-        case 1:
-           duration = HOUR * 72;
-           break;
-
-        // 1 week (default)
-        case 2:
-            duration = HOUR * 168;
-            break;
-    }
+    const hour =    3600000;    // 1 hour (60 min)
+    const weeks =   168;        // 1 week (7 days)
 
     const timeStamp = new Date().getTime();
     const invite = {
         validFrom: timeStamp,
-        validTo: timeStamp + duration,
-        url: `/join-room/${timeStamp}/${id}`
+        validTo: timeStamp + (hour * weeks),
+        url: `/join-room/${shortid.generate()}/${id}`
     }
 
     return invite;

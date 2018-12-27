@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { RefreshCw } from 'react-feather';
 import styled from 'styled-components';
 import { format } from '../../../../helpers/format';
+import { room } from '../../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -10,6 +11,8 @@ import { connect } from 'react-redux';
 class InvitationLink extends Component {
     constructor(props) {
         super(props);
+
+        this.generateNewLink = this.generateNewLink.bind(this);
     }
 
     renderLink() {
@@ -19,7 +22,14 @@ class InvitationLink extends Component {
                 <h4>Invitation Link</h4>
                 <h5>{invite.url}</h5>
                 <p>Valid from {format.tsToDate(invite.validFrom)} to {format.tsToDate(invite.validTo)}</p>
-                {this.renderAvailableBadge(invite.validTo)}<GenerateNewBtn className="waves-effect waves-purple btn-flat"><RefreshCw size={18}/> Generate New</GenerateNewBtn>
+                {this.renderAvailableBadge(invite.validTo)}
+                <GenerateNewBtn 
+                    className="waves-effect waves-purple btn-flat"
+                    onClick={this.generateNewLink}
+                >
+                    <RefreshCw size={17}/> 
+                    Generate New
+                </GenerateNewBtn>
             </StyledInvite>
         )
     }
@@ -32,6 +42,14 @@ class InvitationLink extends Component {
         }
 
         return <AvailableBadge>Available</AvailableBadge>
+    }
+
+    async generateNewLink() {
+        
+        const response = await room.updateRoomInvite(
+                        this.props.state.auth.user.id, 
+                        this.props.state.room.activeRoom.id);
+
     }
 
     render() {
@@ -76,6 +94,7 @@ const StyledInvite = styled.div`
         color: #ffffff;
         font-weight: 800;
         cursor: pointer;
+        word-break: break-all;
     }
 
     p {
@@ -105,6 +124,7 @@ const ExpiredBadge = styled.span`
 const GenerateNewBtn = styled.button`
     font-weight: 600;
     margin-left: 1rem;
+    font-size: 0.9rem;
     color: #757575;
     background-color: #eeeeee;
     border-radius: 4px;
