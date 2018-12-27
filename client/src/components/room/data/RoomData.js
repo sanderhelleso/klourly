@@ -19,12 +19,16 @@ class RoomData extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
+
+        // room id fetched from query
         const roomID = this.props.roomID;
+
+        // attempt to fetch new data
         const response = await room.getRoom(this.props.state.auth.user.id, roomID);
-
         if (response.data.success) {
-
+            
+            // create room state obj
             const roomData = {
                 ...response.data.roomData,
                 owner: {
@@ -32,7 +36,8 @@ class RoomData extends Component {
                     id: response.data.roomData.owner
                 }
             }
-
+            
+            // set room in localstorage and update global state
             localStorage.setItem('activeRoom', JSON.stringify(roomData));
             this.props.enterRoomAction(roomData);
             this.setState({
@@ -47,7 +52,6 @@ class RoomData extends Component {
                 loading: false
             });
         }
-    
     }
 
     renderLoader() {
@@ -59,11 +63,7 @@ class RoomData extends Component {
     }
 
     render() {
-        return (
-            <div>
-                {this.renderLoader()}
-            </div>
-        )
+        return this.renderLoader();
     }
 }
 

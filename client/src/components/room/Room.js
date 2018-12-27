@@ -21,19 +21,32 @@ import RoomData from './data/RoomData';
 class Room extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            dataLoaded: false
-        }
    
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
     }
 
+    componentWillMount() {
+
+        // if room state is not set or not matching, refetch room data
+        if (!this.props.state.room.activeRoom || this.props.state.room.activeRoom.id !== this.props.match.params.roomID) {
+            this.setState({
+                dataLoaded: false
+            });
+        }
+
+        else {
+            this.roomReady(this.props);
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+        this.roomReady(nextProps);
+    }
+
+    roomReady(props) {
         this.setState({
-            room: nextProps.state.room.activeRoom,
+            room: props.state.room.activeRoom,
             dataLoaded: true
         }, () => {
             document.body.style.overflowY = 'auto';
@@ -42,34 +55,6 @@ class Room extends Component {
             });
         });
     }
-
-    /*async componentWillMount() {
-        const roomID = this.props.match.params.roomID;
-        const response = await room.getRoom(this.props.state.auth.user.id, roomID);
-
-        if (response.data.success) {
-            localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
-            this.props.enterRoomAction(response.data.roomData);
-            this.setState({
-                loading: false,
-                room: response.data.roomData,
-                owner: response.data.ownerData,
-                authorized: true
-            }, () => {
-                document.body.style.overflowY = 'auto';
-                document.title = `${this.state.room.name} | Klourly`; 
-                materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
-            });
-        }
-
-        else {
-            this.setState({
-                authorized: false,
-                loading: false
-            });
-        }
-    
-    }*/
 
     joinRoom() {
         redirect.joinRoom(this.state.room.invite.url);
@@ -164,11 +149,15 @@ class Room extends Component {
         return null;
     }
 
+    loadData() {
+        return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
+    }
+
     render() {
         return (
             <div id="room" className="container">
                 <BackToDash />
-                <RoomData roomID={this.props.match.params.roomID} />
+                {this.loadData()}
                 {this.renderRoom()}
             </div>
         )
