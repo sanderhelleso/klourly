@@ -1,20 +1,67 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../helpers/format';
+import { room } from '../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { enterRoomAction } from '../../../actions/room/enterRoomAction';
+import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAction';
+
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
+import { throws } from 'assert';
 
 class Announcement extends Component {
     constructor(props) {
         super(props);
 
+        console.log(this.props);
+        console.log(this.props.match.params);
         this.state = this.props.state.room.activeRoom.activeAnnouncement;
-        console.log(this.state);
+    }
+
+    async componentWillMount() {
+
+        const roomID = this.props.match.params.roomID;
+
+        // validate data and url
+        console.log(this.props.state);
+        if (this.props.state.room.activeRoom) {
+
+            // check if room is matching params
+            if (this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
+                console.log("Room matching");
+
+                // check if announcement is matching params
+                //if ()
+
+            }
+
+            else {
+
+                console.log("Room not matching, refetching...");
+                const response = await room.getRoom(this.props.state.auth.user.id, roomID);
+    
+                if (response.data.success) {
+                    localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
+                    this.props.enterRoomAction(response.data.roomData);
+                    this.setState({
+                        loading: false,
+                        authorized: true
+                    });
+                }
+    
+                else {
+                    this.setState({
+                        authorized: false,
+                        loading: false
+                    });
+                }
+            }
+        }
     }
 
     renderAnnouncement() {
@@ -45,7 +92,11 @@ const mapStateToProps = (state) => {
     return { state }
 }
 
-export default connect(mapStateToProps, null)(Announcement);
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ enterRoomAction, openAnnouncementAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Announcement);
 
 const StyledAnnouncement = styled.section`
     h1 {

@@ -93,10 +93,10 @@ class App extends Component {
                     <Route exact path="/login" component={this.loginRoute} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
-                    <Route exact path="/dashboard/rooms/:id" component={Room} />
+                    <Route exact path="/dashboard/rooms/:roomID" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin" component={RoomAdmin} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
-                    <Route exact path="/dashboard/rooms/:roomID/announcements/:postID" component={Announcement} />
+                    <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
 
                     <Route exact path="/join-room/:timestamp/:roomID" component={JoinRoom} />
                 </div>

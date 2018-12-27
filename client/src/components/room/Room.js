@@ -20,65 +20,59 @@ import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Location from './location/Location';
 import Menu from './Menu';
+import RoomData from './data/RoomData';
 
-class Room extends Component {
+export default class Room extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            authorized: true,
-            loading: true
+            dataLoaded: false
         }
    
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
-        this.renderNotAuthorized = this.renderNotAuthorized.bind(this);
     }
 
-    componentDidMount() {
-        const roomID = this.props.match.params.id;
-        room.getRoom(this.props.state.auth.user.id, roomID)
-        .then(response => {
-            if (response.data.success) {
-                localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
-                this.props.enterRoomAction(response.data.roomData);
-                this.setState({
-                    loading: false
-                });
-                setTimeout(() => {
-                    this.setState({
-                        room: response.data.roomData,
-                        owner: response.data.ownerData,
-                        authorized: true
-                    }, () => {
-                        document.body.style.overflowY = 'auto';
-                        document.title = `${this.state.room.name} | Klourly`; 
-                        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
-                        });
-                    });
-                }, 10);
-            }
+    /*async componentWillMount() {
+        const roomID = this.props.match.params.roomID;
+        const response = await room.getRoom(this.props.state.auth.user.id, roomID);
 
-            else {
-                this.setState({
-                    authorized: false,
-                    loading: false
-                });
-            }
-        });     
-    }
+        if (response.data.success) {
+            localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
+            this.props.enterRoomAction(response.data.roomData);
+            this.setState({
+                loading: false,
+                room: response.data.roomData,
+                owner: response.data.ownerData,
+                authorized: true
+            }, () => {
+                document.body.style.overflowY = 'auto';
+                document.title = `${this.state.room.name} | Klourly`; 
+                materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
+            });
+        }
+
+        else {
+            this.setState({
+                authorized: false,
+                loading: false
+            });
+        }
+    
+    }*/
 
     joinRoom() {
         redirect.joinRoom(this.state.room.invite.url);
     }
 
-    renderLoader() {
+    /*renderLoader() {
         if (this.state.loading) {
             return <LinearLoader loading={true} />;
         }
 
         return <LinearLoader loading={false} />;
-    }
+    }*/
 
     renderRoomHeading() {
         return (
@@ -141,16 +135,8 @@ class Room extends Component {
         return null;
     }
 
-    renderNotAuthorized() {
-        if (!this.state.authorized) {
-            return <h1>NOT ALLOWED TO BE HERE</h1>
-        }
-
-        return null;
-    }
-
     renderRoom() {
-        if (this.state.room) {
+        if (this.state.dataLoaded) {
             return(
                 <div id="room-cont" className="animated fadeIn">
                     {this.renderCover()}
@@ -174,7 +160,7 @@ class Room extends Component {
             )
         }
 
-        return null;
+        return <RoomData roomID={this.props.match.params.roomID} />
     }
 
     render() {
@@ -182,20 +168,7 @@ class Room extends Component {
             <div id="room" className="container">
                 <BackToDash />
                 {this.renderRoom()}
-                {this.renderLoader()}
-                {this.renderNotAuthorized()}
             </div>
         )
     }
 }
-
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
