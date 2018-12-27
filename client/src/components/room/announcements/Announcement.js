@@ -1,84 +1,94 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../helpers/format';
-import { room } from '../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { enterRoomAction } from '../../../actions/room/enterRoomAction';
 import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAction';
 
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
-import { throws } from 'assert';
+import RoomData from '../data/RoomData';
 
 class Announcement extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
-        console.log(this.props.match.params);
-        this.state = this.props.state.room.activeRoom.activeAnnouncement;
+        this.state = {
+            dataLoaded: false
+        }
     }
 
-    async componentWillMount() {
+    componentDidMount() {
 
-        const roomID = this.props.match.params.roomID;
+        // if room state is not set or not matching, refetch room data
+        if (this.props.state.room.activeRoom && this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
 
-        // validate data and url
-        console.log(this.props.state);
-        if (this.props.state.room.activeRoom) {
-
-            // check if room is matching params
-            if (this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
-                console.log("Room matching");
-
-                // check if announcement is matching params
-                //if ()
-
+            if (this.props.state.room.activeRoom.activeAnnouncement) {
+                this.setState({
+                    ...this.props.state.room.activeRoom.activeAnnouncement,
+                    dataLoaded: true
+                });
             }
 
             else {
-
-                console.log("Room not matching, refetching...");
-                const response = await room.getRoom(this.props.state.auth.user.id, roomID);
-    
-                if (response.data.success) {
-                    localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
-                    this.props.enterRoomAction(response.data.roomData);
-                    this.setState({
-                        loading: false,
-                        authorized: true
-                    });
-                }
-    
-                else {
-                    this.setState({
-                        authorized: false,
-                        loading: false
-                    });
-                }
+                this.roomReady(this.props);
             }
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+
+        if (!nextProps.state.room.activeRoom.activeAnnouncement) {
+            this.roomReady(nextProps);
+        }
+    }
+
+    roomReady(props) {
+
+        // check if valid room announcement
+        const activeAnnouncement = props.state.room.activeRoom.announcements[props.match.params.announcementID];
+        if (activeAnnouncement) {
+            this.props.openAnnouncementAction(activeAnnouncement);
+            this.setState({
+                ...activeAnnouncement,
+                dataLoaded: true
+            });
+        }
+
+        // redirect to 404
+    }
+
+    loadRoomData() {
+        return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
+    }
+
+    loadAnnouncementData() {
+
+    }
+
     renderAnnouncement() {
-        return (
-            <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
-                <h1>{this.state.title}</h1>
-                <h5>{format.tsToDate(this.state.timestamp)}</h5>
-                <p>{this.state.message}</p>
-                <Reactions id={this.state.id} data={this.state.reactions} />
-            </StyledAnnouncement>
-        )
+
+        if (this.state.dataLoaded) {
+            return (
+                <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
+                    <BackToRoom id={this.props.state.room.activeRoom.id} />
+                    <h1>{this.state.title}</h1>
+                    <h5>{format.tsToDate(this.state.timestamp)}</h5>
+                    <p>{this.state.message}</p>
+                    <Reactions id={this.state.id} data={this.state.reactions} />
+                </StyledAnnouncement>
+            )
+        }
+
+        return this.loadRoomData();
     }
 
     render() {
         return (
             <main className="container">
-                <BackToRoom id={this.props.state.room.activeRoom.id} />
                 <div className="row">
                     {this.renderAnnouncement()}
                 </div>
@@ -93,7 +103,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ enterRoomAction, openAnnouncementAction }, dispatch);
+    return bindActionCreators({ openAnnouncementAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Announcement);

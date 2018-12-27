@@ -21,21 +21,19 @@ import RoomData from './data/RoomData';
 class Room extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            dataLoaded: false
+        }
    
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         // if room state is not set or not matching, refetch room data
-        if (!this.props.state.room.activeRoom || this.props.state.room.activeRoom.id !== this.props.match.params.roomID) {
-            this.setState({
-                dataLoaded: false
-            });
-        }
-
-        else {
+        if (this.props.state.room.activeRoom && this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
             this.roomReady(this.props);
         }
     }
@@ -51,8 +49,7 @@ class Room extends Component {
         }, () => {
             document.body.style.overflowY = 'auto';
             document.title = `${this.state.room.name} | Klourly`; 
-            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
-            });
+            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
         });
     }
 
