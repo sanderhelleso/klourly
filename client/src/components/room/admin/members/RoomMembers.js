@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Eye, EyeOff } from 'react-feather';
 import styled from 'styled-components';
 
 // redux
@@ -7,6 +8,7 @@ import { connect } from 'react-redux';
 
 import BackToRoom from '../../BackToRoom';
 import InvitationLink from './InvitationLink';
+import MembersList from './MembersList';
 
 class RoomMembers extends Component {
     constructor(props) {
@@ -25,11 +27,12 @@ class RoomMembers extends Component {
 
         return (
             <RenderLinkBtn 
-                className="waves-effect waves-teal btn-flat"
+                className="waves-effect waves-purple btn-flat"
                 onClick={() => 
                 this.setState({
                     linkHidden: this.state.linkHidden ? false : true
                 })}>
+                {this.state.linkHidden ? <Eye size={18} /> : <EyeOff size={18} />}
                 {this.state.linkHidden ? 'Show' : 'Hide'} Invitation Link
             </RenderLinkBtn>
         );
@@ -47,6 +50,7 @@ class RoomMembers extends Component {
                     </StyledHeader>
                     {this.renderLink()}
                 </div>
+                <MembersList />
             </main>
         )
     }
@@ -64,6 +68,9 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(RoomMembers);
 
 const StyledHeader = styled.div`
+
+    min-height: 220px !important;
+
     h3 {
         margin-top: 0;
         font-weight: 800;
@@ -80,7 +87,9 @@ const StyledHeader = styled.div`
 
 const RenderLinkBtn = styled.button`
 
+    min-width: 225px;
     font-weight: 600;
+    color: #757575;
     background-color: #eeeeee;
     border-radius: 4px;
 

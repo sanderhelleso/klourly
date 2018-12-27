@@ -19,7 +19,7 @@ class InvitationLink extends Component {
                 <h4>Invitation Link</h4>
                 <h5>{invite.url}</h5>
                 <p>Valid from {format.tsToDate(invite.validFrom)} to {format.tsToDate(invite.validTo)}</p>
-                {this.renderAvailableBadge(invite.validTo)}<GenerateNewBtn className="waves-effect waves-teal btn-flat"><RefreshCw size={18}/> Generate New</GenerateNewBtn>
+                {this.renderAvailableBadge(invite.validTo)}<GenerateNewBtn className="waves-effect waves-purple btn-flat"><RefreshCw size={18}/> Generate New</GenerateNewBtn>
             </StyledInvite>
         )
     }
@@ -56,22 +56,33 @@ export default connect(mapStateToProps, mapDispatchToProps)(InvitationLink);
 
 const StyledInvite = styled.div`
 
+    padding: 2rem;
+    box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background: #7F00FF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
     h4 {
-        color: #bdbdbd;
-        opacity: 0.7;
+        color: #ffffff;
         font-weight: 100;
         margin-top: 0;
+        opacity: 0.7;
     }
 
     h5 {
         font-size: 1.35rem;
+        color: #ffffff;
+        font-weight: 800;
         cursor: pointer;
     }
 
     p {
-        color: #9e9e9e;
+        color: #ffffff;
         font-size: 0.9rem;
         margin-bottom: 1rem;
+        opacity: 0.7;
     }
 `;
 
@@ -84,7 +95,7 @@ const AvailableBadge = styled.span`
 `;
 
 const ExpiredBadge = styled.span`
-    background-color: #ff1744;
+    background-color: #ff5252;
     color: #ffffff;
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
@@ -94,6 +105,7 @@ const ExpiredBadge = styled.span`
 const GenerateNewBtn = styled.button`
     font-weight: 600;
     margin-left: 1rem;
+    color: #757575;
     background-color: #eeeeee;
     border-radius: 4px;
 
@@ -105,4 +117,6 @@ const GenerateNewBtn = styled.button`
         margin-bottom: -3.5px;
         margin-right: 5px;
     }
+
+
 `;
