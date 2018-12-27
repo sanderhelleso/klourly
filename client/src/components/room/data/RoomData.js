@@ -13,7 +13,6 @@ class RoomData extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
         this.state = {
             loading: true,
             authorized: true
@@ -25,8 +24,17 @@ class RoomData extends Component {
         const response = await room.getRoom(this.props.state.auth.user.id, roomID);
 
         if (response.data.success) {
-            localStorage.setItem('activeRoom', JSON.stringify(response.data.roomData));
-            this.props.enterRoomAction(response.data.roomData);
+
+            const roomData = {
+                ...response.data.roomData,
+                owner: {
+                    ...response.data.ownerData,
+                    id: response.data.roomData.owner
+                }
+            }
+
+            localStorage.setItem('activeRoom', JSON.stringify(roomData));
+            this.props.enterRoomAction(roomData);
             this.setState({
                 loading: false,
                 authorized: true

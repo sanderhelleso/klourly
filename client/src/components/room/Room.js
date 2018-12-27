@@ -6,13 +6,9 @@ import { materializeJS } from '../../helpers/materialize';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import BackToDash from '../dashboard/BackToDash';
 import { redirect } from '../../helpers/redirect';
-import { room } from '../../api/room/room';
-
-import LinearLoader from '../loaders/LinearLoader';
 
 import './styles/room.css';
 import Checkin from './Checkin';
@@ -22,7 +18,7 @@ import Location from './location/Location';
 import Menu from './Menu';
 import RoomData from './data/RoomData';
 
-export default class Room extends Component {
+class Room extends Component {
     constructor(props) {
         super(props);
 
@@ -32,6 +28,19 @@ export default class Room extends Component {
    
         this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        this.setState({
+            room: nextProps.state.room.activeRoom,
+            dataLoaded: true
+        }, () => {
+            document.body.style.overflowY = 'auto';
+            document.title = `${this.state.room.name} | Klourly`; 
+            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
+            });
+        });
     }
 
     /*async componentWillMount() {
@@ -66,20 +75,12 @@ export default class Room extends Component {
         redirect.joinRoom(this.state.room.invite.url);
     }
 
-    /*renderLoader() {
-        if (this.state.loading) {
-            return <LinearLoader loading={true} />;
-        }
-
-        return <LinearLoader loading={false} />;
-    }*/
-
     renderRoomHeading() {
         return (
             <div id="room-cover-header" className="">
                 <h5>{this.state.room.location.name}</h5>
                 <h1>{this.state.room.name}</h1>
-                <p>By {this.state.owner.name}</p>
+                <p>By {this.state.room.owner.name}</p>
             </div>
         )
     }
@@ -112,14 +113,14 @@ export default class Room extends Component {
                 </Parallax>
                 {this.renderRoomHeading()}
                 <div id="room-owner-avatar">
-                    <img className="animated fadeIn z-depth-3" src={this.state.owner.photoUrl} />
+                    <img className="animated fadeIn z-depth-3" src={this.state.room.owner.photoUrl} />
                 </div>
             </div>
         )
     }
 
     renderAdmin() {
-        if (this.state.room.owner === this.props.state.auth.user.id) {
+        if (this.state.room.owner.id === this.props.state.auth.user.id) {
             return (
                 <div 
                     id="room-admin-settings-btn"
@@ -160,15 +161,27 @@ export default class Room extends Component {
             )
         }
 
-        return <RoomData roomID={this.props.match.params.roomID} />
+        return null;
     }
 
     render() {
         return (
             <div id="room" className="container">
                 <BackToDash />
+                <RoomData roomID={this.props.match.params.roomID} />
                 {this.renderRoom()}
             </div>
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room);
