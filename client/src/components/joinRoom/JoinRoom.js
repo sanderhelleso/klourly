@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { invite } from '../../api/room/invite';
+import { redirect } from '../../helpers/redirect';
 import LinearLoader from '../loaders/LinearLoader';
 
 // redux
@@ -44,9 +45,7 @@ class JoinRoom extends Component {
                     {this.renderInviteImage()}
                     <h1>{this.state.heading}</h1>
                     <h5>{this.state.message}</h5>
-                    <StyledButton className="waves-effect waves-light btn">
-                        {this.state.buttonMessage}
-                    </StyledButton>
+                    {this.renderActionButton()}
                 </InvitationCont>
             );
         }
@@ -63,6 +62,43 @@ class JoinRoom extends Component {
             alt="Room owner avatar" 
         />
         : null;
+    }
+
+    renderActionButton() {
+        return (
+            <StyledButton 
+                className="waves-effect waves-light btn"
+                onClick={() => {
+
+                    // join room / login
+                    if (this.state.status === 200) {
+                        this.props.state.auth.user 
+                        ? this.joinRoomLoggedIn() 
+                        : this.joinRoomNotLoggedIn()
+                    }
+
+                    // redirect to room
+                    else if (this.state.status === 409) {
+                        redirect.room(this.props.match.params.roomID);
+                    }
+
+                    // rediret to home
+                    else {
+                        redirect.home();
+                    }
+                }}
+            >
+                {this.state.buttonMessage}
+            </StyledButton>
+        )
+    }
+
+    joinRoomLoggedIn() {
+        console.log('IM LOGGED IN!!');
+    }
+
+    joinRoomNotLoggedIn() {
+        console.log('IM NOT LOGGED IN');
     }
 
     setMessage() {
@@ -95,15 +131,20 @@ class JoinRoom extends Component {
     }
 
     renderBg() {
-        return (
-            <InviteRoomBg 
-                url={
-                    this.state.status === 200 
-                    ? this.state.invitationData.cover
-                    : '/img/invite/invalid.jpg'
-                }
-            />
-        )
+
+        if (!this.state.loading) {
+            return (
+                <InviteRoomBg 
+                    url={
+                        this.state.status === 200 
+                        ? this.state.invitationData.cover
+                        : '/img/invite/invalid.jpg'
+                    }
+                />
+            )
+        }
+
+        return null;
     }
 
 
