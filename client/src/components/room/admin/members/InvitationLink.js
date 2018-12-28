@@ -46,7 +46,7 @@ class InvitationLink extends Component {
         return this.state.loadingNewInvite 
         ? 
         <Rotate>
-            <RefreshCw size={17} /> 
+            <RefreshCw size={22} /> 
         </Rotate>
         : 
         <RefreshCw size={17}/>;
@@ -198,4 +198,8 @@ const rotate = keyframes`
 
 const Rotate = styled.div`
   animation: ${rotate} 1s linear infinite;
+  svg {
+      stroke: #ffffff;
+      opacity: 0.7;
+  }
 `
