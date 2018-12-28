@@ -18,6 +18,6 @@ async function getRoomInvite(inviteData) {
     }
 
     catch(error) {
-        console.log(error);
+        return error.response;
     }
 } 
