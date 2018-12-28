@@ -202,16 +202,20 @@ module.exports = app => {
 }
 
 
-function generateInvitationLink(id) {
+function generateInvitationLink(roomID) {
 
     const hour =    3600000;    // 1 hour (60 min)
     const weeks =   168;        // 1 week (7 days)
 
+    const inviteID = shortid.generate();
     const timeStamp = new Date().getTime();
+
     const invite = {
         validFrom: timeStamp,
         validTo: timeStamp + (hour * weeks),
-        url: `/join-room/${shortid.generate()}/${id}`
+        url: `/join-room/${inviteID}/${roomID}`,
+        inviteID,
+        roomID
     }
 
     return invite;
