@@ -88,7 +88,7 @@ class App extends Component {
 
         else if (this.props.state.auth.loggedIn) {
             return (
-                <div id="main-app-cont">
+                <div>
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
                     <Route exact path="/login" component={this.loginRoute} />
@@ -99,15 +99,13 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
-
-                    <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
                 </div>
             )
         }
 
         else {
             return (
-                <div id="main-app-cont">
+                <div>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
@@ -120,7 +118,10 @@ class App extends Component {
     render() {
         return (
             <Router history={history}>
-                {this.renderRoutes()}
+                <div id="main-app-cont">
+                    {this.renderRoutes()}
+                    <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
+                </div>
             </Router>
         )
     }
