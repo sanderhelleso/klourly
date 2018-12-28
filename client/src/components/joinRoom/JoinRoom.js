@@ -16,6 +16,14 @@ class JoinRoom extends Component {
         }
     }
 
+    componentWillMount() {
+        document.body.style.backgroundColor = '#f3e5f5';
+    }
+
+    componentWillUnmount() {
+        document.body.style.removeProperty('backgroundColor');
+    }
+
     async componentDidMount() {
 
         // check for valid and active invite / room
@@ -87,14 +95,19 @@ class JoinRoom extends Component {
         )
     }
 
+    renderBg() {
+        return this.state.status === 200 ? <InviteRoomBg url={this.state.invitationData.cover}/> : null;
+    }
+
 
     render() {
         return (
-           <main className="container">
+            <main className="container">
+                {this.renderBg()}
                 <StyledHeader>
                     {this.renderInvite()}
                 </StyledHeader>
-           </main>
+            </main>
         )
     }
 }
@@ -161,11 +174,32 @@ const StyledButton = styled.button`
     min-height: 50px;
     font-weight: 600;
     letter-spacing: 1px;
-    background: #7F00FF;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #FF5F6D;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 100px;
 
     &:hover {
         box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.3);
     }
+`;
+
+const InviteRoomBg = styled.div`
+    height: 101%;
+    background: linear-gradient(to right,
+    rgba(166, 81, 223, 0.8),
+    rgba(128, 26, 245, 0.8)),
+    url(${props => props.url});
+    background-size: cover;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0 50%;
+    position: fixed;
+    top: -1%;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    filter: blur(4px);
+    -webkit-filter: blur(4px);
+    transform: scale(1.1);
 `;

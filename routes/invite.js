@@ -1,7 +1,5 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
-const shortid = require('shortid');
-
 
 module.exports = app => {
 
@@ -54,9 +52,9 @@ module.exports = app => {
                 status = 200; // OK
                 response = {
                     success: true,
-                    message: 'Invitation to room is valid and user is eligable to join, however another request is neccesary if not logged in for further validation',
                     invitationData: {
-                        name: snapshot.val().name
+                        name: snapshot.val().name,
+                        cover: snapshot.val().cover
                     }
                 }
             }
@@ -67,16 +65,20 @@ module.exports = app => {
 
             // get ref to owner by id recieved from room data and fetch owner data 
             await ownerRef.once('value', ownerSnapshot => {
+
+                // set owner data
                 response.invitationData.ownerData = {
                     name: ownerSnapshot.val().displayName,
                     photoUrl: ownerSnapshot.val().photoUrl
                 }
+
+                // set response message
+                response.message = `${ownerSnapshot.val().displayName} has invited you to join his room. Click the button below to proceed and gain access to the room.`;
             });
         }
 
         // send back response containing owner and room data
         res.status(status).json(response);
-
     });
 
 }
