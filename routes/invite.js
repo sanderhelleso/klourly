@@ -10,12 +10,13 @@ module.exports = app => {
 
         // get ref to room by id
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
+        let ownerRef = {};
 
-        let status = 200;
+        let status = 404;
         let response = {};
 
         // check if current invite link is valid AND active
-        await roomRef.once('value', snapshot => {
+        await roomRef.once('value', async snapshot => {
             //console.log(snapshot.val().invite);
 
             // check if room exists
@@ -41,13 +42,39 @@ module.exports = app => {
                 status = 409; // conflict
                 response = {
                     success: false,
-                    message: 'User is already a member of this room'
+                    message: 'No need for another invite! Looks like you are already a member of this room'
                 }
             }
 
+            // invitation to room is valid and user is eligable to join
+            // however another request is neccesary if not logged in for further validation
+            else {
+
+                ownerRef = db.ref(`users/${snapshot.val().owner}/settings`);
+                status = 200; // OK
+                response = {
+                    success: true,
+                    message: 'Invitation to room is valid and user is eligable to join, however another request is neccesary if not logged in for further validation',
+                    invitationData: {
+                        name: snapshot.val().name
+                    }
+                }
+            }
         });
 
-        // send back response
+        // fetch owner data
+        if (status === 200) {
+
+            // get ref to owner by id recieved from room data and fetch owner data 
+            await ownerRef.once('value', ownerSnapshot => {
+                response.invitationData.ownerData = {
+                    name: ownerSnapshot.val().displayName,
+                    photoUrl: ownerSnapshot.val().photoUrl
+                }
+            });
+        }
+
+        // send back response containing owner and room data
         res.status(status).json(response);
 
     });
