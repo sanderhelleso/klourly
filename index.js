@@ -33,6 +33,7 @@ require("./routes/userData")(app);
 require("./routes/upload")(app);
 require("./routes/countries")(app);
 require("./routes/room")(app);
+require("./routes/invite")(app);
 require("./routes/algolia")(app);
 //////////////////////////////
 

@@ -100,7 +100,7 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
 
-                    <Route exact path="/join-room/:timestamp/:roomID" component={JoinRoom} />
+                    <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
                 </div>
             )
         }
