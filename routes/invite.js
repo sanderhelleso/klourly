@@ -73,7 +73,7 @@ module.exports = app => {
                 }
 
                 // set response message
-                response.message = `${ownerSnapshot.val().displayName} has invited you to join his room. Click the button below to proceed and gain access to the room.`;
+                response.message = `${ownerSnapshot.val().displayName} has invited you to join this room. Click the button below to proceed and gain access to the room.`;
             });
         }
 

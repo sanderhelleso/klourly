@@ -16,14 +16,6 @@ class JoinRoom extends Component {
         }
     }
 
-    componentWillMount() {
-        document.body.style.backgroundColor = '#f3e5f5';
-    }
-
-    componentWillUnmount() {
-        document.body.style.removeProperty('backgroundColor');
-    }
-
     async componentDidMount() {
 
         // check for valid and active invite / room
@@ -32,6 +24,7 @@ class JoinRoom extends Component {
             uid: this.props.state.auth.user ? this.props.state.auth.user.id : null
         });
 
+        // set invite state
         this.setState({
             loading: false,
             status: response.status,
@@ -39,6 +32,9 @@ class JoinRoom extends Component {
             message: response.data.message,
             invitationData: response.data.invitationData ? response.data.invitationData : null
         });
+
+        // set heading and message
+        this.setMessage();
     }
 
     renderInvite() {
@@ -46,9 +42,11 @@ class JoinRoom extends Component {
             return (
                 <InvitationCont className="animated fadeIn">
                     {this.renderInviteImage()}
-                    <h1>{this.state.invitationData.name}</h1>
+                    <h1>{this.state.heading}</h1>
                     <h5>{this.state.message}</h5>
-                    {this.renderInviteActionButton()}
+                    <StyledButton className="waves-effect waves-light btn">
+                        {this.state.buttonMessage}
+                    </StyledButton>
                 </InvitationCont>
             );
         }
@@ -67,36 +65,45 @@ class JoinRoom extends Component {
         : null;
     }
 
-    renderInviteActionButton() {
+    setMessage() {
 
         // get message depending on response status
-        let message = '';
-
         switch (this.state.status) {
             case 409:
-                message = 'Enter Room';
+                this.setState({
+                    heading: 'Oh Hi There',
+                    buttonMessage: 'Enter Room'
+                });
                 break;
             
             case 404 || 410:
-                message = 'Back to Home';
+                this.setState({
+                    heading: 'Invalid Link',
+                    buttonMessage: 'Back to Home'
+                });
                 break;
             
             case 200:
-                message = 'Join Room';
+                this.setState({
+                    heading: this.state.invitationData.name,
+                    buttonMessage: 'Join Room'
+                });
                 break;
 
             default: break;
         }
-
-        return (
-            <StyledButton className="waves-effect waves-light btn">
-            {message}
-            </StyledButton>
-        )
     }
 
     renderBg() {
-        return this.state.status === 200 ? <InviteRoomBg url={this.state.invitationData.cover}/> : null;
+        return (
+            <InviteRoomBg 
+                url={
+                    this.state.status === 200 
+                    ? this.state.invitationData.cover
+                    : '/img/invite/invalid.jpg'
+                }
+            />
+        )
     }
 
 
@@ -167,17 +174,15 @@ const InvitationCont = styled.div`
 const StyledButton = styled.button`
     margin-top: 3rem;
     color: #ffffff;
-    outline: none;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    min-width: 250px;
+    min-width: 260px;
     min-height: 50px;
     font-weight: 600;
     letter-spacing: 1px;
     background: #FF5F6D;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    border-radius: 100px;
+    border-radius: 110px;
 
     &:hover {
         box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.3);
@@ -199,7 +204,7 @@ const InviteRoomBg = styled.div`
     left: 0;
     right: 0;
     z-index: 0;
-    filter: blur(4px);
-    -webkit-filter: blur(4px);
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
     transform: scale(1.1);
 `;
