@@ -17,10 +17,9 @@ class JoinRoom extends Component {
 
         // check for valid and active invite / room
         const response = await invite.getRoomInvite({
-            ...this.props.match.params
+            ...this.props.match.params,
+            uid: this.props.state.auth.user ? this.props.state.auth.user.id : null
         });
-
-
     }
 
 

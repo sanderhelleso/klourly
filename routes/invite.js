@@ -19,9 +19,8 @@ module.exports = app => {
             //console.log(snapshot.val().invite);
 
             // check if room exists
-            console.log(snapshot.val().invite.inviteID, req.body.inviteID);
             if (snapshot.val() === null || snapshot.val().invite.inviteID !== req.body.inviteID) {
-                status = 404;
+                status = 404; // not found
                 response = {
                     success: false,
                     message: 'The invitation is removed or might never existed.'
@@ -30,10 +29,19 @@ module.exports = app => {
 
             // check if invite ID is valid and active
             else if (snapshot.val().invite.validTo < new Date().getTime()) {
-                status = 410;
+                status = 410; // expired
                 response = {
                     success: false,
                     message: 'The invitation is no longer active. Please contact the owner of the room for a new invitation.'
+                }
+            }
+
+            // if user is logged in, check if user is already a member of room
+            else if (req.body.uid && snapshot.val().members.indexOf(req.body.uid) !== -1) {
+                status = 409; // conflict
+                response = {
+                    success: false,
+                    message: 'User is already a member of this room'
                 }
             }
 
