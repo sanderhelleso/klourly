@@ -71,3 +71,11 @@ function newRoom() {
 function joinRoom(url) {
     history.push(url);
 }
+
+function logInWithJoinRoomRedirect(roomID) {
+    history.push({
+        pathname: '/login',
+        onSucess: '?redirect=true',
+        roomID: `?roomID=${roomID}`
+    });
+}
