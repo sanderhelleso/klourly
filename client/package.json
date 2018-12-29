@@ -48,6 +48,9 @@
     "/api/getRoomInvite": {
       "target": "http://localhost:5000"
     },
+    "/api/getRoomMembers": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }

@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
+import LinearLoader from '../../../loaders/LinearLoader';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { room } from '../../../../api/room/room';
 
 class MembersList extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
+        this.state = {
+            loading: true
+        }
+
+        console.log(this.props);
     }
 
-    renderMemberCard() {
+    async componentDidMount() {
+        
+        // attempt to fetch rooms members
+        const response = await room.getRoomMembers(
+            this.props.user.id, 
+            this.props.roomID, 
+            this.props.membersList
+        );
+
+        this.setState({
+            membersList: response.data.membersList,
+            loading: false
+        });
+    }
+
+    renderMemberCard(member) {
         return (
-            <div className="col s12 m6 l6">
+            <div key={member.email} className="col s12 m6 l6 animated fadeIn">
                 <MemberCard>
                     <div className="row">
                         <div className="col s4 m4 l4 avatar-cont">
-                            <img src="/img/dashboard/stock.jpg" alt="users avatar"/>
+                            <img src={member.photoUrl} alt={`${member.displayName}'s avatar`} />
                         </div>
                         <div className="col s5 m5 l6">
-                            <h5>John Doe</h5>
-                            <p>Joined room at 27.12.2018</p>
+                            <h5>{member.name}</h5>
+                            <p>{member.email}</p>
                         </div>
                         <div className="col s3 m3 l2">
                             <Trash2 size={30} />
@@ -34,21 +55,21 @@ class MembersList extends Component {
         )
     }
 
+    renderMembers() {
+        if (!this.state.loading) {
+            return this.state.membersList.map(member => {
+                return this.renderMemberCard(member);
+            });
+        }
+
+        return null;//<LinearLoader loading={this.state.loading} />;
+    }
+
     render() {
         return (
             <StyledMembersList>
                 <div className="row">
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
-                    {this.renderMemberCard()}
+                    {this.renderMembers()}
                 </div>
             </StyledMembersList>
         )
@@ -57,7 +78,11 @@ class MembersList extends Component {
 
 // set initial store state
 const mapStateToProps = state => {
-    return { ...state.room.activeRoom.members }
+    return { 
+        user: state.auth.user,
+        roomID: state.room.activeRoom.id,
+        membersList: state.room.activeRoom.members
+     }
 }
 
 const mapDispatchToProps = (dispatch) => {
