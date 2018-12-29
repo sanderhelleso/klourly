@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
 
-const Member = props => (
-    <div key={props.data.email} className="col s12 m6 l6 animated fadeIn">
-        <MemberCard>
-            <div className="row">
-                <div className="col s4 m4 l4 avatar-cont">
-                    <img src={props.data.photoUrl} alt={`${props.data.displayName}'s avatar`} />
-                </div>
-                <div className="col s5 m5 l6">
-                    <h5>{props.data.name}</h5>
-                    <p>{props.data.email}</p>
-                </div>
-                <div className="col s3 m3 l2">
-                    <Trash2 size={30} />
-                </div>
-            </div>
-        </MemberCard>
-    </div>
-);
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setConfirmDeleteMemberAction } from '../../../../actions/room/setConfirmDeleteMemberAction';
 
-export default Member;
+class Member extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    confirmDelete(deleteMemberData) {
+
+        // update delete member confirmation data and open modal for confirmation
+        this.props.setConfirmDeleteMemberAction(deleteMemberData);
+    }
+
+    render() {
+        return (
+            <div className="col s12 m6 l6 animated fadeIn">
+                <MemberCard>
+                    <div className="row">
+                        <div className="col s4 m4 l4 avatar-cont">
+                            <img 
+                                src={this.props.data.photoUrl} 
+                                alt={`${this.props.data.displayName}'s avatar`} 
+                            />
+                        </div>
+                        <div className="col s5 m5 l6">
+                            <h5>{this.props.data.name}</h5>
+                            <p>{this.props.data.email}</p>
+                        </div>
+                        <div className="col s3 m3 l2">
+                            <span onClick={() => this.confirmDelete(this.props.data)}>
+                                <Trash2 size={30} />
+                            </span>
+                        </div>
+                    </div>
+                </MemberCard>
+            </div>
+        )
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ setConfirmDeleteMemberAction }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Member);
+
 
 const MemberCard= styled.div`
     margin: 1.5rem 0.5rem;

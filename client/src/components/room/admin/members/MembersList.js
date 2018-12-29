@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { room } from '../../../../api/room/room';
 import Member from './Member';
 
@@ -37,7 +38,7 @@ class MembersList extends Component {
     renderMembers() {
         if (!this.state.loading) {
             return this.state.membersList.map(member => {
-                return <Member data={member} />
+                return <Member key={member.email} data={member} />
             });
         }
 

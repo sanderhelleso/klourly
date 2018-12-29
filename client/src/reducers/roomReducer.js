@@ -17,6 +17,15 @@ const roomReducer = (state = initialState, action) => {
                     activeAnnouncement: action.payload
                 }
             }
+
+        case 'CONFIRM_DELETE_MEMBER':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    confirmDeleteMember: action.payload
+                }
+            }
         
         case 'UPDATE_ANNOUNCEMENT_REACTION':
             return {
