@@ -11,7 +11,9 @@ module.exports = app => {
         let ownerRef = {};
 
         let status = 404;
-        let response = {};
+        let response = {
+            redirectActionSucess: true
+        };
 
         // check if current invite link is valid AND active
         await roomRef.once('value', async snapshot => {
@@ -47,7 +49,7 @@ module.exports = app => {
             // however another request is neccesary if not logged in for further validation
             else {
 
-                ownerRef = db.ref(`users/${snapshot.val().owner}/settings`);
+                ownerRef = await db.ref(`users/${snapshot.val().owner}/settings`);
                 status = 200; // OK
 
                 // check for present callback
@@ -57,23 +59,25 @@ module.exports = app => {
                     await roomRef.update({
                         members: [...snapshot.val().members, req.body.uid]
                     });
-
-                    // set success message
-                    response.redirectActionSucess = true;
                 }
 
-                response = {
-                    success: true,
-                    invitationData: {
-                        name: snapshot.val().name,
-                        cover: snapshot.val().cover
+                // if not, set required data
+                else {
+                    response = {
+                        success: true,
+                        redirectActionSucess: false,
+                        invitationData: {
+                            name: snapshot.val().name,
+                            cover: snapshot.val().cover,
+                        }
                     }
                 }
             }
         });
 
         // fetch owner data
-        if (status === 200) {
+        console.log(req.body);
+        if (status === 200 && !req.body.cb) {
 
             // get ref to owner by id recieved from room data and fetch owner data 
             await ownerRef.once('value', ownerSnapshot => {

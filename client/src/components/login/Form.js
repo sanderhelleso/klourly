@@ -146,10 +146,10 @@ class Form extends Component {
             this.props.userDataActions(response.data.userData);
             this.props.loginAction(authenticatedUser.userData.user);
 
-            // check for valid redirect action
-            if (redirectActions.data.redirectActionSuccess) {
+            /*// check for valid redirect action
+            if (redirectActions && redirectActions.data.redirectActionSuccess) {
                 
-            }
+            }*/
         }
 
         // login failed
