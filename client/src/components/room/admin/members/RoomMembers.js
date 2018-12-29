@@ -16,7 +16,25 @@ class RoomMembers extends Component {
         super(props);
 
         this.state = {
-            linkHidden: false
+            linkHidden: false,
+            confirmDelete: {
+                openModal: false,
+                data: {}
+            }
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        // check for new data
+        if (this.props.confirmDeleteMember !== nextProps.confirmDeleteMember) {
+            console.log('NEW, TRIGGER HERE');
+            this.setState({
+                confirmDelete: {
+                    openModal: true,
+                    data: nextProps.confirmDeleteMember
+                }
+            });
         }
     }
 
@@ -40,10 +58,18 @@ class RoomMembers extends Component {
         );
     }
 
+    renderConfirmDeleteModal() {
+        return (
+            this.state.confirmDelete.openModal
+            ? <p>DELETE</p>
+            : null
+        );
+    }
+
     render() {
         return (
             <main className="container">
-                <BackToRoom id={this.props.state.room.activeRoom.id} />
+                <BackToRoom id={this.props.roomID} />
                 <div className="row">
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Members</h3>
@@ -53,6 +79,7 @@ class RoomMembers extends Component {
                     {this.renderLink()}
                 </div>
                 <MembersList />
+                {this.renderConfirmDeleteModal()}
                 <ToastContainer 
                     transition={Flip}
                     closeButton={false}
@@ -64,7 +91,14 @@ class RoomMembers extends Component {
 
 // set initial store state
 const mapStateToProps = (state) => {
-    return { state }
+    return { 
+        roomID: state.room.activeRoom.id,
+        confirmDeleteMember: {
+            ...state.room.activeRoom.confirmDeleteMember 
+            ? state.room.activeRoom.confirmDeleteMember 
+            : null
+        }
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
