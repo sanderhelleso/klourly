@@ -104,11 +104,6 @@ async function validateUser(uid) {
 // check for params and run action depending on params
 async function authAndDoAction(params, uid) {
 
-    // check for empty params
-    /*if (Object.keys(params).length === 0) {
-        return false;
-    }*/
-
     // api endpoint
     let endpoint = '';
     

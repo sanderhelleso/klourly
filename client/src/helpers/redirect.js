@@ -14,7 +14,8 @@ export const redirect = {
     roomAdminSettings,
     roomAdminMembers,
     roomAdminReports,
-    loginWithJoinRoomRedirect
+    loginWithJoinRoomRedirect,
+    redirectActionSuccess
 };
 
 function home() {
@@ -78,4 +79,16 @@ function loginWithJoinRoomRedirect(inviteID, roomID) {
         pathname: '/login',
         search: `?redirect=true&inviteID=${inviteID}&roomID=${roomID}&cb=joinRoom`,
     });
+}
+
+function redirectActionSuccess(cb, roomID, userID) {
+
+    // redirect depending on callback
+    switch (cb) {
+        case 'joinRoom':
+            room(roomID);
+            break;
+
+        default: break;
+    }
 }

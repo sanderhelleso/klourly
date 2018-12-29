@@ -10,9 +10,10 @@ module.exports = app => {
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
         let ownerRef = {};
 
+        // default values
         let status = 404;
         let response = {
-            redirectActionSucess: true
+            redirectActionSuccess: true
         };
 
         // check if current invite link is valid AND active

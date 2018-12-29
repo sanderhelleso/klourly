@@ -141,15 +141,14 @@ class Form extends Component {
                 this.props.params, authenticatedUser.userData.user.id
             );
 
-            console.log(redirectActions);
-
+            // set user data
             this.props.userDataActions(response.data.userData);
             this.props.loginAction(authenticatedUser.userData.user);
 
-            /*// check for valid redirect action
+            // check for valid redirect action and redirect if needed
             if (redirectActions && redirectActions.data.redirectActionSuccess) {
-                
-            }*/
+                redirect.redirectActionSuccess(this.props.params.cb, this.props.params.roomID, null);
+            }
         }
 
         // login failed
