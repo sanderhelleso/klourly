@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import BackToRoom from '../../BackToRoom';
 import InvitationLink from './InvitationLink';
 import MembersList from './MembersList';
+import DeleteMemberModal from './DeleteMemberModal';
 
 class RoomMembers extends Component {
     constructor(props) {
@@ -59,11 +60,7 @@ class RoomMembers extends Component {
     }
 
     renderConfirmDeleteModal() {
-        return (
-            this.state.confirmDelete.openModal
-            ? <p>DELETE</p>
-            : null
-        );
+        return <DeleteMemberModal data={this.state.confirmDelete.data} />
     }
 
     render() {

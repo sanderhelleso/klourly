@@ -34,7 +34,11 @@ class Member extends Component {
                             <p>{this.props.data.email}</p>
                         </div>
                         <div className="col s3 m3 l2">
-                            <span onClick={() => this.confirmDelete(this.props.data)}>
+                            <span 
+                                onClick={() => this.confirmDelete(this.props.data)}
+                                data-target="confirm-delete-member-modal"
+                                className="modal-trigger"
+                            >
                                 <Trash2 size={30} />
                             </span>
                         </div>
