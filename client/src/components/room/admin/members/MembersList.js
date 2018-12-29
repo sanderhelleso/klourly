@@ -27,10 +27,11 @@ class MembersList extends Component {
             this.props.roomID, 
             this.props.membersList
         );
-
         this.setState({
-            membersList: response.data.membersList,
-            loading: false
+            loading: false,
+            membersList: response.data.membersList.sort(
+                         (a, b) => `${a.name}`
+                         .localeCompare(`${b.name}`)) // sort list (A - Z)
         });
     }
 
