@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
 
-export default class MembersList extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class MembersList extends Component {
+    constructor(props) {
+        super(props);
+
+        console.log(props);
+    }
 
     renderMemberCard() {
         return (
@@ -45,6 +54,17 @@ export default class MembersList extends Component {
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = state => {
+    return { ...state.room.activeRoom.members }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MembersList);
 
 const StyledMembersList = styled.div`
     margin-top: 4rem;

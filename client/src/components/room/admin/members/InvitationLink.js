@@ -15,8 +15,9 @@ class InvitationLink extends Component {
     constructor(props) {
         super(props);
 
+        console.log(props);
         this.state = {
-            ...this.props.state.room.activeRoom.invite,
+            ...this.props.activeRoom.invite,
             loadingNewInvite: false
         }
 
@@ -70,8 +71,8 @@ class InvitationLink extends Component {
         });
 
         const response = await room.updateRoomInvite(
-                        this.props.state.auth.user.id, 
-                        this.props.state.room.activeRoom.id);
+                        this.props.user.id, 
+                        this.props.activeRoom.id);
 
         // new invite generation successfull
         if (response.data.success) {
@@ -106,8 +107,11 @@ class InvitationLink extends Component {
 }
 
 // set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+const mapStateToProps = state => {
+    return { 
+        user: state.auth.user,
+        activeRoom: state.room.activeRoom
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -187,13 +191,13 @@ const GenerateNewBtn = styled.button`
 `;
 
 const rotate = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 `
 
 const Rotate = styled.div`
