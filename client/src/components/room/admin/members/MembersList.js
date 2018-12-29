@@ -27,11 +27,14 @@ class MembersList extends Component {
             this.props.roomID, 
             this.props.membersList
         );
+
         this.setState({
             loading: false,
-            membersList: response.data.membersList.sort(
+            membersList: response.data.membersList 
+                         ? response.data.membersList.sort(
                          (a, b) => `${a.name}`
-                         .localeCompare(`${b.name}`)) // sort list (A - Z)
+                         .localeCompare(`${b.name}`)) 
+                         : [] // sort list (A - Z)
         });
     }
 
@@ -42,7 +45,7 @@ class MembersList extends Component {
             });
         }
 
-        return null;//<LinearLoader loading={this.state.loading} />;
+        return null; //<LinearLoader loading={this.state.loading} />;
     }
 
     render() {
