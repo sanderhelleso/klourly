@@ -13,7 +13,8 @@ export const redirect = {
     announcement,
     roomAdminSettings,
     roomAdminMembers,
-    roomAdminReports
+    roomAdminReports,
+    loginWithJoinRoomRedirect
 };
 
 function home() {
@@ -72,10 +73,9 @@ function joinRoom(url) {
     history.push(url);
 }
 
-function logInWithJoinRoomRedirect(roomID) {
+function loginWithJoinRoomRedirect(inviteID, roomID) {
     history.push({
         pathname: '/login',
-        onSucess: '?redirect=true',
-        roomID: `?roomID=${roomID}`
+        search: `?redirect=true&inviteID=${inviteID}&roomID=${roomID}&cb=joinRoom`,
     });
 }

@@ -57,6 +57,7 @@ class App extends Component {
 
     // route for handling authentication on auth required routes
     loginRoute() {
+        console.log('TRIGGERED');
         return this.props.state.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
     }
 

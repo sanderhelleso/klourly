@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Feather } from 'react-feather';
-
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,6 +28,8 @@ class Form extends Component {
             password: '',
             error: ''
         }
+
+        console.log(props);
 
         this.handleUserInput = this.handleUserInput.bind(this);
         this.login = this.login.bind(this);
@@ -133,23 +133,32 @@ class Form extends Component {
         // login successfull
         if (authenticatedUser.success) {
 
-            // set user state then redirect to dashboard
-            dashboard.fetchUserData(authenticatedUser.userData.user.id)
-            .then(response => {
-                this.props.userDataActions(response.data.userData);
-                this.props.loginAction(authenticatedUser.userData.user);
-            });
+            // set user state
+            const response = await dashboard.fetchUserData(authenticatedUser.userData.user.id);
+
+            // check for params in case of redirects
+            const redirectActions = await authentication.authAndDoAction(
+                this.props.params, authenticatedUser.userData.user.id
+            );
+
+            console.log(redirectActions);
+
+            this.props.userDataActions(response.data.userData);
+            this.props.loginAction(authenticatedUser.userData.user);
+
+            // check for valid redirect action
+            if (redirectActions.data.redirectActionSuccess) {
+                
+            }
         }
 
         // login failed
         else {
-            setTimeout(() => {
-                notification.login(false);
-                this.setState({
-                    valid: true,
-                    loading: false
-                });
-            }, 500);
+            notification.login(false);    
+            this.setState({
+                valid: true,
+                loading: false
+            });
         }
     }
 
@@ -186,7 +195,7 @@ class Form extends Component {
 }
 
 // set initial store state
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         user: state
     }

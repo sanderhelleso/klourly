@@ -98,7 +98,12 @@ class JoinRoom extends Component {
     }
 
     joinRoomNotLoggedIn() {
+        console.log(this.props.match.params);
         console.log('IM NOT LOGGED IN');
+        redirect.loginWithJoinRoomRedirect(
+                this.props.match.params.inviteID, 
+                this.props.match.params.roomID
+            );
     }
 
     setMessage() {

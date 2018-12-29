@@ -15,7 +15,6 @@ module.exports = app => {
 
         // check if current invite link is valid AND active
         await roomRef.once('value', async snapshot => {
-            //console.log(snapshot.val().invite);
 
             // check if room exists
             if (snapshot.val() === null || snapshot.val().invite.inviteID !== req.body.inviteID) {
@@ -50,6 +49,19 @@ module.exports = app => {
 
                 ownerRef = db.ref(`users/${snapshot.val().owner}/settings`);
                 status = 200; // OK
+
+                // check for present callback
+                if (req.body.cb === 'joinRoom') {
+
+                    // add user to room
+                    await roomRef.update({
+                        members: [...snapshot.val().members, req.body.uid]
+                    });
+
+                    // set success message
+                    response.redirectActionSucess = true;
+                }
+
                 response = {
                     success: true,
                     invitationData: {

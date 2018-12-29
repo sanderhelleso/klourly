@@ -6,7 +6,8 @@ export const authentication = {
     signup,
     login,
     logout,
-    validateUser
+    validateUser,
+    authAndDoAction
 };
 
 async function signup(firstName, lastName, email, password, location, newsLetter) {
@@ -74,8 +75,6 @@ function logout() {
 
 async function validateUser(uid) {
 
-    console.log(uid);
-
     // send data to endpoint and attempt to authenticate user
     if (!uid) {
         return false;
@@ -99,5 +98,42 @@ async function validateUser(uid) {
     catch (error) {
         console.log(error);
         return false;
+    }
+}
+
+// check for params and run action depending on params
+async function authAndDoAction(params, uid) {
+
+    // api endpoint
+    let endpoint = '';
+    
+    // check for callback
+    switch (params.cb) {
+        case 'joinRoom':
+            endpoint = '/api/getRoomInvite';
+            break;
+
+        default: break;
+    }
+
+    // run cb action
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: endpoint,
+            data: {
+                uid: uid,
+                ...params
+            }
+        });
+
+        // get response from endpoint
+        return response;
+    }
+
+    // catch and return error
+    catch (error) {
+        return error.response;
     }
 }
