@@ -181,7 +181,7 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ enterRoomAction }, dispatch);
 }
 

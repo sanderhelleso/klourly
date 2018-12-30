@@ -25,6 +25,7 @@ import JoinRoom from './joinRoom/JoinRoom';
 import Announcement from './room/announcements/Announcement';
 import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
 import RoomMembers from './room/admin/members/RoomMembers';
+import RoomData from './dataPrefetch/RoomData';
 
 class App extends Component {
     constructor(props) {
@@ -95,6 +96,7 @@ class App extends Component {
                     <Route exact path="/login" component={this.loginRoute} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
+                    <Route path="/dashboard/rooms/:roomID" component={RoomData} />
                     <Route exact path="/dashboard/rooms/:roomID" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin" component={RoomAdmin} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />

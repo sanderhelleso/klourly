@@ -30,7 +30,6 @@ class MembersList extends Component {
     async componentDidMount() {
 
         // check if member list is empty
-        console.log(this.props.membersList);
         if (this.props.membersList) {
 
             // attempt to fetch rooms members
@@ -72,7 +71,6 @@ class MembersList extends Component {
     }
 }
 
-// set initial store state
 const mapStateToProps = state => {
     return { 
         user: state.auth.user,
