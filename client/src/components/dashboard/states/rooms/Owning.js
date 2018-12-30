@@ -44,9 +44,11 @@ class Owning extends Component {
 
         // render preview card for each room
         if (!this.state.loading && this.props.owningPreview) {
-            return this.props.owningPreview.map(room => {
-                return <RoomPreview key={room.id} data={room} />
-            });
+            return this.props.owningPreview
+                   .sort((a, b) => a.name.localeCompare(b.name))
+                   .map(room => {
+                        return <RoomPreview key={room.id} data={room} />
+                    });
         }
 
         return null;

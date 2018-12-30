@@ -72,10 +72,18 @@ module.exports = app => {
         // itterate over rooms and get data
         Object.keys(req.body.rooms).forEach((roomID) => {
             const roomRef = db.ref(`rooms/${roomID}`);
-            roomRef.orderByChild('name').once('value', snapshot => {
+            roomRef.once('value', snapshot => {
                 
-                // push room data to array
-                rooms.push(snapshot.val());
+                // get needed preview data
+                const roomPreview = {
+                    id: snapshot.val().id,
+                    cover: snapshot.val().cover,
+                    name: snapshot.val().name,
+                    location: snapshot.val().location
+                }
+
+                // push room preview data to array
+                rooms.push(roomPreview);
 
                 // once all rooms have been stored in array, send to client
                 if (rooms.length === Object.keys(req.body.rooms).length) {

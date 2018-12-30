@@ -8,10 +8,7 @@ import { connect } from 'react-redux';
 import { setConfirmDeleteMemberAction } from '../../../../actions/room/setConfirmDeleteMemberAction';
 
 class Member extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+    
     confirmDelete(deleteMemberData) {
 
         // update delete member confirmation data and open modal for confirmation
