@@ -255,27 +255,13 @@ module.exports = app => {
 
             // update list and remove user
             const updatedMembersList = snapshot.val().filter(uid => uid !== req.body.uid);
+            await roomMembersRef.set(updatedMembersList);
 
-            // default response
-            let status = 200;
-            let message = 'Successfully deleted member from room';
-
-            // check if delete was successfull
-            if (updatedMembersList === snapshot.val()) {
-                status = 400; // bad request
-                message = 'Something went wrong when attempting to delete member';
-            }
-
-            // if successfull, update list and return new list to client
-            else {
-                await roomMembersRef.set(updatedMembersList);
-            }
-
-            // send back response with updated invitation link
-            res.status(status).json({
-                success: status === 200 ? true : false,
-                message,
-                updatedMembersList: status === 200 ? updatedMembersList : null
+            // send back response with updated members list
+            res.status(200).json({
+                success: true,
+                message: 'Successfully deleted member from room',
+                updatedMembersList
             });
         });
     });

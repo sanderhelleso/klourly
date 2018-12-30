@@ -4,9 +4,18 @@ import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
 import { room } from '../../../../api/room/room';
 
-export default class DeleteMemberModal extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateRoomMembersAction } from '../../../../actions/room/updateRoomMembersAction';
+
+class DeleteMemberModal extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loading: false
+        }
 
         this.deleteUser = this.deleteUser.bind(this);
     }
@@ -21,10 +30,25 @@ export default class DeleteMemberModal extends Component {
     }
 
     async deleteUser() {
-        
-        const response = await room.removeRoomMember(this.props.data.id, this.props.roomID);
-        console.log(response);
 
+        // set loading state to disable button
+        this.setState({
+            loading: true
+        });
+        
+        // attempt to delete user
+        const response = await room.removeRoomMember(this.props.data.id, this.props.roomID);
+        
+        // if successfull, update members and close modal
+        if (response.data.success) {
+            this.props.updateRoomMembersAction(response.data.updatedMembersList);
+            document.querySelector('.modal-close').click();
+        }
+
+        // enable button
+        this.setState({
+            loading: false
+        });
     }
 
     render() {
@@ -48,6 +72,7 @@ export default class DeleteMemberModal extends Component {
                     <ConfirmButton 
                         className="waves-effect waves-red btn-flat"
                         onClick={this.deleteUser}
+                        disabled={this.state.loading}
                     >
                         Confirm
                     </ConfirmButton>
@@ -56,6 +81,13 @@ export default class DeleteMemberModal extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ updateRoomMembersAction }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(DeleteMemberModal);
+
 
 const StyledModal = styled.div`
     overflow-y: visible;

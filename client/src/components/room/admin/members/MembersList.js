@@ -17,6 +17,16 @@ class MembersList extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.membersList !== nextProps.membersList) {
+            this.setState({
+                membersList: this.state.membersList.filter(
+                             member => nextProps.membersList
+                             .indexOf(member.id) !== -1)
+            });
+        }
+    }
+
     async componentDidMount() {
         
         // attempt to fetch rooms members
