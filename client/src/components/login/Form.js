@@ -142,8 +142,8 @@ class Form extends Component {
             );
 
             // set user data
-            this.props.userDataActions(response.data.userData);
-            this.props.loginAction(authenticatedUser.userData.user);
+            await this.props.userDataActions(response.data.userData);
+            await this.props.loginAction(authenticatedUser.userData.user);
 
             // check for valid redirect action and redirect if needed
             if (redirectActions && redirectActions.data.redirectActionSuccess) {

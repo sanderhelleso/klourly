@@ -70,7 +70,7 @@ module.exports = app => {
         const rooms = [];
 
         // itterate over rooms and get data
-        Object.keys(req.body.rooms).forEach((roomID) => {
+        req.body.rooms.forEach(roomID => {
             const roomRef = db.ref(`rooms/${roomID}`);
             roomRef.once('value', snapshot => {
                 
@@ -86,7 +86,7 @@ module.exports = app => {
                 rooms.push(roomPreview);
 
                 // once all rooms have been stored in array, send to client
-                if (rooms.length === Object.keys(req.body.rooms).length) {
+                if (rooms.length === req.body.rooms.length) {
                     res.status(200).json({
                         success: true,
                         message: 'Successfully fetched rooms',
