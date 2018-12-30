@@ -12,35 +12,33 @@ class Owning extends Component {
         super(props);
 
         this.state = {
-            roomsData : []
+            loading: true
         }
-
     }
 
-    async componentWillMount() {
-        if (localStorage.getItem('roomsOwning') !== null) {
-            
-            this.setState({
-                roomsData: JSON.parse(localStorage.getItem('roomsOwning'))
-            });
-            return;
-        }
+    async componentDidMount() {
 
         // check that room state is present for user, 
         // if present fetch users room and render room cards
-        if (this.props.state.dashboard.userData.rooms) {
-            if (this.props.state.dashboard.userData.rooms.owning) {
-                
-                const rooms = this.props.state.dashboard.userData.rooms.owning;
-                await room.getRooms(this.props.state.auth.user.id, rooms)
-                .then(response => {
-                    this.setState({
-                        roomsData: response.data.roomsData
-                    });
-                    localStorage.setItem('roomsOwning', JSON.stringify(response.data.roomsData));
-                });
-            }
+        if (this.props.owning) {
+
+            const response = await room.getRooms(this.props.userID, this.props.owning);
+            console.log(response);
+
+            this.setState({
+                loading: false
+            });
         }
+    }
+
+    renderOwningCards() {
+
+        /*if (!this.state.loading) {
+            return .map(room => {
+            });
+        }
+
+        return null;*/
     }
 
     render() {
@@ -49,10 +47,10 @@ class Owning extends Component {
                 <div className="main-rooms-header">
                 </div>
                 <div className="row main-rooms-cont">
-                    {cards.renderRooms(
+                    {/*cards.renderRooms(
                         this.state.roomsData.filter(n => n),
                         this.props
-                    )}
+                    )*/}
                 </div>
             </div>
         )
@@ -60,12 +58,15 @@ class Owning extends Component {
 }
 
 // update current room state
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ enterRoomAction }, dispatch);
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        owning: state.dashboard.userData.rooms.owning
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Owning);
