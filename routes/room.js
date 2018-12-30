@@ -163,7 +163,7 @@ module.exports = app => {
                 // reacted, decrease
                 else {
                     await announcementRef.update({
-                        reacted: snapshot.val().reacted.splice(snapshot.val().reacted.indexOf(req.body.id), 1),
+                        reacted: snapshot.val().reacted.filter(uid => uid !== req.body.uid),
                         count: snapshot.val().count -= 1
                     });
                 }
@@ -252,7 +252,31 @@ module.exports = app => {
 
         // delete member from list
         await roomMembersRef.once('value', async snapshot => {
-            await roomMembersRef.set(snapshot.val().filter(uid => uid !== req.body.uid));
+
+            // update list and remove user
+            const updatedMembersList = snapshot.val().filter(uid => uid !== req.body.uid);
+
+            // default response
+            let status = 200;
+            let message = 'Successfully deleted member from room';
+
+            // check if delete was successfull
+            if (updatedMembersList === snapshot.val()) {
+                status = 400; // bad request
+                message = 'Something went wrong when attempting to delete member';
+            }
+
+            // if successfull, update list and return new list to client
+            else {
+                await roomMembersRef.set(updatedMembersList);
+            }
+
+            // send back response with updated invitation link
+            res.status(status).json({
+                success: status === 200 ? true : false,
+                message,
+                updatedMembersList: status === 200 ? updatedMembersList : null
+            });
         });
     });
 

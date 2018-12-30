@@ -23,7 +23,6 @@ export default class DeleteMemberModal extends Component {
     async deleteUser() {
         
         const response = await room.removeRoomMember(this.props.data.id, this.props.roomID);
-
         console.log(response);
 
     }
