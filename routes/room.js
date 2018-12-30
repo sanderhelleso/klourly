@@ -56,7 +56,8 @@ module.exports = app => {
                     roomData: roomSnapshot.val(),
                     ownerData: {
                         name: ownerSnapshot.val().displayName,
-                        photoUrl: ownerSnapshot.val().photoUrl
+                        photoUrl: ownerSnapshot.val().photoUrl,
+                        id: roomSnapshot.val().owner
                     }
                 });
             });

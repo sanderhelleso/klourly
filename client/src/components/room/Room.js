@@ -55,19 +55,20 @@ class Room extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.roomReady(nextProps);
+        console.log(nextProps);
+        if (nextProps.activeRoom !== this.props.activeRoom) {
+            this.roomReady(nextProps.activeRoom);
+        }
     }
 
     roomReady(props) {
-
-        console.log(props);
         this.setState({
             loading: false
+        }, () => {
+            document.body.style.overflowY = 'auto';
+            document.title = `${props.name} | Klourly`;
+            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
         });
-
-        document.body.style.overflowY = 'auto';
-        document.title = `${this.props.activeRoom.name} | Klourly`;
-        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
     }
 
     renderRoomHeading() {
@@ -118,6 +119,7 @@ class Room extends Component {
     }
 
     renderAdmin() {
+        console.log(this.props);
         if (this.props.activeRoom.owner.id === this.props.userID) {
             return (
                 <div 

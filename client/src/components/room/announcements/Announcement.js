@@ -10,7 +10,6 @@ import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAc
 
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
-import RoomData from '../data/RoomData';
 
 class Announcement extends Component {
     constructor(props) {
@@ -62,7 +61,7 @@ class Announcement extends Component {
     }
 
     loadRoomData() {
-        return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
+        return this.state.dataLoaded ? null : null;
     }
 
     setTitle() {
