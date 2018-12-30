@@ -26,15 +26,6 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'UNLOAD_ROOM_LOADED':
-            return {
-                ...state,
-                loaded: false,
-                activeRoom: {
-                    ...action.payload
-                }
-            }
-
         case 'OPEN_ANNOUNCEMENT':
             return {
                 ...state,

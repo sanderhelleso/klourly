@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Parallax, Background } from 'react-parallax';
-import { Settings } from 'react-feather';
-import { materializeJS } from '../../helpers/materialize';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -16,7 +14,6 @@ import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Location from './location/Location';
 import Menu from './Menu';
-import LinearLoader from '../loaders/LinearLoader';
 
 
 class Room extends Component {
@@ -24,11 +21,6 @@ class Room extends Component {
         super(props);
 
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
-    }
-
-    componentDidMount() {
-        document.body.style.overflowY = 'auto';
-        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
     }
 
     renderRoomHeading() {
@@ -80,16 +72,7 @@ class Room extends Component {
 
     renderAdmin() {
         if (this.props.activeRoom.owner.id === this.props.userID) {
-            return (
-                <div 
-                    id="room-admin-settings-btn"
-                    className="dropdown-trigger"
-                    data-target="room-menu"
-                >
-                    <Settings size={35} />
-                    <Menu id={this.props.activeRoom.id}/>
-                </div>
-            )
+            return <Menu id={this.props.activeRoom.id}/>
         }
 
         return null;

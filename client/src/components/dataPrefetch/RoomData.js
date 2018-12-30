@@ -5,17 +5,12 @@ import { room } from '../../api/room/room';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
-import { unloadRoomAction } from '../../actions/room/unloadRoomAction';
 
 import LinearLoader from '../loaders/LinearLoader';
 
 class RoomData extends Component {
     constructor(props) {
         super(props);
-    }
-
-    componentWillUnmount() {
-        this.props.unloadRoomAction();
     }
 
     async componentDidMount() {
@@ -42,7 +37,7 @@ class RoomData extends Component {
     }
 
     render() {
-        return this.props.loaded ? null : <LinearLoader loading={true} />;
+        return <LinearLoader loading={this.props.loaded} />;
     }
 }
 
@@ -55,7 +50,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ enterRoomAction, unloadRoomAction }, dispatch);
+    return bindActionCreators({ enterRoomAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomData);
