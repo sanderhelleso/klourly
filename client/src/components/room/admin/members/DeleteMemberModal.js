@@ -91,8 +91,28 @@ export default connect(null, mapDispatchToProps)(DeleteMemberModal);
 
 const StyledModal = styled.div`
     overflow-y: visible;
-    max-width: 30%;
+    width: 400px;
     padding: 1rem 2rem;
+
+    @media (max-width: 450px) {
+        width: 90%;
+    }
+
+    @media (max-width: 380px) {
+        padding: 1rem;
+    }
+
+    @media (max-height: 500px) AND (max-width: 400px) {
+        overflow-y: auto;
+
+        img {
+            top: 20px;
+        }
+
+        .modal-content h4 {
+            margin-top: 120px;
+        }
+    }
 `;
 
 const StyledModalContent = styled.div`
