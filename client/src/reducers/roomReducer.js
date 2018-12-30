@@ -3,6 +3,19 @@ const initialState = activeRoom ? { activeRoom } : {};
 
 const roomReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case 'SET_ROOMS_OWNING':
+            return {
+                ...state,
+                owningPreview: action.payload
+            }
+
+        case 'SET_ROOMS_ATTENDING':
+            return {
+                ...state,
+                attendingPreview: action.payload
+            }
+
         case 'ENTER_ROOM_SUCCESS':
             return {
                 ...state,

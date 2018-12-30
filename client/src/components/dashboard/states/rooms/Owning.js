@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { cards } from '../../../../helpers/cards';
+import { room } from '../../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
-import { room } from '../../../../api/room/room';
+import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAction';
+
+import RoomPreview from './RoomPreview';
 
 class Owning extends Component {
     constructor(props) {
@@ -14,58 +16,63 @@ class Owning extends Component {
         this.state = {
             loading: true
         }
+
+        this.renderOwningPreview = this.renderOwningPreview.bind(this);
     }
 
     async componentDidMount() {
 
-        // check that room state is present for user, 
-        // if present fetch users room and render room cards
-        if (this.props.owning) {
+        // check if user has rooms to be previewed
+        // if initial load is set, continue and immediatly display preview
+        if (this.props.owningList && !this.props.owningPreview) {
 
-            const response = await room.getRooms(this.props.userID, this.props.owning);
-            console.log(response);
+            const response = await room.getRooms(this.props.userID, this.props.owningList);
 
-            this.setState({
-                loading: false
-            });
+            // if success set room preview state
+            if (response.data.success) {
+                this.props.setRoomsOwningAction(response.data.roomsData);
+            }
         }
+
+        // finish loading
+        this.setState({
+            loading: false
+        });
     }
 
-    renderOwningCards() {
+    renderOwningPreview() {
 
-        /*if (!this.state.loading) {
-            return .map(room => {
+        // render preview card for each room
+        if (!this.state.loading && this.props.owningPreview) {
+            return this.props.owningPreview.map(room => {
+                return <RoomPreview key={room.id} data={room} />
             });
         }
 
-        return null;*/
+        return null;
     }
 
     render() {
         return (
             <div>
-                <div className="main-rooms-header">
-                </div>
                 <div className="row main-rooms-cont">
-                    {/*cards.renderRooms(
-                        this.state.roomsData.filter(n => n),
-                        this.props
-                    )*/}
+                   {this.renderOwningPreview()}
                 </div>
             </div>
         )
     }
 }
 
-// update current room state
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
+    return bindActionCreators({ enterRoomAction, setRoomsOwningAction }, dispatch);
 }
 
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        owning: state.dashboard.userData.rooms.owning
+        owningList: state.dashboard.userData.rooms.owning,
+        owningPreview: state.room.owningPreview,
+        loadedPreview: state.room.loadedPreview
     };
 };
 
