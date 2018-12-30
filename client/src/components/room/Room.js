@@ -2,39 +2,55 @@ import React, { Component } from 'react';
 import { Parallax, Background } from 'react-parallax';
 import { Settings } from 'react-feather';
 import { materializeJS } from '../../helpers/materialize';
+import { room } from '../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import BackToDash from '../dashboard/BackToDash';
-import { redirect } from '../../helpers/redirect';
+import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import './styles/room.css';
+
+import BackToDash from '../dashboard/BackToDash';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Location from './location/Location';
 import Menu from './Menu';
-import RoomData from './data/RoomData';
+import LinearLoader from '../loaders/LinearLoader';
+
 
 class Room extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            dataLoaded: false
+            loading: true
         }
    
-        this.joinRoom = this.joinRoom.bind(this);
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
         // if room state is not set or not matching, refetch room data
-        if (this.props.state.room.activeRoom && this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
+        if (this.props.activeRoom && this.props.activeRoom.id === this.props.match.params.roomID) {
             this.roomReady(this.props);
+        }
+
+        // if not attempt to refetch data
+        else {
+
+            // attempt to fetch new data
+            const response = await room.getRoom(this.props.userID, this.props.match.params.roomID);
+
+            // if success update state and render
+            if (response.data.success) {
+                this.props.enterRoomAction({
+                    ...response.data.roomData,
+                    owner: response.data.ownerData
+                });
+            }
         }
     }
 
@@ -43,26 +59,23 @@ class Room extends Component {
     }
 
     roomReady(props) {
-        this.setState({
-            room: props.state.room.activeRoom,
-            dataLoaded: true
-        }, () => {
-            document.body.style.overflowY = 'auto';
-            document.title = `${this.state.room.name} | Klourly`; 
-            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
-        });
-    }
 
-    joinRoom() {
-        redirect.joinRoom(this.state.room.invite.url);
+        console.log(props);
+        this.setState({
+            loading: false
+        });
+
+        document.body.style.overflowY = 'auto';
+        document.title = `${this.props.activeRoom.name} | Klourly`;
+        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
     }
 
     renderRoomHeading() {
         return (
             <div id="room-cover-header" className="">
-                <h5>{this.state.room.location.name}</h5>
-                <h1>{this.state.room.name}</h1>
-                <p>By {this.state.room.owner.name}</p>
+                <h5>{this.props.activeRoom.location.name}</h5>
+                <h1>{this.props.activeRoom.name}</h1>
+                <p>By {this.props.activeRoom.owner.name}</p>
             </div>
         )
     }
@@ -73,8 +86,8 @@ class Room extends Component {
                 {this.renderAdmin()}
                 <Parallax
                     blur={{ min: -15, max: 15 }}
-                    bgImage={`${this.state.room.cover}`}
-                    bgImageAlt={`${this.state.room.name} cover image`} 
+                    bgImage={`${this.props.activeRoom.cover}`}
+                    bgImageAlt={`${this.props.activeRoom.name} cover image`} 
                     strength={200}
                     renderLayer={percentage => (
                         <div
@@ -95,15 +108,17 @@ class Room extends Component {
                 </Parallax>
                 {this.renderRoomHeading()}
                 <div id="room-owner-avatar">
-                    <img className="animated fadeIn z-depth-3" src={this.state.room.owner.photoUrl} />
+                    <img 
+                        className="animated fadeIn z-depth-3" 
+                        src={this.props.activeRoom.owner.photoUrl} 
+                    />
                 </div>
             </div>
         )
     }
 
     renderAdmin() {
-        console.log(this.state);
-        if (this.state.room.owner.id === this.props.state.auth.user.id) {
+        if (this.props.activeRoom.owner.id === this.props.userID) {
             return (
                 <div 
                     id="room-admin-settings-btn"
@@ -111,7 +126,7 @@ class Room extends Component {
                     data-target="room-menu"
                 >
                     <Settings size={35} />
-                    <Menu id={this.state.room.id}/>
+                    <Menu id={this.props.activeRoom.id}/>
                 </div>
             )
         }
@@ -120,13 +135,13 @@ class Room extends Component {
     }
 
     renderRoom() {
-        if (this.state.dataLoaded) {
+        if (!this.state.loading) {
             return(
                 <div id="room-cont" className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
                         <div id="room-main" className="col l8 m6 s12">
-                            <Announcements announcements={this.state.room.announcements}/>
+                            <Announcements announcements={this.props.activeRoom.announcements}/>
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
                             <div className="col s12 room-aside-section">
@@ -144,11 +159,7 @@ class Room extends Component {
             )
         }
 
-        return this.loadData();
-    }
-
-    loadData() {
-        return this.state.dataLoaded ? null : <RoomData roomID={this.props.match.params.roomID} />;
+        return <LinearLoader loading={this.state.loading} />
     }
 
     render() {
@@ -161,13 +172,15 @@ class Room extends Component {
     }
 }
 
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+const mapStateToProps = state => {
+    return { 
+        activeRoom: state.room.activeRoom,
+        userID: state.auth.user.id
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ enterRoomAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-
-// redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
-
 import RoomCard from './RoomCard';
 
-class RoomPreview extends Component {
+export default class RoomPreview extends Component {
     constructor(props) {
         super(props);
 
@@ -38,9 +32,3 @@ class RoomPreview extends Component {
         )
     }
 }
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(RoomPreview);
