@@ -60,6 +60,16 @@ module.exports = app => {
                     await roomRef.update({
                         members: [...snapshot.val().members, req.body.uid]
                     });
+
+                    // add room to user
+                    const userAttendingRoomsRef = db.ref(`users/${req.body.uid}/rooms/attending`);
+                    await userAttendingRoomsRef.once('value', roomSnapshot => {
+                        userAttendingRoomsRef.set(
+                            roomSnapshot.val() 
+                            ? [...roomSnapshot.val(), req.body.roomID]
+                            : [req.body.roomID]
+                        );
+                    });
                 }
 
                 // if not, set required data
@@ -77,7 +87,6 @@ module.exports = app => {
         });
 
         // fetch owner data
-        console.log(req.body);
         if (status === 200 && !req.body.cb) {
 
             // get ref to owner by id recieved from room data and fetch owner data 

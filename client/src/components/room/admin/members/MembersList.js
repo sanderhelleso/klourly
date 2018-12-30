@@ -28,22 +28,27 @@ class MembersList extends Component {
     }
 
     async componentDidMount() {
-        
-        // attempt to fetch rooms members
-        const response = await room.getRoomMembers(
-            this.props.user.id, 
-            this.props.roomID, 
-            this.props.membersList
-        );
 
-        this.setState({
-            loading: false,
-            membersList: response.data.membersList 
-                         ? response.data.membersList.sort(
-                         (a, b) => `${a.name}`
-                         .localeCompare(`${b.name}`)) 
-                         : [] // sort list (A - Z)
-        });
+        // check if member list is empty
+        console.log(this.props.membersList);
+        if (this.props.membersList) {
+
+            // attempt to fetch rooms members
+            const response = await room.getRoomMembers(
+                this.props.user.id, 
+                this.props.roomID, 
+                this.props.membersList
+            );
+
+            this.setState({
+                loading: false,
+                membersList: response.data.membersList 
+                            ? response.data.membersList.sort(
+                            (a, b) => `${a.name}`
+                            .localeCompare(`${b.name}`)) 
+                            : [] // sort list (A - Z)
+            });
+        }
     }
 
     renderMembers() {

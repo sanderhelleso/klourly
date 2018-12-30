@@ -29,7 +29,6 @@ class RoomMembers extends Component {
 
         // check for new data
         if (this.props.confirmDeleteMember !== nextProps.confirmDeleteMember) {
-            console.log('NEW, TRIGGER HERE');
             this.setState({
                 confirmDelete: {
                     openModal: true,
