@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
-export default class componentName extends Component {
+export default class LinearLoader extends Component {
     constructor(props) {
         super(props);
     }
-    
+
     renderLineadLoader() {
         return (
-            <div className="linear-loader-cont animated fadeIn">
+            <div className={this.props.loading
+                ? 'linear-loader-cont animated fadeIn'
+                : 'linear-loader-cont animated fadeOut'
+            }>
                 <div className="progress">
                     <div className="indeterminate"></div>
                 </div>
@@ -16,6 +19,6 @@ export default class componentName extends Component {
     }
 
     render() {
-        return this.props.loading ? this.renderLineadLoader() : null;
+        return this.renderLineadLoader();
     }
 }
