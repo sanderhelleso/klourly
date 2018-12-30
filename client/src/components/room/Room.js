@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Parallax, Background } from 'react-parallax';
 import { Settings } from 'react-feather';
 import { materializeJS } from '../../helpers/materialize';
-import { room } from '../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
