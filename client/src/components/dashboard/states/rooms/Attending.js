@@ -1,119 +1,80 @@
 import React, { Component } from 'react';
-import { cards } from '../../../../helpers/cards';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
+import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
 
-const mockData = 
-[
-    {   id: 'RPw9BpldH',
-        name: 'CST-238 CSUMB',
-        location: 'BIT Building Room 203',
-        cover: 'https://tinyurl.com/yb977afw',
-        times: [
-            {
-                day: 'monday',
-                timeStart: '10.00',
-                timeEnd: '12.00'
-            },
-            {
-                day: 'wedensday',
-                timeStart: '14.00',
-                timeEnd: '16.00'
-            },
-            {
-                day: 'friday',
-                timeStart: '08.00',
-                timeEnd: '10.00'
-            }
-        ]
-    },
-    {   id: 2,
-        name: 'CST-328 CSUMB',
-        location: 'BIT Building Room 213',
-        cover: 'https://tinyurl.com/y9oetw5a',
-        times: [
-            {
-                day: 'wedensday',
-                timeStart: '08.00',
-                timeEnd: '10.00'
-            },
-            {
-                day: 'friday',
-                timeStart: '17.00',
-                timeEnd: '19.00'
-            }
-        ]
-    },
-    {   id: 3,
-        name: 'CST-370 CSUMB',
-        location: 'BIT Building Room 203',
-        cover: 'https://tinyurl.com/yb977afw',
-        times: [
-            {
-                day: 'monday',
-                timeStart: '10.00',
-                timeEnd: '12.00'
-            },
-            {
-                day: 'wedensday',
-                timeStart: '14.00',
-                timeEnd: '16.00'
-            },
-            {
-                day: 'friday',
-                timeStart: '08.00',
-                timeEnd: '10.00'
-            }
-        ]
-    },
-    {   id: 4,
-        name: 'CST-334 CSUMB',
-        location: 'BIT Building Room 213',
-        cover: 'https://tinyurl.com/y9oetw5a',
-        times: [
-            {
-                day: 'wedensday',
-                timeStart: '08.00',
-                timeEnd: '10.00'
-            },
-            {
-                day: 'friday',
-                timeStart: '17.00',
-                timeEnd: '19.00'
-            }
-        ]
-    }
-]
+import RoomPreview from './RoomPreview';
 
 class Attending extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loading: true
+        }
+
+        this.renderAttendingPreview = this.renderAttendingPreview.bind(this);
+
+        console.log(this.proos);
+    }
+
+    async componentDidMount() {
+
+        // check if user has rooms to be previewed
+        // if initial load is set, continue and immediatly display preview
+        /*if (this.props.attendingList && !this.props.attendingPreview) {
+
+            const response = await room.getRooms(this.props.userID, this.props.attendingList);
+
+            // if success set room preview state
+            if (response.data.success) {
+                this.props.setRoomsAttendingAction(response.data.roomsData);
+            }
+        }
+
+        // finish loading
+        this.setState({
+            loading: false
+        });*/
+    }
+
+    renderAttendingPreview() {
+
+        // render preview card for each room
+        if (!this.state.loading && this.props.attendingPreview) {
+            return this.props.attendingPreview
+                   .sort((a, b) => a.name.localeCompare(b.name))
+                   .map(room => {
+                        return <RoomPreview key={room.id} data={room} />
+                    });
+        }
+
+        return null;
     }
 
     render() {
-        //{cards.renderRooms(mockData, this.props)}
         return (
             <div>
-                <div className="main-rooms-header">
-                </div>
                 <div className="row main-rooms-cont">
+                   {this.renderAttendingPreview()}
                 </div>
             </div>
         )
     }
 }
 
-// update current room state
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ enterRoomAction, setRoomsAttendingAction }, dispatch);
 }
 
-const mapStateToProps = (state) => {
-    return {
-        state: state.state
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        attendingList: state.dashboard.userData.rooms.attending,
+        attendingPreview: state.room.attendingPreview
     };
 };
 

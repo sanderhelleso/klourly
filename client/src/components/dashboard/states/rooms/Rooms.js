@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { room } from '../../../../api/room/room';
 
 // import child components
 import Owning from './Owning';
@@ -10,6 +11,8 @@ import { redirect } from '../../../../helpers/redirect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
+import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAction';
+import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
 
 import '../rooms/styles/rooms.css';
 
@@ -17,16 +20,42 @@ class Rooms extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            loading: true
+        }
+
         this.initNewRoomCreation = this.initNewRoomCreation.bind(this);
+    }
+
+    async componentDidMount() {
+
+        /**
+         *  if initial load is set, continue and immediatly display previews
+         */
+
+        // check if user has owning rooms to be previewed
+        if (this.props.owningList && !this.props.owningPreview) {
+
+            const response = await room.getRooms(this.props.userID, this.props.owningList);
+
+            // if success set room preview state
+            if (response.data.success) {
+                this.props.setRoomsOwningAction(response.data.roomsData);
+            }
+        }
+
+        // finish loading
+        this.setState({
+            loading: false
+        });
+
+        // initialize tabs
+        materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
+
     }
 
     componentWillMount() {
         document.title = "Rooms - Klouly";
-    }
-
-    // initialize tabs
-    componentDidMount() {
-        materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
     }
 
     initNewRoomCreation() {
@@ -51,23 +80,28 @@ class Rooms extends Component {
                     </ul>
                 </div>
                 <div id="owning" className="col s12">
-                    <Owning />
+                    <Owning owningPreview={this.props.owningPreview} />
                 </div>
                 <div id="attending" className="col s12">
-                    <Attending />
                 </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        owningList: state.dashboard.userData.rooms.owning,
+        owningPreview: state.room.owningPreview,
+        attendingList: state.dashboard.userData.rooms.attending,
+        attendingPreview: state.room.attendingPreview
+    };
 };
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ nextStageAction }, dispatch);
+    return bindActionCreators({ nextStageAction, setRoomsOwningAction, setRoomsAttendingAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
