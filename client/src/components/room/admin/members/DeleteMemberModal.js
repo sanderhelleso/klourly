@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AlertOctagon } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
 
@@ -25,12 +26,17 @@ export default class DeleteMemberModal extends Component {
                         alt={`${this.props.data.name}'s avatar`} 
                     />
                     <h4>Confirm Remove Member</h4>
+                    <AlertOctagon size={30} />
                     <p>{`Are you sure you want to remove ${this.props.data.name} 
                         from this room? Removal will delete all records and statistics
                         available for the user. This action is not reversable and 
                         ${this.props.data.name} will need a new invitation to join the room again`}
                     </p>
                 </StyledModalContent>
+                <ModalFooter>
+                    <CancelButton className="modal-close waves-effect waves-purple btn-flat">Cancel</CancelButton>
+                    <ConfirmButton className="modal-close waves-effect waves-red btn-flat">Confirm</ConfirmButton>
+                </ModalFooter>
             </StyledModal>
         )
     }
@@ -39,7 +45,7 @@ export default class DeleteMemberModal extends Component {
 const StyledModal = styled.div`
     overflow-y: visible;
     max-width: 30%;
-    padding: 2rem;
+    padding: 1rem 2rem;
 `;
 
 const StyledModalContent = styled.div`
@@ -55,11 +61,17 @@ const StyledModalContent = styled.div`
         color: #9e9e9e;
         font-size: 0.9rem;
     }
+
+    svg {
+        stroke: #ff5252;
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+    }
 `;
 
 const MemberImage = styled.img`
     position: absolute;
-    top: -80px;
+    top: -70px;
     left: 50%;
     transform: translate(-50%);
     border-radius: 50%;
@@ -68,4 +80,35 @@ const MemberImage = styled.img`
     min-width: 100px;
     max-height: 100px;
     max-width: 100px;
+`;
+
+const ModalFooter = styled.div`
+    padding-top: 1rem;
+    border-top: 1px solid #eeeeee;
+    text-align: center;
+    margin: 0 auto;
+
+    button {
+        margin: 1rem;
+        min-width: 125px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 30px;
+    }
+`;
+
+const CancelButton = styled.button`
+    border: 1.5px solid #bdbdbd;
+    cursor: pointer;
+    color: #bdbdbd;
+    border-radius: 4px;
+    background-color: transparent;
+`;
+
+const ConfirmButton = styled.button`
+    border: 1.5px solid #ff5252;
+    cursor: pointer;
+    color: #ff5252;
+    border-radius: 4px;
+    background-color: transparent;
 `;
