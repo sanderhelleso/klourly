@@ -19,38 +19,32 @@ class RoomData extends Component {
         console.log(props);
     }
 
-    /*async componentDidMount() {
+    async componentDidMount() {
 
-        // room id fetched from query
-        const roomID = this.props.roomID;
-
-        // attempt to fetch new data
-        const response = await room.getRoom(this.props.state.auth.user.id, roomID);
-        if (response.data.success) {
-            
-            // create room state obj
-            const roomData = {
-                ...response.data.roomData,
-                owner: {
-                    ...response.data.ownerData,
-                    id: response.data.roomData.owner
-                }
-            }
-            
-            // set room in localstorage and update global state
-            localStorage.setItem('activeRoom', JSON.stringify(roomData));
-            this.props.enterRoomAction(roomData);
-            this.setState({
-                loading: false,
-            });
+        // if room state is matching dispatch action and set active room data
+        if (this.props.activeRoom && this.props.activeRoom.id === this.props.match.params.roomID) {
+            this.props.enterRoomAction(this.props.activeRoom);
         }
 
+        // if room state is not set or not matching, refetch room data
         else {
-            this.setState({
-                loading: false
-            });
+
+            // attempt to fetch room data
+            const response = await room.getRoom(this.props.userID, this.props.match.params.roomID);
+
+            // if success update state and render
+            if (response.data.success) {
+                this.props.enterRoomAction({
+                    ...response.data.roomData,
+                    owner: response.data.ownerData
+                });
+            }
         }
-    }*/
+
+        this.setState({
+            loading: false
+        });
+    }
 
     renderLoader() {
         if (this.state.loading) {
@@ -67,6 +61,7 @@ class RoomData extends Component {
 
 const mapStateToProps = state => {
     return { 
+        userID: state.auth.user.id,
         activeRoom: state.room.activeRoom
     }
 }

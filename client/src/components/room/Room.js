@@ -31,34 +31,9 @@ class Room extends Component {
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
     }
 
-    async componentDidMount() {
-
-        // if room state is not set or not matching, refetch room data
-        if (this.props.activeRoom && this.props.activeRoom.id === this.props.match.params.roomID) {
-            this.roomReady(this.props);
-        }
-
-        // if not attempt to refetch data
-        else {
-
-            // attempt to fetch new data
-            const response = await room.getRoom(this.props.userID, this.props.match.params.roomID);
-
-            // if success update state and render
-            if (response.data.success) {
-                this.props.enterRoomAction({
-                    ...response.data.roomData,
-                    owner: response.data.ownerData
-                });
-            }
-        }
-    }
-
+    // display room once active room stte has been set
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        if (nextProps.activeRoom !== this.props.activeRoom) {
-            this.roomReady(nextProps.activeRoom);
-        }
+        this.roomReady(nextProps.activeRoom);
     }
 
     roomReady(props) {
