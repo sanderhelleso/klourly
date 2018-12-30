@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { AlertOctagon } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
+import { room } from '../../../../api/room/room';
 
 export default class DeleteMemberModal extends Component {
     constructor(props) {
         super(props);
+
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
@@ -15,6 +18,14 @@ export default class DeleteMemberModal extends Component {
         materializeJS.M.Modal.init(modal, {
             endingTop: '25%'
         });
+    }
+
+    async deleteUser() {
+        
+        const response = await room.removeRoomMember(this.props.data.id, this.props.roomID);
+
+        console.log(response);
+
     }
 
     render() {
@@ -35,7 +46,12 @@ export default class DeleteMemberModal extends Component {
                 </StyledModalContent>
                 <ModalFooter>
                     <CancelButton className="modal-close waves-effect waves-purple btn-flat">Cancel</CancelButton>
-                    <ConfirmButton className="modal-close waves-effect waves-red btn-flat">Confirm</ConfirmButton>
+                    <ConfirmButton 
+                        className="waves-effect waves-red btn-flat"
+                        onClick={this.deleteUser}
+                    >
+                        Confirm
+                    </ConfirmButton>
                 </ModalFooter>
             </StyledModal>
         )

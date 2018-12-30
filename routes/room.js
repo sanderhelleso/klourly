@@ -163,7 +163,7 @@ module.exports = app => {
                 // reacted, decrease
                 else {
                     await announcementRef.update({
-                        reacted: snapshot.val().reacted.slice(1, snapshot.val().reacted.indexOf(req.body.id)),
+                        reacted: snapshot.val().reacted.splice(snapshot.val().reacted.indexOf(req.body.id), 1),
                         count: snapshot.val().count -= 1
                     });
                 }
@@ -221,6 +221,7 @@ module.exports = app => {
                 // retieve releated user data
                 await userRef.once('value', snapshot => {
                     membersList.push({
+                        id: member,
                         name: snapshot.val().settings.displayName,
                         photoUrl: snapshot.val().settings.photoUrl,
                         occupation: snapshot.val().settings.occupation,
@@ -242,6 +243,19 @@ module.exports = app => {
             }
         });
     });
+
+    // remove a specific member from a room
+    app.post('/api/removeRoomMember', authenticate, async (req, res) => {
+
+        // get ref to rooms members by id
+        const roomMembersRef = db.ref(`rooms/${req.body.roomID}/members`);
+
+        // delete member from list
+        await roomMembersRef.once('value', async snapshot => {
+            await roomMembersRef.set(snapshot.val().filter(uid => uid !== req.body.uid));
+        });
+    });
+
 }
 
 

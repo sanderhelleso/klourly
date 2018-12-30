@@ -51,6 +51,9 @@
     "/api/getRoomMembers": {
       "target": "http://localhost:5000"
     },
+    "/api/removeRoomMember": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }

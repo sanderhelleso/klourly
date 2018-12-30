@@ -60,7 +60,12 @@ class RoomMembers extends Component {
     }
 
     renderConfirmDeleteModal() {
-        return <DeleteMemberModal data={this.state.confirmDelete.data} />
+        return (
+            <DeleteMemberModal 
+                roomID={this.props.roomID} 
+                data={this.state.confirmDelete.data} 
+            />
+        );
     }
 
     render() {

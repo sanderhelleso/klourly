@@ -15,8 +15,6 @@ class MembersList extends Component {
         this.state = {
             loading: true
         }
-
-        console.log(this.props);
     }
 
     async componentDidMount() {
@@ -41,7 +39,7 @@ class MembersList extends Component {
     renderMembers() {
         if (!this.state.loading) {
             return this.state.membersList.map(member => {
-                return <Member key={member.email} data={member} />
+                return <Member key={member.id} data={member} />
             });
         }
 

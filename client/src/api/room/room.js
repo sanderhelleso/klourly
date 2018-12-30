@@ -8,7 +8,8 @@ export const room = {
     publishAnnouncement,
     updateAnnouncementReaction,
     updateRoomInvite,
-    getRoomMembers
+    getRoomMembers,
+    removeRoomMember
 }
 
 // create new room
@@ -152,6 +153,28 @@ async function getRoomMembers(uid, roomID, membersList) {
                 uid,
                 roomID,
                 membersList
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+}
+
+// remove a specific member from a room
+async function removeRoomMember(uid, roomID) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/removeRoomMember',
+            data: {
+                uid,
+                roomID
             }
         });
 
