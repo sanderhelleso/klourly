@@ -1,5 +1,6 @@
-let activeRoom = JSON.parse(localStorage.getItem('activeRoom'));
-const initialState = activeRoom ? { activeRoom } : {};
+const initialState = {
+    loaded: false
+}
 
 const roomReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -19,7 +20,19 @@ const roomReducer = (state = initialState, action) => {
         case 'ENTER_ROOM_SUCCESS':
             return {
                 ...state,
-                activeRoom: action.payload
+                loaded: true,
+                activeRoom: {
+                    ...action.payload
+                }
+            }
+
+        case 'UNLOAD_ROOM_LOADED':
+            return {
+                ...state,
+                loaded: false,
+                activeRoom: {
+                    ...action.payload
+                }
             }
 
         case 'OPEN_ANNOUNCEMENT':

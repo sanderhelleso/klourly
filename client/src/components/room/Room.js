@@ -23,26 +23,12 @@ class Room extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            loading: true
-        }
-   
         this.renderRoomHeading = this.renderRoomHeading.bind(this);
     }
 
-    // display room once active room stte has been set
-    componentWillReceiveProps(nextProps) {
-        this.roomReady(nextProps.activeRoom);
-    }
-
-    roomReady(props) {
-        this.setState({
-            loading: false
-        }, () => {
-            document.body.style.overflowY = 'auto';
-            document.title = `${props.name} | Klourly`;
-            materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
-        });
+    componentDidMount() {
+        document.body.style.overflowY = 'auto';
+        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
     }
 
     renderRoomHeading() {
@@ -93,7 +79,6 @@ class Room extends Component {
     }
 
     renderAdmin() {
-        console.log(this.props);
         if (this.props.activeRoom.owner.id === this.props.userID) {
             return (
                 <div 
@@ -111,8 +96,9 @@ class Room extends Component {
     }
 
     renderRoom() {
-        if (!this.state.loading) {
-            return(
+
+        if (this.props.activeRoom.id === this.props.match.params.roomID) {
+            return (
                 <div id="room-cont" className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
@@ -135,7 +121,7 @@ class Room extends Component {
             )
         }
 
-        return <LinearLoader loading={this.state.loading} />
+        return null;
     }
 
     render() {
@@ -151,6 +137,7 @@ class Room extends Component {
 const mapStateToProps = state => {
     return { 
         activeRoom: state.room.activeRoom,
+        loaded: state.room.loaded,
         userID: state.auth.user.id
     }
 }

@@ -5,18 +5,17 @@ import { room } from '../../api/room/room';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
+import { unloadRoomAction } from '../../actions/room/unloadRoomAction';
 
 import LinearLoader from '../loaders/LinearLoader';
 
 class RoomData extends Component {
     constructor(props) {
         super(props);
+    }
 
-        this.state = {
-            loading: true
-        }
-
-        console.log(props);
+    componentWillUnmount() {
+        this.props.unloadRoomAction();
     }
 
     async componentDidMount() {
@@ -40,34 +39,23 @@ class RoomData extends Component {
                 });
             }
         }
-
-        this.setState({
-            loading: false
-        });
-    }
-
-    renderLoader() {
-        if (this.state.loading) {
-            return <LinearLoader loading={true} />;
-        }
-
-        return <LinearLoader loading={false} />;
     }
 
     render() {
-        return this.renderLoader();
+        return this.props.loaded ? null : <LinearLoader loading={true} />;
     }
 }
 
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
+        loaded: state.room.loaded,
         activeRoom: state.room.activeRoom
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
+    return bindActionCreators({ enterRoomAction, unloadRoomAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomData);

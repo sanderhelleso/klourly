@@ -31,25 +31,11 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            activeRoomLoaded: false
-        }
-
         this.landingRoute = this.landingRoute.bind(this);
         this.loginRoute = this.loginRoute.bind(this);
         this.signupRoute = this.signupRoute.bind(this);
         this.dashboardRoute = this.dashboardRoute.bind(this);
         this.roomRoute = this.roomRoute.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        // update active room access
-        if (this.props.room.activeRoom !== nextProps.room.activeRoom) {
-            this.setState({
-                activeRoomLoaded: true
-            });
-        }
     }
 
     // authenticate user
@@ -72,7 +58,6 @@ class App extends Component {
 
     // route for handling authentication on auth required routes
     loginRoute() {
-        console.log('TRIGGERED');
         return this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
     }
 
@@ -98,7 +83,6 @@ class App extends Component {
 
     renderRoomRoutes() {
         if (this.props.room.activeRoom) {
-            console.log('OK');
             return (
                 <div>
                     <Route exact path="/dashboard/rooms/:roomID" component={Room} />
