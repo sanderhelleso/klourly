@@ -17,6 +17,7 @@ import { authentication } from '../../api/authentication/authentication';
 class DashboardSettings extends Component {
     constructor(props) {
         super(props);
+
         this.setState = {
             userData: this.props.state.dashboard.userData
         }
@@ -68,7 +69,6 @@ const mapStateToProps = (state) => {
     return { state };
 };
 
-// attempt to update state if login succesfull
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ userDataActions, logoutActions }, dispatch);
 }

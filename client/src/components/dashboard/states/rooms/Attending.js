@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
 import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
 
-import RoomPreview from './RoomPreview';
+import RoomPreview from './RoomCard';
 
 class Attending extends Component {
     constructor(props) {

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { room } from '../../../../api/room/room';
 
-// import child components
-import Owning from './Owning';
-import Attending from './Attending';
 import { materializeJS } from '../../../../helpers/materialize';
 import { redirect } from '../../../../helpers/redirect';
 
@@ -15,6 +12,8 @@ import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAct
 import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
 
 import '../rooms/styles/rooms.css';
+
+import RoomPreview from './RoomPreview';
 
 class Rooms extends Component {
     constructor(props) {
@@ -41,6 +40,17 @@ class Rooms extends Component {
             // if success set room preview state
             if (response.data.success) {
                 this.props.setRoomsOwningAction(response.data.roomsData);
+            }
+        }
+
+        // check if user has attending rooms to be previewed
+        if (this.props.attendingList && !this.props.attendingPreview) {
+
+            const response = await room.getRooms(this.props.userID, this.props.attendingList);
+
+            // if success set room preview state
+            if (response.data.success) {
+                this.props.setRoomsAttendingAction(response.data.roomsData);
             }
         }
 
@@ -80,9 +90,10 @@ class Rooms extends Component {
                     </ul>
                 </div>
                 <div id="owning" className="col s12">
-                    <Owning owningPreview={this.props.owningPreview} />
+                    <RoomPreview data={this.props.owningPreview} />
                 </div>
                 <div id="attending" className="col s12">
+                    <RoomPreview data={this.props.attendingPreview} />
                 </div>
             </div>
         )

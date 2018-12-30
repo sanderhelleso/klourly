@@ -1,41 +1,46 @@
 import React, { Component } from 'react';
-import { redirect } from '../../../../helpers/redirect';
-import { ArrowRight, Loader,  Lock, Unlock } from 'react-feather';
 
-export default class RoomPreview extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { enterRoomAction } from '../../../../actions/room/enterRoomAction';
+
+import RoomCard from './RoomCard';
+
+class RoomPreview extends Component {
     constructor(props) {
         super(props);
+
+        this.renderPreview = this.renderPreview.bind(this);
+    }
+
+    renderPreview() {
+
+        // render preview card for each room
+        if (this.props.data) {
+            return this.props.data
+                   .sort((a, b) => a.name.localeCompare(b.name))
+                   .map(room => {
+                        return <RoomCard key={room.id} data={room} />
+                    });
+        }
+
+        return null;
     }
 
     render() {
         return (
-            <div className="col s12 m12 l6 animated fadeIn">
-                <div className="card small">
-                    <div className="card-image">
-                        <div className="card-image-overlay">
-                            <img src={this.props.data.cover} />
-                        </div>
-                        <span className="room-card-type">
-                        </span>
-                        <span className="card-title room-card-name">
-                            <span className="room-card-location">
-                            {this.props.data.location.name}
-                            </span>
-                            <br />
-                            {this.props.data.name}
-                        </span>
-                    </div>
-                    <div className="card-fab">
-                        <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn"
-                        onClick={() => redirect.room(this.props.data.id)}
-                        >
-                            <ArrowRight />
-                        </a>
-                    </div>
-                    <div className="card-content room-card-content">
-                    </div>
+            <div>
+                <div className="row main-rooms-cont">
+                   {this.renderPreview()}
                 </div>
             </div>
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ enterRoomAction }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(RoomPreview);
