@@ -18,12 +18,14 @@ export default class RoomCard extends Component {
             
             // fetch potensial available to time
             const availableTo = roomAvailableForCheckin(this.props.data.times);
+            console.log(availableTo);
 
             // if available update state, and start countdown
             if (availableTo) {
                 this.setState({ 
                     available: true,
                     availableTo,
+                    now: new Date().getTime(),
                     interval: this.updateAvailableMode()
                 });
             }
@@ -39,11 +41,14 @@ export default class RoomCard extends Component {
     renderCheckIn() {
 
         // only render check in button if not owner
-        if (this.state.available) {
+        if (this.state.available && this.state.available !== 'not set') {
 
             // check if room is currently available for checkin 
             return (
-                <CheckinRoomButton className="waves-effect waves-light btn-flat animated bounceIn">
+                <CheckinRoomButton 
+                    className={`waves-effect waves-light btn-flat animated 
+                    ${this.state.available === 'not set' ? 'bounceOut' : 'bounceIn'}`}
+                >
                     <CheckCircle />
                 </CheckinRoomButton>
             );
@@ -52,19 +57,34 @@ export default class RoomCard extends Component {
         return null;
     }
 
+    removeCheckIn() {
+
+        // remove button after 1 sec to preserve animation
+        setTimeout(() => {
+            this.setState(this.setInitialState());
+        }, 1000);
+    }
+
     updateAvailableMode() {
 
         // start interval that countup until current time is past to time of room
+        let tick = 1000; // 1 sec
         return setInterval(() => {
+
+                // update current time
                 this.setState({ 
-                    now: new Date().getTime() 
+                    now: this.state.now += tick
                 }, () => {
+
+                    // after each tick check if time has elapsed
                     if (this.state.now > this.state.availableTo) {
-                        clearInterval(this.state.interval._id);
-                        this.setState(this.setInitialState());
+
+                        clearInterval(this.state.interval._id); // clear interval
+                        this.setState({ available: 'not set'}); // animate button out
+                        this.removeCheckIn();                   // remove button
                     }
                 });
-            }, 1000);
+            }, tick);
     }
 
     setInitialState() {
