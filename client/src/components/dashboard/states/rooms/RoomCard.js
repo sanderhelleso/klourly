@@ -7,24 +7,70 @@ import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForChe
 export default class RoomCard extends Component {
     constructor(props) {
         super(props);
+
+        this.state = this.setInitialState();
+    }
+
+    componentDidMount() {
+
+        // set mode depending if time is available or not
+        if (!this.props.owning) {
+            
+            // fetch potensial available to time
+            const availableTo = roomAvailableForCheckin(this.props.data.times);
+
+            // if available update state, and start countdown
+            if (availableTo) {
+                this.setState({ 
+                    available: true,
+                    availableTo,
+                    interval: this.updateAvailableMode()
+                });
+            }
+        }
+    }
+
+    componentWillUnmount() {
+
+        // clear interval on unmount if present
+        this.state.interval ? clearInterval(this.state.interval._id) : null;
     }
 
     renderCheckIn() {
 
         // only render check in button if not owner
-        if (!this.props.owning) {
-
-            roomAvailableForCheckin(this.props.data.times);
+        if (this.state.available) {
 
             // check if room is currently available for checkin 
             return (
-                <CheckinRoomButton className="waves-effect waves-light btn-flat animated fadeIn">
+                <CheckinRoomButton className="waves-effect waves-light btn-flat animated bounceIn">
                     <CheckCircle />
                 </CheckinRoomButton>
             );
         }
         
         return null;
+    }
+
+    updateAvailableMode() {
+
+        // start interval that countup until current time is past to time of room
+        return setInterval(() => {
+                this.setState({ 
+                    now: new Date().getTime() 
+                }, () => {
+                    if (this.state.now > this.state.availableTo) {
+                        clearInterval(this.state.interval._id);
+                        this.setState(this.setInitialState());
+                    }
+                });
+            }, 1000);
+    }
+
+    setInitialState() {
+        return {
+            available: false
+        }
     }
 
     render() {
