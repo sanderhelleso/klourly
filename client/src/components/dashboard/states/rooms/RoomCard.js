@@ -20,8 +20,13 @@ export default class RoomCard extends Component {
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}
                         </h4>
-                        <h5>76<span>%</span></h5>
-                        <ToRoomButton className="waves-effect waves-purple btn-flat"><ArrowRight /></ToRoomButton>
+                        <h5>76<span>%</span><span className="attended">Attended</span></h5>
+                        <ToRoomButton 
+                            className="waves-effect waves-purple btn-flat"
+                            onClick={() => redirect.room(this.props.data.id)}
+                        >
+                            <ArrowRight />
+                        </ToRoomButton>
                         <CheckinRoomButton className="waves-effect waves-purple btn-flat"><Lock /></CheckinRoomButton>
                     </RoomInfo>
                 </div>
@@ -68,12 +73,23 @@ const RoomInfo = styled.div`
     position: relative;
     height: 101%;
 
+    h4 {
+        font-weight: 800;
+        font-size: 2.25rem;
+        position: absolute;
+        top: 25%;
+        left: -65px;
+        max-width: 67.5%;
+        margin-top: 0;
+        word-wrap: break-word;
+    }
+
     h5 {
         font-weight: 100;
         font-size: 4rem;
         position: absolute;
-        top: 16%;
-        right: 45px;
+        top: 7.5%;
+        right: 50px;
         color: #bdbdbd;
         opacity: 0.4;
 
@@ -81,17 +97,13 @@ const RoomInfo = styled.div`
             font-size: 2rem;
             opacity: 0.8;
         }
-    }
 
-    h4 {
-        font-weight: 800;
-        font-size: 2.25rem;
-        position: absolute;
-        top: 20%;
-        left: -55px;
-        max-width: 67.5%;
-        margin-top: 0;
-        word-wrap: break-word;
+        .attended {
+            display: block;
+            font-size: 1.275rem;
+            margin-top: -35px;
+            opacity: 1;
+        }
     }
 
     a {
