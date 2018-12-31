@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { room } from '../../../../api/room/room';
 
 import { materializeJS } from '../../../../helpers/materialize';
@@ -10,8 +11,6 @@ import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
 import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAction';
 import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
-
-import '../rooms/styles/rooms.css';
 
 import RoomPreview from './RoomPreview';
 
@@ -82,13 +81,18 @@ class Rooms extends Component {
             <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>My Rooms</h3>
                 <p id='dashboard-intro'>Preview, enter and checkin to rooms</p>
-                <button id="create-new-room" className="waves-effect waves-light btn" onClick={this.initNewRoomCreation}>Create New</button>
-                <div id="rooms-tabs" className="col s12">
+                <StyledButton
+                    className="waves-effect waves-light btn" 
+                    onClick={this.initNewRoomCreation}
+                >
+                    Create New
+                </StyledButton>
+                <Tabs className="col s12">
                     <ul className="tabs tabs-fixed-width">
                         <li className="tab col s6"><a className="active" href="#owning">Owning</a></li>
                         <li className="tab col s6"><a href="#attending">Attending</a></li>
                     </ul>
-                </div>
+                </Tabs>
                 <div id="owning" className="col s12">
                     <RoomPreview data={this.props.owningPreview} />
                 </div>
@@ -122,3 +126,52 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
+
+const Tabs = styled.div`
+
+    .tabs {
+        box-shadow: 0 5px 5px -5px rgb(85, 85, 85);
+        z-index: 1000;
+    }
+
+    .tabs .tab a.active {
+        background-color: #f5f5f5;
+        color: #7c4dff;
+    }
+
+    .tabs .tab a:hover {
+        color: #7c4dff;
+        background-color: #f5f5f5;
+    }
+
+    .tabs .tab a {
+        color: #bdbdbd;
+        background-color: #f5f5f5;
+        letter-spacing: 2px;
+        font-weight: 400;
+    }
+
+    .tabs .indicator {
+        background-color:#7c4dff;
+        opacity: 0.5;
+    }
+
+    .tabs .tab a:focus, .tabs .tab a:focus.active {
+        background-color: #f5f5f5;
+    }
+`;
+
+const StyledButton = styled.button`
+    margin-top: -7.5rem;
+    background-color: transparent;
+    box-shadow: none;
+    border: 2px solid #00e988;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    color: #ffffff;
+    line-height: 0;
+    padding: 1.5rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    float: right;
+`;

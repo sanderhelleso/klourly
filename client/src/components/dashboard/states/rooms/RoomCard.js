@@ -55,8 +55,8 @@ const StyledCard = styled.div`
 
 
     .col {
-        min-height: 150px;
-        max-height: 150px;
+        min-height: 175px;
+        max-height: 175px;
         padding: 0;
     }
 
@@ -98,7 +98,7 @@ const RoomInfo = styled.div`
         font-weight: 100;
         font-size: 4rem;
         position: absolute;
-        top: 7.5%;
+        top: 12.5%;
         right: 55px;
         color: #bdbdbd;
         opacity: 0.4;

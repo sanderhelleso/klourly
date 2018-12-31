@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import RoomCard from './RoomCard';
 
 export default class RoomPreview extends Component {
@@ -24,11 +25,22 @@ export default class RoomPreview extends Component {
 
     render() {
         return (
-            <div>
-                <div className="row main-rooms-cont animated fadeIn">
-                   {this.renderPreview()}
-                </div>
-            </div>
+            <StyledCont className="row main-rooms-cont animated fadeIn">
+                {this.renderPreview()}
+            </StyledCont>
         )
     }
 }
+
+const StyledCont = styled.div`
+    overflow: auto;
+    padding-top: 5vh;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 20vh;
+    max-height: 80vh;
+    
+    &::-webkit-scrollbar { 
+        display: none;
+    }
+`;
