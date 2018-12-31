@@ -37,7 +37,7 @@ class RoomData extends Component {
     }
 
     render() {
-        return <LinearLoader loading={this.props.loaded ? false : true} />;
+        return <LinearLoader center={true} loading={this.props.loaded ? false : true} />;
     }
 }
 

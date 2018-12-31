@@ -26,7 +26,8 @@ class Form extends Component {
             valid: false,
             email: '',
             password: '',
-            error: ''
+            error: '',
+            loading: false
         }
 
         console.log(props);
@@ -97,13 +98,7 @@ class Form extends Component {
 
         else if (this.state.loading) {
             document.removeEventListener('keyup', this.loginOnEnterKey);
-            return (
-                <div className="login-loader login-loader-cont">
-                    <div className="progress">
-                        <div className="indeterminate"></div>
-                    </div>
-                </div>
-            )
+            return <LinearLoader center={false} loading={this.state.loading} />
         }
 
         else {

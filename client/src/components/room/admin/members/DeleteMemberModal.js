@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { AlertOctagon } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
+import { notification } from '../../../../helpers/notification';
 import { room } from '../../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateRoomMembersAction } from '../../../../actions/room/updateRoomMembersAction';
+
+import LinearLoader from '../../../loaders/LinearLoader';
 
 class DeleteMemberModal extends Component {
     constructor(props) {
@@ -38,17 +41,43 @@ class DeleteMemberModal extends Component {
         
         // attempt to delete user
         const response = await room.removeRoomMember(this.props.data.id, this.props.roomID);
-        
-        // if successfull, update members and close modal
-        if (response.data.success) {
-            this.props.updateRoomMembersAction(response.data.updatedMembersList);
-            document.querySelector('.modal-close').click();
-        }
 
         // enable button
         this.setState({
             loading: false
         });
+
+        // if successfull, update members and close modal
+        if (response.data.success) {
+            this.props.updateRoomMembersAction(response.data.updatedMembersList);
+            document.querySelector('.modal-close').click();
+
+            // display notification
+            notification.success(response.data.message);
+        }
+    }
+
+    renderFooter() {
+        if (!this.state.loading) {
+            return (
+                <div>
+                    <CancelButton 
+                        className="modal-close waves-effect waves-purple btn-flat"
+                    >
+                        Cancel
+                    </CancelButton>
+                    <ConfirmButton 
+                        className="waves-effect waves-red btn-flat"
+                        onClick={this.deleteUser}
+                    >
+                        Confirm
+                    </ConfirmButton>
+                </div>
+            )
+        }
+
+        return <LinearLoader center={false} loading={this.state.loading} />
+
     }
 
     render() {
@@ -68,14 +97,7 @@ class DeleteMemberModal extends Component {
                     </p>
                 </StyledModalContent>
                 <ModalFooter>
-                    <CancelButton className="modal-close waves-effect waves-purple btn-flat">Cancel</CancelButton>
-                    <ConfirmButton 
-                        className="waves-effect waves-red btn-flat"
-                        onClick={this.deleteUser}
-                        disabled={this.state.loading}
-                    >
-                        Confirm
-                    </ConfirmButton>
+                    {this.renderFooter()}
                 </ModalFooter>
             </StyledModal>
         )
@@ -91,7 +113,7 @@ export default connect(null, mapDispatchToProps)(DeleteMemberModal);
 
 const StyledModal = styled.div`
     overflow-y: visible;
-    width: 400px;
+    width: 425px;
     padding: 1rem 2rem;
 
     @media (max-width: 450px) {
@@ -154,6 +176,7 @@ const ModalFooter = styled.div`
     border-top: 1px solid #eeeeee;
     text-align: center;
     margin: 0 auto;
+    min-height: 55px;
 
     button {
         margin: 1rem;
