@@ -25,7 +25,7 @@ export default class RoomPreview extends Component {
     render() {
         return (
             <div>
-                <div className="row main-rooms-cont">
+                <div className="row main-rooms-cont animated fadeIn">
                    {this.renderPreview()}
                 </div>
             </div>

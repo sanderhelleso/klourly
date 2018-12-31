@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
-import { ArrowRight, Loader,  Lock, Unlock } from 'react-feather';
+import { ArrowRight, Loader,  Lock, Unlock, CheckCircle } from 'react-feather';
 
 export default class RoomCard extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class RoomCard extends Component {
 
     render() {
         return (
-            <StyledCard className="col s12 m12 l10 offset-l1 animated fadeIn">
+            <StyledCard className="col s12 m12 l10 offset-l1">
                 <div className="row">
                     <RoomCover className="col s5" url={this.props.data.cover} />
                     <RoomInfo className="col s7">
@@ -22,12 +22,16 @@ export default class RoomCard extends Component {
                         </h4>
                         <h5>76<span>%</span><span className="attended">Attended</span></h5>
                         <ToRoomButton 
-                            className="waves-effect waves-purple btn-flat"
+                            className="waves-effect waves-light btn-flat animated fadeIn"
                             onClick={() => redirect.room(this.props.data.id)}
                         >
                             <ArrowRight />
                         </ToRoomButton>
-                        <CheckinRoomButton className="waves-effect waves-purple btn-flat"><Lock /></CheckinRoomButton>
+                        <CheckinRoomButton 
+                            className="waves-effect waves-light btn-flat animated fadeIn"
+                        >
+                            <CheckCircle />
+                        </CheckinRoomButton>
                     </RoomInfo>
                 </div>
             </StyledCard>
@@ -89,7 +93,7 @@ const RoomInfo = styled.div`
         font-size: 4rem;
         position: absolute;
         top: 7.5%;
-        right: 50px;
+        right: 55px;
         color: #bdbdbd;
         opacity: 0.4;
 
