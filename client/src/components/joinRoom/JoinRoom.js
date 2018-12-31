@@ -50,7 +50,7 @@ class JoinRoom extends Component {
             );
         }
 
-        return <LinearLoader loading={this.state.loading} />
+        return <LinearLoader center={true} loading={this.state.loading} />
     }
 
     renderInviteImage() {

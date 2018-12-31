@@ -264,7 +264,8 @@ module.exports = app => {
 
             // update list and remove user
             const updatedMembersList = snapshot.val().filter(uid => uid !== req.body.uid);
-            //await roomMembersRef.set(updatedMembersList);
+
+            await roomMembersRef.set(updatedMembersList);
 
             // send back response with updated members list
             res.status(200).json({

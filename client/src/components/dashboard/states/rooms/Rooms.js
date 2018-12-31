@@ -23,8 +23,6 @@ class Rooms extends Component {
             loading: true
         }
 
-        console.log(this.props);
-
         this.initNewRoomCreation = this.initNewRoomCreation.bind(this);
     }
 
@@ -106,14 +104,14 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         owningList: (state.dashboard.userData.rooms 
-                    && state.dashboard.userData.rooms.owning) 
-                    ? state.dashboard.userData.rooms.owning 
-                    : undefined,
+                        && state.dashboard.userData.rooms.owning) 
+                        ? state.dashboard.userData.rooms.owning 
+                        : null,
         owningPreview: state.room.owningPreview,
         attendingList: (state.dashboard.userData.rooms 
-                       && state.dashboard.userData.rooms.attending) 
-                       ? state.dashboard.userData.rooms.attending 
-                       : undefined,
+                        && state.dashboard.userData.rooms.attending) 
+                        ? state.dashboard.userData.rooms.attending 
+                        : null,
         attendingPreview: state.room.attendingPreview
     };
 };
