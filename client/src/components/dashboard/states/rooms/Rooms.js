@@ -81,12 +81,12 @@ class Rooms extends Component {
         return (
             <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>My Rooms</h3>
-                <p id='dashboard-intro'>Create, join and modify rooms</p>
+                <p id='dashboard-intro'>Preview, enter and checkin to rooms</p>
                 <button id="create-new-room" className="waves-effect waves-light btn" onClick={this.initNewRoomCreation}>Create New</button>
                 <div id="rooms-tabs" className="col s12">
                     <ul className="tabs tabs-fixed-width">
-                        <li className="tab col s6"><a className="active" href="#owning">Rooms im owning</a></li>
-                        <li className="tab col s6"><a href="#attending">Rooms im attending</a></li>
+                        <li className="tab col s6"><a className="active" href="#owning">Owning</a></li>
+                        <li className="tab col s6"><a href="#attending">Attending</a></li>
                     </ul>
                 </div>
                 <div id="owning" className="col s12">

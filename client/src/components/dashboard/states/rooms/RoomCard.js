@@ -47,6 +47,12 @@ const StyledCard = styled.div`
     border-radius: 8px;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     background-color: #ffffff;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+    }
+
 
     .col {
         min-height: 150px;
@@ -110,6 +116,7 @@ const RoomInfo = styled.div`
         }
     }
 
+
     a {
         border-radius: 50%;
         min-height: 52px;
@@ -120,6 +127,10 @@ const RoomInfo = styled.div`
         position: absolute;
         right: -25px;
         color: #ffffff;
+
+        &:hover {
+            box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+        }
 
         svg {
             position: absolute;
