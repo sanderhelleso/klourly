@@ -27,6 +27,9 @@ class Rooms extends Component {
 
     async componentDidMount() {
 
+        // initialize tabs
+        materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
+
         /**
          *  if initial load is set, continue and immediatly display previews
          */
@@ -57,10 +60,6 @@ class Rooms extends Component {
         this.setState({
             loading: false
         });
-
-        // initialize tabs
-        materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
-
     }
 
     componentWillMount() {
@@ -89,12 +88,20 @@ class Rooms extends Component {
                 </StyledButton>
                 <Tabs className="col s12">
                     <ul className="tabs tabs-fixed-width">
-                        <li className="tab col s6"><a className="active" href="#owning">Owning</a></li>
-                        <li className="tab col s6"><a href="#attending">Attending</a></li>
+                        <li className="tab col s6">
+                            <a className="active" href="#attending">
+                                Attending
+                            </a>
+                        </li>   
+                        <li className="tab col s6">
+                            <a href="#owning">
+                                Owning
+                            </a>
+                        </li>
                     </ul>
                 </Tabs>
                 <div id="owning" className="col s12">
-                    <RoomPreview data={this.props.owningPreview} />
+                    <RoomPreview data={this.props.owningPreview} owning={true} />
                 </div>
                 <div id="attending" className="col s12">
                     <RoomPreview data={this.props.attendingPreview} />

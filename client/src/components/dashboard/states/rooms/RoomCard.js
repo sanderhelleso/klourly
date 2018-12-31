@@ -6,8 +6,15 @@ import { ArrowRight, Loader,  Lock, Unlock, CheckCircle } from 'react-feather';
 export default class RoomCard extends Component {
     constructor(props) {
         super(props);
+    }
 
-        console.log(props);
+    renderCheckIn() {
+
+        return this.props.owning 
+        ?   null 
+        :   <CheckinRoomButton className="waves-effect waves-light btn-flat animated fadeIn">
+                <CheckCircle />
+            </CheckinRoomButton>;
     }
 
     render() {
@@ -23,15 +30,12 @@ export default class RoomCard extends Component {
                         <h5>76<span>%</span><span className="attended">Attended</span></h5>
                         <ToRoomButton 
                             className="waves-effect waves-light btn-flat animated fadeIn"
+                            owning={this.props.owning}
                             onClick={() => redirect.room(this.props.data.id)}
                         >
                             <ArrowRight />
                         </ToRoomButton>
-                        <CheckinRoomButton 
-                            className="waves-effect waves-light btn-flat animated fadeIn"
-                        >
-                            <CheckCircle />
-                        </CheckinRoomButton>
+                        {this.renderCheckIn()}
                     </RoomInfo>
                 </div>
             </StyledCard>
@@ -68,7 +72,7 @@ const StyledCard = styled.div`
 const RoomCover = styled.div`
     transform: scale(1.001);
     background: linear-gradient(to right,
-    rgba(166, 81, 223, 0.6),
+    rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 1)),
     url(${props => props.url});
     background-size: cover;
@@ -150,7 +154,7 @@ const RoomInfo = styled.div`
 `;
 
 const ToRoomButton = styled.a`
-    bottom: 10%;
+    bottom: ${props => props.owning ? '35%' : '10%'};
     background: #7F7FD5;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

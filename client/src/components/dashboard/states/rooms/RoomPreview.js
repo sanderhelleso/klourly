@@ -16,7 +16,7 @@ export default class RoomPreview extends Component {
             return this.props.data
                    .sort((a, b) => a.name.localeCompare(b.name))
                    .map(room => {
-                        return <RoomCard key={room.id} data={room} />
+                        return <RoomCard key={room.id} data={room} owning={this.props.owning} />
                     });
         }
 
