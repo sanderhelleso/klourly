@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
 import { ArrowRight, Loader,  Lock, Unlock, CheckCircle } from 'react-feather';
+import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 
 export default class RoomCard extends Component {
     constructor(props) {
@@ -10,11 +11,20 @@ export default class RoomCard extends Component {
 
     renderCheckIn() {
 
-        return this.props.owning 
-        ?   null 
-        :   <CheckinRoomButton className="waves-effect waves-light btn-flat animated fadeIn">
-                <CheckCircle />
-            </CheckinRoomButton>;
+        // only render check in button if not owner
+        if (!this.props.owning) {
+
+            roomAvailableForCheckin(this.props.data.times);
+
+            // check if room is currently available for checkin 
+            return (
+                <CheckinRoomButton className="waves-effect waves-light btn-flat animated fadeIn">
+                    <CheckCircle />
+                </CheckinRoomButton>
+            );
+        }
+        
+        return null;
     }
 
     render() {

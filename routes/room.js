@@ -80,7 +80,8 @@ module.exports = app => {
                     id: snapshot.val().id,
                     cover: snapshot.val().cover,
                     name: snapshot.val().name,
-                    location: snapshot.val().location
+                    location: snapshot.val().location,
+                    times: snapshot.val().times
                 }
 
                 // push room preview data to array
