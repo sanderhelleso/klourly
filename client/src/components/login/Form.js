@@ -128,13 +128,13 @@ class Form extends Component {
         // login successfull
         if (authenticatedUser.success) {
 
-            // set user state
-            const response = await dashboard.fetchUserData(authenticatedUser.userData.user.id);
-
             // check for params in case of redirects
             const redirectActions = await authentication.authAndDoAction(
                 this.props.params, authenticatedUser.userData.user.id
             );
+
+            // set user state
+            const response = await dashboard.fetchUserData(authenticatedUser.userData.user.id);
 
             // set user data
             await this.props.userDataActions(response.data.userData);

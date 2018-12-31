@@ -17,7 +17,7 @@ module.exports = app => {
             
             // credentials valid, send response data back to client
             else {
-                console.log(userRecord);
+                //console.log(userRecord);
 
                 // send data back to client and login user with localstorage using UID
                 res.json({

@@ -62,14 +62,16 @@ module.exports = app => {
                     });
 
                     // add room to user
-                    const userAttendingRoomsRef = db.ref(`users/${req.body.uid}/rooms/attending`);
-                    await userAttendingRoomsRef.once('value', roomSnapshot => {
-                        userAttendingRoomsRef.set(
+                    const userAttendingRoomsRef = await db.ref(`users/${req.body.uid}/rooms/attending`);
+                    await userAttendingRoomsRef.once('value', async roomSnapshot => {
+                        await userAttendingRoomsRef.set(
                             roomSnapshot.val() 
                             ? [...roomSnapshot.val(), req.body.roomID]
                             : [req.body.roomID]
                         );
                     });
+
+                    console.log("I GOT RUN ATLEAST");
                 }
 
                 // if not, set required data

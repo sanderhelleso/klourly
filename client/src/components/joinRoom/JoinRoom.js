@@ -22,7 +22,9 @@ class JoinRoom extends Component {
         // check for valid and active invite / room
         const response = await invite.getRoomInvite({
             ...this.props.match.params,
-            uid: this.props.state.auth.user ? this.props.state.auth.user.id : null
+            uid: this.props.state.auth.user 
+                 ? this.props.state.auth.user.id 
+                 : null
         });
 
         // set invite state
@@ -31,7 +33,9 @@ class JoinRoom extends Component {
             status: response.status,
             success: response.data.success,
             message: response.data.message,
-            invitationData: response.data.invitationData ? response.data.invitationData : null
+            invitationData: response.data.invitationData 
+                            ? response.data.invitationData 
+                            : null
         });
 
         // set heading and message
@@ -98,8 +102,6 @@ class JoinRoom extends Component {
     }
 
     joinRoomNotLoggedIn() {
-        console.log(this.props.match.params);
-        console.log('IM NOT LOGGED IN');
         redirect.loginWithJoinRoomRedirect(
                 this.props.match.params.inviteID, 
                 this.props.match.params.roomID
