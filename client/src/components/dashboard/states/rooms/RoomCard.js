@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 import { attendence } from '../../../../api/room/attendence';
+import Attendence from './Attendence';
 
 class RoomCard extends Component {
     constructor(props) {
@@ -163,7 +164,7 @@ class RoomCard extends Component {
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}
                         </h4>
-                        <h5>76<span>%</span><span className="attended">Attended</span></h5>
+                        <Attendence />
                         <ToRoomButton 
                             className="waves-effect waves-light btn-flat"
                             owning={this.props.owning}
@@ -244,28 +245,6 @@ const RoomInfo = styled.div`
         max-width: 67.5%;
         margin-top: 0;
         word-wrap: break-word;
-    }
-
-    h5 {
-        font-weight: 100;
-        font-size: 4rem;
-        position: absolute;
-        top: 12.5%;
-        right: 55px;
-        color: #bdbdbd;
-        opacity: 0.4;
-
-        span {
-            font-size: 2rem;
-            opacity: 0.8;
-        }
-
-        .attended {
-            display: block;
-            font-size: 1.275rem;
-            margin-top: -35px;
-            opacity: 1;
-        }
     }
 
     a {

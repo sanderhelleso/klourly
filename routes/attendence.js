@@ -41,6 +41,8 @@ module.exports = app => {
     // get attendence for a specific user for a room
     app.post('/api/getAttendence', async (req, res) => {
         
+        
+        console.log(req.body);
     });
     
 
