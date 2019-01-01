@@ -40,7 +40,6 @@ class RoomCard extends Component {
                 // check if user has already checkedin
                 const alreadyCheckedIn = await this.attendenceResponse(true, availableTo);
 
-                console.log(alreadyCheckedIn.data);
                 if (!alreadyCheckedIn.data.success) {
 
                     // start countdown

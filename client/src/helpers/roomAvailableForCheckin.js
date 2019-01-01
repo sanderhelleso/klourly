@@ -11,11 +11,12 @@ const dateISO = date.toISOString()
 
 
 // check if a rooms given times are currently available for checkin
-export const roomAvailableForCheckin = times => {
+export const roomAvailableForCheckin =  times => {
 
-    // check if room is available 
-    let valid = false;
-    Object.entries(times).forEach(([key, value]) => {
+    // check if room is available
+    let firstFound = false;
+    let data = false;
+    Object.entries(times).every(([key, value]) => {
 
         // check if type is a valid object (ignore singel key - value pairs)
         if (typeof value === 'object' && value !== null) {
@@ -25,12 +26,19 @@ export const roomAvailableForCheckin = times => {
 
                 // validate day specific times and check if available
                 const availableTo = validateTime(value.time);
-                valid = availableTo ? { key, day, availableTo } : false;
+
+                // get first matching found incase of overlapping times
+                if (availableTo && !firstFound) {
+
+                    // set value
+                    data = { key, day, availableTo };
+                    firstFound = true; // set found
+                }
             }
         }
     });
 
-    return valid;
+    return data;
 }
 
 
