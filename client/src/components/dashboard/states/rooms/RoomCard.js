@@ -11,6 +11,12 @@ export default class RoomCard extends Component {
         this.state = this.setInitialState();
     }
 
+    setInitialState() {
+        return {
+            available: false
+        }
+    }
+
     componentDidMount() {
 
         // set mode depending if time is available or not
@@ -23,10 +29,10 @@ export default class RoomCard extends Component {
             // if available update state, and start countdown
             if (availableTo) {
                 this.setState({ 
-                    available: true,
-                    availableTo,
+                    ...availableTo,
                     now: new Date().getTime(),
-                    interval: this.updateAvailableMode()
+                    interval: this.updateAvailableMode(),
+                    available: true
                 });
             }
         }
@@ -36,6 +42,10 @@ export default class RoomCard extends Component {
 
         // clear interval on unmount if present
         this.state.interval ? clearInterval(this.state.interval._id) : null;
+    }
+
+    registerAttendence() {
+
     }
 
     renderCheckIn() {
@@ -48,6 +58,7 @@ export default class RoomCard extends Component {
                 <CheckinRoomButton 
                     className={`waves-effect waves-light btn-flat animated 
                     ${this.state.available === 'not set' ? 'bounceOut' : 'bounceIn'}`}
+                    onClick={this.registerAttendence}
                 >
                     <CheckCircle />
                 </CheckinRoomButton>
@@ -85,12 +96,6 @@ export default class RoomCard extends Component {
                     }
                 });
             }, tick);
-    }
-
-    setInitialState() {
-        return {
-            available: false
-        }
     }
 
     render() {
