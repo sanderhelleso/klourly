@@ -48,7 +48,7 @@ module.exports = app => {
             // check if checkin is registered for given room
             if (snapshot.val()) {
 
-                console.log(getAttendenceStats(snapshot.val()));
+                console.log(getAttendenceStats(snapshot.val(), req.body.uid));
             }
         });
 
@@ -57,15 +57,14 @@ module.exports = app => {
             success: true,
             message: 'Attendence was successfully retrieved'
         });
-
     });
 }
 
-function getAttendenceStats(data) {
+function getAttendenceStats(data, uid) {
 
     const attendenceStats = {
-        roomAttendenceCount: 0,
-        userAttendedCount: 0
+        total: 0,
+        userAttended: 0
     }
 
     // itterate over each time 
@@ -78,7 +77,16 @@ function getAttendenceStats(data) {
             Object.values(year).forEach(week => {
 
                 // increment the total room attendence possible
-                attendenceStats.roomAttendenceCount += Object.keys(week).length;
+                attendenceStats.total += Object.keys(week).length;
+
+                // if user has checked in to time
+                Object.values(week).forEach(attendie => {
+                    if (attendie.hasOwnProperty(uid)) { 
+
+                        // increment users count
+                        attendenceStats.userAttended += 1 
+                    };
+                });
             });
         });
     });
