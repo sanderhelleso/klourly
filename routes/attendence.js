@@ -6,8 +6,6 @@ module.exports = app => {
     // get attendence registration data
     app.post('/api/registerAttendence', async (req, res) => {
 
-        console.log(req.body);
-
         // get checkin path
         const path = 'rooms/' + req.body.roomID +
                         '/checkin/' + req.body.attendenceData.key + 
@@ -39,5 +37,11 @@ module.exports = app => {
             });
         }
     });
+
+    // get attendence for a specific user for a room
+    app.post('/api/getAttendence', async (req, res) => {
+        
+    });
+    
 
 }

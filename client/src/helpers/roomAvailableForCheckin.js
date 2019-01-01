@@ -43,7 +43,7 @@ export const roomAvailableForCheckin =  times => {
 
 
 // validate times day and check if today is active
-function validateDays(days) {    
+function validateDays(days) {   
     if (days.hasOwnProperty(day)) {
         return true;
     }
