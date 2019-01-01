@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
 import { ArrowRight, Loader,  Lock, Unlock, CheckCircle } from 'react-feather';
-import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 
-export default class RoomCard extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
+import { attendence } from '../../../../api/room/attendence';
+
+class RoomCard extends Component {
     constructor(props) {
         super(props);
 
         this.state = this.setInitialState();
+
+        this.registerAttendence = this.registerAttendence.bind(this);
     }
 
     setInitialState() {
@@ -44,8 +52,24 @@ export default class RoomCard extends Component {
         this.state.interval ? clearInterval(this.state.interval._id) : null;
     }
 
-    registerAttendence() {
+    async registerAttendence() {
 
+        // disable button while performing request
+        this.setState({
+            loading: true
+        });
+
+        // attempt to register users attendence
+        const response = await attendence
+                        .registerAttendence(
+                        this.props.userID,
+                        this.props.data.id, {
+                            key: this.state.key,
+                            day: this.state.day,
+                            availableTo: this.state.availableTo
+                        });
+
+        console.log(response);
     }
 
     renderCheckIn() {
@@ -59,6 +83,7 @@ export default class RoomCard extends Component {
                     className={`waves-effect waves-light btn-flat animated 
                     ${this.state.available === 'not set' ? 'bounceOut' : 'bounceIn'}`}
                     onClick={this.registerAttendence}
+                    disabled={this.state.loading}
                 >
                     <CheckCircle />
                 </CheckinRoomButton>
@@ -123,6 +148,17 @@ export default class RoomCard extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { userID: state.auth.user.id };
+};
+
+// update created room state
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomCard);
 
 const StyledCard = styled.div`
     transform: scale(1.001);
@@ -247,34 +283,3 @@ const CheckinRoomButton = styled.a`
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 `;
-
-
-
-//                            <img src={this.props.data.cover} />
-
-/*
-<div className="card small">
-                    <div className="card-image">
-                        <div className="card-image-overlay">
-                            <img src={this.props.data.cover} />
-                        </div>
-                        <span className="room-card-type">
-                        </span>
-                        <span className="card-title room-card-name">
-                            <span className="room-card-location">
-                            {this.props.data.location.name}
-                            </span>
-                            <br />
-                            {this.props.data.name}
-                        </span>
-                    </div>
-                    <div className="card-fab">
-                        <a className="btn-floating halfway-fab waves-effect waves-light btn-large room-btn"
-                        onClick={() => redirect.room(this.props.data.id)}
-                        >
-                            <ArrowRight />
-                        </a>
-                    </div>
-                    <div className="card-content room-card-content">
-                    </div>
-                </div>*/
