@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
 import { ArrowRight, Loader,  Lock, Unlock, CheckCircle } from 'react-feather';
+import { getWeek } from '../../../../helpers/getWeek';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -32,7 +33,6 @@ class RoomCard extends Component {
             
             // fetch potensial available to time
             const availableTo = roomAvailableForCheckin(this.props.data.times);
-            console.log(availableTo);
 
             // if available update state, and start countdown
             if (availableTo) {
@@ -66,7 +66,9 @@ class RoomCard extends Component {
                         this.props.data.id, {
                             key: this.state.key,
                             day: this.state.day,
-                            availableTo: this.state.availableTo
+                            week: getWeek(),
+                            availableTo: this.state.availableTo,
+                            timeOfRegister: this.state.now
                         });
 
         console.log(response);
