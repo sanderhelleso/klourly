@@ -19,8 +19,25 @@ module.exports = app => {
         // get checkin ref for user
         const checkinRef = db.ref(path);
 
-        // set attendence
-        checkinRef.set(req.body.attendenceData.timeOfRegister);
+        // if validate is set to true, validate to check if user has already checked in
+        if (req.body.validate) {
+            checkinRef.once('value', snapshot => {
+                res.status(200).json({ success: snapshot.val() ? true : false });
+            });
+        }
+
+        // if not set attendence
+        else {
+
+            // set attendence
+            checkinRef.set(req.body.attendenceData.timeOfRegister);
+
+            // send back response with success message
+            res.status(200).json({ 
+                success: true,
+                message: 'Attendence was successfully registered'
+            });
+        }
     });
 
 }

@@ -26,7 +26,7 @@ class RoomCard extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
         // set mode depending if time is available or not
         if (!this.props.owning) {
@@ -34,14 +34,21 @@ class RoomCard extends Component {
             // fetch potensial available to time
             const availableTo = roomAvailableForCheckin(this.props.data.times);
 
-            // if available update state, and start countdown
+            // check if checkin is available
             if (availableTo) {
-                this.setState({ 
-                    ...availableTo,
-                    now: new Date().getTime(),
-                    interval: this.updateAvailableMode(),
-                    available: true
-                });
+
+                // check if user has already checkedin
+                const alreadyCheckedIn = await this.attendenceResponse(true);
+                if (!alreadyCheckedIn.data.success) {
+
+                    // start countdown
+                    this.setState({ 
+                        ...availableTo,
+                        now: new Date().getTime(),
+                        interval: this.updateAvailableMode(),
+                        available: true
+                    });
+                }
             }
         }
     }
@@ -60,8 +67,17 @@ class RoomCard extends Component {
         });
 
         // attempt to register users attendence
+        
+
+        //console.log(response);
+    }
+
+    async attendenceResponse(validate) {
+
+        // perform request to fullfil validation / setting attendence
         const response = await attendence
                         .registerAttendence(
+                        validate,
                         this.props.userID,
                         this.props.data.id, {
                             key: this.state.key,
@@ -71,7 +87,7 @@ class RoomCard extends Component {
                             timeOfRegister: this.state.now
                         });
 
-        console.log(response);
+        return response;
     }
 
     renderCheckIn() {
