@@ -38,7 +38,9 @@ class RoomCard extends Component {
             if (availableTo) {
 
                 // check if user has already checkedin
-                const alreadyCheckedIn = await this.attendenceResponse(true);
+                const alreadyCheckedIn = await this.attendenceResponse(true, availableTo);
+
+                console.log(alreadyCheckedIn.data);
                 if (!alreadyCheckedIn.data.success) {
 
                     // start countdown
@@ -67,12 +69,24 @@ class RoomCard extends Component {
         });
 
         // attempt to register users attendence
-        
+        const response = await this.attendenceResponse(false, {
+            key: this.state.key,
+            day: this.state.day
+        });
 
-        //console.log(response);
+
+        // if successfull attendendce, show message and remove button
+        if (response.data.success) {
+            this.setState({ available: 'not set'}, () => this.removeCheckIn());
+        }
+
+        // finish loading
+        this.setState({
+            loading: false
+        });
     }
 
-    async attendenceResponse(validate) {
+    async attendenceResponse(validate, attendenceData) {
 
         // perform request to fullfil validation / setting attendence
         const response = await attendence
@@ -80,8 +94,7 @@ class RoomCard extends Component {
                         validate,
                         this.props.userID,
                         this.props.data.id, {
-                            key: this.state.key,
-                            day: this.state.day,
+                            ...attendenceData,
                             week: getWeek(),
                             availableTo: this.state.availableTo,
                             timeOfRegister: this.state.now
@@ -93,13 +106,13 @@ class RoomCard extends Component {
     renderCheckIn() {
 
         // only render check in button if not owner
-        if (this.state.available && this.state.available !== 'not set') {
+        if (this.state.available) {
 
             // check if room is currently available for checkin 
             return (
                 <CheckinRoomButton 
                     className={`waves-effect waves-light btn-flat animated 
-                    ${this.state.available === 'not set' ? 'bounceOut' : 'bounceIn'}`}
+                    ${this.state.available === 'not set' ? 'bounceOut' : 'fadeIn'}`}
                     onClick={this.registerAttendence}
                     disabled={this.state.loading}
                 >
@@ -146,15 +159,16 @@ class RoomCard extends Component {
             <StyledCard className="col s12 m12 l10 offset-l1">
                 <div className="row">
                     <RoomCover className="col s5" url={this.props.data.cover} />
-                    <RoomInfo className="col s7">
+                    <RoomInfo className="col s7 animated fadeIn">
                         <h4>{this.props.data.name.length > 16 
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}
                         </h4>
                         <h5>76<span>%</span><span className="attended">Attended</span></h5>
                         <ToRoomButton 
-                            className="waves-effect waves-light btn-flat animated fadeIn"
+                            className="waves-effect waves-light btn-flat"
                             owning={this.props.owning}
+                            notAvailable={(!this.props.owning && !this.state.available)}
                             onClick={() => redirect.room(this.props.data.id)}
                         >
                             <ArrowRight />
@@ -255,9 +269,9 @@ const RoomInfo = styled.div`
         }
     }
 
-
     a {
         border-radius: 50%;
+        transition: 0.3s ease-in-out;
         min-height: 52px;
         max-height: 52px;
         min-width: 52px;
@@ -281,6 +295,10 @@ const RoomInfo = styled.div`
         }
     }
 
+    .btn-flat.btn-flat[disabled] {
+        color: #ffffff !important;
+    }
+
     @media (max-width: 1300px) {
         h4 {
             font-size: 2rem;
@@ -289,10 +307,11 @@ const RoomInfo = styled.div`
 `;
 
 const ToRoomButton = styled.a`
-    bottom: ${props => props.owning ? '35%' : '10%'};
-    background: #7F7FD5;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    bottom: ${props => (props.owning || props.notAvailable) ? '35%' : '15%'};
+    background: #9796f0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 `;
 
 const CheckinRoomButton = styled.a`

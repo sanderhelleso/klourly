@@ -25,7 +25,7 @@ export default class RoomPreview extends Component {
 
     render() {
         return (
-            <StyledCont className="row main-rooms-cont animated fadeIn">
+            <StyledCont className="row main-rooms-cont">
                 {this.renderPreview()}
             </StyledCont>
         )
