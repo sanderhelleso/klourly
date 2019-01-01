@@ -41,9 +41,47 @@ module.exports = app => {
     // get attendence for a specific user for a room
     app.post('/api/getAttendence', async (req, res) => {
         
-        
-        console.log(req.body);
-    });
-    
+        // get checkin path
+        const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
+        checkinRef.once('value', snapshot => {
 
+            // check if checkin is registered for given room
+            if (snapshot.val()) {
+
+                console.log(getAttendenceStats(snapshot.val()));
+            }
+        });
+
+        // send back response with success message
+        res.status(200).json({ 
+            success: true,
+            message: 'Attendence was successfully retrieved'
+        });
+
+    });
+}
+
+function getAttendenceStats(data) {
+
+    const attendenceStats = {
+        roomAttendenceCount: 0,
+        userAttendedCount: 0
+    }
+
+    // itterate over each time 
+    data.map(time => {
+
+        // itteratoe over each days registered year
+        Object.values(time.days).forEach(year => {
+
+            // itterate over each years registered week
+            Object.values(year).forEach(week => {
+
+                // increment the total room attendence possible
+                attendenceStats.roomAttendenceCount += Object.keys(week).length;
+            });
+        });
+    });
+
+    return attendenceStats;
 }

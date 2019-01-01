@@ -99,9 +99,12 @@ class RoomCard extends Component {
                             availableTo: this.state.availableTo,
                             timeOfRegister: this.state.now
                         });
-
+        
+        // return recieved response
         return response;
     }
+
+
 
     renderCheckIn() {
 
@@ -164,7 +167,10 @@ class RoomCard extends Component {
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}
                         </h4>
-                        <Attendence />
+                        {this.props.owning 
+                            ? null 
+                            : <Attendence roomID={this.props.data.id} />
+                        }
                         <ToRoomButton 
                             className="waves-effect waves-light btn-flat"
                             owning={this.props.owning}

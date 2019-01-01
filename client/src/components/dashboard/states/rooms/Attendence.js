@@ -5,15 +5,47 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { attendence } from '../../../../api/room/attendence';
+
 class Attendence extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: true
+        }
+    }
+
+    async componentDidMount() {
+
+        console.log(this.props.roomID);
+        const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+
+        console.log(response);
+    }
+
+    renderAttendence() {
+        
+        if (!this.state.loading) {
+            return (
+                <StyledAttendence>
+                    76<span>%</span>
+                    <span className="attended">
+                        Attended
+                    </span>
+                </StyledAttendence>
+            )
+        }
+
+        return null;
+    }
+
+
     render() {
         return (
-            <StyledAttendence>
-                76<span>%</span>
-                <span className="attended">
-                    Attended
-                </span>
-            </StyledAttendence>
+            <div>
+                {this.renderAttendence()}
+            </div>
         )
     }
 }
@@ -22,7 +54,6 @@ const mapStateToProps = state => {
     return { userID: state.auth.user.id };
 };
 
-// update created room state
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({}, dispatch);
 }

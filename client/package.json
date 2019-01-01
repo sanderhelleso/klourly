@@ -57,6 +57,9 @@
     "/api/registerAttendence": {
       "target": "http://localhost:5000"
     },
+    "/api/getAttendence": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }
