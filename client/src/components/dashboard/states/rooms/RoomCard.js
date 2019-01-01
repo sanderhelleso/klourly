@@ -137,20 +137,20 @@ class RoomCard extends Component {
         let tick = 1000; // 1 sec
         return setInterval(() => {
 
-                // update current time
-                this.setState({ 
-                    now: this.state.now += tick
-                }, () => {
+            // update current time
+            this.setState({ 
+                now: this.state.now += tick
+            }, () => {
 
-                    // after each tick check if time has elapsed
-                    if (this.state.now > this.state.availableTo) {
+                // after each tick check if time has elapsed
+                if (this.state.now > this.state.availableTo) {
 
-                        clearInterval(this.state.interval._id); // clear interval
-                        this.setState({ available: 'not set'}); // animate button out
-                        this.removeCheckIn();                   // remove button
-                    }
-                });
-            }, tick);
+                    clearInterval(this.state.interval._id); // clear interval
+                    this.setState({ available: 'not set'}); // animate button out
+                    this.removeCheckIn();                   // remove button
+                }
+            });
+        }, tick);
     }
 
     render() {
