@@ -47,5 +47,6 @@ async function getAttendence(uid, roomID) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 } 

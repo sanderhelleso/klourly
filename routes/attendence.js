@@ -41,21 +41,28 @@ module.exports = app => {
     // get attendence for a specific user for a room
     app.post('/api/getAttendence', async (req, res) => {
         
+        
         // get checkin path
         const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
         checkinRef.once('value', snapshot => {
 
+            let stats = {}; // default to 'N/A'
+            let status = 204; // No content
+
             // check if checkin is registered for given room
             if (snapshot.val()) {
 
-                console.log(getAttendenceStats(snapshot.val(), req.body.uid));
+                // update status and get attendence data
+                status = 200;
+                stats = getAttendenceStats(snapshot.val(), req.body.uid);
             }
-        });
 
-        // send back response with success message
-        res.status(200).json({ 
-            success: true,
-            message: 'Attendence was successfully retrieved'
+            // send back response with retrieved data
+            res.status(status).json({ 
+                success: status === 200 ? true : false,
+                stats
+            });
+
         });
     });
 }
@@ -64,7 +71,8 @@ function getAttendenceStats(data, uid) {
 
     const attendenceStats = {
         total: 0,
-        userAttended: 0
+        userAttended: 0,
+        attendedInPercent: 100
     }
 
     // itterate over each time 
@@ -81,15 +89,16 @@ function getAttendenceStats(data, uid) {
 
                 // if user has checked in to time
                 Object.values(week).forEach(attendie => {
-                    if (attendie.hasOwnProperty(uid)) { 
 
-                        // increment users count
-                        attendenceStats.userAttended += 1 
-                    };
+                    // increment users count if present
+                    if (attendie.hasOwnProperty(uid)) { attendenceStats.userAttended += 1 };
                 });
             });
         });
     });
+
+    // set total attendence in percentage
+    attendenceStats.attendedInPercent = Math.floor((attendenceStats.userAttended / attendenceStats.total) * 100);
 
     return attendenceStats;
 }

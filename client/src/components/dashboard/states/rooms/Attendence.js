@@ -18,23 +18,53 @@ class Attendence extends Component {
 
     async componentDidMount() {
 
-        console.log(this.props.roomID);
+        // fetch users current attendence in percentage
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
         console.log(response);
+        // check for successfull retrieval
+        if (response.status === 200) {
+
+            // update and display
+            this.setState({
+                percentage: response.data.stats.attendedInPercent
+            });
+        }
+
+        else {
+            this.setState({
+                notAttended: true
+            });
+        }
+
+        // finish loding
+        this.setState({
+            loading: false
+        });
     }
 
     renderAttendence() {
         
         if (!this.state.loading) {
-            return (
-                <StyledAttendence>
-                    76<span>%</span>
-                    <span className="attended">
-                        Attended
-                    </span>
-                </StyledAttendence>
-            )
+
+            if (this.state.percentage) {
+                return (
+                    <div className="animated fadeIn">
+                        {this.state.percentage}<span>%</span>
+                        <span className="attended">
+                            Attended
+                        </span>
+                    </div>                        
+                )
+            }
+
+            else {
+                return (
+                    <div className="animated fadeIn">
+                        <p>Not Attended</p>
+                    </div>
+                )
+            }
         }
 
         return null;
@@ -43,9 +73,9 @@ class Attendence extends Component {
 
     render() {
         return (
-            <div>
+            <StyledAttendence>
                 {this.renderAttendence()}
-            </div>
+            </StyledAttendence>
         )
     }
 }
@@ -69,17 +99,19 @@ const StyledAttendence = styled.h5`
     right: 55px;
     color: #bdbdbd;
     opacity: 0.4;
+    text-align: left;
 
     span {
-        font-size: 2rem;
+        font-size: 1.15rem;
         opacity: 0.8;
     }
 
     .attended {
         display: block;
-        font-size: 1.275rem;
+        font-size: 1.25rem;
         margin-top: -35px;
         opacity: 1;
+        text-align: center;
     }
         
 `;
