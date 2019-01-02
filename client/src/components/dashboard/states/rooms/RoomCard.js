@@ -162,7 +162,7 @@ class RoomCard extends Component {
             <StyledCard className="col s12 m12 l10 offset-l1">
                 <div className="row">
                     <RoomCover className="col s5" url={this.props.data.cover} />
-                    <RoomInfo className="col s7 animated fadeIn">
+                    <RoomInfo className="col s7">
                         <h4>{this.props.data.name.length > 16 
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}

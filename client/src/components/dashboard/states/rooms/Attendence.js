@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Cloud } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -60,9 +61,10 @@ class Attendence extends Component {
 
             else {
                 return (
-                    <div className="animated fadeIn">
+                    <NotAttended className="animated fadeIn">
+                        <Cloud size={50} />
                         <p>Not Attended</p>
-                    </div>
+                    </NotAttended>
                 )
             }
         }
@@ -99,19 +101,31 @@ const StyledAttendence = styled.h5`
     right: 55px;
     color: #bdbdbd;
     opacity: 0.4;
-    text-align: left;
 
     span {
         font-size: 1.15rem;
-        opacity: 0.8;
     }
 
     .attended {
         display: block;
         font-size: 1.25rem;
         margin-top: -35px;
-        opacity: 1;
         text-align: center;
+    }     
+`;
+
+const NotAttended = styled.div`
+
+    margin-top: -5px;
+    text-align: center;
+
+    svg {
+        stroke: #b388ff;
+        opacity: 0.6;
     }
-        
+
+    p {
+        font-size: 1.25rem;
+        margin-top: -20px;
+    }
 `;
