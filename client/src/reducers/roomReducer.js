@@ -1,5 +1,6 @@
 const initialState = {
-    loaded: false
+    loaded: false,
+    attendence: {}
 }
 
 const roomReducer = (state = initialState, action) => {
@@ -20,11 +21,10 @@ const roomReducer = (state = initialState, action) => {
         case 'SET_ROOM_ATTENDENCE':
             return {
                 ...state,
-                attendingPreview: state.attendingPreview.map(
-                    (attendingPreview, i) => i === action.payload.key 
-                    ? {...attendingPreview, attendenceData: action.payload}
-                    : attendingPreview
-                )
+                attendence: {
+                    ...state.attendence,
+                    [action.payload.roomID]: action.payload
+                }
             }
 
         case 'ENTER_ROOM_SUCCESS':

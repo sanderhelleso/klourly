@@ -14,10 +14,10 @@ class Attendence extends Component {
         super(props);
 
         // set state depending if data is already retrieved
-        if (props.attendenceData) {
+        if (this.props.attendenceData) {
 
             // data is loaded and user has attended
-            if (props.attendenceData.attended) {
+            if (this.props.attendenceData.attended) {
 
                 // set attendence percentage
                 this.state = {
@@ -43,6 +43,8 @@ class Attendence extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        // update attendence percentage
         if (this.props.attendenceData !== nextProps.attendenceData) {
             this.setState({
                 percentage: nextProps.attendenceData.attendedInPercent
@@ -68,7 +70,8 @@ class Attendence extends Component {
 
                 this.props.setRoomAttendenceAction({
                     ...response.data.stats,
-                    key: this.props.attendingIndex
+                    key: this.props.attendingIndex,
+                    roomID: this.props.roomID
                 });
             }
 
@@ -125,7 +128,10 @@ class Attendence extends Component {
 }
 
 const mapStateToProps = state => {
-    return { userID: state.auth.user.id };
+    return { 
+        userID: state.auth.user.id,
+        attendenceData: state.room.attendence[state.auth.user.id]
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -133,6 +139,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
+
 
 const StyledAttendence = styled.h5`
 
