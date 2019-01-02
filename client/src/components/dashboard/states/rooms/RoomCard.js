@@ -159,7 +159,10 @@ class RoomCard extends Component {
 
     render() {
         return (
-            <StyledCard className="col s12 m12 l10 offset-l1">
+            <StyledCard 
+                className="col s12 m12 l10 offset-l1"
+                onClick={() => redirect.room(this.props.data.id)}
+            >
                 <div className="row">
                     <RoomCover className="col s5" url={this.props.data.cover} />
                     <RoomInfo className="col s7">
@@ -207,6 +210,7 @@ const StyledCard = styled.div`
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     background-color: #ffffff;
     transition: 0.3s ease-in-out;
+    cursor: pointer;
 
     &:hover {
         box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
