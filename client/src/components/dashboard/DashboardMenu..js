@@ -43,16 +43,16 @@ class DashboardMenu extends Component {
     render() {
         return (
             <StyledMenu id='dashboard-menu' className='col s12 m12 l2'>
-                <div className='col l12 menu-item' onClick={this.toogleMenuOption} >
+                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
-                <div className='col l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
+                <div className='col m4 l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
                     <Grid size={30} />
                 </div>
-                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption}>
                     <Map size={30} />
                 </div>
-                <div className='col l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption}>
                     <Settings size={30} />
                 </div>
             </StyledMenu>
@@ -108,5 +108,45 @@ const StyledMenu = styled.aside`
 
     .menu-item:hover svg {
         stroke: #b388ff !important;
+    }
+
+    @media (max-width: 993px) {
+        margin: 0;
+        height: 70px;
+        border-right: none;
+        position: fixed;
+        bottom: 0;
+        z-index: 100000;
+        background-color: #b388ff;
+        -webkit-box-shadow: 0px -1px 30px 0px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow:    0px -1px 30px 0px rgba(0, 0, 0, 0.2);
+        box-shadow:         0px -1px 30px 0px rgba(0, 0, 0, 0.2);
+
+        .menu-item {
+            float: left;
+            min-width: 25%;
+            min-height: 100% !important;
+            border-right: none;
+        }
+
+        .menu-item-active {
+            border-right: none;
+            opacity: 1;
+            transition: 0.3s ease-in-out;
+        }
+
+        .menu-item svg {
+            height: 22px;
+            width: 22px;
+            stroke: #ffffff;
+        }
+
+        .menu-item-active svg {
+            stroke: #ffffff !important;
+        }
+
+        .menu-item:hover svg {
+            stroke: #ffffff !important;
+        }
     }
 `;
