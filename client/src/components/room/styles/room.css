@@ -82,24 +82,6 @@
     margin: 2.5rem;
 }
 
-#room-attendence-cont {
-    margin-bottom: 2rem;
-}
-
-#room-attendence-cont h5 {
-    color: #bdbdbd;
-    font-weight: 100;
-    font-size: 1.15rem;
-    letter-spacing: 1px;
-}
-
-#room-attendence-percentage {
-    font-weight: 800;
-    font-size: 5rem;
-    margin-top: 0;
-    letter-spacing: 0px;
-}
-
 #room-admin-settings-btn {
     position: absolute;
     top: 1rem;

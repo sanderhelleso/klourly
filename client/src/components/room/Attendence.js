@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { attendence } from '../../api/room/attendence';
 
 // redux
@@ -25,12 +26,13 @@ class Attendence extends Component {
     renderAttendence() {
 
         if (this.props.attendenceData) {
-            console.log(this.props.attendenceData);
             return (
-                <div>
-                    <h3>{this.props.attendenceData.attendedInPercent}</h3>
-                    <h5>Total Attendence</h5>
-                </div>
+                <div className="animated fadeIn attendence">
+                    {this.props.attendenceData.attendedInPercent}<span>%</span>
+                    <span className="attended">
+                        Attended
+                    </span>
+                </div>  
             )
         }
 
@@ -39,9 +41,9 @@ class Attendence extends Component {
 
     render() {
         return(
-            <div id="room-attendence-cont" className="col s12">
+            <StyledAttendence className="col s12">
                 {this.renderAttendence()}
-            </div>
+            </StyledAttendence>
         )
     }
 }
@@ -59,3 +61,36 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
+
+
+const StyledAttendence = styled.div`
+
+    margin-bottom: 2rem;
+
+    .attendence {
+        font-weight: 100;
+        font-size: 5.25rem;
+        color: #eeeeee;
+        opacity: 0.4;
+
+        span {
+            font-size: 1.5rem;
+        }
+
+        .attended {
+            display: block;
+            font-size: 1.3rem;
+            margin-top: -15px;
+            text-align: center;
+            letter-spacing: 3px;
+        }    
+    }
+
+    h5 {
+        color: #bdbdbd;
+        font-weight: 100;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+`;
+
