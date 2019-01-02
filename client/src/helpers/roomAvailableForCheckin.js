@@ -62,7 +62,7 @@ function validateTime(time) {
     const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime();
 
     // check if currently within range of available time
-    if ((now + 86400000) >= fromTime && now <= toTime) {
+    if (now >= fromTime && now <= toTime) {
 
         // if true, send back object with to time used for countdown
         return toTime;

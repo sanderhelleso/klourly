@@ -43,8 +43,6 @@ class Attendence extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-
         if (this.props.attendenceData !== nextProps.attendenceData) {
             this.setState({
                 percentage: nextProps.attendenceData.attendedInPercent
