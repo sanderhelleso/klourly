@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Router, Route, Redirect} from "react-router-dom";
+import { Router, Route, Redirect} from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
 import history from '../helpers/history';
 
 // animations
@@ -133,6 +134,7 @@ class App extends Component {
         return (
             <Router history={history}>
                 <div id="main-app-cont">
+                    <GlobalDashStyle />
                     {this.renderRoutes()}
                     <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
                 </div>
@@ -150,3 +152,9 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+const GlobalDashStyle = createGlobalStyle`
+    body {
+        background-color: #f5f5f5;
+    }
+`;
