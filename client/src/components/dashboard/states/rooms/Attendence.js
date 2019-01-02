@@ -67,6 +67,11 @@ class Attendence extends Component {
                 this.setState({
                     percentage: response.data.stats.attendedInPercent
                 });
+
+                this.props.setRoomAttendenceAction({
+                    ...response.data.stats,
+                    key: this.props.attendingIndex
+                });
             }
 
             else {
@@ -75,10 +80,6 @@ class Attendence extends Component {
                 });
             }
 
-            this.props.setRoomAttendenceAction({
-                ...response.data.stats,
-                key: this.props.attendingIndex
-            });
 
             // finish loding
             this.setState({
