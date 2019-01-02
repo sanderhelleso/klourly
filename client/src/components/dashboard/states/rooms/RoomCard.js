@@ -7,6 +7,7 @@ import { getWeek } from '../../../../helpers/getWeek';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 
 import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 import { attendence } from '../../../../api/room/attendence';
@@ -78,6 +79,15 @@ class RoomCard extends Component {
         // if successfull attendendce, show message and remove button
         if (response.data.success) {
             this.setState({ available: 'not set'}, () => this.removeCheckIn());
+
+            // update attendence percentage
+            const updatedUserAttendence = this.props.data.attendenceData.userAttended + 1;
+            this.props.setRoomAttendenceAction({
+                ...this.props.data.attendenceData,
+                key: this.props.attendingIndex,
+                userAttended: updatedUserAttendence,
+                attendedInPercent: Math.floor((updatedUserAttendence / this.props.data.attendenceData.total) * 100)
+            });
         }
 
         // finish loading
@@ -161,7 +171,7 @@ class RoomCard extends Component {
         return (
             <StyledCard 
                 className="col s12 m12 l10 offset-l1"
-                onClick={() => redirect.room(this.props.data.id)}
+                onClick={() => {}}//redirect.room(this.props.data.id)}
             >
                 <div className="row">
                     <RoomCover className="col s5" url={this.props.data.cover} />
@@ -200,7 +210,7 @@ const mapStateToProps = state => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomCard);

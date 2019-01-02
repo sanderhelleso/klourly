@@ -25,7 +25,7 @@ class Attendence extends Component {
                 }
             }
 
-            // data is loaded and user has not addeded
+            // data is loaded and user has not attended
             else {
                 this.state = {
                     notAttended: true
@@ -42,12 +42,20 @@ class Attendence extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+
+        if (this.props.attendenceData !== nextProps.attendenceData) {
+            this.setState({
+                percentage: nextProps.attendenceData.attendedInPercent
+            });
+        }
+    }
+
     async componentDidMount() {
 
         // check if data retrival is needed
         if (this.state.loading) {
-
-            console.log('FETCHING...')
 
             // fetch users current attendence in percentage
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
@@ -76,10 +84,6 @@ class Attendence extends Component {
             this.setState({
                 loading: false
             });
-        }
-
-        else {
-            console.log('NOT FETCHING, GOT DATA!!')
         }
     }
 
@@ -122,9 +126,7 @@ class Attendence extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
-        userID: state.auth.user.id
-    };
+    return { userID: state.auth.user.id };
 };
 
 const mapDispatchToProps = (dispatch) => {
