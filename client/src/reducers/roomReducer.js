@@ -16,6 +16,16 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 attendingPreview: action.payload
             }
+        
+        case 'SET_ROOM_ATTENDENCE':
+            return {
+                ...state,
+                attendingPreview: state.attendingPreview.map(
+                    (attendingPreview, i) => i === action.payload.key 
+                    ? {...attendingPreview, attendenceData: action.payload}
+                    : attendingPreview
+                )
+            }
 
         case 'ENTER_ROOM_SUCCESS':
             return {

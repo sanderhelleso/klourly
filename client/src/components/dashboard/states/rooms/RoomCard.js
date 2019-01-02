@@ -172,7 +172,10 @@ class RoomCard extends Component {
                         </h4>
                         {this.props.owning 
                             ? null 
-                            : <Attendence roomID={this.props.data.id} />
+                            : <Attendence 
+                                roomID={this.props.data.id} 
+                                attendingIndex={this.props.attendingIndex} 
+                            />
                         }
                         <ToRoomButton 
                             className="waves-effect waves-light btn-flat"
@@ -239,6 +242,11 @@ const RoomCover = styled.div`
     height: 100%;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
 `;
 
 const RoomInfo = styled.div`

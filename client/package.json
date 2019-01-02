@@ -71,6 +71,7 @@
     "google-maps-react": "^2.0.2",
     "history": "^4.7.2",
     "materialize-css": "^1.0.0-rc.2",
+    "node-vibrant": "^3.0.0",
     "qs": "^6.6.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

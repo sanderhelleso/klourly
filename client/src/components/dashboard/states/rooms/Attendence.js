@@ -5,6 +5,7 @@ import { Cloud } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 
 import { attendence } from '../../../../api/room/attendence';
 
@@ -22,13 +23,17 @@ class Attendence extends Component {
         // fetch users current attendence in percentage
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
-        console.log(response);
         // check for successfull retrieval
         if (response.status === 200) {
 
             // update and display
             this.setState({
                 percentage: response.data.stats.attendedInPercent
+            });
+
+            this.props.setRoomAttendenceAction({
+                ...response.data.stats,
+                key: this.props.attendingIndex
             });
         }
 
@@ -87,7 +92,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
