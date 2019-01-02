@@ -13,27 +13,41 @@ class DashboardMenu extends Component {
         super(props);
 
         console.log(props);
+
         this.toogleMenuOption = this.toogleMenuOption.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
     }
 
     // select specific menu option
     toogleMenuOption(e) {
+
+        // get all possible options
         const options = Array.from(document.querySelectorAll('.menu-item'));
-        const selectedOption = e.target;
-        for (let i = 0; i < options.length; i++) {
 
-            if (options[i] === selectedOption) {
-                options[i].className = 'menu-item menu-item-active';
+        // itterate over options and update dashboard
+        options.forEach(option => {
 
-                // update state with selected option to render main dashboard
-                this.props.dashboardActions(i + 1);
-                localStorage.setItem('dashboardOption', i + 1);
+            // current option index
+            let index = options.indexOf(option);
+
+            // check if matching
+            if (option === e.target) {
+
+                options[index].className = 'menu-item menu-item-active';
+
+                // update state with selected option to render dashboard sections
+                this.props.dashboardActions(index + 1);
             }
 
             else {
-                options[i].className = 'menu-item';
+
+                // set to default if not active
+                options[index].className = 'menu-item';
             }
-        }
+        });
     }
 
     componentDidMount() {
@@ -43,16 +57,16 @@ class DashboardMenu extends Component {
     render() {
         return (
             <StyledMenu id='dashboard-menu' className='col s12 m12 l2'>
-                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption} >
+                <div className='menu-item' onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
-                <div className='col m4 l12 menu-item menu-item-active' onClick={this.toogleMenuOption}>
+                <div className='menu-item menu-item-active' onClick={this.toogleMenuOption}>
                     <Grid size={30} />
                 </div>
-                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='menu-item' onClick={this.toogleMenuOption}>
                     <Map size={30} />
                 </div>
-                <div className='col m4 l12 menu-item' onClick={this.toogleMenuOption}>
+                <div className='menu-item' onClick={this.toogleMenuOption}>
                     <Settings size={30} />
                 </div>
             </StyledMenu>
@@ -61,13 +75,14 @@ class DashboardMenu extends Component {
 }
 
 
-// update dashboard state
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ dashboardActions }, dispatch);
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        dashboardOption: state.dashboard.dashboardOption
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);
