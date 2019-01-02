@@ -13,7 +13,6 @@ export default class RoomPreview extends Component {
 
         // render preview card for each room
         let attendingIndex = -1;
-        console.log(this.props.data);
         if (this.props.data) {
             return this.props.data
                     .sort((a, b) => a.name.localeCompare(b.name))

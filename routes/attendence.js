@@ -46,20 +46,19 @@ module.exports = app => {
         const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
         checkinRef.once('value', snapshot => {
 
-            let stats = {}; // default to 'N/A'
-            let status = 204; // No content
+            let stats = { attended: false }; // default to false
 
             // check if checkin is registered for given room
             if (snapshot.val()) {
 
                 // update status and get attendence data
-                status = 200;
                 stats = getAttendenceStats(snapshot.val(), req.body.uid);
+                stats.attended = true;
             }
 
             // send back response with retrieved data
-            res.status(status).json({ 
-                success: status === 200 ? true : false,
+            res.status(200).json({ 
+                success: true,
                 stats
             });
 

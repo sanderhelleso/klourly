@@ -13,40 +13,74 @@ class Attendence extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            loading: true
+        // set state depending if data is already retrieved
+        if (props.attendenceData) {
+
+            // data is loaded and user has attended
+            if (props.attendenceData.attended) {
+
+                // set attendence percentage
+                this.state = {
+                    percentage: props.attendenceData.attendedInPercent
+                }
+            }
+
+            // data is loaded and user has not addeded
+            else {
+                this.state = {
+                    notAttended: true
+                }
+            }
+            
+        }
+
+        // no data present, load data
+        else {
+            this.state = {
+                loading: true
+            }
         }
     }
 
     async componentDidMount() {
 
-        // fetch users current attendence in percentage
-        const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+        // check if data retrival is needed
+        if (this.state.loading) {
 
-        // check for successfull retrieval
-        if (response.status === 200) {
+            console.log('FETCHING...')
 
-            // update and display
-            this.setState({
-                percentage: response.data.stats.attendedInPercent
-            });
+            // fetch users current attendence in percentage
+            const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+
+            // check for successfull retrieval
+            if (response.data.success) {
+
+                // update and display
+                this.setState({
+                    percentage: response.data.stats.attendedInPercent
+                });
+            }
+
+            else {
+                this.setState({
+                    notAttended: true
+                });
+            }
 
             this.props.setRoomAttendenceAction({
                 ...response.data.stats,
                 key: this.props.attendingIndex
             });
-        }
 
-        else {
+            // finish loding
             this.setState({
-                notAttended: true
+                loading: false
             });
         }
 
-        // finish loding
-        this.setState({
-            loading: false
-        });
+        else {
+            console.log('NOT FETCHING, GOT DATA!!')
+        }
     }
 
     renderAttendence() {
@@ -88,7 +122,9 @@ class Attendence extends Component {
 }
 
 const mapStateToProps = state => {
-    return { userID: state.auth.user.id };
+    return { 
+        userID: state.auth.user.id
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {

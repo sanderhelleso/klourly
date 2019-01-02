@@ -174,7 +174,8 @@ class RoomCard extends Component {
                             ? null 
                             : <Attendence 
                                 roomID={this.props.data.id} 
-                                attendingIndex={this.props.attendingIndex} 
+                                attendingIndex={this.props.attendingIndex}
+                                attendenceData={this.props.data.attendenceData} 
                             />
                         }
                         <ToRoomButton 
