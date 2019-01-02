@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Map, Clipboard, Activity, Settings, Grid} from 'react-feather';
+import { Map, Activity, Settings, Grid} from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -12,13 +12,7 @@ class DashboardMenu extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
-
         this.toogleMenuOption = this.toogleMenuOption.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
     }
 
     // select specific menu option
@@ -51,22 +45,24 @@ class DashboardMenu extends Component {
     }
 
     componentDidMount() {
+
+        // activate menu
         document.querySelector('.menu-item-active').click();
     }
 
     render() {
         return (
-            <StyledMenu id='dashboard-menu' className='col s12 m12 l2'>
-                <div className='menu-item' onClick={this.toogleMenuOption} >
+            <StyledMenu id="dashboard-menu" className="col s12 m12 l2">
+                <div className="menu-item" onClick={this.toogleMenuOption} >
                     <Activity size={30} />
                 </div>
-                <div className='menu-item menu-item-active' onClick={this.toogleMenuOption}>
+                <div className="menu-item menu-item-active" onClick={this.toogleMenuOption}>
                     <Grid size={30} />
                 </div>
-                <div className='menu-item' onClick={this.toogleMenuOption}>
+                <div className="menu-item" onClick={this.toogleMenuOption}>
                     <Map size={30} />
                 </div>
-                <div className='menu-item' onClick={this.toogleMenuOption}>
+                <div className="menu-item" onClick={this.toogleMenuOption}>
                     <Settings size={30} />
                 </div>
             </StyledMenu>
@@ -79,13 +75,8 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ dashboardActions }, dispatch);
 }
 
-const mapStateToProps = state => {
-    return { 
-        dashboardOption: state.dashboard.dashboardOption
-    };
-};
+export default connect(null, mapDispatchToProps)(DashboardMenu);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);
 
 const StyledMenu = styled.aside`
     margin: 10vh 0 10vh 0;

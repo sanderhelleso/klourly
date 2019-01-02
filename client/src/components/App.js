@@ -19,6 +19,7 @@ import Login from './login/Login';
 import NewRoom from './newRoom/NewRoom';
 import Room from './room/Room';
 import RoomAdmin from './room/admin/RoomAdmin';
+import NotFound from './notFound/NotFound';
 
 // import Dashboard
 import Dashboard from './dashboard/Dashboard';
