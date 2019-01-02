@@ -42,9 +42,6 @@ class RoomCard extends Component {
                 // check if user has already checkedin
                 const alreadyCheckedIn = await this.attendenceResponse(true, availableTo);
 
-                console.log(alreadyCheckedIn);
-                console.log(availableTo);
-
                 if (!alreadyCheckedIn.data.success) {
 
                     // start countdown
@@ -87,7 +84,6 @@ class RoomCard extends Component {
             const updatedUserAttendence = this.props.data.attendenceData.userAttended + 1;
             this.props.setRoomAttendenceAction({
                 ...this.props.data.attendenceData,
-                key: this.props.attendingIndex,
                 userAttended: updatedUserAttendence,
                 attendedInPercent: Math.floor((updatedUserAttendence / this.props.data.attendenceData.total) * 100)
             });
