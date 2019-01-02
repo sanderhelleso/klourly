@@ -25,12 +25,11 @@ export default class Attend extends Component {
 
             return (
                 <div>
-                    <h5>{staticTxt.headingActive}</h5>
                     <button 
-                    id='checkin-btn' 
-                    className={this.state.classNameEnabled} 
-                    >
-                    {this.state.btnMessage}
+                        id='checkin-btn' 
+                        className={this.state.classNameEnabled} 
+                        >
+                        {this.state.btnMessage}
                     </button>
                 </div>
             )
@@ -56,8 +55,8 @@ export default class Attend extends Component {
     render() {
         return (
             <div id="room-checking">
-                {this.renderCheckinBtn()}
                 <Attendence />
+                {this.renderCheckinBtn()}
             </div>
         )
     }

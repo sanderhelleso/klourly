@@ -157,9 +157,10 @@ const StyledAttendence = styled.h5`
 
     .attended {
         display: block;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         margin-top: -35px;
         text-align: center;
+        letter-spacing: 1.5px;
     }     
 `;
 

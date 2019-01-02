@@ -78,6 +78,18 @@ class Room extends Component {
         return null;
     }
 
+    renderCheckin() {
+        if (this.props.activeRoom.owner.id !== this.props.userID) {
+            return (
+                <div className="col s12 room-aside-section">
+                    <Checkin />
+                </div>
+            )
+        }
+
+        return null;
+    }
+
     renderRoom() {
 
         if (this.props.activeRoom.id === this.props.match.params.roomID) {
@@ -89,9 +101,7 @@ class Room extends Component {
                             <Announcements announcements={this.props.activeRoom.announcements}/>
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
-                            <div className="col s12 room-aside-section">
-                                <Checkin />
-                            </div>
+                            {this.renderCheckin()}
                             <div className="col s12 room-aside-section">
                                 <Times />
                             </div>

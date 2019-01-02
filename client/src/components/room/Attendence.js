@@ -65,13 +65,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
 
 const StyledAttendence = styled.div`
 
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
 
     .attendence {
         font-weight: 100;
-        font-size: 5.25rem;
-        color: #eeeeee;
-        opacity: 0.4;
+        font-size: 6rem;
+        color: #e0e0e0;
+        opacity: 0.7;
 
         span {
             font-size: 1.5rem;
