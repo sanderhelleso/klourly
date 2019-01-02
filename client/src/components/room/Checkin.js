@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RoomAttendenceData from '../dataPrefetch/RoomAttendenceData';
 
 const staticTxt = {
     attended: 'Total Attendence',
@@ -56,6 +57,7 @@ export default class Attend extends Component {
     render() {
         return (
             <div id="room-checking">
+                <RoomAttendenceData />
                 {this.renderCheckinBtn()}
                 <div id="room-attendence-cont" className="col s12">
                     <h3 id="room-attendence-percentage">76%</h3>
