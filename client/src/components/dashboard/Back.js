@@ -5,7 +5,7 @@ import { redirect } from '../../helpers/redirect';
 
 const Back = props => (
     <StyledBack>
-        <a className="waves-effect waves-light"
+        <a className="waves-effect waves-light animated fadeIn"
             onClick={
                 props.to === 'Dashboard'
                 ? redirect.dashboard

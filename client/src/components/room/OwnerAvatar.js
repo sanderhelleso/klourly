@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const OwnerAvatar = props => <StyledAvatar className="animated fadeIn z-depth-3" src={props.url} />;
+const OwnerAvatar = props => (
+    <StyledAvatar className="animated fadeIn z-depth-3" src={props.url} />
+);
 
 export default OwnerAvatar;
 

@@ -15,23 +15,12 @@ import Times from './Times';
 import Location from './location/Location';
 import Menu from './Menu';
 import OwnerAvatar from './OwnerAvatar';
+import Header from './Header';
 
 
 class Room extends Component {
     constructor(props) {
         super(props);
-
-        this.renderRoomHeading = this.renderRoomHeading.bind(this);
-    }
-
-    renderRoomHeading() {
-        return (
-            <div id="room-cover-header" className="">
-                <h5>{this.props.activeRoom.location.name}</h5>
-                <h1>{this.props.activeRoom.name}</h1>
-                <p>By {this.props.activeRoom.owner.name}</p>
-            </div>
-        )
     }
 
     renderCover() {
@@ -60,7 +49,11 @@ class Room extends Component {
                 >
                     <div style={{ height: '300px' }} />
                 </Parallax>
-                {this.renderRoomHeading()}
+                <Header 
+                    location={this.props.activeRoom.location.name} 
+                    name={this.props.activeRoom.name}
+                    owner={this.props.activeRoom.owner.name}
+                />
                 <OwnerAvatar url={this.props.activeRoom.owner.photoUrl} />
             </div>
         )
