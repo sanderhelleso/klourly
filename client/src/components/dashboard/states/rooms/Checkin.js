@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
+import { checkinUnavailableAction } from '../../../../actions/room/attendence/checkinUnavailableAction';
 
 
 class Checkin extends Component {
@@ -16,6 +17,7 @@ class Checkin extends Component {
         super(props);
 
         this.state = this.setInitialState();
+
         this.registerAttendence = this.registerAttendence.bind(this);
 
         console.log(this.props);
@@ -25,26 +27,42 @@ class Checkin extends Component {
 
         // fetch potensial available to time
         const availableTo = roomAvailableForCheckin(this.props.times);
+        let available = true;
 
         // check if checkin is available
-        if (availableTo) {
+        if (!availableTo) {
+            available = false;
+        }  
+        
+        else {
 
             // check if user has already checkedin
             const alreadyCheckedIn = await this.attendenceResponse(true, availableTo);
-            console.log(alreadyCheckedIn);
 
-            if (!alreadyCheckedIn.data.success) {
+            // not available
+            if (alreadyCheckedIn.data.success) {
+                available = false;
+            }
+
+            else {
 
                 // start countdown
                 this.setState({ 
                     ...availableTo,
                     now: new Date().getTime(),
                     interval: this.updateAvailableMode(),
-                    available: true
+                    available
                 });
             }
-        }    
-        
+        }
+
+        // update checkin state
+        this.props.checkinUnavailableAction({
+            roomID: this.props.roomID,
+            checkinData: {
+                available
+            }
+        });
     }
 
     setInitialState() {
@@ -179,7 +197,7 @@ const mapStateToProps = state => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ setRoomAttendenceAction }, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction, checkinUnavailableAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);

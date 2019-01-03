@@ -23,7 +23,24 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 attendence: {
                     ...state.attendence,
-                    [action.payload.roomID]: action.payload
+                    [action.payload.roomID]: {
+                        ...state.attendence[action.payload.roomID],
+                        ...action.payload
+                    }
+                }
+            }
+
+        case 'CHECKIN_UNAVAILABLE':
+            return {
+                ...state,
+                attendence: {
+                    ...state.attendence,
+                    [action.payload.roomID]: {
+                        ...state.attendence[action.payload.roomID],
+                        checkin: {
+                            ...action.payload.checkinData
+                        }
+                    }
                 }
             }
 

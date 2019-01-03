@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { redirect } from '../../../../helpers/redirect';
-import { ArrowRight } from 'react-feather';
 
-// redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import Attendence from './Attendence';
 import Checkin from './Checkin';
+import ToRoom from './ToRoom';
 
-class RoomCard extends Component {
+export default class RoomCard extends Component {
     constructor(props) {
         super(props);
     }
@@ -27,21 +23,8 @@ class RoomCard extends Component {
                             ? `${this.props.data.name.substring(0, 16)}..`
                             : this.props.data.name}
                         </h4>
-                        {this.props.owning 
-                            ? null 
-                            : <Attendence 
-                                roomID={this.props.data.id} 
-                                attendingIndex={this.props.attendingIndex}
-                                attendenceData={this.props.data.attendenceData} 
-                            />
-                        }
-                        <ToRoomButton 
-                            className="waves-effect waves-light btn-flat"
-                            notAvailable={this.props.owning}
-                            onClick={() => redirect.room(this.props.data.id)}
-                        >
-                            <ArrowRight />
-                        </ToRoomButton>
+                        {this.props.owning ? null : <Attendence roomID={this.props.data.id} />}
+                        <ToRoom owning={this.props.owning} roomID={this.props.data.id} />
                         {this.props.owning 
                             ? null 
                             : <Checkin 
@@ -55,19 +38,6 @@ class RoomCard extends Component {
         )
     }
 }
-
-const mapStateToProps = state => {
-    return { 
-        userID: state.auth.user.id
-    };
-};
-
-// update created room state
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomCard);
 
 const StyledCard = styled.div`
     transform: scale(1.001);
@@ -165,12 +135,4 @@ const RoomInfo = styled.div`
             font-size: 2rem;
         }       
     }
-`;
-
-const ToRoomButton = styled.a`
-    bottom: ${props => (props.owning || props.notAvailable) ? '35%' : '15%'};
-    background: #9796f0;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 `;
