@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Parallax, Background } from 'react-parallax';
+import { Parallax } from 'react-parallax';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -67,7 +67,7 @@ class Room extends Component {
 
         if (this.props.activeRoom.id === this.props.match.params.roomID) {
             return (
-                <div id="room-cont" className="animated fadeIn">
+                <StyledCont className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
                         <div id="room-main" className="col l8 m6 s12">
@@ -79,14 +79,14 @@ class Room extends Component {
                                  : null
                             }
                             <div className="col s12 room-aside-section">
-                                <Times />
+                                <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 room-aside-section">
-                                <Location />
+                                <Location address={this.props.activeRoom.location.address}/>
                             </div>
                         </div>
                     </div>
-                </div>
+                </StyledCont>
             )
         }
 
@@ -127,4 +127,11 @@ const StyledRoom = styled.div`
 const StyledCover = styled.div`
     position: relative;
     margin-bottom: 7.5rem;
+`;
+
+const StyledCont = styled.div`
+    min-height: 100vh;
+    padding-bottom: 5rem;
+    background-color: #ffffff;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 `;

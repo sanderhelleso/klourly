@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
-
-// redux
-import { connect } from 'react-redux';
-import { MapPin } from 'react-feather';
+import styled from 'styled-components';
 import RoomMapContainer from './RoomMapContainer';
 
-class Location extends Component {
+export default class Location extends Component {
     constructor(props) {
         super(props);
-
-        console.log(props);
     }
 
     render() {
         return (
-            <div id="room-location-cont" className="center-align">
+            <StyledLocation>
                 <RoomMapContainer />
-                <h5>{this.props.state.room.activeRoom.location.address}</h5>
-            </div>
+                <h5>{this.props.address}</h5>
+            </StyledLocation>
         )
     }
 }
 
+const StyledLocation = styled.div`
+    padding: 0;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word;
+    text-align: center;
 
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
-}
+    #room-map-cont {
+        padding: 0;
+    }
 
-export default connect(mapStateToProps, null)(Location);
+    h5 {
+        font-size: 1.15rem;
+        color: #9e9e9e;
+        font-weight: 100;
+        display: inline-block;
+    }
+`;
+
+

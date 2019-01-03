@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
-import { Clock } from 'react-feather';
+import styled from 'styled-components';
+import { DAYS } from '../../helpers/days';
 
-// redux
-import { connect } from 'react-redux';
-
-class Times extends Component {
+export default class Times extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            times: {
-                ...props.state.room.activeRoom.times
-            }
-        }
-
-        this.renderTimes = this.renderTimes.bind(this);
     }
 
     sortDays(timeDays) {
-        const days = ['monday', 'tueseday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
         const sortedDays = [];
         Object.keys(timeDays).forEach(day => {
-            sortedDays[days.indexOf(day)] = day;
+            sortedDays[DAYS.indexOf(day)] = day;
         });
         
         return { ...sortedDays.filter(Boolean) };
@@ -30,23 +18,21 @@ class Times extends Component {
 
     renderTimes() {
 
-        return Object.keys(this.state.times).map(timeKey => {
+        return Object.keys(this.props.times).map(timeKey => {
 
             // check if current key is object
-            if (typeof this.state.times[timeKey] === 'object') {
+            if (typeof this.props.times[timeKey] === 'object') {
 
-                const time = this.state.times[timeKey];
+                const time = this.props.times[timeKey];
                 return(
-                    <div key={timeKey} className="room-times center-align animated fadeIn">
-                        <ul>
-                        {  
-                            Object.values(this.sortDays(time.days)).map(day => {
+                    <StyledList key={timeKey}>
+                        <ul>{Object.values(this.sortDays(time.days))
+                            .map(day => {
                                 return <li key={day}>{day.substring(0, 3).toUpperCase()}</li>
-                            })
-                        }
+                            })}
                         </ul>
                         <h5>{time.time.from} - {time.time.to}</h5>
-                    </div>
+                    </StyledList>
                 );
             };
         });
@@ -55,16 +41,54 @@ class Times extends Component {
 
     render() {
         return (
-            <div id="room-times-cont" className="center-align">
+            <StyledCont>
                 {this.renderTimes()}
-            </div>
+            </StyledCont>
         )
     }
 }
 
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
-}
+const StyledCont = styled.div`
 
-export default connect(mapStateToProps, null)(Times);
+    margin: 2rem 0;
+    text-align: center;
+
+    .room-times {
+        margin: 1.5rem 0;
+        word-wrap: break-word;
+    }
+
+    .room-times ul li {
+        display: inline;
+        padding: 0.50rem;
+        color: #bdbdbd;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+    }
+
+    .room-times h5 {
+        font-size: 1.65rem;
+        font-weight: 100;
+        color: #212121;
+    }
+`;
+
+const StyledList = styled.div`
+
+    margin: 1.5rem 0;
+    word-wrap: break-word;
+
+    ul li {
+        display: inline;
+        padding: 0.50rem;
+        color: #bdbdbd;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+    }
+
+    h5 {
+        font-size: 1.65rem;
+        font-weight: 100;
+        color: #212121;
+    }
+`;

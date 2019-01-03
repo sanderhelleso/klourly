@@ -18,7 +18,7 @@ class RoomMapContainer extends React.Component {
 
 	render() {
 		return (
-            <div className="animated fadeIn">
+            <div>
                 <RoomMap
                     props={this.props}
                     coords={this.state.coords}
