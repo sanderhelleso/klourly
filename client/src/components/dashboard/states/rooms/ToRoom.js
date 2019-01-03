@@ -10,6 +10,18 @@ import { connect } from 'react-redux';
 class ToRoom extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            available: false
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.attendenceData[this.props.roomID] && nextProps.attendenceData[this.props.roomID].checkin.available) {
+            this.setState({
+                available: true
+            });
+        }
     }
 
 
@@ -17,7 +29,7 @@ class ToRoom extends Component {
         return (
             <ToRoomButton 
                 className="waves-effect waves-light btn-flat"
-                notAvailable={this.props.owning}
+                notAvailable={this.props.owning || !this.state.available}
                 onClick={() => redirect.room(this.props.roomID)}
             >
                 <ArrowRight />
@@ -28,7 +40,7 @@ class ToRoom extends Component {
 
 const mapStateToProps = state => {
     return { 
-        userID: state.auth.user.id
+        attendenceData: state.room.attendence
     };
 };
 
