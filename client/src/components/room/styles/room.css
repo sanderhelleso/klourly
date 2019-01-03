@@ -1,15 +1,3 @@
-
-#room {
-    min-height: 75vh;
-    margin-bottom: 15vh;
-    padding-bottom: 10vh;
-}
-
-#room-cover {
-    position: relative;
-    margin-bottom: 7.5rem;
-}
-
 #room-cont {
     min-height: 100vh;
     padding-bottom: 5rem;
@@ -119,10 +107,6 @@
     stroke: #7c4dff;
     opacity: 0.6;
     margin: 2rem 0;
-}
-
-.room-aside-section {
-    margin-bottom: 1rem;
 }
 
 .room-times {

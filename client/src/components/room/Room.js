@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { Parallax, Background } from 'react-parallax';
 
 // redux
@@ -25,8 +26,11 @@ class Room extends Component {
 
     renderCover() {
         return (
-            <div id="room-cover" className="col s12">
-                {this.renderAdmin()}
+            <StyledCover className="col s12">
+                {this.props.activeRoom.owner.id === this.props.userID
+                    ? <Menu id={this.props.activeRoom.id}/> 
+                    : null
+                }
                 <Parallax
                     blur={{ min: -15, max: 15 }}
                     bgImage={`${this.props.activeRoom.cover}`}
@@ -55,28 +59,8 @@ class Room extends Component {
                     owner={this.props.activeRoom.owner.name}
                 />
                 <OwnerAvatar url={this.props.activeRoom.owner.photoUrl} />
-            </div>
+            </StyledCover>
         )
-    }
-
-    renderAdmin() {
-        if (this.props.activeRoom.owner.id === this.props.userID) {
-            return <Menu id={this.props.activeRoom.id}/>
-        }
-
-        return null;
-    }
-
-    renderCheckin() {
-        if (this.props.activeRoom.owner.id !== this.props.userID) {
-            return (
-                <div className="col s12 room-aside-section">
-                    <Checkin />
-                </div>
-            )
-        }
-
-        return null;
     }
 
     renderRoom() {
@@ -90,7 +74,10 @@ class Room extends Component {
                             <Announcements announcements={this.props.activeRoom.announcements}/>
                         </div>
                         <div id="room-aside" className="col l4 m6 s12">
-                            {this.renderCheckin()}
+                            {this.props.activeRoom.owner.id !== this.props.userID
+                                 ? <Checkin /> 
+                                 : null
+                            }
                             <div className="col s12 room-aside-section">
                                 <Times />
                             </div>
@@ -108,10 +95,10 @@ class Room extends Component {
 
     render() {
         return (
-            <div id="room" className="container">
+            <StyledRoom className="container">
                 <Back to={'Dashboard'} roomID={this.props.activeRoom.id} />
                 {this.renderRoom()}
-            </div>
+            </StyledRoom>
         )
     }
 }
@@ -129,3 +116,15 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);
+
+
+const StyledRoom = styled.div`
+    min-height: 75vh;
+    margin-bottom: 15vh;
+    padding-bottom: 10vh;
+`;
+
+const StyledCover = styled.div`
+    position: relative;
+    margin-bottom: 7.5rem;
+`;

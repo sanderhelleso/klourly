@@ -27,7 +27,7 @@ export default class Checkin extends Component {
 
     render() {
         return (
-            <CheckinCont>
+            <CheckinCont className="col s12">
                 <Attendence />
                 {this.renderCheckinBtn()}
             </CheckinCont>
@@ -37,7 +37,8 @@ export default class Checkin extends Component {
 
 const CheckinCont = styled.div`
     text-align: center;
-`
+    margin-bottom: 1rem;
+`;
 
 const StyledButton = styled.a`
     background: #FF5F6D;  /* fallback for old browsers */
