@@ -13,15 +13,16 @@ class Attendence extends Component {
     constructor(props) {
         super(props);
 
+
         // set state depending if data is already retrieved
-        if (this.props.attendenceData) {
+        if (this.props.attendenceData[this.props.roomID]) {
 
             // data is loaded and user has attended
-            if (this.props.attendenceData.attended) {
+            if (this.props.attendenceData[this.props.roomID].attended) {
 
                 // set attendence percentage
                 this.state = {
-                    percentage: props.attendenceData.attendedInPercent
+                    percentage: props.attendenceData[this.props.roomID].attendedInPercent
                 }
             }
 
@@ -45,9 +46,9 @@ class Attendence extends Component {
     componentWillReceiveProps(nextProps) {
 
         // update attendence percentage
-        if (this.props.attendenceData !== nextProps.attendenceData) {
+        if (this.props.attendenceData[this.props.roomID] !== nextProps.attendenceData[this.props.roomID]) {
             this.setState({
-                percentage: nextProps.attendenceData.attendedInPercent
+                percentage: nextProps.attendenceData[this.props.roomID].attendedInPercent
             });
         }
     }
@@ -60,6 +61,8 @@ class Attendence extends Component {
             // fetch users current attendence in percentage
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
+            console.log(response);
+
             // check for successfull retrieval
             if (response.data.success) {
 
@@ -70,7 +73,6 @@ class Attendence extends Component {
 
                 this.props.setRoomAttendenceAction({
                     ...response.data.stats,
-                    key: this.props.attendingIndex,
                     roomID: this.props.roomID
                 });
             }
@@ -130,7 +132,7 @@ class Attendence extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        attendenceData: state.room.attendence[state.auth.user.id]
+        attendenceData: state.room.attendence
     };
 };
 

@@ -5,7 +5,7 @@ import { attendence } from '../../api/room/attendence';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { enterRoomAction } from '../../actions/room/enterRoomAction';
+import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
 
 import LinearLoader from '../loaders/LinearLoader';
 
@@ -18,9 +18,20 @@ class Attendence extends Component {
 
     async componentDidMount() {
 
-        const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+        // validate and check if attendence for room is loaded
+        if (!this.props.attendenceData) {
 
-        console.log(response);
+            const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+
+            // update attendence data
+            this.props.setRoomAttendenceAction({
+                ...response.data.stats,
+                roomID: this.props.roomID
+            });
+
+            console.log(response);
+
+        }
     }
 
     renderAttendence() {
@@ -57,7 +68,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ enterRoomAction }, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
@@ -83,7 +94,7 @@ const StyledAttendence = styled.div`
             font-size: 1.3rem;
             margin-top: -15px;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
         }    
     }
 
