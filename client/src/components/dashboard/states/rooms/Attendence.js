@@ -151,7 +151,7 @@ const StyledAttendence = styled.h5`
     top: 12.5%;
     right: 55px;
     color: #bdbdbd;
-    opacity: 0.4;
+    opacity: 0.5;
 
     span {
         font-size: 1.15rem;
@@ -163,6 +163,7 @@ const StyledAttendence = styled.h5`
         margin-top: -35px;
         text-align: center;
         letter-spacing: 1.5px;
+        color: #9e9e9e;
     }     
 `;
 
@@ -179,5 +180,6 @@ const NotAttended = styled.div`
     p {
         font-size: 1.25rem;
         margin-top: -20px;
+        color: #9e9e9e;
     }
 `;

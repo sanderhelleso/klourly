@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
-import './styles/room.css';
-
 import Back from '../dashboard/Back';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';

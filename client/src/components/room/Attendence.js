@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Cloud } from 'react-feather';
 import { attendence } from '../../api/room/attendence';
 
 // redux
@@ -33,15 +34,32 @@ class Attendence extends Component {
 
     renderAttendence() {
 
+        // check if attendence data is loaded
         if (this.props.attendenceData) {
-            return (
-                <div className="animated fadeIn attendence">
-                    {this.props.attendenceData.attendedInPercent}<span>%</span>
-                    <span className="attended">
-                        Attended
-                    </span>
-                </div>  
-            )
+
+            // once loaded check if user has attended
+            if (this.props.attendenceData.attended) {
+                return (
+                    <div className="attendence">
+                        {this.props.attendenceData.attendedInPercent}<span>%</span>
+                        <span className="attended">
+                            Attended
+                        </span>
+                    </div>  
+                )
+            }
+
+            // user hat not attended
+            else {
+                return (
+                    <div className="attendence">
+                        <div className="not-attended">
+                            <Cloud size={70} />
+                            <p>Not Attended</p>
+                        </div>
+                    </div>  
+                )
+            }
         }
 
         return <LinearLoader loading={this.props.attendenceData ? false : true} />;
@@ -49,7 +67,7 @@ class Attendence extends Component {
 
     render() {
         return(
-            <StyledAttendence className="col s12">
+            <StyledAttendence className="col s12 animated fadeIn">
                 {this.renderAttendence()}
             </StyledAttendence>
         )
@@ -79,8 +97,8 @@ const StyledAttendence = styled.div`
     .attendence {
         font-weight: 100;
         font-size: 6rem;
-        color: #e0e0e0;
-        opacity: 0.7;
+        color: #bdbdbd;
+        opacity: 0.5;
 
         span {
             font-size: 1.5rem;
@@ -92,7 +110,24 @@ const StyledAttendence = styled.div`
             margin-top: -15px;
             text-align: center;
             letter-spacing: 5px;
-        }    
+            color: #9e9e9e;
+        }  
+        
+        .not-attended {
+            margin-top: -25px;
+            text-align: center;
+
+            svg {
+                stroke: #b388ff;
+                opacity: 0.6;
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin-top: -10px;
+                color: #9e9e9e;
+            }
+        }
     }
 
     h5 {
