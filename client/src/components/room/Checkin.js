@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { CheckCircle } from 'react-feather';
 import Attendence from './Attendence';
 
 const staticTxt = {
@@ -7,57 +9,56 @@ const staticTxt = {
 
 }
 
-export default class Attend extends Component {
+export default class Checkin extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            active: true,
-            btnMessage: 'Check In',
-            classNameEnabled: 'waves-effect waves-light btn animated fadeIn',
-            classNameDisabled: 'waves-effect waves-light btn animated fadeIn new-room-name-disabled'
-        }
     }
 
     renderCheckinBtn() {
 
-        if (this.state.active) {
-
-            return (
-                <div>
-                    <button 
-                        id='checkin-btn' 
-                        className={this.state.classNameEnabled} 
-                        >
-                        {this.state.btnMessage}
-                    </button>
-                </div>
-            )
-        }
-
-        else {
-
-            return (
-                <div>
-                    <h5>{staticTxt.headingDisabled}</h5>
-                    <button 
-                    id='checkin-btn' 
-                    className={this.state.classNameDisabled} 
-                    onClick={this.setNextStage}
-                    >
-                    {this.state.btnMessage}
-                    </button>
-                </div>
-            )
-        }
+        return (
+            <div>
+                <StyledButton className="waves-effect waves-light">
+                    Check In
+                </StyledButton>
+            </div>
+        )
     }
 
     render() {
         return (
-            <div id="room-checking">
+            <CheckinCont>
                 <Attendence />
                 {this.renderCheckinBtn()}
-            </div>
+            </CheckinCont>
         )
     }
 }
+
+const CheckinCont = styled.div`
+    text-align: center;
+`
+
+const StyledButton = styled.a`
+    background: #FF5F6D;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #ffffff;
+    box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.09);
+    line-height: 0;
+    border: none;
+    padding: 1.75rem 0;
+    min-width: 80%;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    text-align: center;
+    margin: 2rem auto;
+    transition: 0.3s ease-in-out;
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+    }
+`;
+
+

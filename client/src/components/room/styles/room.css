@@ -57,21 +57,6 @@
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 }
 
-#checkin-btn {
-    background-color: transparent;
-    box-shadow: none;
-    border: 2px solid #00e988;
-    color: #ffffff;
-    background-color: #00e988;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    line-height: 0;
-    padding: 1.75rem 2rem;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 2.5rem;
-}
-
 #room-admin-settings-btn {
     position: absolute;
     top: 1rem;
