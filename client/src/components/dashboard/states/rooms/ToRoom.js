@@ -17,10 +17,24 @@ class ToRoom extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.attendenceData[this.props.roomID] && nextProps.attendenceData[this.props.roomID].checkin.available) {
-            this.setState({
-                available: true
-            });
+
+        // updated checkin status
+        let available;
+        const ready = nextProps.attendenceData[this.props.roomID];
+        if (ready) available = nextProps.attendenceData[this.props.roomID].checkin.available;
+
+        // available
+        if (ready && available) {
+            this.setState({ available });
+        }
+
+        // not available
+        else if (ready && !available) {
+
+            // timeout to preserve animation
+            setTimeout(() => {
+                this.setState({ available });
+            }, 750);
         }
     }
 

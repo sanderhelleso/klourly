@@ -30,7 +30,7 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
-        case 'CHECKIN_UNAVAILABLE':
+        case 'CHECKIN_AVAILABLE':
             return {
                 ...state,
                 attendence: {

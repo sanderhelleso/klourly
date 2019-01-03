@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
-import { checkinUnavailableAction } from '../../../../actions/room/attendence/checkinUnavailableAction';
+import { checkinAvailableAction } from '../../../../actions/room/attendence/checkinAvailableAction';
 
 
 class Checkin extends Component {
@@ -57,7 +57,7 @@ class Checkin extends Component {
         }
 
         // update checkin state
-        this.props.checkinUnavailableAction({
+        this.props.checkinAvailableAction({
             roomID: this.props.roomID,
             checkinData: {
                 available
@@ -102,6 +102,14 @@ class Checkin extends Component {
                 ...this.props.attendenceData[this.props.roomID],
                 userAttended: updatedUserAttendence,
                 attendedInPercent: Math.floor((updatedUserAttendence / this.props.attendenceData[this.props.roomID].total) * 100)
+            });
+
+            // update checkin state
+            this.props.checkinAvailableAction({
+                roomID: this.props.roomID,
+                checkinData: {
+                    available: false
+                }
             });
         }
 
@@ -197,7 +205,7 @@ const mapStateToProps = state => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ setRoomAttendenceAction, checkinUnavailableAction }, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction, checkinAvailableAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
