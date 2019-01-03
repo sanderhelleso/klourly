@@ -16,12 +16,10 @@ export const roomAvailableForCheckin =  times => {
     // check if room is available
     let firstFound = false;
     let data = false;
-    Object.entries(times).every(([key, value]) => {
+    Object.entries(times).forEach(([key, value]) => {
 
         // check if type is a valid object (ignore singel key - value pairs)
         if (typeof value === 'object' && value !== null) {
-
-            //console.log(key, value);
 
             // validate if today is part of rooms times
             if (validateDays(value.days)) {
