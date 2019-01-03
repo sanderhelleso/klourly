@@ -68,6 +68,8 @@ module.exports = app => {
 
 function getAttendenceStats(data, uid) {
 
+    // check if any attendences has been set
+
     const attendenceStats = {
         total: 0,
         userAttended: 0,
@@ -100,4 +102,6 @@ function getAttendenceStats(data, uid) {
     attendenceStats.attendedInPercent = Math.floor((attendenceStats.userAttended / attendenceStats.total) * 100);
 
     return attendenceStats;
+
+    // https://www.youtube.com/watch?v=Ca_nad3ipHI  <-- dope track
 }

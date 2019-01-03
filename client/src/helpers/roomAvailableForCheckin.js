@@ -21,6 +21,8 @@ export const roomAvailableForCheckin =  times => {
         // check if type is a valid object (ignore singel key - value pairs)
         if (typeof value === 'object' && value !== null) {
 
+            //console.log(key, value);
+
             // validate if today is part of rooms times
             if (validateDays(value.days)) {
 
@@ -44,6 +46,7 @@ export const roomAvailableForCheckin =  times => {
 
 // validate times day and check if today is active
 function validateDays(days) {   
+
     if (days.hasOwnProperty(day)) {
         return true;
     }
@@ -59,13 +62,16 @@ function validateTime(time) {
     const dayInMs = 86400000;
 
     // get timestamps for from - to time
-    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime() - dayInMs;
-    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime() - dayInMs;
+    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime();
+    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime();
 
     /**
-     * NOTE: for some reasom from and to days are 1 day ahead, need to read more about the API
-     *       could potensially cause bugs for people in different timezones?
+     * NOTE: FIX DAY CHANGE BUG
      */
+
+     /*console.log(now);
+     console.log(fromTime);
+     console.log(toTime);*/
 
     // check if currently within range of available time
     if (now >= fromTime && now <= toTime) {

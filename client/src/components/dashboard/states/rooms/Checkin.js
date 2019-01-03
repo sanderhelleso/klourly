@@ -19,15 +19,16 @@ class Checkin extends Component {
         this.state = this.setInitialState();
 
         this.registerAttendence = this.registerAttendence.bind(this);
-
-        console.log(this.props);
     }
 
     async componentDidMount() {
 
         // fetch potensial available to time
-        const availableTo = roomAvailableForCheckin(this.props.times);
         let available = true;
+        console.log(this.props.times);
+        const availableTo = roomAvailableForCheckin(this.props.times);
+
+        console.log(availableTo);
 
         // check if checkin is available
         if (!availableTo) {
