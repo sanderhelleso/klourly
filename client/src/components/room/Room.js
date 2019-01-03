@@ -14,6 +14,7 @@ import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Location from './location/Location';
 import Menu from './Menu';
+import OwnerAvatar from './OwnerAvatar';
 
 
 class Room extends Component {
@@ -60,12 +61,7 @@ class Room extends Component {
                     <div style={{ height: '300px' }} />
                 </Parallax>
                 {this.renderRoomHeading()}
-                <div id="room-owner-avatar">
-                    <img 
-                        className="animated fadeIn z-depth-3" 
-                        src={this.props.activeRoom.owner.photoUrl} 
-                    />
-                </div>
+                <OwnerAvatar url={this.props.activeRoom.owner.photoUrl} />
             </div>
         )
     }
