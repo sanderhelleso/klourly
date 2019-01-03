@@ -9,7 +9,7 @@ import { enterRoomAction } from '../../../actions/room/enterRoomAction';
 
 import { dashboard } from '../../../api/dashboard/dashboard';
 
-import BackToDash from '../../dashboard/BackToDash';
+import Back from '../../dashboard/Back';
 import { redirect } from '../../../helpers/redirect';
 
 class Create extends Component {
@@ -117,7 +117,7 @@ class Create extends Component {
     }
 
     renderBackToDash() {
-        return this.state.success ? null : <BackToDash />
+        return this.state.success ? null : <Back />
     }
 
 

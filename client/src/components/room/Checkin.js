@@ -44,7 +44,7 @@ const StyledButton = styled.a`
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: #ffffff;
-    box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.09);
+    box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.09);
     line-height: 0;
     border: none;
     padding: 1.75rem 0;
@@ -57,7 +57,7 @@ const StyledButton = styled.a`
     text-transform: uppercase;
 
     &:hover {
-        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.09);
     }
 `;
 

@@ -8,7 +8,7 @@ import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import './styles/room.css';
 
-import BackToDash from '../dashboard/BackToDash';
+import Back from '../dashboard/Back';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
@@ -120,7 +120,7 @@ class Room extends Component {
     render() {
         return (
             <div id="room" className="container">
-                <BackToDash />
+                <Back to={'Dashboard'} roomID={this.props.activeRoom.id} />
                 {this.renderRoom()}
             </div>
         )
