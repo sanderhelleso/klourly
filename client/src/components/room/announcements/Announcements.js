@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import AnnouncementPreview from './AnnouncementPreview';
 
 export default class Announcements extends Component {
@@ -8,7 +9,6 @@ export default class Announcements extends Component {
     }
 
     renderAnnouncements() {
-        
         if (this.props.announcements) {
             return Object.entries(this.props.announcements).map(announcement => {
                 return (
@@ -26,12 +26,27 @@ export default class Announcements extends Component {
 
     render() {
         return (
-            <div id="room-announcements">
+            <StyledAnnouncements>
                 <h2>Announcements</h2>
-                <div id="announcements-cont">
-                    {this.renderAnnouncements()}
-                </div>
-            </div>
+                {this.renderAnnouncements()}
+            </StyledAnnouncements>
         )
     }
 }
+
+const StyledAnnouncements = styled.div`
+
+    padding: 0 3rem;
+
+    h3 {
+        margin-top: 0;
+    }
+
+    h2 {
+        color: #bdbdbd;
+        opacity: 0.3;
+        margin: 0 0 5rem 0;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+    }
+`;

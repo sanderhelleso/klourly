@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 import Reactions from './reactions/Reactions';
 import Fade from 'react-reveal/Fade';
 import { redirect } from '../../../helpers/redirect';
@@ -39,9 +40,9 @@ class AnnouncementPreview extends Component {
             return (
                 <div className="col s12 announcement-readmore-cont">
                     <button 
-                    onClick={this.enterAnnouncement}
-                    className="announcement-readmore-btn waves-effect waves-light btn animated fadeIn">
-                    Read more
+                        onClick={this.enterAnnouncement}
+                        className="waves-effect waves-light btn animated fadeIn">
+                        Read more
                     </button>
                 </div>
             )
@@ -53,13 +54,13 @@ class AnnouncementPreview extends Component {
     render() {
         return (
             <Fade>
-                <div className="col s12 announcement">
-                    <h5 className="announcement-title">{this.state.title}</h5>
-                    <span className="announcement-date">{format.tsToDate(this.state.timestamp)}</span>
-                    <p className="announcement-body">{this.state.message.substring(0, 355)}</p>
+                <StyledAnnouncementPreview className="col s12">
+                    <h5>{this.state.title}</h5>
+                    <span>{format.tsToDate(this.state.timestamp)}</span>
+                    <p>{this.state.message.substring(0, 355)}</p>
                     <Reactions id={this.props.id} data={this.state.reactions} />
                     {this.renderReadMore()}
-                </div>
+                </StyledAnnouncementPreview>
             </Fade>
         )
     }
@@ -75,3 +76,43 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPreview);
+
+
+const StyledAnnouncementPreview = styled.div`
+
+    padding: 0 0 3.25rem 0 !important;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eeeeee;
+
+    .reactions, .announcement-readmore-cont {
+        margin-top: 0.5rem;
+        padding: 0 !important;
+    }
+
+    button {
+        margin-top: 1rem;
+        background-color: transparent;
+        color: #bdbdbd;
+        border: 1.5px solid #eeeeee;
+        line-height: 0;
+        padding: 1rem;
+        box-shadow: none;
+    }
+
+    button:hover, button:focus {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    h5 {
+        font-weight: 400;
+    }
+
+    span {
+        color: #bdbdbd;
+    }
+
+    p {
+        color: #757575;
+    }
+`

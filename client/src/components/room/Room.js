@@ -134,4 +134,20 @@ const StyledCont = styled.div`
     padding-bottom: 5rem;
     background-color: #ffffff;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+
+    #room-admin-settings-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 10000;
+    }
+
+    #room-admin-settings-btn svg {
+        stroke: #ffffff;
+        opacity: 0.5;
+    }
+
+    #room-main {
+        border-right: 1px solid #eeeeee;
+    }
 `;

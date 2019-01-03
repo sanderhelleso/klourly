@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Reaction from './Reaction';
 
 export default class Reactions extends Component {
@@ -42,9 +43,36 @@ export default class Reactions extends Component {
 
     render() {
         return (
-            <div className="reactions col l10 m12 s12">
+            <StyledReactions className="col l10 m12 s12">
                 {this.renderReactions()}
-            </div>
+            </StyledReactions>
         )
     }
 }
+
+const StyledReactions = styled.div`
+
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 0 !important;
+
+    div {
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        margin: 0 0.5rem;
+        padding: 0.5rem !important;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+    }
+
+    div span {
+        font-size: 1rem;
+        z-index: -1000;
+        pointer-events: none;
+    }
+
+    .reacted {
+        background-color: #ede7f6 !important;
+        border: 1px solid #d1c4e9 !important;
+    }
+`;
