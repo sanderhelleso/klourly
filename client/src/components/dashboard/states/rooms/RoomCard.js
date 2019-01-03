@@ -35,6 +35,7 @@ class RoomCard extends Component {
             
             // fetch potensial available to time
             const availableTo = roomAvailableForCheckin(this.props.data.times);
+            console.log(availableTo);
 
             // check if checkin is available
             if (availableTo) {

@@ -28,9 +28,6 @@ class Attendence extends Component {
                 ...response.data.stats,
                 roomID: this.props.roomID
             });
-
-            console.log(response);
-
         }
     }
 

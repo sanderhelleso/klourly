@@ -61,8 +61,6 @@ class Attendence extends Component {
             // fetch users current attendence in percentage
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
-            console.log(response);
-
             // check for successfull retrieval
             if (response.data.success) {
 

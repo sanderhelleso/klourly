@@ -56,10 +56,16 @@ function validateTime(time) {
 
     // get current timestamp
     const now = date.getTime();
+    const dayInMs = 86400000;
 
     // get timestamps for from - to time
-    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime();
-    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime();
+    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime() - dayInMs;
+    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime() - dayInMs;
+
+    /**
+     * NOTE: for some reasom from and to days are 1 day ahead, need to read more about the API
+     *       could potensially cause bugs for people in different timezones?
+     */
 
     // check if currently within range of available time
     if (now >= fromTime && now <= toTime) {
