@@ -10,20 +10,6 @@
     margin-bottom: 7.5rem;
 }
 
-#room-owner-avatar {
-    position: absolute;
-    bottom: -20%;
-    right: 11%;
-}
-
-#room-owner-avatar img {
-    border-radius: 50%;
-    max-width: 125px;
-    max-height: 125px;
-    min-width: 125px;
-    min-height: 125px;
-}
-
 #room-cover-header {
     position: absolute;
     bottom: 10%;
