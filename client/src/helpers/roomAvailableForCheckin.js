@@ -15,7 +15,12 @@ export const roomAvailableForCheckin =  times => {
 
     // check if room is available
     let firstFound = false;
-    let data = false;
+    let data = {
+        available: false,
+        availableTo: 0,
+        nextAvailable: {}
+    };
+
     Object.entries(times).forEach(([key, value]) => {
 
         // check if type is a valid object (ignore singel key - value pairs)
@@ -25,14 +30,38 @@ export const roomAvailableForCheckin =  times => {
             if (validateDays(value.days)) {
 
                 // validate day specific times and check if available
-                const availableTo = validateTime(value.time);
+                const available = validateTime(value.time);
+                console.log(available);
 
                 // get first matching found incase of overlapping times
-                if (availableTo && !firstFound) {
+                if (available.time && !firstFound) {
 
                     // set value
-                    data = { key, day, availableTo };
+                    data = { 
+                        key,
+                        day,
+                        availableTo: available.time,
+                        available: true
+                    };
+                    
                     firstFound = true; // set found
+                }
+
+                else {
+
+                    // if no next available is present, set
+                    if (!data.nextAvailable.fromTime) {
+                        data.nextAvailable = available;
+                    }
+
+                    // if present compare and update if needed
+                    else {
+                        console.log((data.nextAvailable.fromTime - date.getTime()) + " is less than " + (available.fromTime - date.getTime()))
+                        if ((data.nextAvailable.fromTime - date.getTime()) < (available.fromTime - date.getTime())) {
+                            data.nextAvailable = available;
+                            console.log((data.nextAvailable.fromTime - date.getTime()) + " is less than " + (available.fromTime - date.getTime()))
+                        }
+                    }
                 }
             }
         }
@@ -59,9 +88,10 @@ function validateTime(time) {
     const now = date.getTime();
     const dayInMs = 86400000;
 
+    
     // get timestamps for from - to time
-    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime();
-    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime();
+    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00 UTC`).getTime();
+    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00 UTC`).getTime();
 
     /**
      * NOTE: FIX DAY CHANGE BUG
@@ -75,10 +105,14 @@ function validateTime(time) {
     if (now >= fromTime && now <= toTime) {
 
         // if true, send back object with to time used for countdown
-        return toTime;
+        return { time: toTime };
     }
 
-    return false;
+    // if not send back the next available time
+    return {
+        nextFromTime: fromTime,
+        nextToTime: toTime
+    };
 }
 
 // convert AM - PM to 24 hour time format
