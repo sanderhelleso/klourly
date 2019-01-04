@@ -21,48 +21,17 @@ class Checkin extends Component {
         this.registerAttendence = this.registerAttendence.bind(this);
     }
 
-    async componentDidMount() {
+    componentWillReceiveProps(nextProps) {
 
-        // fetch potensial available to time
-        let available = true;
-        const availableTo = roomAvailableForCheckin(this.props.times);
-
-        console.log(availableTo);
-
-        // check if checkin is available
-        if (!availableTo.available) {
-            available = false;
-        }  
-        
-        else {
-
-            // check if user has already checkedin
-            const alreadyCheckedIn = await this.attendenceResponse(true, availableTo);
-
-            // not available
-            if (alreadyCheckedIn.data.success) {
-                available = false;
-            }
-
-            else {
-
-                // start countdown
-                this.setState({ 
-                    ...availableTo,
-                    now: new Date().getTime(),
-                    interval: this.updateAvailableMode(),
-                    available
-                });
+        if (nextProps.attendenceData[this.props.roomID] !== this.props.attendenceData[this.props.roomID]) {
+            if (nextProps.attendenceData[this.props.roomID].checkin) {
+                this.setState({ available: nextProps.attendenceData[this.props.roomID].checkin.available });
             }
         }
+    }
 
-        // update checkin state
-        this.props.checkinAvailableAction({
-            roomID: this.props.roomID,
-            checkinData: {
-                available
-            }
-        });
+    async componentDidMount() {
+        await this.loadCheckin();
     }
 
     setInitialState() {
@@ -76,6 +45,76 @@ class Checkin extends Component {
 
         // clear interval on unmount if present
         this.state.interval ? clearInterval(this.state.interval._id) : null;
+    }
+
+    async loadCheckin() {
+
+        console.log('i got runn');
+
+        // fetch potensial available to time
+        let available = true;
+        const availableTo = roomAvailableForCheckin(this.props.times);
+
+        // check if checkin is available
+        if (!availableTo.available) {
+            available = false;
+        }  
+        
+        else {
+
+            // check if user has already checkedin
+            const alreadyCheckedIn = await this.attendenceResponse(true, { availableTo });
+
+            // not available
+            if (alreadyCheckedIn.data.success) {
+                available = false;
+            }
+
+            else {
+
+                // start countdown
+                console.log('sap')
+                this.setState({ 
+                    ...availableTo,
+                    now: new Date().getTime(),
+                    interval: this.updateAvailableMode(),
+                    available
+                });
+            }
+        }
+
+        // update checkin state
+        this.props.checkinAvailableAction({
+            roomID: this.props.roomID,
+            checkinData: {
+                ...availableTo
+            }
+        });
+
+        if (availableTo.nextAvailable.found) this.prepareNext(availableTo.nextAvailable);
+    }
+
+    prepareNext(nextAvailable) {
+
+        // create interval counting down until next upcoming time
+        const nextInterval = setInterval(() => {
+
+            // check if time has passed
+            if (new Date().getTime() >= nextAvailable.fromTime) {
+
+                // update state and display checkin
+                this.props.checkinAvailableAction({
+                    roomID: this.props.roomID,
+                    checkinData: {
+                        available: true,
+                        day: getWeek(),
+                        key: nextAvailable.key,
+                        availableTo: nextAvailable.toTime
+                    }
+                });
+                clearInterval(nextInterval);
+            }
+        }, 1000);
     }
 
     async registerAttendence() {
@@ -178,13 +217,12 @@ class Checkin extends Component {
             this.setState({ 
                 now: this.state.now += tick
             }, () => {
-
+                
                 // after each tick check if time has elapsed
                 if (this.state.now > this.state.availableTo) {
-
-                    clearInterval(this.state.interval._id); // clear interval
-                    this.setState({ available: 'not set'}); // animate button out
-                    this.removeCheckIn();                   // remove button
+                    clearInterval(this.state.interval._id);     // clear interval
+                    this.setState({ available: 'not set'});     // animate button out
+                    this.removeCheckIn();                       // remove button
                 }
             });
         }, tick);

@@ -2,7 +2,7 @@ import { DAYS } from './days';
 import { getWeek } from './getWeek';
 
 // globals
-const date = new Date();
+const date = new Date(new Date().toISOString());
 const day = DAYS[date.getDay() - 1];
 const dateISO = date.toISOString()
                 .replace('-', '/')
@@ -17,7 +17,6 @@ export const roomAvailableForCheckin = times => {
     let firstFound = false;
     let data = {
         available: false,
-        availableTo: 0,
         nextAvailable: {
             found: false
         }
@@ -53,13 +52,21 @@ export const roomAvailableForCheckin = times => {
 
                     // if no next available is present, set
                     if (!data.nextAvailable.fromTime) {
-                        data.nextAvailable = available;
+                        data.nextAvailable = {
+                            key,
+                            ...available,
+                            found: true
+                        };
                     }
 
                     // if present compare and update if needed
                     else {
                         if ((data.nextAvailable.fromTime - date.getTime()) < (available.fromTime - date.getTime())) {
-                            data.nextAvailable = available;
+                            data.nextAvailable = {
+                                key,
+                                ...available,
+                                found: true
+                            };
                         }
                     }
                 }
@@ -67,7 +74,6 @@ export const roomAvailableForCheckin = times => {
         }
     });
 
-    console.log(data);
     return data;
 }
 
@@ -91,8 +97,8 @@ function validateTime(time) {
 
     
     // get timestamps for from - to time
-    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00 UTC`).getTime();
-    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00 UTC`).getTime();
+    const fromTime = new Date(`${dateISO} ${getTwentyFourHourTime(time.from)}:00`).getTime() - dayInMs;
+    const toTime =   new Date(`${dateISO} ${getTwentyFourHourTime(time.to)}:00`).getTime() - dayInMs;
 
     /**
      * NOTE: FIX DAY CHANGE BUG
@@ -102,18 +108,8 @@ function validateTime(time) {
      console.log(fromTime);
      console.log(toTime);*/
 
-    // check if currently within range of available time
-    if (now >= fromTime && now <= toTime) {
-
-        // if true, send back object with to time used for countdown
-        return { time: toTime };
-    }
-
-    // if not send back the next available time
-    return {
-        fromTime: fromTime,
-        toTime: toTime
-    };
+    // check if currently within range of available time, if not send back next and update
+    return (now >= fromTime && now <= toTime) ? { time: toTime } : { fromTime, toTime };
 }
 
 // convert AM - PM to 24 hour time format

@@ -21,7 +21,7 @@ class ToRoom extends Component {
         // updated checkin status
         let available;
         const ready = nextProps.attendenceData[this.props.roomID];
-        if (ready) available = nextProps.attendenceData[this.props.roomID].checkin.available;
+        if (ready && ready.checkin) available = nextProps.attendenceData[this.props.roomID].checkin.available;
 
         // available
         if (ready && available) {
