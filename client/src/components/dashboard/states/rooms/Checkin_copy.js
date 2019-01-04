@@ -27,24 +27,101 @@ class Checkin extends Component {
 
     async componentDidMount() {
 
-        // get room reference
         const roomRef = firebase.database().ref(`rooms/${this.props.roomID}/active`);
-
-        // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
             console.log(snapshot.val());
             this.setState({ available: snapshot.val() });
-
-            // update checkin state
-            this.props.checkinAvailableAction({
-                roomID: this.props.roomID,
-                checkinData: {
-                    available: snapshot.val()
-                }
-            });
         });
 
         //await this.loadCheckin();
+    }
+
+    setInitialState() {
+        return {
+            available: false
+        }
+    }
+
+
+    componentWillUnmount() {
+
+        // clear interval on unmount if present
+        if (this.state.interval) clearInterval(this.state.interval._id);
+        if (this.state.nextInterval) clearInterval(this.state.nextInterval._id);
+
+    }
+
+    async loadCheckin() {
+
+        // fetch potensial available to time
+        let available = true;
+        const availableTo = roomAvailableForCheckin(this.props.times);
+
+        // check if checkin is available
+        if (!availableTo.available) {
+            available = false;
+        }  
+        
+        else {
+
+            // check if user has already checkedin
+            const alreadyCheckedIn = await this.attendenceResponse(true, { availableTo });
+
+            // not available
+            if (alreadyCheckedIn.data.success) {
+                available = false;
+            }
+
+            else {
+
+                // start countdown
+                this.setState({ 
+                    ...availableTo,
+                    now: new Date().getTime(),
+                    interval: this.updateAvailableMode(),
+                    available
+                });
+            }
+        }
+
+        // update checkin state
+        this.props.checkinAvailableAction({
+            roomID: this.props.roomID,
+            checkinData: {
+                ...availableTo
+            }
+        });
+
+        /*if (availableTo.nextAvailable.found && !updated) {
+            this.setState({ nextInterval: this.prepareNext(availableTo.nextAvailable) });
+        }*/
+    }
+
+    prepareNext(nextAvailable) {
+
+        // create interval counting down until next upcoming time
+        return setInterval(() => {
+
+            // check if time has passed
+            if (new Date().getTime() >= (nextAvailable.fromTime)) {
+
+                // update state and display checkin
+                /*this.props.checkinAvailableAction({
+                    roomID: this.props.roomID,
+                    checkinData: {
+                        available: true,
+                        day: getWeek(),
+                        key: nextAvailable.key,
+                        availableTo: nextAvailable.toTime
+                    }
+                });*/
+                console.log('...');
+                this.props.checkinNeedUpdateAction({
+                    roomID: this.props.roomID,
+                    updateNeeded: true
+                });
+            }
+        }, 1000);
     }
 
     async registerAttendence() {
@@ -88,6 +165,24 @@ class Checkin extends Component {
         });
     }
 
+    async attendenceResponse(validate, attendenceData) {
+
+        // perform request to fullfil validation / setting attendence
+        const response = await attendence
+                        .registerAttendence(
+                        validate,
+                        this.props.userID,
+                        this.props.roomID, {
+                            ...attendenceData,
+                            week: getWeek(),
+                            availableTo: this.state.availableTo,
+                            timeOfRegister: this.state.now
+                        });
+        
+        // return recieved response
+        return response;
+    }
+
 
 
     renderCheckIn() {
@@ -114,8 +209,32 @@ class Checkin extends Component {
     removeCheckIn() {
 
         // remove button after 1 sec to preserve animation
-        setTimeout(() => { this.setState({ available: false }) }, 1000);
+        setTimeout(() => {
+            this.setState(this.setInitialState());
+        }, 1000);
     }
+
+    updateAvailableMode() {
+
+        // start interval that countup until current time is past to time of room
+        let tick = 1000; // 1 sec
+        return setInterval(() => {
+
+            // update current time
+            this.setState({ 
+                now: this.state.now += tick
+            }, () => {
+                
+                // after each tick check if time has elapsed
+                if (this.state.now > this.state.availableTo) {
+                    clearInterval(this.state.interval._id);     // clear interval
+                    this.setState({ available: 'not set'});     // animate button out
+                    this.removeCheckIn();                       // remove button
+                }
+            });
+        }, tick);
+    }
+
 
     render() {
         return this.renderCheckIn();

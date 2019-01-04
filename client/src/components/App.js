@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, Redirect} from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import history from '../helpers/history';
+import * as firebase from 'firebase';
 
 // animations
 import 'animate.css';
@@ -28,6 +29,17 @@ import Announcement from './room/announcements/Announcement';
 import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
 import RoomMembers from './room/admin/members/RoomMembers';
 import RoomData from './dataPrefetch/RoomData';
+
+// Initialize Firebase
+const config = {
+    apiKey: "AIzaSyCS-DuAW0EyzWL3zHe_eVwMcHWqBvnIOHg",
+    authDomain: "klourly-44ba2.firebaseapp.com",
+    databaseURL: "https://klourly-44ba2.firebaseio.com",
+    projectId: "klourly-44ba2",
+    storageBucket: "klourly-44ba2.appspot.com",
+    messagingSenderId: "737898303857"
+};
+firebase.initializeApp(config);
 
 class App extends Component {
     constructor(props) {

@@ -29,13 +29,13 @@ class ToRoom extends Component {
         }
 
         // not available
-        else if (ready && !available) {
+        /*else if (ready && !available) {
 
             // timeout to preserve animation
             setTimeout(() => {
                 this.setState({ available });
             }, 750);
-        }
+        }*/
     }
 
 

@@ -37,9 +37,7 @@ const roomReducer = (state = initialState, action) => {
                     ...state.attendence,
                     [action.payload.roomID]: {
                         ...state.attendence[action.payload.roomID],
-                        checkin: {
-                            ...action.payload.checkinData
-                        }
+                        checkin: action.payload.checkinData
                     }
                 }
             }

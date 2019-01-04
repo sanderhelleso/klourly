@@ -68,6 +68,7 @@
     "algolia-places-react": "^1.3.0",
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
+    "firebase": "^5.7.2",
     "google-maps-react": "^2.0.2",
     "history": "^4.7.2",
     "materialize-css": "^1.0.0-rc.2",
