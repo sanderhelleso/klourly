@@ -44,6 +44,21 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'CHECKIN_NEED_UPDATE':
+            return {
+                ...state,
+                attendence: {
+                    ...state.attendence,
+                    [action.payload.roomID]: {
+                        ...state.attendence[action.payload.roomID],
+                        checkin: {
+                            ...state.attendence[action.payload.roomID].checkin,
+                            updateNeeded: action.payload.updateNeeded
+                        }
+                    }
+                }
+            }
+
         case 'ENTER_ROOM_SUCCESS':
             return {
                 ...state,

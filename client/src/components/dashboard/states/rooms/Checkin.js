@@ -7,10 +7,11 @@ import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForChe
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../../../actions/room/attendence/checkinAvailableAction';
-
+import { checkinNeedUpdateAction } from '../../../../actions/room/attendence/checkinNeedUpdateAction';
 
 class Checkin extends Component {
     constructor(props) {
@@ -21,14 +22,17 @@ class Checkin extends Component {
         this.registerAttendence = this.registerAttendence.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    /*async componentWillReceiveProps(nextProps) {
 
-        if (nextProps.attendenceData[this.props.roomID] !== this.props.attendenceData[this.props.roomID]) {
-            if (nextProps.attendenceData[this.props.roomID].checkin) {
-                this.setState({ available: nextProps.attendenceData[this.props.roomID].checkin.available });
+        const checkinRef = nextProps.attendenceData[this.props.roomID];
+        if (checkinRef && checkinRef.checkin) {
+
+            if (checkinRef.checkin.updateNeeded) {
+                clearInterval(this.state.nextInterval._id);
+                await this.loadCheckin(true);
             }
         }
-    }
+    }*/
 
     async componentDidMount() {
         await this.loadCheckin();
@@ -44,12 +48,12 @@ class Checkin extends Component {
     componentWillUnmount() {
 
         // clear interval on unmount if present
-        this.state.interval ? clearInterval(this.state.interval._id) : null;
+        if (this.state.interval) clearInterval(this.state.interval._id);
+        if (this.state.nextInterval) clearInterval(this.state.nextInterval._id);
+
     }
 
     async loadCheckin() {
-
-        console.log('i got runn');
 
         // fetch potensial available to time
         let available = true;
@@ -73,7 +77,6 @@ class Checkin extends Component {
             else {
 
                 // start countdown
-                console.log('sap')
                 this.setState({ 
                     ...availableTo,
                     now: new Date().getTime(),
@@ -91,19 +94,21 @@ class Checkin extends Component {
             }
         });
 
-        if (availableTo.nextAvailable.found) this.prepareNext(availableTo.nextAvailable);
+        /*if (availableTo.nextAvailable.found && !updated) {
+            this.setState({ nextInterval: this.prepareNext(availableTo.nextAvailable) });
+        }*/
     }
 
     prepareNext(nextAvailable) {
 
         // create interval counting down until next upcoming time
-        const nextInterval = setInterval(() => {
+        return setInterval(() => {
 
             // check if time has passed
-            if (new Date().getTime() >= nextAvailable.fromTime) {
+            if (new Date().getTime() >= (nextAvailable.fromTime)) {
 
                 // update state and display checkin
-                this.props.checkinAvailableAction({
+                /*this.props.checkinAvailableAction({
                     roomID: this.props.roomID,
                     checkinData: {
                         available: true,
@@ -111,8 +116,12 @@ class Checkin extends Component {
                         key: nextAvailable.key,
                         availableTo: nextAvailable.toTime
                     }
+                });*/
+                console.log('...');
+                this.props.checkinNeedUpdateAction({
+                    roomID: this.props.roomID,
+                    updateNeeded: true
                 });
-                clearInterval(nextInterval);
             }
         }, 1000);
     }
@@ -243,7 +252,7 @@ const mapStateToProps = state => {
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ setRoomAttendenceAction, checkinAvailableAction }, dispatch);
+    return bindActionCreators({ setRoomAttendenceAction, checkinAvailableAction, checkinNeedUpdateAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
