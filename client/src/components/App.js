@@ -28,6 +28,7 @@ import JoinRoom from './joinRoom/JoinRoom';
 import Announcement from './room/announcements/Announcement';
 import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
 import RoomMembers from './room/admin/members/RoomMembers';
+import RoomCheckin from './room/admin/checkin/RoomCheckin';
 import RoomData from './dataPrefetch/RoomData';
 
 // Initialize Firebase
@@ -102,6 +103,7 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin" component={RoomAdmin} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />
+                    <Route exact path="/dashboard/rooms/:roomID/admin/checkin" component={RoomCheckin} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
                 </div>

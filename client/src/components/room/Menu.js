@@ -19,7 +19,7 @@ export default class Menu extends Component {
             >
                 <Settings size={35} />
                 <ul id="room-menu" className="dropdown-content">
-                    <li onClick={() => {redirect.roomAdminMembers(this.props.id)}}><a><CheckCircle /> Checkin</a></li>
+                    <li onClick={() => {redirect.roomAdminCheckin(this.props.id)}}><a><CheckCircle /> Checkin</a></li>
                     <li onClick={() => {redirect.roomAdminMembers(this.props.id)}}><a><Users /> Members</a></li>
                     <li onClick={() => {redirect.roomAdminReports(this.props.id)}}><a><BarChart2 /> Reports</a></li>
                     <li onClick={() => {redirect.roomAdminSettings(this.props.id)}}><a><Settings /> Settings</a></li>

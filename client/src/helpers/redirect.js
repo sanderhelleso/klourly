@@ -12,6 +12,7 @@ export const redirect = {
     joinRoom,
     announcement,
     roomAdminSettings,
+    roomAdminCheckin,
     roomAdminMembers,
     roomAdminReports,
     loginWithJoinRoomRedirect,
@@ -48,6 +49,10 @@ function room(id) {
 
 function roomAdminSettings(id) {
     history.push(`/dashboard/rooms/${id}/admin/settings`);
+}
+
+function roomAdminCheckin(id) {
+    history.push(`/dashboard/rooms/${id}/admin/checkin`);
 }
 
 function roomAdminMembers(id) {
