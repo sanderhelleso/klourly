@@ -11,14 +11,16 @@ const dateISO = date.toISOString()
 
 
 // check if a rooms given times are currently available for checkin
-export const roomAvailableForCheckin =  times => {
+export const roomAvailableForCheckin = times => {
 
     // check if room is available
     let firstFound = false;
     let data = {
         available: false,
         availableTo: 0,
-        nextAvailable: {}
+        nextAvailable: {
+            found: false
+        }
     };
 
     Object.entries(times).forEach(([key, value]) => {
@@ -31,13 +33,13 @@ export const roomAvailableForCheckin =  times => {
 
                 // validate day specific times and check if available
                 const available = validateTime(value.time);
-                console.log(available);
 
                 // get first matching found incase of overlapping times
                 if (available.time && !firstFound) {
 
                     // set value
                     data = { 
+                        ...data,
                         key,
                         day,
                         availableTo: available.time,
@@ -56,10 +58,8 @@ export const roomAvailableForCheckin =  times => {
 
                     // if present compare and update if needed
                     else {
-                        console.log((data.nextAvailable.fromTime - date.getTime()) + " is less than " + (available.fromTime - date.getTime()))
                         if ((data.nextAvailable.fromTime - date.getTime()) < (available.fromTime - date.getTime())) {
                             data.nextAvailable = available;
-                            console.log((data.nextAvailable.fromTime - date.getTime()) + " is less than " + (available.fromTime - date.getTime()))
                         }
                     }
                 }
@@ -67,6 +67,7 @@ export const roomAvailableForCheckin =  times => {
         }
     });
 
+    console.log(data);
     return data;
 }
 
@@ -110,8 +111,8 @@ function validateTime(time) {
 
     // if not send back the next available time
     return {
-        nextFromTime: fromTime,
-        nextToTime: toTime
+        fromTime: fromTime,
+        toTime: toTime
     };
 }
 

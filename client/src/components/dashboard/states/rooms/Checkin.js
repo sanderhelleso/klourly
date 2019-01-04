@@ -27,6 +27,8 @@ class Checkin extends Component {
         let available = true;
         const availableTo = roomAvailableForCheckin(this.props.times);
 
+        console.log(availableTo);
+
         // check if checkin is available
         if (!availableTo.available) {
             available = false;
