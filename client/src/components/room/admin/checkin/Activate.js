@@ -30,16 +30,20 @@ class Activate extends Component {
         if (response.data.success) {
 
             // get checkin ref of newly generated checkin
-            const path = `rooms/${this.props.roomID}/checkins/${response.data.checkinData.checkinID}`;
+            const checkinID = response.data.checkinData.checkinID;
+            const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
             const checkinRef = firebase.database().ref(path);
 
             // on value change, log change
             checkinRef.on('value', snapshot => {
                 console.log(snapshot.val());
-            });
 
-            // update the checkin state
-            this.props.activateCheckinAction(response.data.checkinData.checkinID);
+                // update the checkin state
+                this.props.activateCheckinAction({
+                    checkinID,
+                    checkinData: snapshot.val()
+                });
+            });
         }
     }
 

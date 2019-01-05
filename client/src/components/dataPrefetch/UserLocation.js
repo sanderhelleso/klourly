@@ -38,7 +38,7 @@ export default class UserLocation extends Component {
             },
             { 
                 enableHighAccuracy: true,   // get hgihest possible accurance
-                timeout: 20000,             // timeout after 20 sec
+                timeout: 5000,              // timeout after 5 sec
                 maximumAge: 1000,           // 1 sec max age
                 distanceFilter: 1           // update every 1m
             });
