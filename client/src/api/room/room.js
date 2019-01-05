@@ -9,7 +9,9 @@ export const room = {
     updateAnnouncementReaction,
     updateRoomInvite,
     getRoomMembers,
-    removeRoomMember
+    removeRoomMember,
+    activateRoom,
+    deactivateRoom
 }
 
 // create new room

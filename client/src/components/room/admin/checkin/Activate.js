@@ -9,11 +9,17 @@ import { connect } from 'react-redux';
 class Activate extends Component {
     constructor(props) {
         super(props);
+
+        this.activateRoom = this.activateRoom.bind(this);
     }
 
     async activateRoom() {
 
-        const response = await room.activateRoom();
+        const response = await room.activateRoom(
+                            this.props.userID, 
+                            this.props.roomID, 
+                            this.props.currentLocation
+                        );
 
         console.log(response);
     }
@@ -34,11 +40,15 @@ class Activate extends Component {
 }
 
 // set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+const mapStateToProps = state => {
+    return { 
+        currentLocation: state.location.coords,
+        roomID: state.room.activeRoom.id,
+        userID: state.auth.user.id
+    };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 }
 

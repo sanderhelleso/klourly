@@ -277,7 +277,7 @@ module.exports = app => {
     });
 
     // activate room for checkin
-    app.post('/api/activateRoom', authenticate, async (req, res) => {
+    app.post('/api/activateRoom', authenticate, (req, res) => {
 
         // get ref to rooms members by id
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
@@ -291,18 +291,18 @@ module.exports = app => {
             checkin: {
                 active: true,
                 radius: 20,
-                timeStamp,
+                timestamp,
                 checkinID,
-                ...req.body.checkinData,
+                coords: req.body.checkinData,
             },
+        });
 
-            checkins: {
-                [checkinID]: {
-                    startTime: timestamp,
-                    attendies: {}
-                }
+        // set checkin ref for members
+        roomRef.child('checkins').update({
+            [checkinID]: {
+                startTime: timestamp,
+                attendies: {}
             }
-
         });
 
         // send back response with success message and checkin data
@@ -310,7 +310,7 @@ module.exports = app => {
             success: true,
             message: 'Successfully activated room for checkin',
             checkinData: {
-                timeStamp,
+                timestamp,
                 checkinID
             }
         });
