@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import styled from 'styled-components';
 import { room } from '../../.././../api/room/room';
 
 // redux
@@ -62,7 +61,6 @@ class Activate extends Component {
     }
 }
 
-// set initial store state
 const mapStateToProps = state => {
     return { 
         currentLocation: state.location.coords,

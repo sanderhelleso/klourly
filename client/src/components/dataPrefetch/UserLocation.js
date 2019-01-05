@@ -26,7 +26,6 @@ export default class UserLocation extends Component {
 
             // fetch users current location and assign ID
             this.watchID = navigator.geolocation.watchPosition(position => {
-                console.log(position);
                 dispatch({
                     type: 'FETCH_USER_LOCATION_SUCCESS',
                     payload: this.geopositionToObject(position)

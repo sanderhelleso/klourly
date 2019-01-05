@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import Activate from './Activate';
 import Deactivate from './Deactivate';
 import BackToRoom from '../../BackToRoom';
 import CheckinStatus from './CheckinStatus';
 
-export default class AdminCheckin extends Component {
+class AdminCheckin extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            active: true
-        }
     }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ active: false});
-        }, 1000);
-    }
-
 
     render() {
         return (
@@ -37,8 +31,8 @@ export default class AdminCheckin extends Component {
                         </p>
                         <div className="row">
                             <StyledButtonsCont className="col s12">
-                                <Activate active={this.state.active} />
-                                <Deactivate active={this.state.active} />
+                                <Activate active={this.props.activeCheckin.active} />
+                                <Deactivate active={this.props.activeCheckin.active} />
                             </StyledButtonsCont>
                         </div>
                     </StyledHeader>
@@ -48,6 +42,17 @@ export default class AdminCheckin extends Component {
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = state => {
+    return { activeCheckin: state.room.activeRoom.checkin};
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCheckin);
 
 const StyledButtonsCont = styled.div`
     text-align: center;
