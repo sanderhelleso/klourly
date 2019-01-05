@@ -39,6 +39,21 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'DEACTIVATE_ROOM_SUCCESS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    checkin: {
+                        active: false
+                    }
+                },
+                activeCheckings: {
+                    ...state.activeCheckings,
+                    [action.payload]: null
+                }
+            }
+
         case 'CHECKIN_AVAILABLE':
             return {
                 ...state,

@@ -45,7 +45,7 @@ class AdminCheckin extends Component {
 
 // set initial store state
 const mapStateToProps = state => {
-    return { activeCheckin: state.room.activeRoom.checkin};
+    return { activeCheckin: state.room.activeRoom.checkin };
 }
 
 const mapDispatchToProps = dispatch => {
