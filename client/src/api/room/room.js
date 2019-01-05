@@ -186,3 +186,49 @@ async function removeRoomMember(uid, roomID) {
         return error.response;
     }
 }
+
+// activate the given room for checkin
+async function activateRoom(uid, roomID, checkinData) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/activateRoom',
+            data: {
+                uid,
+                roomID,
+                checkinData
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+}
+
+// activate the given room for checkin
+async function deactivateRoom(uid, roomID) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/deactivateRoom',
+            data: {
+                uid,
+                roomID
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+}
+

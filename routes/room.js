@@ -276,6 +276,46 @@ module.exports = app => {
         });
     });
 
+    // activate room for checkin
+    app.post('/api/activateRoom', authenticate, async (req, res) => {
+
+        // get ref to rooms members by id
+        const roomRef = db.ref(`rooms/${req.body.roomID}`);
+
+        // generate checkin ID and timestamp
+        const checkinID = shortid.generate();
+        const timestamp = new Date().getTime();
+
+        // update checkin data
+        roomRef.update({
+            checkin: {
+                active: true,
+                radius: 20,
+                timeStamp,
+                checkinID,
+                ...req.body.checkinData,
+            },
+
+            checkins: {
+                [checkinID]: {
+                    startTime: timestamp,
+                    attendies: {}
+                }
+            }
+
+        });
+
+        // send back response with success message and checkin data
+        res.status(200).json({
+            success: true,
+            message: 'Successfully activated room for checkin',
+            checkinData: {
+                timeStamp,
+                checkinID
+            }
+        });
+    });
+
 }
 
 
