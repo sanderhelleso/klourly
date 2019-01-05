@@ -5,6 +5,7 @@ import { room } from '../../.././../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateActiveCheckinStatusAction } from '../../../../actions/room/checkin/updateActiveCheckinStatusAction';
 import { activateCheckinAction } from '../../../../actions/room/checkin/activateCheckinAction';
 
 class Activate extends Component {
@@ -33,12 +34,15 @@ class Activate extends Component {
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
             const checkinRef = firebase.database().ref(path);
 
+            // update rooms checking state and activate room for members
+            this.props.activateCheckinAction(response.data.checkinData);
+
             // on value change, log change
             checkinRef.on('value', snapshot => {
                 console.log(snapshot.val());
 
-                // update the checkin state
-                this.props.activateCheckinAction({
+                // update the checkin state of the created checking ref
+                this.props.updateActiveCheckinStatusAction({
                     checkinID,
                     checkinData: snapshot.val()
                 });
@@ -70,7 +74,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ activateCheckinAction }, dispatch);
+    return bindActionCreators({ updateActiveCheckinStatusAction, activateCheckinAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activate);

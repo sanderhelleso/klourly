@@ -33,6 +33,18 @@ const roomReducer = (state = initialState, action) => {
         case 'ACTIVATE_ROOM_SUCCESS':
             return {
                 ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    checkin: {
+                        active: true,
+                        ...action.payload 
+                    }
+                },
+            }
+
+        case 'UPDATE_ACTIVATE_ROOM_STATUS_SUCCESS':
+            return {
+                ...state,
                 activeCheckins: {
                     ...state.activeCheckins,
                     [action.payload.checkinID]: action.payload.checkinData

@@ -289,11 +289,10 @@ module.exports = app => {
         // update checkin data
         roomRef.update({
             checkin: {
-                active: true,
-                radius: 20,
                 timestamp,
                 checkinID,
-                coords: req.body.checkinData,
+                active: true,
+                coords: req.body.checkinData
             },
         });
 
