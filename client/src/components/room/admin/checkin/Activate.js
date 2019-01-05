@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 import styled from 'styled-components';
 import { room } from '../../.././../api/room/room';
 
@@ -22,6 +23,18 @@ class Activate extends Component {
                         );
 
         console.log(response);
+        // validate that checkin was successfully started
+        if (response.data.success) {
+
+            // get checkin ref of newly generated checkin
+            const path = `rooms/${this.props.roomID}/checkins/${response.data.checkinData.checkinID}`;
+            const checkinRef = firebase.database().ref(path);
+
+            // on value change, log change
+            checkinRef.on('value', snapshot => {
+                console.log(snapshot.val());
+            });
+        }
     }
 
     render() {

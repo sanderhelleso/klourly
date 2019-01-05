@@ -28,21 +28,20 @@ class Checkin extends Component {
     async componentDidMount() {
 
         // get room reference
-        const roomRef = firebase.database().ref(`rooms/${this.props.roomID}/active`);
+        /*const roomRef = firebase.database().ref(`rooms/${this.props.roomID}/checkin`);
 
         // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
-            console.log(snapshot.val());
-            this.setState({ available: snapshot.val() });
+            this.setState({ available: snapshot.val().active });
 
             // update checkin state
             this.props.checkinAvailableAction({
                 roomID: this.props.roomID,
                 checkinData: {
-                    available: snapshot.val()
+                    available: snapshot.val().active
                 }
             });
-        });
+        });*/
 
         //await this.loadCheckin();
     }
