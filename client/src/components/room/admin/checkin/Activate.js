@@ -6,6 +6,7 @@ import { room } from '../../.././../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { activateCheckinAction } from '../../../../actions/room/checkin/activateCheckinAction';
 
 class Activate extends Component {
     constructor(props) {
@@ -16,13 +17,15 @@ class Activate extends Component {
 
     async activateRoom() {
 
+        // attempt to activate the current room
         const response = await room.activateRoom(
                             this.props.userID, 
                             this.props.roomID, 
                             this.props.currentLocation
                         );
-
+        
         console.log(response);
+
         // validate that checkin was successfully started
         if (response.data.success) {
 
@@ -34,6 +37,9 @@ class Activate extends Component {
             checkinRef.on('value', snapshot => {
                 console.log(snapshot.val());
             });
+
+            // update the checkin state
+            this.props.activateCheckinAction(response.data.checkinData.checkinID);
         }
     }
 
@@ -62,7 +68,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ activateCheckinAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activate);

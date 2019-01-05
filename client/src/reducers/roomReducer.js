@@ -30,6 +30,12 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'ACTIVATE_ROOM_SUCCESS':
+            return {
+                ...state,
+                checkin: action.payload
+            }
+
         case 'CHECKIN_AVAILABLE':
             return {
                 ...state,
@@ -61,9 +67,7 @@ const roomReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loaded: true,
-                activeRoom: {
-                    ...action.payload
-                }
+                activeRoom: action.payload
             }
 
         case 'OPEN_ANNOUNCEMENT':
