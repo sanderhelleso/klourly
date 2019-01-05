@@ -4,7 +4,7 @@ import { InfoWindow, withGoogleMap, withScriptjs, GoogleMap, Marker} from "react
 import MapMarker from './MapMarker';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { geoLocationActions } from '../../actions/geoLocationActions';
+import { geoLocationAction } from '../../actions/geoLocationAction';
 import { newRoomLocationAction } from '../../actions/newRoom/newRoomLocationAction';
 import { newRoomAddressAction } from '../../actions/newRoom/newRoomAddressAction';
 
@@ -134,7 +134,7 @@ function copyCoords(coords) {
 // update current geolocation state
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators ({
-        geoLocationActions: () => dispatch(geoLocationActions())
+        geoLocationAction: () => dispatch(geoLocationAction())
     }, dispatch);
 }
 

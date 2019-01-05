@@ -1,17 +1,42 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-export default class Activate extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Activate extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    async getCurrentLocation() {
+    }
+
     render() {
         return (
             <div>
-                <StyledActivate className="waves-effect waves-light">
-                    Click
+                <StyledActivate 
+                    className="waves-effect waves-light"
+                    onClick={this.getCurrentLocation}
+                >
+                    Activate
                 </StyledActivate>
             </div>
         )
     }
 }
+
+// set initial store state
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Activate);
 
 
 const StyledActivate = styled.button`

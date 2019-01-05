@@ -10,6 +10,8 @@ import 'animate.css';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { store } from '../store/index';
+import { geoLocationAction } from '../actions/geoLocationAction';
 
 import { authentication } from '../api/authentication/authentication';
 import { validateAction } from '../actions/validateActions';
@@ -120,6 +122,9 @@ class App extends Component {
         }
 
         else if (this.props.auth.loggedIn) {
+
+            // set users location
+            store.dispatch(geoLocationAction());
             return (
                 <div>
                     <Route exact path="/" component={this.landingRoute} />

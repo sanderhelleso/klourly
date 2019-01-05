@@ -1,6 +1,6 @@
 import React from "react";
 import Map from "./Map";
-import { geoLocationActions } from '../../actions/geoLocationActions';
+import { geoLocationAction } from '../../actions/geoLocationAction';
 
 // redux
 import { connect } from 'react-redux';
@@ -58,7 +58,7 @@ class MapContainer extends React.Component {
 // update current geolocation state
 const mapDispatchToProps = (dispatch) => {
     return {
-        geoLocationActions: () => dispatch(geoLocationActions())
+        geoLocationAction: () => dispatch(geoLocationAction())
     };
 }
 
