@@ -8,22 +8,40 @@ export default class UserLocation extends Component {
     }
 
     componentWillMount() {
+
+        // on mount, fetch location
         store.dispatch(this.watchLocation());
     }
 
     componentWillUnmount() {
+
+        // on unmount, remove watcher
         navigator.geolocation.clearWatch(this.watchID);
     }
 
     watchLocation = () => {
+
+        // update state
         return dispatch => {
+
+            // fetch users current location and assign ID
             this.watchID = navigator.geolocation.watchPosition(position => {
+                console.log(position);
                 dispatch({
                     type: 'FETCH_USER_LOCATION_SUCCESS',
                     payload: this.geopositionToObject(position)
                 });
-            }, error => {},
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+            }, error => {
+                console.log(error);
+                navigator.geolocation.clearWatch(this.watchID);
+                store.dispatch(this.watchLocation());
+            },
+            { 
+                enableHighAccuracy: true,   // get hgihest possible accurance
+                timeout: 20000,             // timeout after 20 sec
+                maximumAge: 1000,           // 1 sec max age
+                distanceFilter: 1           // update every 1m
+            });
         }
     };
     
