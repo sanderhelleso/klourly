@@ -10,8 +10,6 @@ import 'animate.css';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { store } from '../store/index';
-import { geoLocationAction } from '../actions/geoLocationAction';
 
 import { authentication } from '../api/authentication/authentication';
 import { validateAction } from '../actions/validateActions';
@@ -32,6 +30,7 @@ import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
 import RoomMembers from './room/admin/members/RoomMembers';
 import RoomCheckin from './room/admin/checkin/RoomCheckin';
 import RoomData from './dataPrefetch/RoomData';
+import UserLocation from './dataPrefetch/UserLocation';
 
 // Initialize Firebase
 const config = {
@@ -123,8 +122,6 @@ class App extends Component {
 
         else if (this.props.auth.loggedIn) {
 
-            // set users location
-            store.dispatch(geoLocationAction());
             return (
                 <div>
                     <Route exact path="/" component={this.landingRoute} />
@@ -134,6 +131,7 @@ class App extends Component {
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route path="/dashboard/rooms/:roomID" component={RoomData} />
                     {this.renderRoomRoutes()}
+                    <UserLocation />
                 </div>
             )
         }
