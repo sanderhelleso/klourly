@@ -1,14 +1,14 @@
 
 export const geoLocationAction = () => {
     return dispatch => {
-        const geolocation = navigator.geolocation;
-        geolocation.getCurrentPosition(position => {
-            const positionObj = geopositionToObject(position);
+        navigator.geolocation.watchPosition(position => {
+            const geoObj = geopositionToObject(position);
             dispatch({
                 type: 'FETCH_USER_LOCATION_SUCCESS',
-                payload: positionObj
+                payload: geoObj
             });
-        });
+        }, error => console.log(error),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
     }
 };
 
