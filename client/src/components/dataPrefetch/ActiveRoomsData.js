@@ -38,7 +38,10 @@ class ActiveRoomsData extends Component {
                     // update the checkin state of the ref
                     this.props.updateActiveCheckinStatusAction({
                         checkinID,
-                        checkinData: snapshot.val()
+                        checkinData: {
+                            ...snapshot.val(),
+                            totalMembers: value.totalMembers
+                        }
                     });
                 });
             });

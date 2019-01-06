@@ -372,7 +372,8 @@ module.exports = app => {
                     if (roomData.checkin.active) {
                        activeCheckins[roomData.checkin.checkinID] = {
                            ...roomData.checkins[roomData.checkin.checkinID],
-                           roomID
+                           roomID,
+                            totalMembers: roomData.members.length - 1 // exclude owner from count
                        };
                     }
 
