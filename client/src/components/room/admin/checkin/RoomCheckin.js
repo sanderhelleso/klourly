@@ -20,7 +20,7 @@ class AdminCheckin extends Component {
             <main className="container">
                 <BackToRoom id={this.props.roomID} />
                 <div className="row">
-                    <StyledHeader className="col s12 m6 l6">
+                    <StyledHeader className="col s12 m12 l6">
                         <div></div>
                         <h3>Activate Checkin</h3>
                         <p>
@@ -43,7 +43,6 @@ class AdminCheckin extends Component {
     }
 }
 
-// set initial store state
 const mapStateToProps = state => {
     return { activeCheckin: state.room.activeRoom.checkin };
 }

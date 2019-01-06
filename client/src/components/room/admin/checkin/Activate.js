@@ -40,7 +40,6 @@ class Activate extends Component {
 
             // on value change, log change
             checkinRef.on('value', snapshot => {
-                console.log(snapshot.val());
 
                 // update the checkin state of the created checking ref
                 this.props.updateActiveCheckinStatusAction({

@@ -1,7 +1,6 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
 const shortid = require('shortid');
-
 const authenticate = require('../middelwares/requireLogin');
 
 module.exports = app => {
@@ -324,6 +323,9 @@ module.exports = app => {
         // update checkin data
         roomRef.update({ checkin: { active: false } });
 
+        // set endtime of deactivated checkin time
+        roomRef.child(`checkins/${req.body.checkinID}`).update({ endTime: new Date().getTime() });
+
         // send back response with success message and checkin data
         res.status(200).json({
             success: true,
@@ -369,7 +371,6 @@ module.exports = app => {
                     const roomData = roomSnapshot.val();
                     if (roomData.checkin.active) {
                        activeCheckins[roomData.checkin.checkinID] = roomData.checkins[roomData.checkin.checkinID];
-                       console.log(activeCheckins);
                     }
 
                     // check if counter is equal to list length
