@@ -11,7 +11,8 @@ export const room = {
     getRoomMembers,
     removeRoomMember,
     activateRoom,
-    deactivateRoom
+    deactivateRoom,
+    getActiveRooms
 }
 
 // create new room
@@ -212,7 +213,7 @@ async function activateRoom(uid, roomID, checkinData) {
     }
 }
 
-// activate the given room for checkin
+// deactivate the given room for checkin
 async function deactivateRoom(uid, roomID, checkinID) {
     try {
         const response = await axios({
@@ -223,6 +224,27 @@ async function deactivateRoom(uid, roomID, checkinID) {
                 uid,
                 roomID,
                 checkinID
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+}
+
+// fetch all users owned room that is active for checking
+async function getActiveRooms(uid) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/getActiveRooms',
+            data: {
+                uid
             }
         });
 

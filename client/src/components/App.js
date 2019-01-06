@@ -29,8 +29,11 @@ import Announcement from './room/announcements/Announcement';
 import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
 import RoomMembers from './room/admin/members/RoomMembers';
 import RoomCheckin from './room/admin/checkin/RoomCheckin';
+
+// data fetchers
 import RoomData from './dataPrefetch/RoomData';
 import UserLocation from './dataPrefetch/UserLocation';
+import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
 
 // Initialize Firebase
 const config = {
@@ -132,6 +135,7 @@ class App extends Component {
                     <Route path="/dashboard/rooms/:roomID" component={RoomData} />
                     {this.renderRoomRoutes()}
                     <UserLocation />
+                    <ActiveRoomsData />
                 </div>
             )
         }

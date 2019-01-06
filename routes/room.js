@@ -324,9 +324,6 @@ module.exports = app => {
         // update checkin data
         roomRef.update({ checkin: { active: false } });
 
-        // set checkin ref for members
-        roomRef.child('checkins').update({ [req.body.checkinID]: null });
-
         // send back response with success message and checkin data
         res.status(200).json({
             success: true,
@@ -334,6 +331,62 @@ module.exports = app => {
         });
     });
 
+    // fetch users active rooms
+    app.post('/api/getActiveRooms', authenticate, (req, res) => {
+
+        // get ref to users owned 
+        const owningRef = db.ref(`users/${req.body.uid}/rooms/owning`);
+        owningRef.once('value', owningSnapshot => {
+            
+            let counter = 0;                                // itteration counter
+            const activeCheckins = {};                      // result set
+            const userOwnedRooms = owningSnapshot.val();    // owned room list
+
+            // if list is empty send back response and return immediatly
+            if (!userOwnedRooms) {
+
+                // send back response with success message and checkin data
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully fetched active rooms',
+                    activeCheckins
+                });
+
+                return;
+            }
+
+            // itterate over list and create set containing currently active rooms 
+            userOwnedRooms.forEach(roomID => {
+
+                // get ref to room and access snapshot data
+                const roomRef = db.ref(`rooms/${roomID}`);
+                roomRef.once('value', roomSnapshot => {
+
+                    // increment counter
+                    counter++;
+
+                    // check if room is active, if active add to list of active rooms
+                    const roomData = roomSnapshot.val();
+                    if (roomData.checkin.active) {
+                       activeCheckins[roomData.checkin.checkinID] = roomData.checkins[roomData.checkin.checkinID];
+                       console.log(activeCheckins);
+                    }
+
+                    // check if counter is equal to list length
+                    // if all data is collected, send back response with data
+                    if (userOwnedRooms.length === counter) {
+
+                        // send back response with success message and checkin data
+                        res.status(200).json({
+                            success: true,
+                            message: 'Successfully fetched active rooms',
+                            activeCheckins
+                        });
+                    }
+                });
+           });
+        });
+    });
 }
 
 

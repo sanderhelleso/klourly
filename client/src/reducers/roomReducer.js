@@ -32,6 +32,12 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'SET_INITIAL_ACTIVE_ROOM_STATUS_SUCCESS':
+            return {
+                ...state,
+                activeCheckins: action.payload
+            }
+
         case 'ACTIVATE_ROOM_SUCCESS':
             return {
                 ...state,
@@ -45,6 +51,7 @@ const roomReducer = (state = initialState, action) => {
             }
 
         case 'UPDATE_ACTIVATE_ROOM_STATUS_SUCCESS':
+            console.log(action.payload);
             return {
                 ...state,
                 activeCheckins: {

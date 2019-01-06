@@ -66,6 +66,9 @@
     "/api/deactivateRoom": {
       "target": "http://localhost:5000"
     },
+    "/api/getActiveRooms": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }
