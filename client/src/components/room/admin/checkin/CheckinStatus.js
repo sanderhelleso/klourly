@@ -30,7 +30,10 @@ class CheckinStatus extends Component {
                     <Attended>
                         <h4>
                             <span className="attended">
-                                {Object.keys(this.state.statusData.attendies).length}
+                                {this.state.statusData.attendies 
+                                    ? Object.keys(this.state.statusData.attendies).length
+                                    : 0
+                                }
                             </span>
                             <span className="total"> / {this.state.statusData.totalMembers}</span>
                             <span className="checked-in">Checked In</span>

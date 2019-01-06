@@ -11,14 +11,11 @@ import { deactivateCheckinAction } from '../../../../actions/room/checkin/deacti
 class Deactivate extends Component {
     constructor(props) {
         super(props);
-
-        this.deactivateRoom = this.deactivateRoom.bind(this);
     }
 
-    async deactivateRoom() {
+    deactivateRoom = async () => {
 
-        const response = await room.deactivateRoom(this.props.userID, this.props.roomID, this.props.checkinID);
-
+        await room.deactivateRoom(this.props.userID, this.props.roomID, this.props.checkinID);
         this.props.deactivateCheckinAction(this.props.checkinID);
     }
 

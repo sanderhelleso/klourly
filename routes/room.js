@@ -317,14 +317,26 @@ module.exports = app => {
     // deactivate room for checkin
     app.post('/api/deactivateRoom', authenticate, (req, res) => {
 
-        // get ref to rooms members by id
+        // get ref to rooms members by id and checkins re
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
 
         // update checkin data
         roomRef.update({ checkin: { active: false } });
 
         // set endtime of deactivated checkin time
-        roomRef.child(`checkins/${req.body.checkinID}`).update({ endTime: new Date().getTime() });
+        roomRef.once('value', snapshot => {
+            const checkinSnap = snapshot.val().checkins[req.body.checkinID];
+
+            // values to calculate the average attendence for the room
+            const totalCheckins = checkinSnap.attendies ? Object.keys(checkinSnap.attendies).length : 0;
+            const totalMembers = snapshot.val().members.length - 1;
+            
+            roomRef.child(`checkins/${req.body.checkinID}`)
+            .update({ 
+                endTime: new Date().getTime(),
+                attendenceInPercent: Math.round((totalCheckins / totalMembers) * 100)
+            });
+        });
 
         // send back response with success message and checkin data
         res.status(200).json({
