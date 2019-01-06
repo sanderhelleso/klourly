@@ -24,8 +24,6 @@ class Activate extends Component {
                             this.props.currentLocation
                         );
         
-        console.log(response);
-
         // validate that checkin was successfully started
         if (response.data.success) {
 
@@ -35,7 +33,10 @@ class Activate extends Component {
             const checkinRef = firebase.database().ref(path);
 
             // update rooms checking state and activate room for members
-            this.props.activateCheckinAction(response.data.checkinData);
+            this.props.activateCheckinAction({
+                ...response.data.checkinData,
+                coords: this.props.currentLocation
+            });
 
             // on value change, log change
             checkinRef.on('value', snapshot => {

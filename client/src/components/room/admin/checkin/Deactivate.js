@@ -16,7 +16,10 @@ class Deactivate extends Component {
         this.deactivateRoom = this.deactivateRoom.bind(this);
     }
 
-    deactivateRoom() {
+    async deactivateRoom() {
+
+        const response = await room.deactivateRoom(this.props.userID, this.props.roomID, this.props.checkinID);
+
         this.props.deactivateCheckinAction(this.props.checkinID);
     }
 
@@ -37,7 +40,9 @@ class Deactivate extends Component {
 
 const mapStateToProps = state => {
     return {
-        checkinID: state.room.activeRoom.checkin.checkinID
+        checkinID: state.room.activeRoom.checkin.checkinID,
+        roomID: state.room.activeRoom.id,
+        userID: state.auth.user.id
     };
 }
 

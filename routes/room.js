@@ -315,6 +315,25 @@ module.exports = app => {
         });
     });
 
+    // deactivate room for checkin
+    app.post('/api/deactivateRoom', authenticate, (req, res) => {
+
+        // get ref to rooms members by id
+        const roomRef = db.ref(`rooms/${req.body.roomID}`);
+
+        // update checkin data
+        roomRef.update({ checkin: { active: false } });
+
+        // set checkin ref for members
+        roomRef.child('checkins').update({ [req.body.checkinID]: null });
+
+        // send back response with success message and checkin data
+        res.status(200).json({
+            success: true,
+            message: 'Successfully deactivated room for checkin'
+        });
+    });
+
 }
 
 

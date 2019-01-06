@@ -1,3 +1,5 @@
+import { format } from '../helpers/format';
+
 const initialState = {
     loaded: false,
     attendence: {}
@@ -60,10 +62,7 @@ const roomReducer = (state = initialState, action) => {
                         active: false
                     }
                 },
-                activeCheckings: {
-                    ...state.activeCheckings,
-                    [action.payload]: null
-                }
+                activeCheckins: format.removeByKey(state.activeCheckins, action.payload)
             }
 
         case 'CHECKIN_AVAILABLE':
@@ -178,3 +177,4 @@ const roomReducer = (state = initialState, action) => {
 }
 
 export default roomReducer;
+  

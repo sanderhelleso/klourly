@@ -1,8 +1,7 @@
-
-// client
 export const format = {
     capitalize,
-    tsToDate
+    tsToDate,
+    removeByKey
 }
 
 // capitalize given string
@@ -14,3 +13,13 @@ function capitalize(str) {
 function tsToDate(timestamp) {
     return new Date(timestamp).toDateString();
 }
+
+// remove key from object
+function removeByKey (obj, deleteKey) {
+    return Object.keys(obj)
+      .filter(key => key !== deleteKey)
+      .reduce((result, current) => {
+        result[current] = obj[current];
+        return result;
+    }, {});
+  }
