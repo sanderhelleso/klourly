@@ -38,7 +38,7 @@ class Activate extends Component {
                 coords: this.props.currentLocation
             });
 
-            // on value change, log change
+            // on value change, update checkin status state
             checkinRef.on('value', snapshot => {
 
                 // update the checkin state of the created checking ref
@@ -66,11 +66,7 @@ class Activate extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
-        currentLocation: state.location.coords,
-        roomID: state.room.activeRoom.id,
-        userID: state.auth.user.id
-    };
+    return {  currentLocation: state.location.coords };
 }
 
 const mapDispatchToProps = dispatch => {

@@ -39,11 +39,7 @@ class Deactivate extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        checkinID: state.room.activeRoom.checkin.checkinID,
-        roomID: state.room.activeRoom.id,
-        userID: state.auth.user.id
-    };
+    return { checkinID: state.room.activeRoom.checkin.checkinID };
 }
 
 const mapDispatchToProps = dispatch => {

@@ -31,12 +31,24 @@ class AdminCheckin extends Component {
                         </p>
                         <div className="row">
                             <StyledButtonsCont className="col s12">
-                                <Activate active={this.props.activeCheckin.active} />
-                                <Deactivate active={this.props.activeCheckin.active} />
+                                <Activate 
+                                    active={this.props.activeCheckin.active} 
+                                    roomID={this.props.roomID}
+                                    userID={this.props.userID}
+                                />
+                                <Deactivate 
+                                    active={this.props.activeCheckin.active} 
+                                    roomID={this.props.roomID} 
+                                    userID={this.props.userID}
+                                />
                             </StyledButtonsCont>
                         </div>
                     </StyledHeader>
-                    <CheckinStatus />
+                    <CheckinStatus 
+                        checkinID={this.props.activeCheckin.active 
+                        ? this.props.activeCheckin.checkinID 
+                        : null} 
+                    />
                 </div>
             </main>
         )
@@ -44,7 +56,11 @@ class AdminCheckin extends Component {
 }
 
 const mapStateToProps = state => {
-    return { activeCheckin: state.room.activeRoom.checkin };
+    return { 
+        activeCheckin: state.room.activeRoom.checkin,
+        roomID: state.room.activeRoom.id,
+        userID: state.auth.user.id
+    };
 }
 
 const mapDispatchToProps = dispatch => {

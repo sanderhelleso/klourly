@@ -51,7 +51,6 @@ const roomReducer = (state = initialState, action) => {
             }
 
         case 'UPDATE_ACTIVATE_ROOM_STATUS_SUCCESS':
-            console.log(action.payload);
             return {
                 ...state,
                 activeCheckins: {

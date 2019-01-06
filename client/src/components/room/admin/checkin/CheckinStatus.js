@@ -2,18 +2,63 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { WifiOff } from 'react-feather';
 
-export default class CheckinStatus extends Component {
-    render() {
-        return (
-            <StyledStatus className="col s12 m12 l5 offset-l1">
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { timingSafeEqual } from 'crypto';
+
+class CheckinStatus extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.activeCheckinStatus !== nextProps.activeCheckinStatus) {
+            this.setState({
+                statusData: nextProps[this.props.checkinID]
+            });
+        }
+    }
+
+    renderStatus() {
+
+        if (this.props.checkinID) {
+            console.log(this.props);
+            return (
+               <p>Active...</p> 
+            );
+        }
+
+        else {
+            return (
                 <NotActive>
                     <WifiOff size={70} />
                     <h5>Not Active</h5>
                 </NotActive>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <StyledStatus className="col s12 m12 l5 offset-l1">
+                {this.renderStatus()}
             </StyledStatus>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        activeCheckinStatus: state.room.activeCheckins
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckinStatus);
 
 const StyledStatus = styled.div`
     position: relative;

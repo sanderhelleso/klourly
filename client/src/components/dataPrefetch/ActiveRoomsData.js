@@ -6,6 +6,7 @@ import { room } from '../../api/room/room';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setInitialActiveCheckinsAction } from '../../actions/room/checkin/setInitialActiveCheckinsAction';
+import { updateActiveCheckinStatusAction } from '../../actions/room/checkin/updateActiveCheckinStatusAction';
 
 class ActiveRoomsData extends Component {
     constructor(props) {
@@ -17,13 +18,30 @@ class ActiveRoomsData extends Component {
         // attempt to fetch users active rooms availale for checkin
         const response = await room.getActiveRooms(this.props.userID);
 
-        console.log(response);
-
         // check if data fetch is successfull
         if (response.data.success) {
 
-            // update state with the fetched active rooms
+            // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
+
+            // add listeners for each active checkin
+            Object.entries(response.data.activeCheckins)
+            .forEach(([checkinID, value]) => {
+
+                // get path and ref
+                const path = `rooms/${value.roomID}/checkins/${checkinID}`;
+                const checkinRef = firebase.database().ref(path);
+
+                // on value change, update checkin status state
+                checkinRef.on('value', snapshot => {
+
+                    // update the checkin state of the ref
+                    this.props.updateActiveCheckinStatusAction({
+                        checkinID,
+                        checkinData: snapshot.val()
+                    });
+                });
+            });
         }
     }
 
@@ -40,7 +58,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({  setInitialActiveCheckinsAction }, dispatch);
+    return bindActionCreators({  setInitialActiveCheckinsAction, updateActiveCheckinStatusAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveRoomsData);
