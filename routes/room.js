@@ -323,6 +323,7 @@ module.exports = app => {
                 checkinData: {
                     timestamp,
                     checkinID,
+                    membersList: snapshot.val().members.filter(uid => uid !== req.body.uid),
                     totalMembers: snapshot.val().members.length - 1
                 }
             });

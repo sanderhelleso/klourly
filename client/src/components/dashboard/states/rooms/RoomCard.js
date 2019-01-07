@@ -104,7 +104,7 @@ const RoomInfo = styled.div`
 
     a {
         border-radius: 50%;
-        transition: 0.3s ease-in-out;
+        transition: 0.3s linear;
         min-height: 52px;
         max-height: 52px;
         min-width: 52px;

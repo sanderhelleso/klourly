@@ -48,7 +48,9 @@ class Activate extends Component {
                     checkinID,
                     checkinData: {
                         ...snapshot.val(),
-                        totalMembers: response.data.checkinData.totalMembers
+                        totalMembers: response.data.checkinData.totalMembers,
+                        membersData: response.data.checkinData.membersData,
+                        membersList: response.data.checkinData.membersList
                     }
                 });
             });
