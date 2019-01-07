@@ -18,19 +18,11 @@ class ToRoom extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        // available
-        if (nextProps.availableForCheckin[this.props.roomID]) {
-            this.setState({ available: true });
+        if (!nextProps.availableForCheckin.hasOwnProperty(this.props.roomID)) {
+            this.setState({ available: false });
         }
 
-        // not available
-        else {
-
-            // timeout to preserve animation
-            setTimeout(() => {
-                this.setState({ available: false });
-            }, 750);
-        }
+        else this.setState({ available: true });
     }
 
 

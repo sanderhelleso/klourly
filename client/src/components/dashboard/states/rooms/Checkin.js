@@ -18,11 +18,13 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            available: false
-        }
+        this.state = { available: false }
+    }
 
-        this.registerAttendence = this.registerAttendence.bind(this);
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.availableForCheckin.hasOwnProperty(this.props.roomID)) {
+            this.setState({ available: false });
+        }
     }
 
     async componentDidMount() {
@@ -33,20 +35,17 @@ class Checkin extends Component {
         // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
 
-            if (snapshot.val().active) {
-                console.log(snapshot.val());
-                this.setState({ available: snapshot.val().active });
+            this.setState({ available: snapshot.val().active });
 
-                // update checkin state
-                this.props.checkinAvailableAction({
-                    roomID: this.props.roomID,
-                    checkinData: snapshot.val()
-                });
-            }
+            // update checkin state
+            this.props.checkinAvailableAction({
+                roomID: this.props.roomID,
+                checkinData: snapshot.val().active ? snapshot.val() : false
+            });
         });
     }
 
-    async registerAttendence() {
+    registerAttendence = async () => {
 
         // disable button while performing request
         this.setState({
@@ -62,7 +61,6 @@ class Checkin extends Component {
 
         // if successfull attendendce, show message and remove button
         if (response.data.success) {
-            this.setState({ available: 'not set'}, () => this.removeCheckIn());
 
             // update attendence percentage
             const updatedUserAttendence = this.props.attendenceData[this.props.roomID].userAttended + 1;
@@ -90,6 +88,7 @@ class Checkin extends Component {
 
 
     renderCheckIn() {
+        console.log(this.state);
 
         // only render check in button if not owner
         if (this.state.available) {
@@ -98,7 +97,7 @@ class Checkin extends Component {
             return (
                 <CheckinRoomButton 
                     className={`waves-effect waves-light btn-flat animated 
-                    ${this.state.available === 'not set' ? 'bounceOut' : 'fadeIn'}`}
+                    ${this.state.available === 'not set' ? 'fadeOut' : 'fadeIn'}`}
                     onClick={this.registerAttendence}
                     disabled={this.state.loading}
                 >
@@ -110,12 +109,6 @@ class Checkin extends Component {
         return null;
     }
 
-    removeCheckIn() {
-
-        // remove button after 1 sec to preserve animation
-        setTimeout(() => { this.setState({ available: false }) }, 1000);
-    }
-
     render() {
         return this.renderCheckIn();
     }
@@ -124,7 +117,7 @@ class Checkin extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        attendenceData: state.room.attendence
+        availableForCheckin: state.room.availableForCheckin
     };
 };
 

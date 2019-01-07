@@ -74,10 +74,15 @@ const roomReducer = (state = initialState, action) => {
         case 'CHECKIN_AVAILABLE':
             return {
                 ...state,
-                availableForCheckin: {
-                    ...state.availableForCheckin,
-                    [action.payload.roomID]: action.payload.checkinData
-                }
+                availableForCheckin: action.payload.checkinData 
+                                    ? {
+                                        ...state.availableForCheckin,
+                                        [action.payload.roomID]: action.payload.checkinData
+                                    } : state.availableForCheckin 
+                                        ? format.removeByKey(
+                                            state.availableForCheckin,
+                                            action.payload.roomID
+                                        ) : {}
             }
 
         case 'CHECKIN_NEED_UPDATE':
