@@ -6,6 +6,8 @@ import { WifiOff } from 'react-feather';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CheckedInMember from './CheckedInMember';
+import CheckinPercentage from './CheckinPercentage';
+import CheckinCounter from './CheckinCounter';
 
 class CheckinStatus extends Component {
     constructor(props) {
@@ -26,22 +28,26 @@ class CheckinStatus extends Component {
         }
     }
 
+    getAttendies = () => {
+        return this.state.statusData.attendies 
+                ? Object.keys(this.state.statusData.attendies).length
+                : 0;
+    }
+
     renderStatus = () => {
 
         if (this.props.checkinID && this.state.statusData) {
             return (
                 <div>
-                    <Attended className="animated fadeIn">
-                        <h4>
-                            <span className="attended">
-                                {this.state.statusData.attendies 
-                                    ? Object.keys(this.state.statusData.attendies).length
-                                    : 0
-                                }
-                            </span>
-                            <span className="total"> / {this.state.statusData.totalMembers}</span>
-                            <span className="checked-in">Checked In</span>
-                        </h4>
+                    <Attended className="animated fadeIn row">
+                        <CheckinCounter
+                            totalMembers={this.state.statusData.totalMembers}
+                            attendies={this.getAttendies()}
+                        />
+                        <CheckinPercentage
+                            totalMembers={this.state.statusData.totalMembers}
+                            attendies={this.getAttendies()}
+                        />
                     </Attended>
                     <AttendedDetails>
                         <CheckedInMember />
@@ -134,18 +140,20 @@ const Attended = styled.div`
         font-weight: 100;
     }
 
-    .attended {
+    .focus {
         font-size: 4rem;
     }
 
-    .total {
+    .sub {
         font-size: 1.75rem;
+        opacity: 0.7;
     }
 
-    .checked-in {
+    .description {
         display: block;
         letter-spacing: 1px;
         font-size: 1.1rem;
+        opacity: 0.7;
     }
 `;
 
