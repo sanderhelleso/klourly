@@ -6,13 +6,22 @@ export default class CheckedInMember extends Component {
         super(props);
     }
 
+    renderCheckedinTime() {
+
+        if (this.props.data.checkedin) {
+            return <p>Checked in 6 minutes ago</p>
+        }
+
+        return <p>Not checked in</p>
+    }
+
     render() {
         return (
-            <StyledMember checkedin={this.props.checkedin} >
+            <StyledMember checkedin={this.props.data.checkedin} >
                 <img src={this.props.data.photoUrl} alt="Checked in members avatar" />
                 <div className="member-info">
                     <h5>{this.props.data.name}</h5>
-                    <p>Checked in 6 minutes ago</p>
+                    {this.renderCheckedinTime()}
                 </div>
             </StyledMember>
         )
@@ -20,13 +29,13 @@ export default class CheckedInMember extends Component {
 }
 
 const StyledMember = styled.div`
-    ${props => console.log(props.checkedin)}
+
     min-width: 100%;
     padding: 2rem;
     margin: 0.25rem 0;
     clear: both;
     transition: 0.3s ease-in-out;
-    opacity: ${props => props.checkedin ? 1 : 0.4};
+    opacity: ${props => props.checkedin ? 1 : 0.3};
 
     img {
         border-radius: 50%;

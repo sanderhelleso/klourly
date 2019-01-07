@@ -20,7 +20,6 @@ export default class CheckedinList extends Component {
                             true
                         );
 
-        console.log(response.data);
         this.setState({
             membersData: response.data.membersList
         });
@@ -41,14 +40,23 @@ export default class CheckedinList extends Component {
 
     renderMembers() {
 
+        // sort 
+
         if (this.state.membersData) {
-            console.log(this.state.membersData)
-            return this.state.membersData.map(member => {
-                return <CheckedInMember 
-                            key={member.id}
-                            data={member} 
-                            checkedin={this.isMemberCheckedIn(member.id)}
-                        />
+
+            // add checkin prop to member
+            this.state.membersData.forEach(member => {
+                member.checkedin = this.isMemberCheckedIn(member.id);
+            });
+
+            // return sortted member list, based on check in
+            return this.state.membersData
+                    .sort((a, b) => b.checkedin - a.checkedin)
+                    .map(member => {
+                        return <CheckedInMember 
+                                    key={member.id}
+                                    data={member} 
+                                />
             });
         }
 

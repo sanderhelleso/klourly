@@ -42,7 +42,7 @@ class ActiveRoomsData extends Component {
                         checkinID,
                         checkinData: {
                             ...snapshot.val(),
-                            totalMembers: value.totalMembers,
+                            totalMembers: value.totalMembers, // exclude owner
                             membersData: value.membersData,
                             membersList: value.membersList
                         }

@@ -396,12 +396,13 @@ module.exports = app => {
 
                     // check if room is active, if active add to list of active rooms
                     const roomData = roomSnapshot.val();
+                    console.log(roomData.members);
                     if (roomData.checkin.active) {
                        activeCheckins[roomData.checkin.checkinID] = {
                             ...roomData.checkins[roomData.checkin.checkinID],
                             roomID,
-                            membersList: roomSnapshot.val().members.filter(uid => uid !== req.body.uid),
-                            totalMembers: roomData.members.length - 1 // exclude owner from count
+                            membersList: roomData.members.filter(uid => uid !== req.body.uid),
+                            totalMembers: roomData.members.length - 1   // exclude owner from count
                        };
                     }
 
