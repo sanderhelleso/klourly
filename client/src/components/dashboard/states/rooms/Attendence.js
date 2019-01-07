@@ -56,7 +56,7 @@ class Attendence extends Component {
     async componentDidMount() {
 
         // check if data retrival is needed
-        if (this.state.loading) {
+        /*if (this.state.loading) {
 
             // fetch users current attendence in percentage
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
@@ -88,7 +88,7 @@ class Attendence extends Component {
             this.setState({
                 loading: false
             });
-        }
+        }*/
     }
 
     renderAttendence() {

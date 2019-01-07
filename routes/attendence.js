@@ -69,7 +69,6 @@ module.exports = app => {
 function getAttendenceStats(data, uid) {
 
     // check if any attendences has been set
-
     const attendenceStats = {
         total: 0,
         userAttended: 0,
