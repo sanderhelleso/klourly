@@ -303,14 +303,18 @@ module.exports = app => {
             }
         });
 
-        // send back response with success message and checkin data
-        res.status(200).json({
-            success: true,
-            message: 'Successfully activated room for checkin',
-            checkinData: {
-                timestamp,
-                checkinID
-            }
+        roomRef.once('value', snapshot => {
+
+            // send back response with success message and checkin data
+            res.status(200).json({
+                success: true,
+                message: 'Successfully activated room for checkin',
+                checkinData: {
+                    timestamp,
+                    checkinID,
+                    totalMembers: snapshot.val().members.length - 1
+                }
+            });
         });
     });
 

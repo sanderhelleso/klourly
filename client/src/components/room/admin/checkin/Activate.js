@@ -27,6 +27,8 @@ class Activate extends Component {
         // validate that checkin was successfully started
         if (response.data.success) {
 
+            console.log(response.data);
+
             // get checkin ref of newly generated checkin
             const checkinID = response.data.checkinData.checkinID;
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
@@ -44,7 +46,10 @@ class Activate extends Component {
                 // update the checkin state of the created checking ref
                 this.props.updateActiveCheckinStatusAction({
                     checkinID,
-                    checkinData: snapshot.val()
+                    checkinData: {
+                        ...snapshot.val(),
+                        totalMembers: response.data.checkinData.totalMembers
+                    }
                 });
             });
         }
