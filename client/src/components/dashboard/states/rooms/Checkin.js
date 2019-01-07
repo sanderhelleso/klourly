@@ -52,32 +52,17 @@ class Checkin extends Component {
             loading: true
         });
 
-        // attempt to register users attendence
-        const response = await this.attendenceResponse(false, {
-            key: this.state.key,
-            day: this.state.day
-        });
+        const response = await attendence.registerAttendence(this.props.userID, this.props.roomID);
 
-
-        // if successfull attendendce, show message and remove button
         if (response.data.success) {
-
-            // update attendence percentage
-            const updatedUserAttendence = this.props.attendenceData[this.props.roomID].userAttended + 1;
-            this.props.setRoomAttendenceAction({
-                ...this.props.attendenceData[this.props.roomID],
-                userAttended: updatedUserAttendence,
-                attendedInPercent: Math.floor((updatedUserAttendence / this.props.attendenceData[this.props.roomID].total) * 100)
-            });
 
             // update checkin state
             this.props.checkinAvailableAction({
                 roomID: this.props.roomID,
-                checkinData: {
-                    available: false
-                }
+                checkinData: false
             });
         }
+        
 
         // finish loading
         this.setState({

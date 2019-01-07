@@ -4,38 +4,30 @@ const db = firebase.database();
 module.exports = app => {
 
     // get attendence registration data
-    app.post('/api/registerAttendence', async (req, res) => {
+    app.post('/api/registerAttendence', (req, res) => {
 
-        // get checkin path
-        const path = 'rooms/' + req.body.roomID +
-                        '/checkin/' + req.body.attendenceData.key + 
-                            '/days/' + req.body.attendenceData.day +
-                                '/' + new Date().getFullYear() +
-                                    '/' + req.body.attendenceData.week +
-                                        '/' + req.body.uid;
+        console.log(req.body);
+        const checkinTimestamp = new Date().getTime();
         
         // get checkin ref for user
-        const checkinRef = db.ref(path);
+        const roomRef = db.ref(`rooms/${req.body.roomID}`);
+        roomRef.once('value', snapshot => {
 
-        // if validate is set to true, validate to check if user has already checked in
-        if (req.body.validate) {
-            checkinRef.once('value', snapshot => {
-                res.status(200).json({ success: snapshot.val() ? true : false });
-            });
-        }
+            // retrieve user ref and set the checkin data
+            const checkinID = snapshot.val().checkin.checkinID;
+            const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${checkinID}`);
+            userCheckinRef.set(checkinTimestamp);
 
-        // if not set attendence
-        else {
+            // update the rooms checkin ref
+            roomRef.child(`checkins/${checkinID}/attendies/${req.body.uid}`).set(checkinTimestamp);
+        });
 
-            // set attendence
-            checkinRef.set(req.body.attendenceData.timeOfRegister);
-
-            // send back response with success message
-            res.status(200).json({ 
-                success: true,
-                message: 'Attendence was successfully registered'
-            });
-        }
+        // send back response with success message
+        res.status(200).json({ 
+            success: true,
+            message: 'Attendence was successfully registered'
+        });
+        
     });
 
     // get attendence for a specific user for a room

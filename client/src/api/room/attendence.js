@@ -7,17 +7,15 @@ export const attendence = {
 }
 
 // register attendence for a user aswell as lookup if already checkedin
-async function registerAttendence(validate, uid, roomID, attendenceData) {
+async function registerAttendence(uid, roomID) {
     try {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
             url: '/api/registerAttendence',
             data: {
-                validate,
                 uid,
-                roomID,
-                attendenceData
+                roomID
             }
         });
 
