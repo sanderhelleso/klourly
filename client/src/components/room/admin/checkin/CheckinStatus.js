@@ -5,13 +5,17 @@ import { WifiOff } from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { timingSafeEqual } from 'crypto';
+import CheckedInMember from './CheckedInMember';
 
 class CheckinStatus extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            statusData: this.props.activeCheckinStatus 
+                        ? this.props.activeCheckinStatus[this.props.checkinID]
+                        : false
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -26,8 +30,8 @@ class CheckinStatus extends Component {
 
         if (this.props.checkinID && this.state.statusData) {
             return (
-                <IsActive className="row">
-                    <Attended>
+                <div>
+                    <Attended className="animated fadeIn">
                         <h4>
                             <span className="attended">
                                 {this.state.statusData.attendies 
@@ -39,7 +43,18 @@ class CheckinStatus extends Component {
                             <span className="checked-in">Checked In</span>
                         </h4>
                     </Attended>
-                </IsActive> 
+                    <AttendedDetails>
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                        <CheckedInMember />
+                    </AttendedDetails>
+                </div> 
             );
         }
 
@@ -53,20 +68,9 @@ class CheckinStatus extends Component {
         }
     }
 
-    renderActiveTime = () => {
-        
-        // get the timestamp of the activation and the current time
-        const startTime = new Date(this.state.statusData.startTime);
-        const now = new Date(new Date().getTime() + 44064000000);
-        const diff = new Date(now.getTime() - startTime.getTime());
-
-        // calculte the year difference between the two times
-        const yearDiff = Math.abs(diff.getFullYear() - 1970) - 1;
-    }
-
     render() {
         return (
-            <StyledStatus className="col s12 m12 l5 offset-l1">
+            <StyledStatus className="col s12 m12 l5 offset-l1 animated fadeIn">
                 {this.renderStatus()}
             </StyledStatus>
         )
@@ -95,6 +99,7 @@ const StyledStatus = styled.div`
     background-color: #ffffff;
     min-height: 350px !important;
     text-align: center;
+    margin-bottom: 5rem;
 `;
 
 const NotActive = styled.div`
@@ -114,16 +119,6 @@ const NotActive = styled.div`
     svg {
         stroke: #8c9eff;
         opacity: 0.4;
-    }
-`;
-
-const IsActive = styled.div`
-
-    h3 {
-        margin-top: 3rem;
-        font-size: 1.5rem;
-        font-weight: 600;
-        text-transform: capitalize;
     }
 `;
 
@@ -152,6 +147,8 @@ const Attended = styled.div`
         letter-spacing: 1px;
         font-size: 1.1rem;
     }
+`;
 
-    
+const AttendedDetails = styled.div`
+    padding-bottom: 4rem;
 `;
