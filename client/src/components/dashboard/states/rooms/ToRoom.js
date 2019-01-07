@@ -18,24 +18,19 @@ class ToRoom extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        // updated checkin status
-        let available;
-        const ready = nextProps.attendenceData[this.props.roomID];
-        if (ready && ready.checkin) available = nextProps.attendenceData[this.props.roomID].checkin.available;
-
         // available
-        if (ready && available) {
-            this.setState({ available });
+        if (nextProps.availableForCheckin[this.props.roomID]) {
+            this.setState({ available: true });
         }
 
         // not available
-        /*else if (ready && !available) {
+        else {
 
             // timeout to preserve animation
             setTimeout(() => {
-                this.setState({ available });
+                this.setState({ available: false });
             }, 750);
-        }*/
+        }
     }
 
 
@@ -54,7 +49,7 @@ class ToRoom extends Component {
 
 const mapStateToProps = state => {
     return { 
-        attendenceData: state.room.attendence
+        availableForCheckin: state.room.availableForCheckin
     };
 };
 

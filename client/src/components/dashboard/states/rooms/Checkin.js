@@ -32,16 +32,18 @@ class Checkin extends Component {
 
         // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
-            this.setState({ available: snapshot.val().active });
 
-            // update checkin state
-            this.props.checkinAvailableAction({
-                roomID: this.props.roomID,
-                checkinData: snapshot.val()
-            });
+            if (snapshot.val().active) {
+                console.log(snapshot.val());
+                this.setState({ available: snapshot.val().active });
+
+                // update checkin state
+                this.props.checkinAvailableAction({
+                    roomID: this.props.roomID,
+                    checkinData: snapshot.val()
+                });
+            }
         });
-
-        //await this.loadCheckin();
     }
 
     async registerAttendence() {
