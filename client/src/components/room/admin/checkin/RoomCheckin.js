@@ -45,6 +45,8 @@ class AdminCheckin extends Component {
                         </div>
                     </StyledHeader>
                     <CheckinStatus 
+                        roomID={this.props.roomID}
+                        userID={this.props.userID}
                         checkinID={this.props.activeCheckin.active 
                         ? this.props.activeCheckin.checkinID 
                         : null} 
@@ -59,7 +61,8 @@ const mapStateToProps = state => {
     return { 
         activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
-        userID: state.auth.user.id
+        userID: state.auth.user.id,
+        members: state.room.activeRoom.members
     };
 }
 

@@ -228,18 +228,29 @@ module.exports = app => {
 
                 // retieve releated user data
                 await userRef.once('value', snapshot => {
-                    membersList.push({
-                        id: member,
-                        name: snapshot.val().settings.displayName,
-                        photoUrl: snapshot.val().settings.photoUrl,
-                        occupation: snapshot.val().settings.occupation,
-                        phoneNr: snapshot.val().settings.phoneNr,
-                        email: memberRes.email
-                    });
+
+                    if (req.body.getOnlyPreview) {
+                        membersList.push({
+                            id: member,
+                            name: snapshot.val().settings.displayName,
+                            photoUrl: snapshot.val().settings.photoUrl
+                        });
+                    }
+
+                    else {
+                        membersList.push({
+                            id: member,
+                            name: snapshot.val().settings.displayName,
+                            photoUrl: snapshot.val().settings.photoUrl,
+                            occupation: snapshot.val().settings.occupation,
+                            phoneNr: snapshot.val().settings.phoneNr,
+                            email: memberRes.email
+                        });
+                    }
                 });
 
                 // check if all members data has been collected
-                if (membersList.length === req.body.membersList.length - 1) {
+                if (membersList.length === req.body.membersList.length) {
 
                     // send back response with updated invitation link
                     res.status(200).json({
@@ -387,8 +398,9 @@ module.exports = app => {
                     const roomData = roomSnapshot.val();
                     if (roomData.checkin.active) {
                        activeCheckins[roomData.checkin.checkinID] = {
-                           ...roomData.checkins[roomData.checkin.checkinID],
-                           roomID,
+                            ...roomData.checkins[roomData.checkin.checkinID],
+                            roomID,
+                            membersList: roomSnapshot.val().members.filter(uid => uid !== req.body.uid),
                             totalMembers: roomData.members.length - 1 // exclude owner from count
                        };
                     }

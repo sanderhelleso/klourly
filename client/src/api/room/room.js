@@ -146,7 +146,7 @@ async function updateRoomInvite(uid, roomID) {
 }
 
 // retrieve data about a rooms members
-async function getRoomMembers(uid, roomID, membersList) {
+async function getRoomMembers(uid, roomID, membersList, getOnlyPreview) {
     try {
         const response = await axios({
             headers: authHeader(),
@@ -155,7 +155,8 @@ async function getRoomMembers(uid, roomID, membersList) {
             data: {
                 uid,
                 roomID,
-                membersList
+                membersList,
+                getOnlyPreview
             }
         });
 

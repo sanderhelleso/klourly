@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { WifiOff } from 'react-feather';
+import { materializeJS } from '../../../../helpers/materialize';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -8,6 +9,7 @@ import { connect } from 'react-redux';
 import CheckedInMember from './CheckedInMember';
 import CheckinPercentage from './CheckinPercentage';
 import CheckinCounter from './CheckinCounter';
+import CheckedinList from './CheckedinList';
 
 class CheckinStatus extends Component {
     constructor(props) {
@@ -49,18 +51,13 @@ class CheckinStatus extends Component {
                             attendies={this.getAttendies()}
                         />
                     </Attended>
-                    <AttendedDetails>
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                        <CheckedInMember />
-                    </AttendedDetails>
-                </div> 
+                    <CheckedinList 
+                        roomID={this.props.roomID}
+                        userId={this.props.userID}
+                        membersList={this.state.statusData.membersList}
+                        checkedinMembers={this.state.statusData.attendies}
+                    />
+                </div>
             );
         }
 

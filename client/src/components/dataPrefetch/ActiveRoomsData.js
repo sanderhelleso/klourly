@@ -18,6 +18,8 @@ class ActiveRoomsData extends Component {
         // attempt to fetch users active rooms availale for checkin
         const response = await room.getActiveRooms(this.props.userID);
 
+        console.log(response.data);
+
         // check if data fetch is successfull
         if (response.data.success) {
 
@@ -40,7 +42,9 @@ class ActiveRoomsData extends Component {
                         checkinID,
                         checkinData: {
                             ...snapshot.val(),
-                            totalMembers: value.totalMembers
+                            totalMembers: value.totalMembers,
+                            membersData: value.membersData,
+                            membersList: value.membersList
                         }
                     });
                 });

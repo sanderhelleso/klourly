@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 export default class CheckedInMember extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
-            <StyledMember className="animated fadeIn">
-                <img src="/img/dashboard/stock.jpg" alt="Checked in members avatar" />
+            <StyledMember checkedin={this.props.checkedin} >
+                <img src={this.props.data.photoUrl} alt="Checked in members avatar" />
                 <div className="member-info">
-                    <h5>John Doe</h5>
+                    <h5>{this.props.data.name}</h5>
                     <p>Checked in 6 minutes ago</p>
                 </div>
             </StyledMember>
@@ -16,11 +20,13 @@ export default class CheckedInMember extends Component {
 }
 
 const StyledMember = styled.div`
-
+    ${props => console.log(props.checkedin)}
     min-width: 100%;
     padding: 2rem;
     margin: 0.25rem 0;
     clear: both;
+    transition: 0.3s ease-in-out;
+    opacity: ${props => props.checkedin ? 1 : 0.4};
 
     img {
         border-radius: 50%;
