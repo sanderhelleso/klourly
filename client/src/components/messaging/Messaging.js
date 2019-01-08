@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { messages } from '../../api/messaging/messages';
 
 
 export default class Messaging extends Component {
@@ -8,9 +9,12 @@ export default class Messaging extends Component {
         
         this.state = {
             messaging: firebase.messaging(),
-            permissionGranted: false
+            permissionGranted: false,
+            currentToken: false
 
         }
+
+        // initialize messaging configuration
         this.messagingConfig();
     }
 
@@ -22,14 +26,53 @@ export default class Messaging extends Component {
 
             // update permission state
             this.setState({ permissionGranted: true });
-            this.recieveMessages();
-            // TODO(developer): Retrieve an Instance ID token for use with FCM.
-            // ...
+
+            // prepeare to recieve update of token
+            this.updateMessagingToken();
+
+            // prepeare to recieve the current token
+            this.getMessagingToken();
     
-          }).catch(error => {
-            console.log('Unable to get permission to notify.', error);
-        });           
+          })
+          .catch(error => console.log('Unable to get permission to notify.', error));           
     };
+
+    getMessagingToken() {
+
+        this.state.messaging.getToken().then(currentToken => {
+
+            // if currentToken return immediatly
+            if (currentToken) {
+
+                this.setState({ currentToken: true })
+                this.recieveMessages();
+                return currentToken;
+            }
+
+        })
+        .catch(error => this.errorRefetchToken(error));
+    }
+
+    updateMessagingToken() {
+
+        // Callback fired if Instance ID token is updated.
+        this.state.messaging.onTokenRefresh(() => {
+            this.state.messaging.getToken().then(refreshedToken => {
+            console.log('Token refreshed.');
+
+            })
+            .catch(error => this.errorRefetchToken(error));
+        });
+    }
+
+    errorRefetchToken(error) {
+
+        // if an error occures, attempt to refetch the messaging token every 5 sec
+        console.log('An error occurred while retrieving token. Retrying in 5 seconds', error);
+        setTimeout(() => {
+            this.getMessagingToken();
+        }, 5000);
+    }
 
     recieveMessages() {
 
@@ -39,9 +82,10 @@ export default class Messaging extends Component {
         this.state.messaging.onMessage(payload => {
             console.log('Message received. ', payload);
             // ...
-        });
-          
+        });  
     }
+
+    
 
     render() {
         return null;
