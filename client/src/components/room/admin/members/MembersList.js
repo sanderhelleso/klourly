@@ -29,15 +29,18 @@ class MembersList extends Component {
 
     async componentDidMount() {
 
+
         // check if member list is empty
         if (this.props.membersList) {
 
             // attempt to fetch rooms members
             const response = await room.getRoomMembers(
-                this.props.user.id, 
+                this.props.userID, 
                 this.props.roomID, 
-                this.props.membersList
+                this.props.membersList.filter(uid => uid !== this.props.userID)
             );
+
+            console.log(response);
 
             this.setState({
                 loading: false,
@@ -73,7 +76,7 @@ class MembersList extends Component {
 
 const mapStateToProps = state => {
     return { 
-        user: state.auth.user,
+        userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
         membersList: state.room.activeRoom.members
      }

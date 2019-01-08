@@ -217,48 +217,45 @@ module.exports = app => {
         // get members ref of each user
         req.body.membersList.forEach(async member => {
             
-            // exclude admin
-            if (member !== req.body.uid) {
+            // get ref for each user in passed in list
+            const userRef = db.ref(`users/${member}`);
 
-                // get ref for each user in passed in list
-                const userRef = db.ref(`users/${member}`);
+            // fetch email
+            const memberRes = await firebase.auth().getUser(member);
 
-                // fetch email
-                const memberRes = await firebase.auth().getUser(member);
+            // retieve releated user data
+            await userRef.once('value', snapshot => {
 
-                // retieve releated user data
-                await userRef.once('value', snapshot => {
-
-                    if (req.body.getOnlyPreview) {
-                        membersList.push({
-                            id: member,
-                            name: snapshot.val().settings.displayName,
-                            photoUrl: snapshot.val().settings.photoUrl
-                        });
-                    }
-
-                    else {
-                        membersList.push({
-                            id: member,
-                            name: snapshot.val().settings.displayName,
-                            photoUrl: snapshot.val().settings.photoUrl,
-                            occupation: snapshot.val().settings.occupation,
-                            phoneNr: snapshot.val().settings.phoneNr,
-                            email: memberRes.email
-                        });
-                    }
-                });
-
-                // check if all members data has been collected
-                if (membersList.length === req.body.membersList.length) {
-
-                    // send back response with updated invitation link
-                    res.status(200).json({
-                        success: true,
-                        message: 'Successfully recieved members data',
-                        membersList
+                // if preview is true, only retrieve needed data
+                if (req.body.getOnlyPreview) {
+                    membersList.push({
+                        id: member,
+                        name: snapshot.val().settings.displayName,
+                        photoUrl: snapshot.val().settings.photoUrl
                     });
                 }
+
+                else {
+                    membersList.push({
+                        id: member,
+                        name: snapshot.val().settings.displayName,
+                        photoUrl: snapshot.val().settings.photoUrl,
+                        occupation: snapshot.val().settings.occupation,
+                        phoneNr: snapshot.val().settings.phoneNr,
+                        email: memberRes.email
+                    });
+                }
+            });
+
+            // check if all members data has been collected
+            if (membersList.length === req.body.membersList.length) {
+
+                // send back response with updated invitation link
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully recieved members data',
+                    membersList
+                });
             }
         });
     });
