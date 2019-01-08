@@ -35,6 +35,7 @@ require("./routes/countries")(app);
 require("./routes/room")(app);
 require("./routes/invite")(app);
 require("./routes/attendence")(app);
+require("./routes/messaging")(app);
 require("./routes/algolia")(app);
 //////////////////////////////
 

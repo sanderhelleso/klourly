@@ -3,7 +3,7 @@ export const messages = {
     notifyOpenRoom
 }
 
-async function notifyOpenRoom(token, notification) {
+async function notifyOpenRoom(key, token, notification) {
 
     var notification = {
         'title': 'Portugal vs. Denmark',
@@ -15,7 +15,7 @@ async function notifyOpenRoom(token, notification) {
     const response = await fetch('https://fcm.googleapis.com/fcm/send', {
         method: 'post',
         headers: {
-            Authorization: `key=${KEY}`,
+            Authorization: `key=${key}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({

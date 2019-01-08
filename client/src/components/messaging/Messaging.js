@@ -3,6 +3,10 @@ import * as firebase from 'firebase';
 import { messages } from '../../api/messaging/messages';
 import { token } from '../../api/messaging/token';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 
 class Messaging extends Component {
     constructor(props) {
@@ -31,18 +35,19 @@ class Messaging extends Component {
 
     getMessagingToken() {
 
-        this.state.messaging.getToken().then(async currentToken => {
+        this.messaging.getToken().then(currentToken => {
 
             // if currentToken exists
             if (currentToken) {
 
+                console.log(currentToken);
+
                 // send token to server and update if NEEDED
-                const setToken = await token.setToken(this.props.userID, currentToken);
+                token.setToken(this.props.userID, currentToken);
 
-                // if setToken was successfully returned, procced client to recieve messages
-                if (setToken.data.success) this.recieveMessages();
+                // procced client to recieve messages
+                this.recieveMessages();
             }
-
         })
         .catch(error => this.errorRefetchToken(error));
     }
@@ -51,9 +56,13 @@ class Messaging extends Component {
 
         // Callback fired if Instance ID token is updated.
         this.messaging.onTokenRefresh(() => {
-            this.messaging.getToken().then(refreshedToken => {
-            console.log('Token refreshed.');
 
+            // get new updated token
+            this.messaging.getToken().then(refreshedToken => {
+
+                // send updated token to server and set for user
+                console.log('Token refreshed.');
+                token.setToken(this.props.userID, refreshedToken);
             })
             .catch(error => this.errorRefetchToken(error));
         });
@@ -73,13 +82,11 @@ class Messaging extends Component {
         // Handle incoming messages. Called when:
         // - a message is received while the app has focus
         // - the user clicks on an app notification created by a service worker
-        this.state.messaging.onMessage(payload => {
+        this.messaging.onMessage(payload => {
             console.log('Message received. ', payload);
             // ...
         });  
     }
-
-    
 
     render() {
         return null;
