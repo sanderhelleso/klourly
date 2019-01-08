@@ -34,6 +34,7 @@ import RoomCheckin from './room/admin/checkin/RoomCheckin';
 import RoomData from './dataPrefetch/RoomData';
 import UserLocation from './dataPrefetch/UserLocation';
 import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
+import Messaging from './messaging/Messaging';
 
 // Initialize Firebase
 const config = {
@@ -44,7 +45,9 @@ const config = {
     storageBucket: "klourly-44ba2.appspot.com",
     messagingSenderId: "737898303857"
 };
+
 firebase.initializeApp(config);
+
 
 class App extends Component {
     constructor(props) {
@@ -124,16 +127,16 @@ class App extends Component {
         }
 
         else if (this.props.auth.loggedIn) {
-
             return (
                 <div>
+                    {this.renderRoomRoutes()}
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
                     <Route exact path="/login" component={this.loginRoute} />
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/dashboard/new-room" component={NewRoom} />
                     <Route path="/dashboard/rooms/:roomID" component={RoomData} />
-                    {this.renderRoomRoutes()}
+                    <Messaging />
                     <UserLocation />
                     <ActiveRoomsData />
                 </div>

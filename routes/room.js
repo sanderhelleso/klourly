@@ -147,11 +147,11 @@ module.exports = app => {
         const announcementRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`);
 
         // get the value and proceed to updte counter
-        await announcementRef.once('value', async snapshot => {
+        await announcementRef.once('value', snapshot => {
 
             // if first reaction, add user and update counter
             if (snapshot.val().reacted === undefined) {
-                await announcementRef.update({
+                announcementRef.update({
                     reacted: [req.body.uid],
                     count: snapshot.val().count += 1
                 });
@@ -162,7 +162,7 @@ module.exports = app => {
 
                 // not reacted, increase
                 if (snapshot.val().reacted.indexOf(req.body.uid) === -1) {
-                    await announcementRef.update({
+                    announcementRef.update({
                         reacted: [...snapshot.val().reacted, req.body.uid],
                         count: snapshot.val().count += 1
                     });
@@ -170,7 +170,7 @@ module.exports = app => {
 
                 // reacted, decrease
                 else {
-                    await announcementRef.update({
+                    announcementRef.update({
                         reacted: snapshot.val().reacted.filter(uid => uid !== req.body.uid),
                         count: snapshot.val().count -= 1
                     });
