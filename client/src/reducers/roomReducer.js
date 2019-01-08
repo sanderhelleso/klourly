@@ -2,7 +2,7 @@ import { format } from '../helpers/format';
 
 const initialState = {
     loaded: false,
-    attendence: {}
+    usersCheckedinRooms: {}
 }
 
 const roomReducer = (state = initialState, action) => {
@@ -85,17 +85,14 @@ const roomReducer = (state = initialState, action) => {
                                         ) : {}
             }
 
-        case 'CHECKIN_NEED_UPDATE':
+        case 'UPDATE_USERS_CHECKEDIN_ROOMS':
             return {
                 ...state,
-                attendence: {
-                    ...state.attendence,
+                usersCheckedinRooms: {
+                    ...state.usersCheckedinRooms,
                     [action.payload.roomID]: {
-                        ...state.attendence[action.payload.roomID],
-                        checkin: {
-                            ...state.attendence[action.payload.roomID].checkin,
-                            updateNeeded: action.payload.updateNeeded
-                        }
+                        ...state.usersCheckedinRooms[action.payload.roomID],
+                        [action.payload.checkinID]: true
                     }
                 }
             }

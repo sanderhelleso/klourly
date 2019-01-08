@@ -13,8 +13,10 @@ class Attendence extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {};
 
-        // set state depending if data is already retrieved
+
+        /*// set state depending if data is already retrieved
         if (this.props.attendenceData[this.props.roomID]) {
 
             // data is loaded and user has attended
@@ -40,17 +42,17 @@ class Attendence extends Component {
             this.state = {
                 loading: true
             }
-        }
+        }*/
     }
 
     componentWillReceiveProps(nextProps) {
 
-        // update attendence percentage
+        /*// update attendence percentage
         if (this.props.attendenceData[this.props.roomID] !== nextProps.attendenceData[this.props.roomID]) {
             this.setState({
                 percentage: nextProps.attendenceData[this.props.roomID].attendedInPercent
             });
-        }
+        }*/
     }
 
     async componentDidMount() {

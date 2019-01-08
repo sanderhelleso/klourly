@@ -15,7 +15,7 @@ module.exports = app => {
 
             // retrieve user ref and set the checkin data
             const checkinID = snapshot.val().checkin.checkinID;
-            const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${checkinID}`);
+            const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${req.body.roomID}/${checkinID}`);
             userCheckinRef.set(checkinTimestamp);
 
             // update the rooms checkin ref

@@ -12,8 +12,8 @@ import { connect } from 'react-redux';
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../../../actions/room/attendence/checkinAvailableAction';
-import { checkinNeedUpdateAction } from '../../../../actions/room/attendence/checkinNeedUpdateAction';
-
+import { updateUsersCheckedinRoomsAction } from '../../../../actions/room/attendence/updateUsersCheckedinRoomsAction'
+;
 class Checkin extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +22,8 @@ class Checkin extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        // check if room is available for checkin
         if (!nextProps.availableForCheckin.hasOwnProperty(this.props.roomID)) {
             this.setState({ available: false });
         }
@@ -35,24 +37,33 @@ class Checkin extends Component {
         // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
 
-            this.setState({ available: snapshot.val().active });
+            if (this.props.usersCheckedinRooms && 
+                !this.props.usersCheckedinRooms[this.props.roomID]
+                .hasOwnProperty(snapshot.val().checkinID)) return;
 
-            // update checkin state
-            this.props.checkinAvailableAction({
-                roomID: this.props.roomID,
-                checkinData: snapshot.val().active ? snapshot.val() : false
+           // set available
+           this.setState({ 
+               available: snapshot.val().active,
+               checkinID: snapshot.val().checkinID
             });
+    
+           // update checkin state
+           this.props.checkinAvailableAction({
+               roomID: this.props.roomID,
+               checkinData: snapshot.val().active ? snapshot.val() : false
+           });
+
         });
     }
 
     registerAttendence = async () => {
 
         // disable button while performing request
-        this.setState({
-            loading: true
-        });
+        this.setState({ loading: true });
 
-        const response = await attendence.registerAttendence(this.props.userID, this.props.roomID);
+        // attempt to register attendence
+        const response = await attendence.registerAttendence(
+                        this.props.userID, this.props.roomID);
 
         if (response.data.success) {
 
@@ -61,19 +72,21 @@ class Checkin extends Component {
                 roomID: this.props.roomID,
                 checkinData: false
             });
-        }
-        
+
+            // update users checked in rooms
+            this.props.updateUsersCheckedinRoomsAction({
+                roomID: this.props.roomID,
+                checkinID: this.state.checkinID
+            });
+        } 
 
         // finish loading
-        this.setState({
-            loading: false
-        });
+        this.setState({ loading: false });
     }
 
 
 
     renderCheckIn() {
-        console.log(this.state);
 
         // only render check in button if not owner
         if (this.state.available) {
@@ -82,7 +95,7 @@ class Checkin extends Component {
             return (
                 <CheckinRoomButton 
                     className={`waves-effect waves-light btn-flat animated 
-                    ${this.state.available === 'not set' ? 'fadeOut' : 'fadeIn'}`}
+                    ${this.state.available ? 'fadeIn' : 'fadeOut'}`}
                     onClick={this.registerAttendence}
                     disabled={this.state.loading}
                 >
@@ -102,13 +115,18 @@ class Checkin extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        availableForCheckin: state.room.availableForCheckin
+        availableForCheckin: state.room.availableForCheckin,
+        usersCheckedinRooms: state.dashboard.userData.checkins
     };
 };
 
 // update created room state
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ setRoomAttendenceAction, checkinAvailableAction, checkinNeedUpdateAction }, dispatch);
+    return bindActionCreators({ 
+        setRoomAttendenceAction,
+        checkinAvailableAction, 
+        updateUsersCheckedinRoomsAction
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);

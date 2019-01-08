@@ -1,6 +1,7 @@
 let userData = JSON.parse(localStorage.getItem('userData'));
 const initialState = userData ? { userData } : {};
 const dashboardReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case 'DASHBOARD_OPTION':
             return {
