@@ -38,8 +38,7 @@ class Checkin extends Component {
         // on value change, update state and set checkin mode depending on result
         roomRef.on('value', snapshot => {
 
-            if (this.props.usersCheckedinRooms && 
-                !this.props.usersCheckedinRooms[this.props.roomID]
+            if (!this.props.usersCheckedinRooms[this.props.roomID]
                 .hasOwnProperty(snapshot.val().checkinID)) return;
 
            // set available
@@ -117,7 +116,7 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin,
-        usersCheckedinRooms: state.dashboard.userData.checkins
+        usersCheckedinRooms: state.room.usersCheckedinRooms
     };
 };
 

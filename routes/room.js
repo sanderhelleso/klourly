@@ -364,13 +364,14 @@ module.exports = app => {
     // fetch users active rooms
     app.post('/api/getActiveRooms', authenticate, (req, res) => {
 
-        // get ref to users owned 
-        const owningRef = db.ref(`users/${req.body.uid}/rooms/owning`);
-        owningRef.once('value', owningSnapshot => {
+        // get ref to users rooms
+        const userRef = db.ref(`users/${req.body.uid}`);
+        userRef.once('value', userSnapshot => {
             
-            let counter = 0;                                // itteration counter
-            const activeCheckins = {};                      // result set
-            const userOwnedRooms = owningSnapshot.val();    // owned room list
+            let counter = 0;                                            // itteration counter
+            const activeCheckins = {};                                  // result set
+            const userOwnedRooms = userSnapshot.val().rooms.owning;     // owned room list
+            const usersCheckedinRooms = userSnapshot.val().checkins;    // attending room list
 
             // if list is empty send back response and return immediatly
             if (!userOwnedRooms) {
@@ -379,6 +380,7 @@ module.exports = app => {
                 res.status(200).json({
                     success: true,
                     message: 'Successfully fetched active rooms',
+                    usersCheckedinRooms,
                     activeCheckins
                 });
 
@@ -414,7 +416,8 @@ module.exports = app => {
                         res.status(200).json({
                             success: true,
                             message: 'Successfully fetched active rooms',
-                            activeCheckins
+                            activeCheckins,
+                            usersCheckedinRooms
                         });
                     }
                 });

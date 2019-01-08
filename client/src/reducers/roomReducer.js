@@ -2,6 +2,7 @@ import { format } from '../helpers/format';
 
 const initialState = {
     loaded: false,
+    activeCheckins: {},
     usersCheckedinRooms: {}
 }
 
