@@ -11,9 +11,10 @@ import { connect } from 'react-redux';
 
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
-import { checkinAvailableAction } from '../../../../actions/room/attendence/checkinAvailableAction';
-import { updateUsersCheckedinRoomsAction } from '../../../../actions/room/attendence/updateUsersCheckedinRoomsAction'
-;
+import { checkinAvailableAction } from '../../../../actions/room/checkin/checkinAvailableAction';
+import { updateUsersCheckedinRoomsAction } from '../../../../actions/room/checkin/updateUsersCheckedinRoomsAction';
+
+
 class Checkin extends Component {
     constructor(props) {
         super(props);

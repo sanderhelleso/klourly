@@ -85,6 +85,12 @@ const roomReducer = (state = initialState, action) => {
                                         ) : {}
             }
 
+        case 'SET_USERS_CHECKEDIN_ROOMS':
+            return {
+                ...state,
+                usersCheckedinRooms: action.payload
+            }
+
         case 'UPDATE_USERS_CHECKEDIN_ROOMS':
             return {
                 ...state,

@@ -6,6 +6,7 @@ import { room } from '../../api/room/room';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setInitialActiveCheckinsAction } from '../../actions/room/checkin/setInitialActiveCheckinsAction';
+import { setInitialUsersCheckedinRoomsAction } from '../../actions/room/checkin/setInitialUsersCheckedinRoomsAction';
 import { updateActiveCheckinStatusAction } from '../../actions/room/checkin/updateActiveCheckinStatusAction';
 
 class ActiveRoomsData extends Component {
@@ -25,6 +26,7 @@ class ActiveRoomsData extends Component {
 
             // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
+            this.props.setInitialUsersCheckedinRoomsAction(response.data.usersCheckedinRooms);
 
             // add listeners for each active checkin
             Object.entries(response.data.activeCheckins)
@@ -65,7 +67,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({  setInitialActiveCheckinsAction, updateActiveCheckinStatusAction }, dispatch);
+    return bindActionCreators({ 
+        setInitialActiveCheckinsAction,
+        updateActiveCheckinStatusAction ,
+        setInitialUsersCheckedinRoomsAction
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveRoomsData);
