@@ -69,6 +69,12 @@
     "/api/getActiveRooms": {
       "target": "http://localhost:5000"
     },
+    "/api/messaging/getToken": {
+      "target": "http://localhost:5000"
+    },
+    "/api/messaging/setToken": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }

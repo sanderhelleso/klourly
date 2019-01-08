@@ -1,31 +1,23 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { messages } from '../../api/messaging/messages';
+import { token } from '../../api/messaging/token';
 
 
-export default class Messaging extends Component {
+class Messaging extends Component {
     constructor(props) {
         super(props);
         
-        this.state = {
-            messaging: firebase.messaging(),
-            permissionGranted: false,
-            currentToken: false
-
-        }
-
         // initialize messaging configuration
+        this.messaging = firebase.messaging();
         this.messagingConfig();
     }
 
     messagingConfig() {
     
         // prompt for permission
-        this.state.messaging.requestPermission().then(() => {
+        this.messaging.requestPermission().then(() => {
             console.log('Notification permission granted.');
-
-            // update permission state
-            this.setState({ permissionGranted: true });
 
             // prepeare to recieve update of token
             this.updateMessagingToken();
@@ -39,14 +31,16 @@ export default class Messaging extends Component {
 
     getMessagingToken() {
 
-        this.state.messaging.getToken().then(currentToken => {
+        this.state.messaging.getToken().then(async currentToken => {
 
-            // if currentToken return immediatly
+            // if currentToken exists
             if (currentToken) {
 
-                this.setState({ currentToken: true })
-                this.recieveMessages();
-                return currentToken;
+                // send token to server and update if NEEDED
+                const setToken = await token.setToken(this.props.userID, currentToken);
+
+                // if setToken was successfully returned, procced client to recieve messages
+                if (setToken.data.success) this.recieveMessages();
             }
 
         })
@@ -56,8 +50,8 @@ export default class Messaging extends Component {
     updateMessagingToken() {
 
         // Callback fired if Instance ID token is updated.
-        this.state.messaging.onTokenRefresh(() => {
-            this.state.messaging.getToken().then(refreshedToken => {
+        this.messaging.onTokenRefresh(() => {
+            this.messaging.getToken().then(refreshedToken => {
             console.log('Token refreshed.');
 
             })
@@ -91,3 +85,13 @@ export default class Messaging extends Component {
         return null;
     }
 }
+
+const mapStateToProps = state => {
+    return { userID: state.auth.user.id };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messaging);
