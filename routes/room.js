@@ -378,10 +378,12 @@ module.exports = app => {
 
                 // send back response with success message and checkin data
                 res.status(200).json({
+                    activeCheckins,
                     success: true,
                     message: 'Successfully fetched active rooms',
-                    usersCheckedinRooms,
-                    activeCheckins
+                    usersCheckedinRooms: usersCheckedinRooms 
+                                         ? usersCheckedinRooms 
+                                         : {}
                 });
 
                 return;
@@ -414,10 +416,12 @@ module.exports = app => {
 
                         // send back response with success message and checkin data
                         res.status(200).json({
+                            activeCheckins,
                             success: true,
                             message: 'Successfully fetched active rooms',
-                            activeCheckins,
-                            usersCheckedinRooms
+                            usersCheckedinRooms: usersCheckedinRooms 
+                                                 ? usersCheckedinRooms 
+                                                 : {}
                         });
                     }
                 });

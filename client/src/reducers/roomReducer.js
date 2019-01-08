@@ -2,7 +2,7 @@ import { format } from '../helpers/format';
 
 const initialState = {
     loaded: false,
-    activeCheckins: {},
+    availableForCheckin: {},
     usersCheckedinRooms: {}
 }
 
@@ -36,7 +36,7 @@ const roomReducer = (state = initialState, action) => {
         case 'SET_INITIAL_ACTIVE_ROOM_STATUS_SUCCESS':
             return {
                 ...state,
-                activeCheckins: action.payload
+                availableForCheckin: action.payload
             }
 
         case 'ACTIVATE_ROOM_SUCCESS':
