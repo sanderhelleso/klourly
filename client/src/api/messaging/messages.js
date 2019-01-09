@@ -3,9 +3,12 @@ export const messages = {
     notifyOpenRoom
 }
 
-async function notifyOpenRoom(key, token, notification) {
+async function notifyOpenRoom(key, token) {
 
-    var notification = {
+    console.log(key);
+    console.log(token);
+
+    const notification = {
         'title': 'Portugal vs. Denmark',
         'body': '5 to 1',
         'icon': 'firebase-logo.png',
@@ -23,6 +26,4 @@ async function notifyOpenRoom(key, token, notification) {
             to: token
         })
     });
-    
-    console.log(response);
 }

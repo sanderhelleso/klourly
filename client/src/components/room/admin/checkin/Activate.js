@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { room } from '../../.././../api/room/room';
+import { messages } from '../../.././../api/messaging/messages';
 import { token } from '../../.././../api/messaging/token';
 
 // redux
@@ -56,8 +57,11 @@ class Activate extends Component {
 
             // retrieve the rooms member tokens
             const getTokens = await token.getRoomMembersToken(response.data.checkinData.membersList);
-            console.log(getTokens);
 
+            // itterate over tokens and send push notifications
+            getTokens.data.tokens.forEach(token => {
+                messages.notifyOpenRoom(getTokens.data.serverKey, token);
+            });
         }
     }
 

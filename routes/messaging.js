@@ -7,7 +7,7 @@ module.exports = app => {
     app.post('/api/messaging/setToken', (req, res) => {
         
         // See documentation on defining a message payload.
-        /*var message = {
+        var message = {
             data: {
             score: '850',
             time: '2:45'
@@ -24,7 +24,7 @@ module.exports = app => {
             })
             .catch((error) => {
             console.log('Error sending message:', error);
-        });*/
+        });
 
         // get users messaging ref
         const messagingRef = db.ref(`users/${req.body.uid}/messaging`);
