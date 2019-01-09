@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import DashboardMenu from './DashboardMenu.';
-import DashboardSettings from './DashboardSettings';
 import DashboardMain from './DashboardMain';
+import Toolbar from './toolbar/Toolbar';
 
 
 export default class Dashboard extends Component {
@@ -22,7 +22,7 @@ export default class Dashboard extends Component {
             <div className='row no-select'>
                 <DashboardMenu />
                 <DashboardMain />
-                <DashboardSettings />
+                <Toolbar />
             </div>
         )
     }

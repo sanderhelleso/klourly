@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Clock from 'react-live-clock';
 import styled from 'styled-components';
-import { DAYS } from '../../helpers/days';
+import { DAYS } from '../../../helpers/days';
 
 export default class DashboardDate extends Component {
     constructor(props) {
