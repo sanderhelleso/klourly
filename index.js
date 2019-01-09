@@ -1,4 +1,3 @@
-// ES6
 'use strict';
 
 // initialize firebase
