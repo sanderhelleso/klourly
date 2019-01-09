@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { LogOut, Bell } from 'react-feather';
+import styled from 'styled-components';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -13,6 +14,7 @@ import { logoutActions } from '../../actions/logoutActions';
 import { authentication } from '../../api/authentication/authentication'; 
 
 import DashboardDate from './DashboardDate';
+
 
 class DashboardSettings extends Component {
     constructor(props) {
@@ -43,7 +45,7 @@ class DashboardSettings extends Component {
 
     render() {
         return (
-            <aside id='dashboard-settings' className='col s12 m12 l3 z-depth-2 animated fadeIn'>
+            <StyledAside id='dashboard-settings' className='col s12 m12 l3 z-depth-2 animated fadeIn'>
                 <div id='dashboard-settings-top' className='col l12'>
                     <div className='col l2'>
                         <Bell size={20} />
@@ -56,8 +58,10 @@ class DashboardSettings extends Component {
                         <LogOut size={20} />
                     </div>
                 </div>
-                <DashboardDate />
-            </aside>
+                <SettingsBody>
+                    <DashboardDate />
+                </SettingsBody>
+            </StyledAside>
         )
     }
 }
@@ -71,3 +75,16 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardSettings);
+
+
+const StyledAside = styled.aside`
+    position: relative;
+    background: #6a3093;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #a044ff, #6a3093);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #a044ff, #6a3093); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 100vh !important;
+`;
+
+const SettingsBody = styled.div`
+    padding: 2rem 1rem;
+`;

@@ -30,12 +30,14 @@ export default class DashboardDate extends Component {
     render() {
         return (
             <StyledDateCont>
-                <StyledDateName>{this.state.dateName}</StyledDateName>
+                <StyledClock>
+                    <Clock format={'HH:mm'} ticking={true} />
+                </StyledClock>  
+                <StyledDateName>
+                    {this.state.dateName}
+                </StyledDateName>
                 <StyledDate>
                     {this.state.date} 
-                    <span>
-                        <Clock format={'HH:mm'} ticking={true} />
-                    </span>
                 </StyledDate>
             </StyledDateCont>
         )
@@ -43,28 +45,30 @@ export default class DashboardDate extends Component {
 }
 
 const StyledDateCont = styled.div`
-    color: #ffffff;
-    margin: 5rem auto;
+    color: #ac73ff;
+    margin: 3rem auto;
     text-align: center;
+    position: relative;
 `;
 
 const StyledDateName = styled.h3`
-    font-size: 2.6rem;
-    margin-bottom: 0;
+    font-size: 1.8rem;
+    margin: 0;
     font-weight: 100;
     text-transform: capitalize;
+    letter-spacing: 2px;
 `;
 
 const StyledDate = styled.h5`
     margin-top: 0.75rem;
-    font-weight: 100;
+    margin-left: 7.5px;
     font-size: 1rem;
-    opacity: 0.5;
+`;
 
-    span {
-        display: inline-block;
-        margin-left: 10px;
-    }
+const StyledClock = styled.time`
+    font-size: 3rem;
+    opacity: 0.5;
+    text-align: center;
 `;
 
 
