@@ -18,8 +18,6 @@ const messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(payload => {
 	console.log('[firebase-messaging-sw.js] Received background message ', payload);
 
-	console.log(payload);
-
 	// notification option and structure, consuming given API data
 	const notificationTitle = payload.data.title;
 	const notificationOptions = {
@@ -29,17 +27,16 @@ messaging.setBackgroundMessageHandler(payload => {
 		actions: [{ action: 'open_url', title: 'Check In Now'}]
 	};
 
-	// handle push notification action
-	self.addEventListener('notificationclick', event => {
-
-		console.log(event)
-
-		// redirect to given site
-		switch (event.action) {
-			case 'open_url': clients.openWindow(event.notification.data.url);
-			break;
-
-	}}, false);
-
+	// launch notification
 	return self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+// handle push notification action
+self.addEventListener('notificationclick', event => {
+
+	// redirect to given site
+	switch (event.action) {
+		case 'open_url': clients.openWindow(event.notification.data.url);
+		break;
+
+}}, false);

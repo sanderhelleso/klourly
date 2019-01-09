@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import { messages } from '../../api/messaging/messages';
 import { token } from '../../api/messaging/token';
 
 // redux

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { room } from '../../.././../api/room/room';
-import { messages } from '../../.././../api/messaging/messages';
 import { token } from '../../.././../api/messaging/token';
 
 // redux
@@ -55,8 +54,8 @@ class Activate extends Component {
                 });
             });
 
-            // retrieve the rooms member tokens
-            const getTokens = await token.getRoomMembersToken(response.data.checkinData.membersList);
+            // send push notifications to subscribed room members
+            token.getRoomMembersToken(response.data.checkinData.membersList, this.props.notificationData);
         }
     }
 
@@ -76,7 +75,15 @@ class Activate extends Component {
 }
 
 const mapStateToProps = state => {
-    return {  currentLocation: state.location.coords };
+    return {  
+        currentLocation: state.location.coords,
+        notificationData: {
+            title: 'Room available for checkin',
+            body: `"${state.room.activeRoom.name}" just opened for checkin. Register your attendence now!`,
+            icon: state.room.activeRoom.cover,
+            click_action: `http://localhost:3000/dashboard/rooms/${state.room.activeRoom.id}`
+        }
+    };
 }
 
 const mapDispatchToProps = dispatch => {

@@ -49,14 +49,15 @@ async function setToken(uid, token) {
 } 
 
 // retrieve tokens for a specific rooms members
-async function getRoomMembersToken(members) {
+async function getRoomMembersToken(members, data) {
     try {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
             url: '/api/messaging/getRoomMembersToken',
             data: {
-                members
+                members,
+                data
             }
         });
 

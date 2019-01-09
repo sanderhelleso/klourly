@@ -54,12 +54,7 @@ module.exports = app => {
 
                     // See documentation on defining a message payload.
                     const message = {
-                        data: {
-                            title: 'Portugal vs. Denmark',
-                            body: '5 to 1',
-                            icon: 'firebase-logo.png',
-                            click_action: 'http://localhost:8081'
-                        },
+                        data: req.body.data,
                         token: snapshot.val()
                     };
                     
