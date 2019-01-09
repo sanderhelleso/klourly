@@ -37,6 +37,11 @@ class Checkin extends Component {
         // get room reference
         const roomRef = firebase.database().ref(`rooms/${this.props.roomID}`);
 
+        // clear all previous listeners
+        roomRef.off('value');
+        roomRef.child('/checkins').off('value');
+        roomRef.child('/checkins').off('child_added');
+
         // on value change, update state and set checkin mode depending on result
         roomRef.child('/checkin').on('value', snapshot => {
 
@@ -58,19 +63,22 @@ class Checkin extends Component {
             });
         });
 
-        // on new checkin, update total potensial attendence
+        // prefetch data to only recieve callbacks on new data added
         let initialDataLoaded = false;
         roomRef.child('/checkins').once('value', snapshot => {
             initialDataLoaded = true;
         });
 
         // on new checkin, update total potensial attendence
-        roomRef.child('/checkins').limitToLast(1).on('child_added', snapshot => {
+        roomRef.child('/checkins')
+        .orderByChild('startTime')
+        .limitToLast(1)
+        .on('child_added', () => {
+
+            // if initalData is not loaded, return
             if (!initialDataLoaded) return;
 
-            console.log(321);
-            console.log(snapshot.val());
-
+            // if not, increment total room checkin and update attendence state
             const updatedTotal = this.props.attendence[this.props.roomID].totalRoomCheckins + 1;
             this.props.setRoomAttendenceAction({
                 roomID: this.props.roomID,
