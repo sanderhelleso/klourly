@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { LogOut, Bell } from 'react-feather';
-import DashboardDate from './DashboardDate';
-import DashboardClock from './DashboardClock';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -13,6 +11,8 @@ import './styles/dashboardSettings.css';
 import { userDataActions } from '../../actions/userDataActions';
 import { logoutActions } from '../../actions/logoutActions';
 import { authentication } from '../../api/authentication/authentication'; 
+
+import DashboardDate from './DashboardDate';
 
 class DashboardSettings extends Component {
     constructor(props) {
@@ -56,10 +56,7 @@ class DashboardSettings extends Component {
                         <LogOut size={20} />
                     </div>
                 </div>
-                <div className='col l12'>
-                    <DashboardDate />
-                    <DashboardClock />
-                </div>
+                <DashboardDate />
             </aside>
         )
     }

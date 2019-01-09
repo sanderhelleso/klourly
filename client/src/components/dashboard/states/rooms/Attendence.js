@@ -21,20 +21,21 @@ class Attendence extends Component {
         
         // attempt to fetch users room attendence
         if (this.props.attendence[this.props.roomID]) return;
-        
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
         // if successfull, update attendence state for room
-        this.props.setRoomAttendenceAction({
-            roomID: this.props.roomID,
-            attendenceData: {
-                ...response.data.attendenceData,
-                attendenceInPercentage: format.getPercentage(
-                    response.data.attendenceData.totalUserCheckinsForRoom,
-                    response.data.attendenceData.totalRoomCheckins
-                )
-            }
-        });
+        if (response.data.success) {
+            this.props.setRoomAttendenceAction({
+                roomID: this.props.roomID,
+                attendenceData: {
+                    ...response.data.attendenceData,
+                    attendenceInPercentage: format.getPercentage(
+                        response.data.attendenceData.totalUserCheckinsForRoom,
+                        response.data.attendenceData.totalRoomCheckins
+                    )
+                }
+            });
+        }
     }
 
     renderAttendence() {

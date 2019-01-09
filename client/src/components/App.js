@@ -122,9 +122,7 @@ class App extends Component {
 
     renderRoutes() {
 
-        if (this.props.auth.loggedIn === null) {
-            return null;
-        }
+        if (this.props.auth.loggedIn === null) return null;
 
         else if (this.props.auth.loggedIn) {
             return (
