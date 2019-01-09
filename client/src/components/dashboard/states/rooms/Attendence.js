@@ -13,84 +13,13 @@ class Attendence extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
-
-
-        /*// set state depending if data is already retrieved
-        if (this.props.attendenceData[this.props.roomID]) {
-
-            // data is loaded and user has attended
-            if (this.props.attendenceData[this.props.roomID].attended) {
-
-                // set attendence percentage
-                this.state = {
-                    percentage: props.attendenceData[this.props.roomID].attendedInPercent
-                }
-            }
-
-            // data is loaded and user has not attended
-            else {
-                this.state = {
-                    notAttended: true
-                }
-            }
-            
-        }
-
-        // no data present, load data
-        else {
-            this.state = {
-                loading: true
-            }
-        }*/
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        /*// update attendence percentage
-        if (this.props.attendenceData[this.props.roomID] !== nextProps.attendenceData[this.props.roomID]) {
-            this.setState({
-                percentage: nextProps.attendenceData[this.props.roomID].attendedInPercent
-            });
-        }*/
+        this.state = { loading: true };
     }
 
     async componentDidMount() {
-
-        // check if data retrival is needed
-        /*if (this.state.loading) {
-
-            // fetch users current attendence in percentage
-            const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
-
-            //console.log(response);
-
-            // check for successfull retrieval
-            if (response.data.success) {
-
-                // update and display
-                this.setState({
-                    percentage: response.data.stats.attendedInPercent
-                });
-
-                this.props.setRoomAttendenceAction({
-                    ...response.data.stats,
-                    roomID: this.props.roomID
-                });
-            }
-
-            else {
-                this.setState({
-                    notAttended: true
-                });
-            }
-
-
-            // finish loding
-            this.setState({
-                loading: false
-            });
-        }*/
+        
+        const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
+        console.log(response);
     }
 
     renderAttendence() {
@@ -133,8 +62,7 @@ class Attendence extends Component {
 
 const mapStateToProps = state => {
     return { 
-        userID: state.auth.user.id,
-        attendenceData: state.room.attendence
+        userID: state.auth.user.id
     };
 };
 

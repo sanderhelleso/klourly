@@ -6,7 +6,6 @@ module.exports = app => {
     // get attendence registration data
     app.post('/api/registerAttendence', (req, res) => {
 
-        console.log(req.body);
         const checkinTimestamp = new Date().getTime();
         
         // get checkin ref for user
@@ -31,68 +30,36 @@ module.exports = app => {
     });
 
     // get attendence for a specific user for a room
-    app.post('/api/getAttendence', async (req, res) => {
+    app.post('/api/getAttendence', (req, res) => {
         
-        
-        // get checkin path
-        const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
-        checkinRef.once('value', snapshot => {
+        // get room reference
+        const roomCheckinsRef = db.ref(`rooms/${req.body.roomID}/checkins`);
+        roomCheckinsRef.once('value', roomCheckinSnapshot => {
 
-            let stats = { attended: false }; // default to false
+            // get total room checkins
+            console.log(roomCheckinSnapshot.val())
+            const totalRoomCheckins = Object.keys(roomCheckinSnapshot.val()).length;
 
-            // check if checkin is registered for given room
-            if (snapshot.val()) {
+            // get user reference
+            const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${req.body.roomID}`);
+            userCheckinRef.once('value', userCheckinsnapshot => {
 
-                // update status and get attendence data
-                stats = getAttendenceStats(snapshot.val(), req.body.uid);
-                stats.attended = true;
-            }
+                // get total user checkins for room
+                console.log(userCheckinsnapshot.val())
+                const totalUserCheckinsForRoom = Object.keys(userCheckinsnapshot.val()).length;
 
-            // send back response with retrieved data
-            res.status(200).json({ 
-                success: true,
-                stats
-            });
-
-        });
-    });
-}
-
-function getAttendenceStats(data, uid) {
-
-    // check if any attendences has been set
-    const attendenceStats = {
-        total: 0,
-        userAttended: 0,
-        attendedInPercent: 100
-    }
-
-    // itterate over each time 
-    data.map(time => {
-
-        // itteratoe over each days registered year
-        Object.values(time.days).forEach(year => {
-
-            // itterate over each years registered week
-            Object.values(year).forEach(week => {
-
-                // increment the total room attendence possible
-                attendenceStats.total += Object.keys(week).length;
-
-                // if user has checked in to time
-                Object.values(week).forEach(attendie => {
-
-                    // increment users count if present
-                    if (attendie.hasOwnProperty(uid)) { attendenceStats.userAttended += 1 };
+                // send back response with success message and data
+                res.status(200).json({ 
+                    success: true,
+                    message: 'Attendence was successfully retrieved',
+                    attendenceData: {
+                        attendenceInPercentage: Math.round((totalUserCheckinsForRoom / totalRoomCheckins) * 100),
+                        totalRoomCheckins,
+                        totalUserCheckinsForRoom
+                    }
                 });
             });
         });
+        
     });
-
-    // set total attendence in percentage
-    attendenceStats.attendedInPercent = Math.floor((attendenceStats.userAttended / attendenceStats.total) * 100);
-
-    return attendenceStats;
-
-    // https://www.youtube.com/watch?v=Ca_nad3ipHI  <-- dope track
 }

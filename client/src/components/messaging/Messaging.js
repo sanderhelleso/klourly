@@ -39,8 +39,6 @@ class Messaging extends Component {
             // if currentToken exists
             if (currentToken) {
 
-                console.log(currentToken);
-
                 // send token to server and update if NEEDED
                 token.setToken(this.props.userID, currentToken);
 

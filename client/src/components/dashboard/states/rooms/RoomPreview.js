@@ -5,11 +5,9 @@ import RoomCard from './RoomCard';
 export default class RoomPreview extends Component {
     constructor(props) {
         super(props);
-
-        this.renderPreview = this.renderPreview.bind(this);
     }
 
-    renderPreview() {
+    renderPreview = () => {
 
         // render preview card for each room
         if (this.props.data) {
