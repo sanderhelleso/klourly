@@ -51,4 +51,47 @@ module.exports = app => {
 
         });
     });
+
+    // get a messaging token for a user
+    app.post('/api/messaging/getToken', (req, res) => {
+
+    });
+
+    // get all messaging tokens for members of a room
+    app.post('/api/messaging/getRoomMembersToken', (req, res) => {
+
+        console.log(req.body);
+
+        const tokens = [];   // array to store tokens
+        let counter = 0;    // itteration counter
+
+        // itterate over members
+        req.body.members.forEach(uid => {
+            
+
+            // get users messaging ref
+            const tokenRef = db.ref(`users/${uid}/messaging/token`);
+
+            // access messaging ref data and add token to list
+            tokenRef.once('value', snapshot => {
+
+                if (snapshot.val()) tokens.push(snapshot.val());
+
+                // increment counter
+                counter++;
+
+                // once all tokens has been collected, send back response
+                if (counter === req.body.members.length) {
+
+                    // send back response with success message
+                    res.status(200).json({
+                        success: true,
+                        message: 'Successfully retrieved tokens',
+                        serverKey: process.env.FIREBASE_SERVER_KEY,
+                        tokens
+                    });
+                }
+            });
+        });
+    });
 }

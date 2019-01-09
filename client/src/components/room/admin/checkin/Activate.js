@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { room } from '../../.././../api/room/room';
+import { token } from '../../.././../api/messaging/token';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -27,8 +28,6 @@ class Activate extends Component {
         // validate that checkin was successfully started
         if (response.data.success) {
 
-            console.log(response.data);
-
             // get checkin ref of newly generated checkin
             const checkinID = response.data.checkinData.checkinID;
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
@@ -54,6 +53,11 @@ class Activate extends Component {
                     }
                 });
             });
+
+            // retrieve the rooms member tokens
+            const getTokens = await token.getRoomMembersToken(response.data.checkinData.membersList);
+            console.log(getTokens);
+
         }
     }
 
