@@ -37,23 +37,24 @@ module.exports = app => {
         roomCheckinsRef.once('value', roomCheckinSnapshot => {
 
             // get total room checkins
-            console.log(roomCheckinSnapshot.val())
-            const totalRoomCheckins = Object.keys(roomCheckinSnapshot.val()).length;
+            const totalRoomCheckins = roomCheckinSnapshot.val() 
+                                      ? Object.keys(roomCheckinSnapshot.val()).length
+                                      : 0;
 
             // get user reference
             const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${req.body.roomID}`);
             userCheckinRef.once('value', userCheckinsnapshot => {
 
                 // get total user checkins for room
-                console.log(userCheckinsnapshot.val())
-                const totalUserCheckinsForRoom = Object.keys(userCheckinsnapshot.val()).length;
+                const totalUserCheckinsForRoom = userCheckinsnapshot.val()
+                                                 ? Object.keys(userCheckinsnapshot.val()).length
+                                                 : 0
 
                 // send back response with success message and data
                 res.status(200).json({ 
                     success: true,
                     message: 'Attendence was successfully retrieved',
                     attendenceData: {
-                        attendenceInPercentage: Math.round((totalUserCheckinsForRoom / totalRoomCheckins) * 100),
                         totalRoomCheckins,
                         totalUserCheckinsForRoom
                     }

@@ -18,31 +18,50 @@ class Attendence extends Component {
 
     async componentDidMount() {
         
+        // attempt to fetch users room attendence
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
         console.log(response);
+
+        // if successfull, update attendence state for room
+        this.props.setRoomAttendenceAction({
+            roomID: this.props.roomID,
+            attendenceData: {
+                ...response.data.attendenceData,
+                attendenceInPercentage: this.getRoomAttendenceInPercentage(
+                    response.data.attendenceData.totalUserCheckinsForRoom,
+                    response.data.attendenceData.totalRoomCheckins
+                )
+            }
+        });
+    }
+
+    getRoomAttendenceInPercentage(totalUserCheckinsForRoom, totalRoomCheckins) {
+        return Math.round((totalUserCheckinsForRoom / totalRoomCheckins) * 100);
     }
 
     renderAttendence() {
         
-        if (!this.state.loading) {
+        // check if room attendence is sat / loaded
+        if (this.props.attendence[this.props.roomID]) {
 
-            if (this.state.percentage) {
-                return (
-                    <div className="animated fadeIn">
-                        {this.state.percentage}<span>%</span>
-                        <span className="attended">
-                            Attended
-                        </span>
-                    </div>                        
-                )
-            }
-
-            else {
+            if (this.props.attendence[this.props.roomID].attendenceInPercentage === 0 ||
+                !this.props.attendence[this.props.roomID].attendenceInPercentage) {
                 return (
                     <NotAttended className="animated fadeIn">
                         <Cloud size={50} />
                         <p>Not Attended</p>
                     </NotAttended>
+                )
+            }
+
+            else {
+                return (
+                    <div className="animated fadeIn">
+                        {this.props.attendence[this.props.roomID].attendenceInPercentage}<span>%</span>
+                        <span className="attended">
+                            Attended
+                        </span>
+                    </div>                        
                 )
             }
         }
@@ -62,7 +81,8 @@ class Attendence extends Component {
 
 const mapStateToProps = state => {
     return { 
-        userID: state.auth.user.id
+        userID: state.auth.user.id,
+        attendence: state.room.attendence
     };
 };
 

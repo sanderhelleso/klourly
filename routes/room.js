@@ -398,7 +398,7 @@ module.exports = app => {
 
                     // check if room is active, if active add to list of active rooms
                     const roomData = roomSnapshot.val();
-                    if (roomData.checkin.active) {
+                    if (roomData.checkin.active && roomData.checkins) {
                        activeCheckins[roomData.checkin.checkinID] = {
                             ...roomData.checkins[roomData.checkin.checkinID],
                             roomID,

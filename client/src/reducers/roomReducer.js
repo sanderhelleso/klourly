@@ -3,7 +3,8 @@ import { format } from '../helpers/format';
 const initialState = {
     loaded: false,
     availableForCheckin: {},
-    usersCheckedinRooms: {}
+    usersCheckedinRooms: {},
+    attendence: {}
 }
 
 const roomReducer = (state = initialState, action) => {
@@ -26,12 +27,9 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 attendence: {
                     ...state.attendence,
-                    [action.payload.roomID]: {
-                        ...state.attendence[action.payload.roomID],
-                        ...action.payload
-                    }
+                    [action.payload.roomID]: action.payload.attendenceData
                 }
-            }
+            } 
 
         case 'SET_INITIAL_ACTIVE_ROOM_STATUS_SUCCESS':
             return {

@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { setInitialActiveCheckinsAction } from '../../actions/room/checkin/setInitialActiveCheckinsAction';
 import { setInitialUsersCheckedinRoomsAction } from '../../actions/room/checkin/setInitialUsersCheckedinRoomsAction';
 import { updateActiveCheckinStatusAction } from '../../actions/room/checkin/updateActiveCheckinStatusAction';
+import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
+
 
 class ActiveRoomsData extends Component {
     constructor(props) {
@@ -19,10 +21,10 @@ class ActiveRoomsData extends Component {
         // attempt to fetch users active rooms availale for checkin
         const response = await room.getActiveRooms(this.props.userID);
 
-        console.log(response.data);
-
         // check if data fetch is successfull
         if (response.data.success) {
+
+            console.log(response.data);
 
             // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
@@ -49,6 +51,7 @@ class ActiveRoomsData extends Component {
                             membersList: value.membersList
                         }
                     });
+                    
                 });
             });
         }
@@ -70,7 +73,8 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setInitialActiveCheckinsAction,
         updateActiveCheckinStatusAction ,
-        setInitialUsersCheckedinRoomsAction
+        setInitialUsersCheckedinRoomsAction,
+        setRoomAttendenceAction
     }, dispatch);
 }
 
