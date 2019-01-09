@@ -5,30 +5,41 @@
 importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
 
-// Initialize the Firebase app in the service worker by passing in the
-// messagingSenderId.
+// initialize the Firebase app in the service worker by passing in the messagingSenderId.
 firebase.initializeApp({
   'messagingSenderId': '737898303857'
 });
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
+// initialize firebase messaging
 const messaging = firebase.messaging();
 
-// If you would like to customize notifications that are received in the
-// background (Web app is closed or not in browser focus) then you should
-// implement this optional method.
-// [START background_handler]
-messaging.setBackgroundMessageHandler(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  var notificationTitle = 'Background Message Title';
-  var notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png'
-  };
+// handle notifications that are received in the
+// background (Web app is closed or not in browser focus)
+messaging.setBackgroundMessageHandler(payload => {
+	console.log('[firebase-messaging-sw.js] Received background message ', payload);
 
-  return self.registration.showNotification(notificationTitle,
-    notificationOptions);
+	console.log(payload);
+
+	// notification option and structure, consuming given API data
+	const notificationTitle = payload.data.title;
+	const notificationOptions = {
+		body: payload.data.body,
+		icon: payload.data.icon,
+		data: { url: payload.data.click_action },
+		actions: [{ action: 'open_url', title: 'Check In Now'}]
+	};
+
+	// handle push notification action
+	self.addEventListener('notificationclick', event => {
+
+		console.log(event)
+
+		// redirect to given site
+		switch (event.action) {
+			case 'open_url': clients.openWindow(event.notification.data.url);
+			break;
+
+	}}, false);
+
+	return self.registration.showNotification(notificationTitle, notificationOptions);
 });
-// [END background_handler]

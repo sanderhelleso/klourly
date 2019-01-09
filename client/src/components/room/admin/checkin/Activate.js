@@ -57,11 +57,6 @@ class Activate extends Component {
 
             // retrieve the rooms member tokens
             const getTokens = await token.getRoomMembersToken(response.data.checkinData.membersList);
-
-            // itterate over tokens and send push notifications
-            getTokens.data.tokens.forEach(token => {
-                messages.notifyOpenRoom(getTokens.data.serverKey, token);
-            });
         }
     }
 
