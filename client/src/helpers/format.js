@@ -1,7 +1,8 @@
 export const format = {
     capitalize,
     tsToDate,
-    removeByKey
+    removeByKey,
+    getPercentage
 }
 
 // capitalize given string
@@ -22,4 +23,8 @@ function removeByKey (obj, deleteKey) {
         result[current] = obj[current];
         return result;
     }, {});
-  }
+}
+
+function getPercentage(num1, num2) {
+    return Math.round((num1 / num2) * 100);
+}

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 
 import { attendence } from '../../../../api/room/attendence';
+import { format } from '../../../../helpers/format';
 
 class Attendence extends Component {
     constructor(props) {
@@ -20,23 +21,18 @@ class Attendence extends Component {
         
         // attempt to fetch users room attendence
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
-        console.log(response);
 
         // if successfull, update attendence state for room
         this.props.setRoomAttendenceAction({
             roomID: this.props.roomID,
             attendenceData: {
                 ...response.data.attendenceData,
-                attendenceInPercentage: this.getRoomAttendenceInPercentage(
+                attendenceInPercentage: format.getPercentage(
                     response.data.attendenceData.totalUserCheckinsForRoom,
                     response.data.attendenceData.totalRoomCheckins
                 )
             }
         });
-    }
-
-    getRoomAttendenceInPercentage(totalUserCheckinsForRoom, totalRoomCheckins) {
-        return Math.round((totalUserCheckinsForRoom / totalRoomCheckins) * 100);
     }
 
     renderAttendence() {

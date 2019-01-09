@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import * as firebase from 'firebase';
 import { CheckCircle } from 'react-feather';
 import { getWeek } from '../../../../helpers/getWeek';
+
+import { format } from '../../../../helpers/format';
 import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 
 // redux
@@ -33,28 +35,45 @@ class Checkin extends Component {
     async componentDidMount() {
 
         // get room reference
-        const roomRef = firebase.database().ref(`rooms/${this.props.roomID}/checkin`);
+        const roomRef = firebase.database().ref(`rooms/${this.props.roomID}`);
 
         // on value change, update state and set checkin mode depending on result
-        roomRef.on('value', snapshot => {
+        let initialDataLoaded = false;
+        roomRef.child('/checkin').on('value', snapshot => {
 
             // validate if user has already checked into room for this checkin
             if (this.props.usersCheckedinRooms[this.props.roomID] &&
                 this.props.usersCheckedinRooms[this.props.roomID]
                 .hasOwnProperty(snapshot.val().checkinID)) return;
 
-           // set available
-           this.setState({ 
-               available: snapshot.val().active,
-               checkinID: snapshot.val().checkinID
+            // set available
+            this.setState({ 
+                available: snapshot.val().active,
+                checkinID: snapshot.val().checkinID
             });
-    
-           // update checkin state
-           this.props.checkinAvailableAction({
-               roomID: this.props.roomID,
-               checkinData: snapshot.val().active ? snapshot.val() : false
-           });
+        
+            // update checkin state
+            this.props.checkinAvailableAction({
+                roomID: this.props.roomID,
+                checkinData: snapshot.val().active ? snapshot.val() : false
+            });
+        });
 
+        // on new checkin, update total potensial attendence
+        roomRef.child('/checkins').on('child_changed', snapshot => {
+
+            /*console.log(123)
+                this.props.setRoomAttendenceAction({
+                    roomID: this.props.roomID,
+                    attendenceData: {
+                        ...this.props.attendence[this.props.roomID],
+                        totalRoomCheckins: Object.keys(snapshot.val()).length,
+                        attendenceInPercentage: format.getPercentage(
+                            this.props.attendence[this.props.roomID].totalUserCheckinsForRoom,
+                            this.props.attendence[this.props.roomID].totalRoomCheckins + 1
+                        )
+                    }
+                });*/
         });
     }
 
@@ -118,7 +137,8 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin,
-        usersCheckedinRooms: state.room.usersCheckedinRooms
+        usersCheckedinRooms: state.room.usersCheckedinRooms,
+        attendence: state.room.attendence
     };
 };
 
