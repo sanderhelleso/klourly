@@ -65,8 +65,11 @@ class Checkin extends Component {
         });
 
         // on new checkin, update total potensial attendence
-        roomRef.child('/checkins').on('child_added', snapshot => {
+        roomRef.child('/checkins').limitToLast(1).on('child_added', snapshot => {
             if (!initialDataLoaded) return;
+
+            console.log(321);
+            console.log(snapshot.val());
 
             const updatedTotal = this.props.attendence[this.props.roomID].totalRoomCheckins + 1;
             this.props.setRoomAttendenceAction({
@@ -104,6 +107,20 @@ class Checkin extends Component {
             this.props.updateUsersCheckedinRoomsAction({
                 roomID: this.props.roomID,
                 checkinID: this.state.checkinID
+            });
+
+            // update users attendence percentage for room
+            const updatedTotal = this.props.attendence[this.props.roomID].totalUserCheckinsForRoom + 1;
+            this.props.setRoomAttendenceAction({
+                roomID: this.props.roomID,
+                attendenceData: {
+                    ...this.props.attendence[this.props.roomID],
+                    totalUserCheckinsForRoom: updatedTotal,
+                    attendenceInPercentage: format.getPercentage(
+                        updatedTotal,
+                        this.props.attendence[this.props.roomID].totalRoomCheckins
+                    )
+                }
             });
         } 
 

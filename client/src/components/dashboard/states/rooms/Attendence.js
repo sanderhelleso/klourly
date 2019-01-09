@@ -20,6 +20,8 @@ class Attendence extends Component {
     async componentDidMount() {
         
         // attempt to fetch users room attendence
+        if (this.props.attendence[this.props.roomID]) return;
+        
         const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
         // if successfull, update attendence state for room
