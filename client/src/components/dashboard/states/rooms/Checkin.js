@@ -38,7 +38,6 @@ class Checkin extends Component {
         const roomRef = firebase.database().ref(`rooms/${this.props.roomID}`);
 
         // on value change, update state and set checkin mode depending on result
-        let initialDataLoaded = false;
         roomRef.child('/checkin').on('value', snapshot => {
 
             // validate if user has already checked into room for this checkin
@@ -60,20 +59,27 @@ class Checkin extends Component {
         });
 
         // on new checkin, update total potensial attendence
-        roomRef.child('/checkins').on('child_changed', snapshot => {
+        let initialDataLoaded = false;
+        roomRef.child('/checkins').once('value', snapshot => {
+            initialDataLoaded = true;
+        });
 
-            /*console.log(123)
-                this.props.setRoomAttendenceAction({
-                    roomID: this.props.roomID,
-                    attendenceData: {
-                        ...this.props.attendence[this.props.roomID],
-                        totalRoomCheckins: Object.keys(snapshot.val()).length,
-                        attendenceInPercentage: format.getPercentage(
-                            this.props.attendence[this.props.roomID].totalUserCheckinsForRoom,
-                            this.props.attendence[this.props.roomID].totalRoomCheckins + 1
-                        )
-                    }
-                });*/
+        // on new checkin, update total potensial attendence
+        roomRef.child('/checkins').on('child_added', snapshot => {
+            if (!initialDataLoaded) return;
+
+            const updatedTotal = this.props.attendence[this.props.roomID].totalRoomCheckins + 1;
+            this.props.setRoomAttendenceAction({
+                roomID: this.props.roomID,
+                attendenceData: {
+                    ...this.props.attendence[this.props.roomID],
+                    totalRoomCheckins: updatedTotal,
+                    attendenceInPercentage: format.getPercentage(
+                        this.props.attendence[this.props.roomID].totalUserCheckinsForRoom,
+                        updatedTotal
+                    )
+                }
+            });
         });
     }
 
