@@ -6,13 +6,34 @@ export default class ReportPreviews extends Component {
         super(props);
     }
 
+    renderReportPreviews() {
+
+        if (this.props.checkins) {
+
+            // itterate over checkins and generate preview reports
+            return Object.entries(this.props.checkins)
+            .map(([checkinID, checkinData]) => {
+                return <ReportPreview 
+                            key={checkinID} 
+                            data={{
+                                checkinID,
+                                ...checkinData
+                            }} 
+                        />
+            });
+        }
+
+        else {
+            return <div>No reports active</div>
+        }
+    }
+
     render() {
         return (
             <div className="row">
-                <ReportPreview />
-                <ReportPreview />
-                <ReportPreview />
-                <ReportPreview />
+                <div className="col s8">
+                    {this.renderReportPreviews()}
+                </div>
             </div>
         )
     }

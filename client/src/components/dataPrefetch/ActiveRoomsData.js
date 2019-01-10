@@ -24,8 +24,6 @@ class ActiveRoomsData extends Component {
         // check if data fetch is successfull
         if (response.data.success) {
 
-            console.log(response.data);
-
             // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
             this.props.setInitialUsersCheckedinRoomsAction(response.data.usersCheckedinRooms);

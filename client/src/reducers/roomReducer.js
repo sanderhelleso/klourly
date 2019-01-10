@@ -180,6 +180,15 @@ const roomReducer = (state = initialState, action) => {
                     type: action.payload
                 }
             }
+
+        case 'SET_ROOM_REPORTS_SUCCESS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    checkins: action.payload
+                }
+            }
             
         default:
             return state;

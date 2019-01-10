@@ -5,6 +5,7 @@ import { report } from '../../../../api/room/report';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setRoomReportsAction } from '../../../../actions/room/report/setRoomReportsAction';
 
 import BackToRoom from '../../BackToRoom';
 import ReportPreviews from './ReportPreviews';
@@ -16,8 +17,13 @@ class RoomReports extends Component {
 
     async componentDidMount() {
 
+        // attempt to fetch the rooms checkins
         const response = await report.getRoomReports(this.props.userID, this.props.roomID);
-        console.log(response);
+
+        // if fetch was successfull, update checkins state
+        if (response.data.success) {
+            this.props.setRoomReportsAction(response.data.checkins);
+        }
     }
 
     render() {
@@ -29,7 +35,7 @@ class RoomReports extends Component {
                         <h3>Reports</h3>
                         <p>See statistics, details and generate reports of the rooms checkins</p>
                     </StyledHeader>
-                    <ReportPreviews />
+                    <ReportPreviews checkins={this.props.checkins} />
                 </div>
             </main>
         )
@@ -39,12 +45,13 @@ class RoomReports extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        roomID: state.room.activeRoom.id
+        roomID: state.room.activeRoom.id,
+        checkins: state.room.activeRoom.checkins
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ setRoomReportsAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReports);
