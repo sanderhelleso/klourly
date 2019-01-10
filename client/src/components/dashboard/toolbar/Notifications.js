@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { CloudOff } from 'react-feather';
 import Clear from './Clear';
+import Notification from './Notification';
 
 export default class Notifications extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            notifications: 0
+            notifications: 1
         }
     }
 
@@ -16,7 +17,7 @@ export default class Notifications extends Component {
 
         if (this.state.notifications > 0) {
             return (
-                <p>got notifications</p>
+                <Notification />
             )
         }
 
@@ -77,9 +78,10 @@ const NotificationHeader = styled.div`
 const NotificationList = styled.div`
     padding: 1rem;
     position: absolute;
-    top: 5%;
-    bottom: 5%;
+    top: 30px;
+    bottom: 30px;
     left: 0;
+    margin: 2rem 0;
     min-height: 100%;
     min-width: 100%;
 `;
