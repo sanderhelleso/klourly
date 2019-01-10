@@ -17,20 +17,10 @@ export default class ReportPreview extends Component {
                 datasets: [{
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 255, 255, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255,255,255, 0.4)',
                     ],
                     borderWidth: 1
                 }]
@@ -42,6 +32,7 @@ export default class ReportPreview extends Component {
                     xAxes: [{
                         gridLines: {
                             color: "rgba(0, 0, 0, 0)",
+                            drawTicks: false
                         },
                         ticks: {
                             display: false
@@ -111,7 +102,12 @@ const StyledPreview = styled.div`
     text-align: center;
 
     .chart {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
         padding: 0;
+        background: #B24592;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(${props => Math.floor(Math.random() * 360) + 1}deg, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(${props => Math.floor(Math.random() * 360) + 1}deg, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
     .information {

@@ -11,7 +11,7 @@ export default class ReportPreviews extends Component {
         if (this.props.checkins) {
 
             // itterate over checkins and generate preview reports
-            return Object.entries(this.props.checkins)
+            return Object.entries(this.props.checkins).slice(0, 1)
             .map(([checkinID, checkinData]) => {
                 return <ReportPreview 
                             key={checkinID} 
