@@ -17,6 +17,7 @@ class RoomReports extends Component {
     async componentDidMount() {
 
         const response = await report.getRoomReports(this.props.userID, this.props.roomID);
+        console.log(response);
     }
 
     render() {

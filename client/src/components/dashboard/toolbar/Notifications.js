@@ -66,8 +66,6 @@ const StyledNotifications = styled.div`
     background-color: rgba(67, 49, 87, 0.8);
     background: rgba(67, 49, 87, 0.8);
     box-shadow: 0px 18px 58px rgba(0,0,0,0.2);
-}
- 
 `;
 
 const NotificationHeader = styled.div`
