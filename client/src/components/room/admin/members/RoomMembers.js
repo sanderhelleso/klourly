@@ -90,8 +90,7 @@ class RoomMembers extends Component {
     }
 }
 
-// set initial store state
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return { 
         roomID: state.room.activeRoom.id,
         confirmDeleteMember: {
@@ -102,7 +101,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 }
 

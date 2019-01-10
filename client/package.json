@@ -78,6 +78,9 @@
     "/api/messaging/getRoomMembersToken": {
       "target": "http://localhost:5000"
     },
+    "/api/report/getRoomReports": {
+      "target": "http://localhost:5000"
+    },
     "/api/algolia/keys": {
       "target": "http://localhost:5000"
     }
