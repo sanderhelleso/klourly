@@ -17,7 +17,15 @@ export default class Notifications extends Component {
 
         if (this.state.notifications > 0) {
             return (
+                <div>
                 <Notification />
+                <Notification />
+                <Notification />
+                <Notification />
+                <Notification />
+                <Notification />
+
+                </div>
             )
         }
 
@@ -58,6 +66,8 @@ const StyledNotifications = styled.div`
     background-color: rgba(67, 49, 87, 0.8);
     background: rgba(67, 49, 87, 0.8);
     box-shadow: 0px 18px 58px rgba(0,0,0,0.2);
+}
+ 
 `;
 
 const NotificationHeader = styled.div`
@@ -78,12 +88,23 @@ const NotificationHeader = styled.div`
 const NotificationList = styled.div`
     padding: 1rem;
     position: absolute;
-    top: 30px;
-    bottom: 30px;
+    top: 16px;
+    bottom: 0;
     left: 0;
+    padding-top: 1.5rem;
     margin: 2rem 0;
-    min-height: 100%;
+    min-height: 81.5%;
+    max-width: 81.5%;
     min-width: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 0.2em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #8a79af;
+    }
 `;
 
 const NoNotifications = styled.div`

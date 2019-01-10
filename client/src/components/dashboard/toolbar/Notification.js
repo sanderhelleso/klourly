@@ -33,7 +33,7 @@ const StyledNotification = styled.div`
     position: relative;
 
     .avatar-cont {
-        margin-top: 2px;
+        margin-top: 5px;
         text-align: center;
         max-width: 70px;
     }
@@ -67,6 +67,10 @@ const StyledNotification = styled.div`
             font-size: 0.7rem;
             color: #8a79af;
             opacity: 0.7;
+        }
+
+        @media screen AND (max-width: 1100px) {
+            padding-left: 10px;
         }
     }
 `;
