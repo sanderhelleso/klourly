@@ -31,7 +31,7 @@ export default class ReportPreviews extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col s8">
+                <div className="col s10">
                     {this.renderReportPreviews()}
                 </div>
             </div>
