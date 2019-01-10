@@ -6,6 +6,7 @@ import '../styles/dashboardSettings.css';
 
 import DashboardDate from './DashboardDate';
 import Options from './Options';
+import Notifications from './Notifications';
 
 
 export default class Toolbar extends Component {
@@ -20,6 +21,7 @@ export default class Toolbar extends Component {
                 <SettingsBody>
                     <DashboardDate />
                 </SettingsBody>
+                <Notifications />
             </StyledAside>
         )
     }
@@ -27,6 +29,7 @@ export default class Toolbar extends Component {
 
 const StyledAside = styled.aside`
     position: relative;
+    padding: 0 !important;
     background: #6a3093;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom, #a044ff, #6a3093);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom, #a044ff, #6a3093); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

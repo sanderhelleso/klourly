@@ -46,7 +46,7 @@ export default class DashboardDate extends Component {
 
 const StyledDateCont = styled.div`
     color: #ac73ff;
-    margin: 3rem auto;
+    margin-top: 5rem;
     text-align: center;
     position: relative;
 `;

@@ -1,14 +1,4 @@
-#dashboard-settings-top {
-    text-align: center;
-    color: #ffffff;
-    padding-bottom: 1rem;
-    border-bottom: 0.5px solid #ac73ff;
-}
 
-#dashboard-settings-top svg {
-    opacity: 0.5;
-    margin-top: 0.5rem;
-}
 
 .avatar-cont {
     display: flex;
