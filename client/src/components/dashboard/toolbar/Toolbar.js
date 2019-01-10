@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-// import component style
-import '../styles/dashboardSettings.css';
-
 import DashboardDate from './DashboardDate';
 import Options from './Options';
 import Notifications from './Notifications';
