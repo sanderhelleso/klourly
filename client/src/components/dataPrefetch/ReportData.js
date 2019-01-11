@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { report } from '../../api/room/report';
 import { room } from '../../api/room/room';
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ class ReportData extends Component {
 
         console.log('loading...');
 
-        // attempt to  fetch members data
+        // attempt to fetch members data
         const userResponse = await room.getRoomMembers(
                                 this.props.userID, 
                                 this.props.roomID, 
@@ -30,8 +31,6 @@ class ReportData extends Component {
         if (userResponse.data.success) {
             this.props.setRoomMembersDataAction(userResponse.data.membersList);
         }
-
-        console.log(userResponse.data);
 
         // attempt to fetch the rooms checkins
         const checkinResponse = await report.getRoomReports(
