@@ -48,9 +48,7 @@ export default class Chart extends Component {
             },
             tooltips: {
                 callbacks: {
-                   label: tooltipItem => {
-                          return tooltipItem.yLabel;
-                   }
+                   label: tooltipItem => tooltipItem.yLabel
                 }
             }
         }
