@@ -36,6 +36,7 @@ import RoomData from './dataPrefetch/RoomData';
 import UserLocation from './dataPrefetch/UserLocation';
 import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
 import Messaging from './messaging/Messaging';
+import CheckinReport from './room/admin/reports/CheckinReport';
 
 // Initialize Firebase
 const config = {
@@ -115,6 +116,8 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID/admin/checkin" component={RoomCheckin} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
+                    <Route exact path="/dashboard/rooms/:roomID/admin/reports/checkin/:checkinID" component={CheckinReport} />
+                    <Route exact path="/dashboard/rooms/:roomID/admin/reports/member/:memberID" component={Room} />
                 </div>
             )
         }

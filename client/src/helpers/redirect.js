@@ -16,7 +16,8 @@ export const redirect = {
     roomAdminMembers,
     roomAdminReports,
     loginWithJoinRoomRedirect,
-    redirectActionSuccess
+    redirectActionSuccess,
+    roomCheckinReport
 };
 
 function home() {
@@ -96,4 +97,8 @@ function redirectActionSuccess(cb, roomID, userID) {
 
         default: break;
     }
+}
+
+function roomCheckinReport(roomID, checkinID) {
+    history.push(`/dashboard/rooms/${roomID}/admin/reports/checkin/${checkinID}`);
 }

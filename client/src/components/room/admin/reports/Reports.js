@@ -61,6 +61,7 @@ class RoomReports extends Component {
             return <RoomReportPreviews 
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
+                        roomID={this.props.roomID}
                     />
         }
 

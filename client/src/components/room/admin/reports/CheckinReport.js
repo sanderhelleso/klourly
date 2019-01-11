@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class RoomReport extends Component {
+export default class CheckinReport extends Component {
     render() {
         return (
             <div>
-                <h1>Room Report</h1>
+                <h1>Checkin Report</h1>
             </div>
         )
     }

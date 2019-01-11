@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { redirect } from '../../../../helpers/redirect';
 import Chart from './Chart';
 
 
 export default class ReportPreview extends Component {
     constructor(props) {
         super(props);
-
-        /*const attendies = this.props.membersData
-        .filter(member => member.id !== checkinData.attendies.id);
-        console.log(attendies);*/
 
         console.log(this.props);
     }
@@ -36,7 +33,12 @@ export default class ReportPreview extends Component {
                     <div className="col s6 checkinID">
                         <h5>Checkin ID</h5>
                         <h3>{this.props.data.checkinID}</h3>
-                        <a className="waves-effect waves-purple btn-flat see-details">See Details</a>
+                        <a 
+                            className="waves-effect waves-purple btn-flat see-details"
+                            onClick={() => redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID)}
+                        >
+                            See Details
+                        </a>
                     </div>
                 </div>
             </StyledPreview>
