@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
 import RoomReportPreview from './RoomReportPreview';
 
-export default class ReportPreviews extends Component {
+export default class RoomReportPreviews extends Component {
     constructor(props) {
         super(props);
     }
 
     renderReportPreviews() {
 
-        if (this.props.checkins) {
+        // itterate over checkins and generate preview reports
+        return Object.entries(this.props.checkins).reverse().slice(0, 1)
+        .map(([checkinID, checkinData]) => {
 
-            // itterate over checkins and generate preview reports
-            return Object.entries(this.props.checkins).slice(0, 1)
-            .map(([checkinID, checkinData]) => {
-                return <RoomReportPreview 
-                            key={checkinID} 
-                            data={{
-                                checkinID,
-                                ...checkinData
-                            }} 
-                        />
-            });
-        }
+            // filter out attendies not attended
+            const attendies = this.props.membersData
+                            .filter(member => 
+                                checkinData.attendies 
+                                ? Object.keys(checkinData.attendies).indexOf(member.id) !== -1
+                                : null
+                            );
 
-        else {
-            return <div>No reports active</div>
-        }
+            return <RoomReportPreview 
+                        key={checkinID}
+                        data={{
+                            checkinID,
+                            ...checkinData,
+                            attendies
+                        }} 
+                    />
+        });
+        
     }
 
     render() {

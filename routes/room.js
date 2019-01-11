@@ -232,7 +232,9 @@ module.exports = app => {
                         id: member,
                         name: snapshot.val().settings.displayName,
                         photoUrl: snapshot.val().settings.photoUrl,
-                        checkins: snapshot.val().checkins
+                        checkins: snapshot.val().checkins 
+                                  ? snapshot.val().checkins[req.body.roomID] 
+                                  : null
                     });
                 }
 

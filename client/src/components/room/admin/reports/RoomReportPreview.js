@@ -1,79 +1,31 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Chart from './Chart';
 
-import { Line } from 'react-chartjs-2';
 
 export default class ReportPreview extends Component {
     constructor(props) {
         super(props);
 
+        /*const attendies = this.props.membersData
+        .filter(member => member.id !== checkinData.attendies.id);
+        console.log(attendies);*/
+
         console.log(this.props);
     }
 
-    renderChart() {
-
-        const data = {
-                labels: ["John Doe", "Kevin Hearth", "Sophie Johe", "Apple Bruns"],
-                datasets: [{
-                    data: [1233346, 1233357, 1233324, 1233349],
-                    backgroundColor: [
-                        'rgba(255, 255, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,255,255, 0.6)',
-                    ],
-                    borderWidth: 1
-                }]
-            }
-
-            const options = {
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            color: "rgba(0, 0, 0, 0)",
-                            drawTicks: false
-                        },
-                        ticks: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            color: "rgba(0, 0, 0, 0)",
-                            drawTicks: false
-                        },
-                        ticks: {
-                            display: false,
-                        }   
-                    }]
-                },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    callbacks: {
-                       label: tooltipItem => {
-                              return tooltipItem.yLabel;
-                       }
-                    }
-                }
-            }
-
-
-        return <Line
-                    data={data}
-                    width={100}
-                    height={300}
-                    options={options}
-                />
+    generateChartData() {
+        return {
+            labels: this.props.data.attendies.map(attendie => attendie.name),
+            dataset:   this.props.data.attendies.map(attendie => attendie.checkins[this.props.data.checkinID])
+        }
     }
 
     render() {
         return (
             <StyledPreview className="col s5">
                 <div className="col s12 chart">
-                    {this.renderChart()}
+                    <Chart chartData={this.generateChartData()} />
                 </div>
                 <div className="col s12 information">
                     <div className="col s4 checkinID">

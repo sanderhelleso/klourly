@@ -16,6 +16,11 @@ import MemberReportPreviews from './MemberReportPreviews';
 class RoomReports extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            membersDataLoaded: false,
+            checkinsDataLoaded: false
+        }
     }
 
     async componentDidMount() {
@@ -25,13 +30,17 @@ class RoomReports extends Component {
                                 this.props.userID, 
                                 this.props.roomID, 
                                 this.props.membersList.filter(uid => uid !== this.props.userID), 
+                                false,
                                 true
                             );
 
         // if fetch was successfull, update report members state
         if (userResponse.data.success) {
             this.props.setRoomMembersDataAction(userResponse.data.membersList);
+            this.setState({ membersDataLoaded: true });
         }
+
+        console.log(userResponse.data);
 
         // attempt to fetch the rooms checkins
         const checkinResponse = await report.getRoomReports(
@@ -42,6 +51,21 @@ class RoomReports extends Component {
         // if fetch was successfull, update checkins state
         if (checkinResponse.data.success) {
             this.props.setRoomReportsAction(checkinResponse.data.checkins);
+            this.setState({ checkinsDataLoaded: true });
+        }
+    }
+
+    renderRoomReportPreviews() {
+
+        if (this.state.checkinsDataLoaded && this.state.membersDataLoaded) {
+            return <RoomReportPreviews 
+                        checkins={this.props.checkins}
+                        membersData={this.props.membersData}
+                    />
+        }
+
+        else {
+            <p>Loading...</p>
         }
     }
 
@@ -54,8 +78,8 @@ class RoomReports extends Component {
                         <h3>Reports</h3>
                         <p>See statistics, details and generate reports of the rooms checkins</p>
                     </StyledHeader>
-                    <RoomReportPreviews checkins={this.props.checkins} />
-                    <MemberReportPreviews membersList={this.props.membersList} />
+                    {this.renderRoomReportPreviews()}
+                    <MemberReportPreviews />
                 </div>
             </main>
         )
@@ -67,7 +91,8 @@ const mapStateToProps = state => {
         userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
         checkins: state.room.activeRoom.checkins,
-        membersList: state.room.activeRoom.members
+        membersList: state.room.activeRoom.members,
+        membersData: state.room.activeRoom.membersData
     }
 }
 
