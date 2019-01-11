@@ -71,7 +71,7 @@ class RoomReports extends Component {
 
     render() {
         return (
-            <main className="container">
+            <StyledContainer className="container">
                 <BackToRoom id={this.props.roomID} />
                 <div className="rom">
                     <StyledHeader className="col s12 m6 l6">
@@ -81,7 +81,7 @@ class RoomReports extends Component {
                     {this.renderRoomReportPreviews()}
                     <MemberReportPreviews />
                 </div>
-            </main>
+            </StyledContainer>
         )
     }
 }
@@ -101,6 +101,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReports);
+
+const StyledContainer = styled.main`
+    min-width: 75%;
+`;
 
 const StyledHeader = styled.div`
 

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import RoomReportPreview from './RoomReportPreview';
+import Filter from './Filter';
+import SelectMemberReport from './SelectMemberReport';
 
 export default class RoomReportPreviews extends Component {
     constructor(props) {
@@ -34,13 +37,22 @@ export default class RoomReportPreviews extends Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col s9">
+            <StyledCont className="row">
+                <div className="col s9 report-preview">
                     {this.renderReportPreviews()}
                 </div>
-                <div className="col ">
+                <div className="col s3 aside-menu">
+                    <Filter />
+                    <SelectMemberReport data={this.props.membersData} />
                 </div>
-            </div>
+            </StyledCont>
         )
     }
 }
+
+const StyledCont = styled.div`
+
+    .report-preview, .aside-menu {
+        padding: 0;
+    }
+`;
