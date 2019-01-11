@@ -8,7 +8,7 @@ module.exports = app => {
 
         // get reference to the rooms checkins history
         const checkinsRef = db.ref(`rooms/${req.body.roomID}/checkins`);
-        checkinsRef.orderByChild('startTime').limitToLast(6).once('value', snapshot => {
+        checkinsRef.orderByChild('startTime').once('value', snapshot => {
 
 
             // send back response containing success message

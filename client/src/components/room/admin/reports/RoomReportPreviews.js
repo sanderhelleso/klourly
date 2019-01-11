@@ -9,7 +9,7 @@ export default class RoomReportPreviews extends Component {
     renderReportPreviews() {
 
         // itterate over checkins and generate preview reports
-        return Object.entries(this.props.checkins).reverse().slice(0, 1)
+        return Object.entries(this.props.checkins).reverse().slice(0, 6)
         .map(([checkinID, checkinData]) => {
 
             // filter out attendies not attended
@@ -35,8 +35,10 @@ export default class RoomReportPreviews extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col s10">
+                <div className="col s9">
                     {this.renderReportPreviews()}
+                </div>
+                <div className="col ">
                 </div>
             </div>
         )

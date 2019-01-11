@@ -25,18 +25,18 @@ export default class ReportPreview extends Component {
         return (
             <StyledPreview className="col s5">
                 <div className="col s12 chart">
+                    <span>Time of Checkins</span>
                     <Chart chartData={this.generateChartData()} />
                 </div>
                 <div className="col s12 information">
-                    <div className="col s4 checkinID">
-                        <h5>Checkin ID</h5>
-                        <h3>{this.props.data.checkinID}</h3>
-                    </div>
-                    <div className="col s4 attendence">
+                    <div className="col s6 attendence">
                         <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
                         <h5>Attendence</h5>
                     </div>
-                    <div className="col s4">
+                    <div className="col s6 checkinID">
+                        <h5>Checkin ID</h5>
+                        <h3>{this.props.data.checkinID}</h3>
+                        <a className="waves-effect waves-purple btn-flat see-details">See Details</a>
                     </div>
                 </div>
             </StyledPreview>
@@ -54,6 +54,23 @@ const StyledPreview = styled.div`
     text-align: center;
 
     .chart {
+
+        position: relative;
+
+        span {
+            position: absolute;
+            display: block;
+            padding: 0.25rem 1rem;
+            top: 10px;
+            right: 10px;
+            color: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #ffffff;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            margin-bottom: 25px;
+        }
+
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
         padding: 0;
@@ -63,12 +80,21 @@ const StyledPreview = styled.div`
     }
 
     .information {
-        padding: 2rem;
+        padding: 1rem;
+        min-height: 165px;
+    }
+
+    .see-details {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: #bdbdbd;
+        border: 1px solid #bdbdbd;
+        padding: 0 10px;
     }
 
     .checkinID {
 
-        text-align: left;
+        text-align: right;
 
         h5 {
             font-size: 1rem;
@@ -78,7 +104,7 @@ const StyledPreview = styled.div`
         }
 
         h3 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             margin: 0;
             font-weight: 600;
         }
@@ -88,11 +114,13 @@ const StyledPreview = styled.div`
 
         color: #9e9e9e;
         opacity: 0.6;
+        position: relative;
 
         h3 {
             font-size: 4.5rem;
             font-weight: 100;
             margin: 0;
+            margin-top: 1rem;
 
             span {
                 font-size: 1.5rem;
@@ -111,6 +139,18 @@ const StyledPreview = styled.div`
             margin-top: -17.5px;
             font-weight: 400;
             opacity: 0.8;
+        }
+    }
+
+    @media screen and (max-width: 1300px) {
+        .information .col {
+            min-width: 100%;
+            text-align: center;
+            margin-bottom: 2rem;
+        }   
+
+        .see-details {
+            padding: 0 25px;
         }
     }
 `;

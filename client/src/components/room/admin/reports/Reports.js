@@ -104,7 +104,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(RoomReports);
 
 const StyledHeader = styled.div`
 
-    min-height: 220px !important;
+    min-height: 100px !important;
 
     h3 {
         margin-top: 0;
