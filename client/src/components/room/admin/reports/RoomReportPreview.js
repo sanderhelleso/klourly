@@ -13,14 +13,14 @@ export default class ReportPreview extends Component {
     renderChart() {
 
         const data = {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["John Doe", "Kevin Hearth", "Sophie Johe", "Apple Bruns"],
                 datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [1233346, 1233357, 1233324, 1233349],
                     backgroundColor: [
                         'rgba(255, 255, 255, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255,255,255, 0.4)',
+                        'rgba(255,255,255, 0.6)',
                     ],
                     borderWidth: 1
                 }]

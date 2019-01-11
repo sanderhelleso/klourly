@@ -226,8 +226,18 @@ module.exports = app => {
             // retieve releated user data
             await userRef.once('value', snapshot => {
 
+                // if report  is true, get checkins
+                if (req.body.report) {
+                    membersList.push({
+                        id: member,
+                        name: snapshot.val().settings.displayName,
+                        photoUrl: snapshot.val().settings.photoUrl,
+                        checkins: snapshot.val().checkins
+                    });
+                }
+
                 // if preview is true, only retrieve needed data
-                if (req.body.getOnlyPreview) {
+                else if (req.body.getOnlyPreview) {
                     membersList.push({
                         id: member,
                         name: snapshot.val().settings.displayName,

@@ -189,6 +189,15 @@ const roomReducer = (state = initialState, action) => {
                     checkins: action.payload
                 }
             }
+
+        case 'SET_ROOM_MEMBERS_DATA_SUCCESS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    membersData: action.payload
+                }
+            }
             
         default:
             return state;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReportPreview from './ReportPreview';
+import RoomReportPreview from './RoomReportPreview';
 
 export default class ReportPreviews extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export default class ReportPreviews extends Component {
             // itterate over checkins and generate preview reports
             return Object.entries(this.props.checkins).slice(0, 1)
             .map(([checkinID, checkinData]) => {
-                return <ReportPreview 
+                return <RoomReportPreview 
                             key={checkinID} 
                             data={{
                                 checkinID,
