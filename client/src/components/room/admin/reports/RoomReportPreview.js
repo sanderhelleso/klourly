@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
 import Chart from './Chart';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setSpecificCheckinReportAction } from '../../../../actions/room/report/setSpecificCheckinReportAction';
 
-export default class ReportPreview extends Component {
+class RoomReportPreview extends Component {
     constructor(props) {
         super(props);
 
@@ -16,6 +20,16 @@ export default class ReportPreview extends Component {
             labels: this.props.data.attendies.map(attendie => attendie.name),
             dataset:   this.props.data.attendies.map(attendie => attendie.checkins[this.props.data.checkinID])
         }
+    }
+
+    toCheckinReport() {
+
+        // update specific checkin report state and redirect
+        this.props.setSpecificCheckinReportAction({
+            chartData: this.generateChartData(),
+            reportData: this.props.data
+        });
+        redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID);
     }
 
     render() {
@@ -35,7 +49,7 @@ export default class ReportPreview extends Component {
                         <h3>{this.props.data.checkinID}</h3>
                         <a 
                             className="waves-effect waves-purple btn-flat see-details"
-                            onClick={() => redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID)}
+                            onClick={() => this.toCheckinReport()}
                         >
                             See Details
                         </a>
@@ -46,6 +60,17 @@ export default class ReportPreview extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { 
+        roomID: state.room.activeRoom.id,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ setSpecificCheckinReportAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreview);
 
 const StyledPreview = styled.div`
     margin: 1rem 2rem;

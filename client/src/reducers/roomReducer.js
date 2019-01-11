@@ -198,6 +198,15 @@ const roomReducer = (state = initialState, action) => {
                     membersData: action.payload
                 }
             }
+
+        case 'SET_SPECIFIC_CHECKIN_REPORT':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    activeReport: action.payload
+                }
+            }
             
         default:
             return state;

@@ -25,7 +25,6 @@ export default class RoomReportPreviews extends Component {
 
             return <RoomReportPreview 
                         key={checkinID}
-                        roomID={this.props.roomID}
                         data={{
                             checkinID,
                             ...checkinData,
