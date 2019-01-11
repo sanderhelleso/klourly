@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { report } from '../../../../api/room/report';
-import { room } from '../../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setRoomReportsAction } from '../../../../actions/room/report/setRoomReportsAction';
-import { setRoomMembersDataAction } from '../../../../actions/room/report/setRoomMembersDataAction';
 
 import BackToRoom from '../../BackToRoom';
 import RoomReportPreviews from './RoomReportPreviews';
@@ -16,48 +12,11 @@ import MemberReportPreviews from './MemberReportPreviews';
 class RoomReports extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            membersDataLoaded: false,
-            checkinsDataLoaded: false
-        }
-    }
-
-    async componentDidMount() {
-
-        // attempt to  fetch members data
-        const userResponse = await room.getRoomMembers(
-                                this.props.userID, 
-                                this.props.roomID, 
-                                this.props.membersList.filter(uid => uid !== this.props.userID), 
-                                false,
-                                true
-                            );
-
-        // if fetch was successfull, update report members state
-        if (userResponse.data.success) {
-            this.props.setRoomMembersDataAction(userResponse.data.membersList);
-            this.setState({ membersDataLoaded: true });
-        }
-
-        console.log(userResponse.data);
-
-        // attempt to fetch the rooms checkins
-        const checkinResponse = await report.getRoomReports(
-                                    this.props.userID, 
-                                    this.props.roomID
-                                );
-
-        // if fetch was successfull, update checkins state
-        if (checkinResponse.data.success) {
-            this.props.setRoomReportsAction(checkinResponse.data.checkins);
-            this.setState({ checkinsDataLoaded: true });
-        }
     }
 
     renderRoomReportPreviews() {
 
-        if (this.state.checkinsDataLoaded && this.state.membersDataLoaded) {
+        if (this.props.checkins && this.props.membersData) {
             return <RoomReportPreviews 
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
@@ -88,16 +47,14 @@ class RoomReports extends Component {
 
 const mapStateToProps = state => {
     return { 
-        userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
         checkins: state.room.activeRoom.checkins,
-        membersList: state.room.activeRoom.members,
         membersData: state.room.activeRoom.membersData
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ setRoomReportsAction, setRoomMembersDataAction }, dispatch);
+    return bindActionCreators({}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReports);

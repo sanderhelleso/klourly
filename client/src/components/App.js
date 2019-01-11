@@ -33,6 +33,7 @@ import Reports from './room/admin/reports/Reports';
 
 // data fetchers
 import RoomData from './dataPrefetch/RoomData';
+import ReportData from './dataPrefetch/ReportData';
 import UserLocation from './dataPrefetch/UserLocation';
 import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
 import Messaging from './messaging/Messaging';
@@ -118,6 +119,7 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports/checkin/:checkinID" component={CheckinReport} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports/member/:memberID" component={Room} />
+                    <Route path="/dashboard/rooms/:roomID/admin/reports" component={ReportData} />
                 </div>
             )
         }

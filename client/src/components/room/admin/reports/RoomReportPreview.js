@@ -27,7 +27,7 @@ class RoomReportPreview extends Component {
         // update specific checkin report state and redirect
         this.props.setSpecificCheckinReportAction({
             chartData: this.generateChartData(),
-            reportData: this.props.data
+            ...this.props.data
         });
         redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID);
     }
