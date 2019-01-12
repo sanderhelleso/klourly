@@ -18,12 +18,12 @@ export default class CheckinReportInfo extends Component {
 
     render() {
         return (
-            <StyledInfo className="col s12 m4 l5">
-                <div className="col s12 m12 l12">
+            <StyledInfo className="col s12 m12 l5">
+                <div className="col s12 m6 l12">
                     <h5>Checkin ID Number</h5>
                     <h3>{this.props.info.checkinID}</h3>
                 </div>
-                <div className="col s12 m12 l12">
+                <div className="col s12 m6 l12">
                     <p><Cloud /> <span>{this.startTime}</span></p>
                     <p><CloudOff /> <span>{this.endTime}</span></p>
                 </div>
@@ -63,7 +63,7 @@ const StyledInfo = styled.div`
         }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 1000px) {
         text-align: center;
         margin-bottom: 1rem;
         padding-bottom: 2rem !important;

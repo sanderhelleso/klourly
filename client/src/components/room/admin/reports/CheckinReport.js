@@ -68,7 +68,7 @@ class CheckinReport extends Component {
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
                             <CheckinReportInfo info={this.props.reportData} />
-                            <StyledDownloads className="col s8 offset-s2 m8 l7">
+                            <StyledDownloads className="col s8 offset-s2 m12 l7">
                                 <DownloadReports />
                             </StyledDownloads>
                         </StyledDetails>
@@ -171,6 +171,8 @@ const StyledDownloads = styled.div`
 
     h5 {
         margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.65rem;
     }
 
     .download-cont {
@@ -185,6 +187,17 @@ const StyledDownloads = styled.div`
         margin: 0 0.5rem;
         min-width: 95px;
         max-width: 95px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .download-cont {
+            float: none;
+            padding: 1rem 0 !important;
+        }
+
+        .downloads {
+            margin-bottom: 1rem;
+        }
     }
 
     @media screen and (max-width: 710px) {
