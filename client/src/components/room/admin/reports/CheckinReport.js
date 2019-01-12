@@ -8,6 +8,7 @@ import { setSpecificCheckinReportAction } from '../../../../actions/room/report/
 
 import Chart from './Chart';
 import ReportMembers from './ReportMembers';
+import CheckinReportInfo from './CheckinReportInfo';
 
 
 class CheckinReport extends Component {
@@ -65,10 +66,7 @@ class CheckinReport extends Component {
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
-                            <div className="col s10 offset-s1 m4 l5">
-                                <h5>Checkin ID Number</h5>
-                                <h3>#{this.props.reportData.checkinID}</h3>
-                            </div>
+                            <CheckinReportInfo info={this.props.reportData} />
                             <StyledDownloads className="col s8 offset-s2 m8 l7">
                                 <div className="download-cont">
                                     <h5>Download Report</h5>
@@ -168,20 +166,6 @@ const StyledDetails = styled.div`
 
     border-bottom: 1px solid #eeeeee;
     padding-bottom: 2rem !important;
-
-    h5 {
-        font-size: 1.15rem;
-        font-weight: 100;
-        color: #9e9e9e;
-        margin: 0;
-        margin-bottom: 0.5rem;
-    }
-
-    h3 {
-        margin: 0;
-        font-size: 1.75rem;
-        font-weight: 800;
-    }
 `;
 
 const StyledDownloads = styled.div`

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { format } from '../../../../helpers/format';
 
 export default class ReportMember extends Component {
     constructor(props) {
@@ -19,7 +20,11 @@ export default class ReportMember extends Component {
                                 alt={`${this.props.data.name}'s avatar`} 
                             />
                             <h5>{this.props.data.name}</h5>
-                            <span>Not attended</span>
+                            <span>{this.props.data.attended 
+                                    ? `Checked in at ${format.tsToHHMM(this.props.data.timestamp)}`
+                                    : 'Not Attended'
+                                }
+                            </span>
                         </div>
                     </div>
                 </StyledMember> 
