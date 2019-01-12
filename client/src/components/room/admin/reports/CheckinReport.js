@@ -9,6 +9,7 @@ import { setSpecificCheckinReportAction } from '../../../../actions/room/report/
 import Chart from './Chart';
 import ReportMembers from './ReportMembers';
 import CheckinReportInfo from './CheckinReportInfo';
+import DownloadReports from './DownloadReports';
 
 
 class CheckinReport extends Component {
@@ -68,14 +69,7 @@ class CheckinReport extends Component {
                         <StyledDetails className="col s12">
                             <CheckinReportInfo info={this.props.reportData} />
                             <StyledDownloads className="col s8 offset-s2 m8 l7">
-                                <div className="download-cont">
-                                    <h5>Download Report</h5>
-                                    <div className="col s12 downloads">
-                                        <a class="waves-effect waves-purple btn-flat">CSV</a>
-                                        <a class="waves-effect waves-purple btn-flat">JSON</a>
-                                        <a class="waves-effect waves-purple btn-flat">PDF</a>
-                                    </div>
-                                </div>
+                                <DownloadReports />
                             </StyledDownloads>
                         </StyledDetails>
                         <ReportMembers  
@@ -157,7 +151,8 @@ const StyledReport = styled.div`
     }
 
     .details {
-        padding: 2rem;
+        position: relative;
+        padding: 4rem 2rem;
         min-height: 200px;
     }
 `;
@@ -166,6 +161,7 @@ const StyledDetails = styled.div`
 
     border-bottom: 1px solid #eeeeee;
     padding-bottom: 2rem !important;
+    margin-bottom: 2rem;
 `;
 
 const StyledDownloads = styled.div`

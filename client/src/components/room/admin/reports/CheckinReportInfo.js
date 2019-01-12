@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Cloud, CloudOff} from 'react-feather';
+import { Cloud, CloudOff } from 'react-feather';
 import { format } from '../../../../helpers/format';
 
 

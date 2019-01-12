@@ -29,10 +29,6 @@ export default class ReportMembers extends Component {
     }
 
     render() {
-        return (
-            <div>
-                {this.renderMembers()}
-            </div>
-        )
+        return this.renderMembers();
     }
 }
