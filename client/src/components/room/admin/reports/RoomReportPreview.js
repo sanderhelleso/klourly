@@ -34,28 +34,30 @@ class RoomReportPreview extends Component {
 
     render() {
         return (
-            <StyledPreview className="col s5">
-                <div className="col s12 chart">
-                    <span>Time of Checkins</span>
-                    <Chart chartData={this.generateChartData()} />
-                </div>
-                <div className="col s12 information">
-                    <div className="col s6 attendence">
-                        <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
-                        <h5>Attendence</h5>
+            <div className="col s12 m6 l4">
+                <StyledPreview className="col s12">
+                    <div className="col s12 chart">
+                        <span>Time of Checkins</span>
+                        <Chart chartData={this.generateChartData()} />
                     </div>
-                    <div className="col s6 checkinID">
-                        <h5>Checkin ID</h5>
-                        <h3>{this.props.data.checkinID}</h3>
-                        <a 
-                            className="waves-effect waves-purple btn-flat see-details"
-                            onClick={() => this.toCheckinReport()}
-                        >
-                            See Details
-                        </a>
+                    <div className="col s12 information">
+                        <div className="col s6 attendence">
+                            <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
+                            <h5>Attendence</h5>
+                        </div>
+                        <div className="col s6 checkinID">
+                            <h5>Checkin ID</h5>
+                            <h3>{this.props.data.checkinID}</h3>
+                            <a 
+                                className="waves-effect waves-purple btn-flat see-details"
+                                onClick={() => this.toCheckinReport()}
+                            >
+                                See Details
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </StyledPreview>
+                </StyledPreview>
+            </div>
         )
     }
 }
@@ -73,7 +75,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreview);
 
 const StyledPreview = styled.div`
-    margin: 1rem 2rem;
+    margin: 1rem 3rem;
     padding: 0 !important;
     border-radius: 12px;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
@@ -121,7 +123,7 @@ const StyledPreview = styled.div`
 
     .checkinID {
 
-        text-align: right;
+        margin-top: 0.8rem;
 
         h5 {
             font-size: 1rem;

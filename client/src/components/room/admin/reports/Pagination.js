@@ -22,7 +22,7 @@ class Pagination extends Component {
 
         // create paginations
         const paginations = [];
-        const availablePaginations = Math.ceil(Object.keys(this.props.checkins).length / 8);
+        const availablePaginations = Math.ceil(Object.keys(this.props.checkins).length / 9);
 
         for (let i = 1; i < availablePaginations + 1; i++) {
             paginations[i] = i;

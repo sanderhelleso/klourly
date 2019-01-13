@@ -17,9 +17,12 @@ class RoomReportPreviews extends Component {
 
     renderReportPreviews() {
 
+        const fromIndex = this.props.reportIndex * 9;
+        const toIndex = (this.props.reportIndex * 9) + 9;
+
         // itterate over checkins and generate preview reports
         return Object.entries(this.props.checkins)
-        .reverse().slice((this.props.reportIndex * 8), (this.props.reportIndex * 8) + 8)
+        .reverse().slice(fromIndex, toIndex)
         .map(([checkinID, checkinData]) => {
 
             // filter out attendies not attended
@@ -45,7 +48,7 @@ class RoomReportPreviews extends Component {
     render() {
         return (
             <StyledCont className="row">
-                <div className="col s9 report-preview">
+                <div className="col s12 report-preview">
                     <Pagination />
                     {this.renderReportPreviews()}
                     <Pagination />
@@ -73,8 +76,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreviews);
 
 const StyledCont = styled.div`
-
-    .report-preview, .aside-menu {
-        padding: 0;
-    }
 `;
