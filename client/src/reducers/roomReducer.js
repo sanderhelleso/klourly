@@ -192,7 +192,8 @@ const roomReducer = (state = initialState, action) => {
                         options: {
                             index: 0,
                             filter: {
-                                by: 'Most Recent'
+                                by: 'Most Recent',
+                                time: null
                             }
                         }
                     }

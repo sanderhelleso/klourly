@@ -18,7 +18,8 @@ class Filter extends Component {
             type: 'radio',
             labels: {
                 label1: {
-                    name: 'Most Recent'
+                    name: 'Most Recent',
+                    time: null
                 },
                 label2: {
                     name: 'Last 3 Days',
@@ -46,15 +47,29 @@ class Filter extends Component {
 
     updateFilter = option => {
 
+        console.log(option);
+        this.props.updateRoomReportsFilterAction({
+            by: option.name,
+            time: option.time
+        });
     }
 
     renderOptions() {
 
         return Object.values(this.options.labels).map(option => {
             return (
-                <p onClick={() => this.updateFilter(option)}>
-                    <label>
-                        <input name={this.options.group} type={this.options.type} />
+                <p key={option.name}>
+                    <label 
+                        id={`label-${option.name}`}
+                        htmlFor={`input-${option.name}`}
+                    >
+                        <input
+                            id={`input-${option.name}`} 
+                            name={this.options.group} 
+                            type={this.options.type}
+                            onClick={() => this.updateFilter(option)}
+                            checked={option.name === this.props.filter.by ? true : false}
+                        />
                         <span>{option.name}</span>
                     </label>
                 </p>
