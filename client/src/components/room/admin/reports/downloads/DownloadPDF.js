@@ -14,12 +14,30 @@ class DownloadPDF extends Component {
         console.log(props);
     }
 
+    createMemberList() {
+
+        const members = {};
+        Object.values(this.props.activeRoom.membersData).forEach(member => {
+
+            const name = member.name.split('_').join('_');
+            members[name] = 
+            Object.keys(this.props.activeReport.attendies).indexOf(member.id) !== -1
+            ? {
+                name,
+                attended: true,
+                checkedin_at: `${format.tsToDate(this.props.activeReport.attendies[member.id])} ${format.tsToHHMM(this.props.activeReport.attendies[member.id])}`
+            } : { name, attended: false }
+        });
+
+        return Object.values(members).sort((a, b) => b.attended - a.attended);
+    }
+
     generatePDF = () => {
 
         const now = new Date().getTime();
         const report_generated_at = `${format.tsToDate(now)} ${format.tsToHHMM(now)}`;
-        const startTime =          `${format.tsToDate(this.props.activeReport.startTime)} ${format.tsToHHMM(this.props.activeReport.startTime)}`;
-        const endTime =            `${format.tsToDate(this.props.activeReport.endTime)} ${format.tsToHHMM(this.props.activeReport.endTime)}`;
+        const startTime =           `${format.tsToDate(this.props.activeReport.startTime)} ${format.tsToHHMM(this.props.activeReport.startTime)}`;
+        const endTime =             `${format.tsToDate(this.props.activeReport.endTime)} ${format.tsToHHMM(this.props.activeReport.endTime)}`;
 
         // create a new pdf
         const doc = new jsPDF();
@@ -48,6 +66,41 @@ class DownloadPDF extends Component {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(16);
         doc.text(20, 60, `Total Checkins: ${Object.keys(this.props.activeReport.attendies).length} (${this.props.activeReport.attendenceInPercent}%)`);
+
+        // list names
+        doc.setFontSize(12);
+        doc.setTextColor(150);
+        doc.text(20, 80, 'Name');
+        doc.text(90, 80, 'Attended');
+        doc.text(150, 80, 'Checkin Time');
+
+        doc.setDrawColor(128, 128, 128) // draw red lines
+        doc.line(10, 85, 200, 85) // horizontal line
+
+        let startList = 95;
+        let counter = 0;
+        doc.setFontSize(12);
+        this.createMemberList().forEach(member => {
+            counter ++;
+            doc.setTextColor(0, 0, 0);
+            doc.text(20, startList, member.name);
+
+            // set attendence status
+            member.attended ? doc.setTextColor(102, 187, 106) : doc.setTextColor(239, 83, 80);
+            doc.text(90, startList, member.attended ? 'Yes' : 'No');
+
+            // set attendence time if checked in
+            doc.setTextColor(0, 0, 0);
+            doc.text(150, startList, member.attended ? member.checkedin_at : 'N/A');
+            startList += 10;
+
+            // add new page if needed
+            if (counter % 25 === 0) {
+                doc.addPage();
+                startList = 20;
+            }
+        });
+        
 
         doc.save('a4.pdf')
     }
