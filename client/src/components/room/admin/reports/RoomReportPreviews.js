@@ -16,7 +16,7 @@ class RoomReportPreviews extends Component {
 
         // calculate amount of columns to show
         const numOfColumns = 9;
-        const fromIndex = this.props.reportIndex * numOfColumns;
+        const fromIndex = this.props.reportOptions.index * numOfColumns;
         const toIndex = fromIndex + numOfColumns;
 
         // itterate over checkins and generate preview reports
@@ -60,7 +60,7 @@ class RoomReportPreviews extends Component {
 const mapStateToProps = state => {
     return { 
         checkins: state.room.activeRoom.checkins,
-        reportIndex: state.room.activeRoom.reportIndex
+        reportOptions: state.room.activeRoom.reports.options
     }
 }
 

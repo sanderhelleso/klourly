@@ -58,7 +58,7 @@ class Pagination extends Component {
 const mapStateToProps = state => {
     return { 
         checkins: state.room.activeRoom.checkins,
-        reportIndex: state.room.activeRoom.reportIndex
+        reportIndex: state.room.activeRoom.reports.options.index
     }
 }
 

@@ -5,8 +5,6 @@ export default class Chart extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
-
         this.data = {
             labels: this.props.chartData.labels,
             datasets: [{

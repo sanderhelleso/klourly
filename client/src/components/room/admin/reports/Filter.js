@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-export default class Filter extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateRoomReportsFilterAction } from '../../../../actions/room/report/updateRoomReportsFilterAction';
+
+
+class Filter extends Component {
     constructor(props) {
         super(props);
 
@@ -38,11 +44,15 @@ export default class Filter extends Component {
         }
     }
 
+    updateFilter = option => {
+
+    }
+
     renderOptions() {
 
         return Object.values(this.options.labels).map(option => {
             return (
-                <p>
+                <p onClick={() => this.updateFilter(option)}>
                     <label>
                         <input name={this.options.group} type={this.options.type} />
                         <span>{option.name}</span>
@@ -60,6 +70,18 @@ export default class Filter extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        filter: state.room.activeRoom.reports.options.filter
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateRoomReportsFilterAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
 
 const StyledOptions = styled.div`
     p {

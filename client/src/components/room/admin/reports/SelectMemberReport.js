@@ -5,8 +5,6 @@ import { materializeJS } from '../../../../helpers/materialize';
 export default class SelectMemberReport extends Component {
     constructor(props) {
         super(props);
-
-        console.log(props);
     }
 
     componentDidMount() {

@@ -18,7 +18,7 @@ class RoomReports extends Component {
 
     renderRoomReportPreviews() {
 
-        if (this.props.checkins && this.props.membersData) {
+        if (this.props.reports && this.props.reports.loaded) {
             return <RoomReportPreviews 
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
@@ -31,7 +31,7 @@ class RoomReports extends Component {
     }
 
     renderSettings() {
-        if (this.props.checkins && this.props.membersData) {
+        if (this.props.reports && this.props.reports.loaded) {
             return (
                 <div className="col s12 m6 l6">
                     <Filter />
@@ -50,7 +50,7 @@ class RoomReports extends Component {
                 <div className="row">
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Reports</h3>
-                        <p>See statistics, details and generate reports of the rooms checkins</p>
+                        <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
                     </StyledHeader>
                     {this.renderSettings()}
                     {this.renderRoomReportPreviews()}
@@ -65,7 +65,8 @@ const mapStateToProps = state => {
     return { 
         roomID: state.room.activeRoom.id,
         checkins: state.room.activeRoom.checkins,
-        membersData: state.room.activeRoom.membersData
+        membersData: state.room.activeRoom.membersData,
+        reports: state.room.activeRoom.reports
     }
 }
 

@@ -187,7 +187,15 @@ const roomReducer = (state = initialState, action) => {
                 activeRoom: {
                     ...state.activeRoom,
                     checkins: action.payload,
-                    reportIndex: 0
+                    reports: {
+                        loaded: true,
+                        options: {
+                            index: 0,
+                            filter: {
+                                by: 'Most Recent'
+                            }
+                        }
+                    }
                 }
             }
 
@@ -196,7 +204,28 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 activeRoom: {
                     ...state.activeRoom,
-                    reportIndex: action.payload
+                    reports: {
+                        ...state.activeRoom.reports,
+                        options: {
+                            ...state.activeRoom.reports.options,
+                            index: action.payload
+                        }
+                    }
+                }
+            }
+
+        case 'UPDATE_ROOM_REPORTS_FILTER':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    reports: {
+                        ...state.activeRoom.reports,
+                        options: {
+                            ...state.activeRoom.reports.options,
+                            filter: action.payload
+                        }
+                    }
                 }
             }
 
