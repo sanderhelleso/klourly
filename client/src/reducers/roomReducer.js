@@ -186,7 +186,17 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 activeRoom: {
                     ...state.activeRoom,
-                    checkins: action.payload
+                    checkins: action.payload,
+                    reportIndex: 0
+                }
+            }
+
+        case 'UPDATE_ROOM_REPORTS_INDEX':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    reportIndex: action.payload
                 }
             }
 

@@ -5,7 +5,12 @@ import Filter from './Filter';
 import SelectMemberReport from './SelectMemberReport';
 import Pagination from './Pagination';
 
-export default class RoomReportPreviews extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+
+class RoomReportPreviews extends Component {
     constructor(props) {
         super(props);
     }
@@ -13,7 +18,8 @@ export default class RoomReportPreviews extends Component {
     renderReportPreviews() {
 
         // itterate over checkins and generate preview reports
-        return Object.entries(this.props.checkins).reverse().slice(0, 6)
+        return Object.entries(this.props.checkins)
+        .reverse().slice((this.props.reportIndex * 8), (this.props.reportIndex * 8) + 8)
         .map(([checkinID, checkinData]) => {
 
             // filter out attendies not attended
@@ -52,6 +58,19 @@ export default class RoomReportPreviews extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        checkins: state.room.activeRoom.checkins,
+        reportIndex: state.room.activeRoom.reportIndex
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreviews);
 
 const StyledCont = styled.div`
 
