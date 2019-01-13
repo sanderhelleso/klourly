@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import DownloadJSON from './downloads/DownloadJSON';
-import DownloadPDF from './downloads/DownloadPDF';
+import DownloadJSON from './DownloadJSON';
+import DownloadPDF from './DownloadPDF';
 
 
 class DownloadReports extends Component {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RoomReportPreview from './RoomReportPreview';
 import Filter from './Filter';
 import SelectMemberReport from './SelectMemberReport';
+import Pagination from './Pagination';
 
 export default class RoomReportPreviews extends Component {
     constructor(props) {
@@ -39,7 +40,9 @@ export default class RoomReportPreviews extends Component {
         return (
             <StyledCont className="row">
                 <div className="col s9 report-preview">
+                    <Pagination />
                     {this.renderReportPreviews()}
+                    <Pagination />
                 </div>
                 <div className="col s3 aside-menu">
                     <Filter />
