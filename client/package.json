@@ -93,6 +93,7 @@
     "firebase": "^5.7.2",
     "google-maps-react": "^2.0.2",
     "history": "^4.7.2",
+    "jspdf": "^1.5.3",
     "materialize-css": "^1.0.0-rc.2",
     "node-vibrant": "^3.0.0",
     "npm": "^6.6.0-next.1",
