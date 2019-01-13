@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Bar } from 'react-chartjs-2';
 
 export default class Chart extends Component {
     constructor(props) {
@@ -23,6 +23,11 @@ export default class Chart extends Component {
 
         this.options = {
             maintainAspectRatio: false,
+            elements: {
+                point:{
+                    radius: 0
+                }
+            },
             scales: {
                 xAxes: [{
                     gridLines: {
@@ -47,9 +52,8 @@ export default class Chart extends Component {
                 display: false
             },
             tooltips: {
-                callbacks: {
-                   label: tooltipItem => tooltipItem.yLabel
-                }
+                enabled: false,
+                hover: { mode: null},
             }
         }
     }

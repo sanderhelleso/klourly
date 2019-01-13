@@ -103,11 +103,9 @@ class DownloadJSON extends Component {
 
     render() {
         return (
-            <div>
-                <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON('checkin')}>
-                    JSON
-                </a>
-            </div>
+            <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON('checkin')}>
+                JSON
+            </a>
         )
     }
 }

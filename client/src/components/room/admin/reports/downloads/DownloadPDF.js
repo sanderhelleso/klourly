@@ -107,11 +107,9 @@ class DownloadPDF extends Component {
 
     render() {
         return (
-            <div>
-                <a class="waves-effect waves-purple btn-flat" onClick={this.generatePDF}>
-                    PDF
-                </a>
-            </div>
+            <a class="waves-effect waves-purple btn-flat" onClick={this.generatePDF}>
+                PDF
+            </a>
         )
     }
 }
