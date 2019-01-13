@@ -34,9 +34,9 @@ class RoomReports extends Component {
         if (this.props.checkins && this.props.membersData) {
             return (
                 <div className="col s12 m6 l6">
-                        <Filter />
-                        <SelectMemberReport data={this.props.membersData} />
-                    </div>
+                    <Filter />
+                    <SelectMemberReport data={this.props.membersData} />
+                </div>
             )
         }
 
@@ -47,7 +47,7 @@ class RoomReports extends Component {
         return (
             <div className="container">
                 <BackToRoom id={this.props.roomID} />
-                <div className="rom">
+                <div className="row">
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Reports</h3>
                         <p>See statistics, details and generate reports of the rooms checkins</p>

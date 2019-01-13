@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 export default class Filter extends Component {
     constructor(props) {
@@ -53,9 +54,23 @@ export default class Filter extends Component {
 
     render() {
         return (
-            <div>
+            <StyledOptions>
                {this.renderOptions()}
-            </div>
+            </StyledOptions>
         )
     }
 }
+
+const StyledOptions = styled.div`
+    p {
+        display: inline-block;
+        margin: 1rem 0;
+        width: 150px;
+    }
+
+    @media screen and (max-width: 600px) {
+        p {
+            width: 50%;
+        }
+    }
+`;

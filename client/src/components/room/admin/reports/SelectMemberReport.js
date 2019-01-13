@@ -28,7 +28,7 @@ export default class SelectMemberReport extends Component {
     render() {
         return (
             <StyledSelectCont>
-                <div class="input-field col s12">
+                <div class="input-field col s12 m10 l10">
                     <select class="icons">
                         <option value="" disabled selected>Choose a member</option>
                         {this.renderMemberOptions()}
@@ -41,5 +41,5 @@ export default class SelectMemberReport extends Component {
 }
 
 const StyledSelectCont = styled.div`
-    margin: 4rem 0;
+    margin: 1rem 0;
 `;
