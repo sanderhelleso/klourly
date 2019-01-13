@@ -21,8 +21,9 @@ class Pagination extends Component {
     renderPagination() {
 
         // create paginations
+        const numOfColums = 9;
         const paginations = [];
-        const availablePaginations = Math.ceil(Object.keys(this.props.checkins).length / 9);
+        const availablePaginations = Math.ceil(Object.keys(this.props.checkins).length / numOfColums);
 
         for (let i = 1; i < availablePaginations + 1; i++) {
             paginations[i] = i;

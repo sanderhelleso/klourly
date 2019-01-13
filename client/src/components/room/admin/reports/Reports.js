@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import BackToRoom from '../../BackToRoom';
 import RoomReportPreviews from './RoomReportPreviews';
 import MemberReportPreviews from './MemberReportPreviews';
+import Filter from './Filter';
+import SelectMemberReport from './SelectMemberReport';
 
 class RoomReports extends Component {
     constructor(props) {
@@ -28,19 +30,33 @@ class RoomReports extends Component {
         }
     }
 
+    renderSettings() {
+        if (this.props.checkins && this.props.membersData) {
+            return (
+                <div className="col s12 m6 l6">
+                        <Filter />
+                        <SelectMemberReport data={this.props.membersData} />
+                    </div>
+            )
+        }
+
+        return null;
+    }
+
     render() {
         return (
-            <StyledContainer className="container">
+            <div className="container">
                 <BackToRoom id={this.props.roomID} />
                 <div className="rom">
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Reports</h3>
                         <p>See statistics, details and generate reports of the rooms checkins</p>
                     </StyledHeader>
+                    {this.renderSettings()}
                     {this.renderRoomReportPreviews()}
                     <MemberReportPreviews />
                 </div>
-            </StyledContainer>
+            </div>
         )
     }
 }
@@ -58,10 +74,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReports);
-
-const StyledContainer = styled.main`
-    min-width: 75%;
-`;
 
 const StyledHeader = styled.div`
 

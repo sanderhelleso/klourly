@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import RoomReportPreview from './RoomReportPreview';
-import Filter from './Filter';
-import SelectMemberReport from './SelectMemberReport';
 import Pagination from './Pagination';
 
 // redux
@@ -17,8 +14,10 @@ class RoomReportPreviews extends Component {
 
     renderReportPreviews() {
 
-        const fromIndex = this.props.reportIndex * 9;
-        const toIndex = (this.props.reportIndex * 9) + 9;
+        // calculate amount of columns to show
+        const numOfColumns = 9;
+        const fromIndex = this.props.reportIndex * numOfColumns;
+        const toIndex = fromIndex + numOfColumns;
 
         // itterate over checkins and generate preview reports
         return Object.entries(this.props.checkins)
@@ -47,17 +46,13 @@ class RoomReportPreviews extends Component {
 
     render() {
         return (
-            <StyledCont className="row">
+            <div className="row">
                 <div className="col s12 report-preview">
                     <Pagination />
                     {this.renderReportPreviews()}
                     <Pagination />
                 </div>
-                <div className="col s3 aside-menu">
-                    <Filter />
-                    <SelectMemberReport data={this.props.membersData} />
-                </div>
-            </StyledCont>
+            </div>
         )
     }
 }
@@ -74,6 +69,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreviews);
-
-const StyledCont = styled.div`
-`;

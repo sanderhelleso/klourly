@@ -11,14 +11,12 @@ import { setSpecificCheckinReportAction } from '../../../../actions/room/report/
 class RoomReportPreview extends Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props);
     }
 
     generateChartData() {
         return {
             labels: this.props.data.attendies.map(attendie => attendie.name),
-            dataset:   this.props.data.attendies.map(attendie => attendie.checkins[this.props.data.checkinID])
+            dataset: this.props.data.attendies.map(attendie => attendie.checkins[this.props.data.checkinID])
         }
     }
 
@@ -29,6 +27,7 @@ class RoomReportPreview extends Component {
             chartData: this.generateChartData(),
             ...this.props.data
         });
+        
         redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID);
     }
 
