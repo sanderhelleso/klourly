@@ -49,6 +49,8 @@ class DownloadJSON extends Component {
 
         const report = {
             ...this.reportData().meta,
+            room_name: this.props.activeRoom.name,
+            checkin_id: this.props.activeReport.checkinID,
             report: {
                 total_checkins: Object.keys(this.props.activeReport.attendies).length,
                 attendende_in_percentage: this.props.activeReport.attendenceInPercent,

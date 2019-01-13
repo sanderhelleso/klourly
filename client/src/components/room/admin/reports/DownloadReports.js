@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DownloadJSON from './downloads/DownloadJSON';
+import DownloadPDF from './downloads/DownloadPDF';
 
 
 class DownloadReports extends Component {
@@ -17,7 +18,7 @@ class DownloadReports extends Component {
                 <h5>Download Report</h5>
                 <div className="col s12 downloads">
                     <DownloadJSON />
-                    <a class="waves-effect waves-purple btn-flat">PDF</a>
+                    <DownloadPDF />
                 </div>
             </div>
         )
