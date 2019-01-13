@@ -1,18 +1,19 @@
 'use strict';
 
+require("dotenv").load();
+
 // initialize firebase
 const firebase = require("firebase-admin");
-const serviceAccount = require("./keys/firebaseServiceAccountKey.json");
+const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH);
 firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
-    databaseURL: "https://klourly-44ba2.firebaseio.com"
+    databaseURL: process.env.FIREBASE_DB_URL
 });
 
 // vals
 const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
-const dotenv = require("dotenv").load();
 
 // app
 const app = express();
