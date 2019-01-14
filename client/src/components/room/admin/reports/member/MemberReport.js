@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { format } from '../../../../../helpers/format';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -9,6 +10,7 @@ import Chart from '../Chart';
 import Back from '../../../../dashboard/Back';
 import DownloadReports from '../downloads/DownloadReports';
 import MemberReportInfo from './MemberReportInfo';
+import MemberReportCheckins from './MemberReportCheckins';
 
 class MemberReport extends Component {
     constructor(props) {
@@ -24,6 +26,11 @@ class MemberReport extends Component {
                 dataset: Object.values(this.props.userData.checkins).map(value => value).sort((a, b) => a - b)
             }
 
+            const attendedInPercentage = format.getPercentage(
+                                            Object.keys(this.props.userData.checkins).length,
+                                            Object.keys(this.props.roomCheckins).length
+                                        );
+
             return(
                 <StyledReport className="col s12">
                     <div className="col s12 chart">
@@ -37,6 +44,12 @@ class MemberReport extends Component {
                                 <DownloadReports />
                             </div>
                         </StyledDetails>
+                        <MemberReportCheckins 
+                            userID={this.props.userData.id}
+                            userCheckins={this.props.userData.checkins} 
+                            roomCheckins={this.props.roomCheckins}
+                            attendedInPercentage={attendedInPercentage} 
+                        />
                     </div>
                 </StyledReport>
             )
@@ -61,7 +74,9 @@ class MemberReport extends Component {
 const mapStateToProps = (state, props) => {
 
     // get user
-    return { userData: state.room.activeRoom.membersData
+    return { 
+            roomCheckins: state.room.activeRoom.checkins,
+            userData: state.room.activeRoom.membersData
                         ? Object.values(state.room.activeRoom.membersData)
                           .filter(member => member.id === props.match.params.memberID)[0]
                         : null  
@@ -121,7 +136,7 @@ const StyledReport = styled.div`
 const StyledDetails = styled.div`
 
     border-bottom: 1px solid #eeeeee;
-    padding-bottom: 2rem !important;
-    margin-bottom: 2rem;
+    padding-bottom: 3rem !important;
+    margin-bottom: 3rem;
 `;
 

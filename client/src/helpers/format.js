@@ -3,7 +3,7 @@ export const format = {
     tsToDate,
     removeByKey,
     getPercentage,
-    tsToHHMM
+    getFormatedDateAndTime
 }
 
 // capitalize given string
@@ -16,9 +16,14 @@ function tsToDate(timestamp) {
     return new Date(timestamp).toDateString();
 }
 
+// convert a timestamp to HH:MM
 function tsToHHMM(timestamp) {
     const date = new Date(timestamp);
     return `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
+}
+
+function getFormatedDateAndTime(timestamp) {
+    return `${tsToDate(timestamp)} ${tsToHHMM(timestamp)}`;
 }
 
 // remove key from object
