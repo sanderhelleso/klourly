@@ -26,9 +26,9 @@ export default class SelectMemberReport extends Component {
     render() {
         return (
             <StyledSelectCont>
-                <div class="input-field col s12 m10 l10">
-                    <select class="icons">
-                        <option value="" disabled selected>Choose a member</option>
+                <div className="input-field col s12 m10 l10">
+                    <select className="icons">
+                        <option disabled selected>Choose a member</option>
                         {this.renderMemberOptions()}
                     </select>
                     <label>Select a member for individual report</label>

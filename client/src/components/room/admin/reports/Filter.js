@@ -64,6 +64,7 @@ class Filter extends Component {
                         htmlFor={`input-${option.name}`}
                     >
                         <input
+                            readOnly
                             id={`input-${option.name}`} 
                             name={this.options.group} 
                             type={this.options.type}

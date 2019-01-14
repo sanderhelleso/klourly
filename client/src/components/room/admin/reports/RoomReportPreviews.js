@@ -5,15 +5,12 @@ import Pagination from './Pagination';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateReportsPaginationLengthAction } from '../../../../actions/room/report/updateReportsPaginationLengthAction';
 
 
 class RoomReportPreviews extends Component {
     constructor(props) {
         super(props);
-    }
-
-    compareDates(date) {
-        
     }
 
     renderReportPreviews() {
@@ -27,9 +24,14 @@ class RoomReportPreviews extends Component {
         const now = new Date().getTime();
 
         // itterate over checkins and generate preview reports
-        return Object.entries(this.props.checkins)
-        .filter(checkin => filterBy ? (checkin[1].startTime > now - filterBy) : checkin)
-        .reverse().slice(fromIndex, toIndex)
+        let filteredCheckins = Object.entries(this.props.checkins)
+        .filter(checkin => filterBy ? (checkin[1].startTime > now - filterBy) : checkin);
+
+        // set pagination length
+        this.props.updateReportsPaginationLengthAction(filteredCheckins.length);
+    
+        // render checkin previews
+        return filteredCheckins.reverse().slice(fromIndex, toIndex)
         .map(([checkinID, checkinData]) => {
 
             // filter out attendies not attended
@@ -49,7 +51,6 @@ class RoomReportPreviews extends Component {
                         }} 
                     />
         });
-        
     }
 
     render() {
@@ -73,7 +74,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateReportsPaginationLengthAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreviews);

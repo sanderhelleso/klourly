@@ -230,6 +230,18 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'UPDATE_REPORTS_PAGINATION_LENGTH':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    reports: {
+                        ...state.activeRoom.reports,
+                        paginationLength: action.payload
+                    }
+                }
+            }
+
         case 'SET_ROOM_MEMBERS_DATA_SUCCESS':
             return {
                 ...state,
