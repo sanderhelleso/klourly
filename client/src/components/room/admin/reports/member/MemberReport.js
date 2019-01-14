@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Chart from '../Chart';
 import Back from '../../../../dashboard/Back';
 import DownloadReports from '../downloads/DownloadReports';
+import MemberReportInfo from './MemberReportInfo';
 
 class MemberReport extends Component {
     constructor(props) {
@@ -24,13 +25,14 @@ class MemberReport extends Component {
             }
 
             return(
-                <StyledReport>
+                <StyledReport className="col s12">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
                         <Chart chartData={chartData} />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
+                            <MemberReportInfo data={this.props.userData} />
                             <div className="col s12 m12 l7">
                                 <DownloadReports />
                             </div>
@@ -47,7 +49,9 @@ class MemberReport extends Component {
         return (
             <div className="container">
                 <Back roomID={this.props.match.params.roomID} location="reports" />
-                {this.renderMemberReport()}
+                <div className="row">
+                    {this.renderMemberReport()}
+                </div>
             </div>
         )
     }
