@@ -13,12 +13,14 @@ class Pagination extends Component {
 
     calculateNextIndex = index => {
 
-        this.props.reportIndex === index - 1 
+        this.props.reportOptions.index === index - 1 
         ? null
         : this.props.updateRoomReportsIndexAction(index - 1);
     }
 
     renderPagination() {
+
+        if (this.props.reportOptions.filter.by === 'Most Recent') return;
 
         // create paginations
         const numOfColums = 9;
@@ -33,7 +35,7 @@ class Pagination extends Component {
         return paginations.map(index => {
             return (
                 <li 
-                    className={`waves-effect ${index === this.props.reportIndex + 1 ? 'active' : ''}`}
+                    className={`waves-effect ${index === this.props.reportOptions.index + 1 ? 'active' : ''}`}
                     onClick={() => this.calculateNextIndex(index)}
                 >
                     <a>{index}</a>
@@ -58,7 +60,7 @@ class Pagination extends Component {
 const mapStateToProps = state => {
     return { 
         checkins: state.room.activeRoom.checkins,
-        reportIndex: state.room.activeRoom.reports.options.index
+        reportOptions: state.room.activeRoom.reports.options
     }
 }
 

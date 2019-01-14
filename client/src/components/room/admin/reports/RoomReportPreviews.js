@@ -23,12 +23,12 @@ class RoomReportPreviews extends Component {
         const numOfColumns = 9;
         const fromIndex = this.props.reportOptions.index * numOfColumns;
         const toIndex = fromIndex + numOfColumns;
-        const filterBy = this.props.reportOptions.filter;
+        const filterBy = this.props.reportOptions.filter.time;
         const now = new Date().getTime();
 
         // itterate over checkins and generate preview reports
         return Object.entries(this.props.checkins)
-        .filter(checkin => filterBy ? (checkin[1].startTime > now - filterBy.time) : checkin)
+        .filter(checkin => filterBy ? (checkin[1].startTime > now - filterBy) : checkin)
         .reverse().slice(fromIndex, toIndex)
         .map(([checkinID, checkinData]) => {
 
