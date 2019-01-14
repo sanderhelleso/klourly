@@ -10,6 +10,7 @@ import RoomReportPreviews from './RoomReportPreviews';
 import MemberReportPreviews from './MemberReportPreviews';
 import Filter from './Filter';
 import SelectMemberReport from './SelectMemberReport';
+import Back from '../../../dashboard/Back';
 
 class RoomReports extends Component {
     constructor(props) {
@@ -18,41 +19,40 @@ class RoomReports extends Component {
 
     renderRoomReportPreviews() {
 
+        console.log(this.props.reports);
         if (this.props.reports && this.props.reports.loaded) {
-            return <RoomReportPreviews 
+            return (
+                <div>
+                    <div className="col s12 m6 l6">
+                        <Filter />
+                        <SelectMemberReport data={this.props.membersData} />
+                    </div>
+                    <RoomReportPreviews 
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
                     />
-        }
-
-        else {
-            <p>Loading...</p>
-        }
-    }
-
-    renderSettings() {
-        if (this.props.reports && this.props.reports.loaded) {
-            return (
-                <div className="col s12 m6 l6">
-                    <Filter />
-                    <SelectMemberReport data={this.props.membersData} />
                 </div>
             )
         }
 
-        return null;
+        else {
+            return (
+                <div className="col s12">
+                    <p>Loading reports...</p>
+                </div>
+            )
+        }
     }
 
     render() {
         return (
             <div className="container">
-                <BackToRoom id={this.props.roomID} />
+                <Back roomID={this.props.roomID} location="room" />
                 <div className="row">
                     <StyledHeader className="col s12 m6 l6">
                         <h3>Reports</h3>
                         <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
                     </StyledHeader>
-                    {this.renderSettings()}
                     {this.renderRoomReportPreviews()}
                     <MemberReportPreviews />
                 </div>

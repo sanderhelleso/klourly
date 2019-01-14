@@ -94,7 +94,7 @@ class Room extends Component {
     render() {
         return (
             <StyledRoom className="container">
-                <Back to={'Dashboard'} roomID={this.props.activeRoom.id} />
+                <Back roomID={this.props.activeRoom.id} location="dashboard" />
                 {this.renderRoom()}
             </StyledRoom>
         )

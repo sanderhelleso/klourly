@@ -10,6 +10,7 @@ import Chart from './Chart';
 import ReportMembers from './ReportMembers';
 import CheckinReportInfo from './CheckinReportInfo';
 import DownloadReports from './downloads/DownloadReports';
+import Back from '../../../dashboard/Back';
 
 
 class CheckinReport extends Component {
@@ -89,6 +90,7 @@ class CheckinReport extends Component {
     render() {
         return (
             <StyledCont className="container">
+                <Back roomID={this.props.roomID} location="reports" />
                 <div className="row">
                     {this.renderReport()}
                 </div>
@@ -100,6 +102,7 @@ class CheckinReport extends Component {
 
 const mapStateToProps = state => {
     return { 
+        roomID: state.room.activeRoom.id,
         reportData: state.room.activeRoom.activeReport,
         checkins: state.room.activeRoom.checkins,
         membersData: state.room.activeRoom.membersData

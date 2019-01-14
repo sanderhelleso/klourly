@@ -56,7 +56,7 @@ class RoomReportPreviews extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col s12 report-preview">
+                <div className="col s12 report-preview animated fadeIn">
                     <Pagination />
                     {this.renderReportPreviews()}
                     <Pagination />

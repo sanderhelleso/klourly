@@ -3,8 +3,72 @@ import styled from 'styled-components';
 import { ArrowLeft } from 'react-feather';
 import { redirect } from '../../helpers/redirect';
 
-const Back = props => (
-    <StyledBack>
+
+export default class Back extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    renderBack() {
+
+        let navigate = {
+            label: '',
+            redirect: ''
+        };
+
+        console.log(this.props);
+
+        switch(this.props.location) {
+            case 'dashboard':
+                navigate.label = 'Dashboard';
+                navigate.redirect = () => redirect.dashboard();
+                break;
+
+            case 'reports':
+                navigate.label = 'Reports';
+                navigate.redirect = () => redirect.roomAdminReports(this.props.roomID);
+                break;
+
+            case 'room':
+                navigate.label = 'Room';
+                navigate.redirect = () => redirect.room(this.props.roomID);
+                break;
+
+        }
+
+        console.log(navigate);
+        return <a onClick={navigate.redirect}><ArrowLeft /> Back to {navigate.label}</a>
+
+    }
+
+    render() {
+        return (
+            <StyledBack>
+                {this.renderBack()}
+            </StyledBack>
+        )
+    }
+}
+
+
+
+
+const StyledBack = styled.div`
+
+    margin: 4rem 0 15vh 0;
+
+    a {
+        color: #bdbdbd;
+    }
+
+    svg {
+        stroke: #7c4dff;
+        margin-bottom: -6px;
+        margin-right: 5px;
+    }
+`;
+
+/* <StyledBack>
         <a className="waves-effect waves-light animated fadeIn"
             onClick={
                 props.to === 'Dashboard'
@@ -15,40 +79,4 @@ const Back = props => (
             <ArrowLeft size={18} />
             {`Back To ${props.to}`}
         </a>
-    </StyledBack>
-)
-
-export default Back;
-
-
-const StyledBack = styled.div`
-
-    max-width: 250px;
-    margin: 4rem 0 15vh 0;
-
-    a {
-        transition: 0.3s ease-in-out;
-        color: #ffffff;
-        padding: 1rem 1.25rem;
-        font-size: 0.9rem;
-        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-        border-radius: 8px;
-        text-align: center;
-        background: #9796f0;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-
-    svg {
-        transition: 0.3s ease-in-out;
-        stroke: #ffffff;
-        margin-bottom: -4px;
-        margin-right: 5px;
-    }
-
-    &:hover {
-        a {
-            box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.09);
-        }
-    }
-`;
+    </StyledBack>*/

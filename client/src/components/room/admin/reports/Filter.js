@@ -80,7 +80,7 @@ class Filter extends Component {
 
     render() {
         return (
-            <StyledOptions>
+            <StyledOptions className="animated fadeIn">
                {this.renderOptions()}
             </StyledOptions>
         )

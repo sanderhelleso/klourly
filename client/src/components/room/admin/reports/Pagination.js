@@ -94,5 +94,6 @@ const StyledPagination = styled.div`
 
     .active {
         box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+        background-color: #b388ff !important;
     }
 `;
