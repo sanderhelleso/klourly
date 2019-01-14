@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { redirect } from '../../../../helpers/redirect';
 import { materializeJS } from '../../../../helpers/materialize';
 
 export default class SelectMemberReport extends Component {
@@ -16,7 +17,8 @@ export default class SelectMemberReport extends Component {
         return Object.values(this.props.data)
             .sort((a, b) => `${a.name}`.localeCompare(`${b.name}`))
             .map(member => {
-            return <option 
+            return <option
+                        value={member.id}
                         key={member.id} 
                         data-icon={member.photoUrl}
                     >
@@ -29,8 +31,12 @@ export default class SelectMemberReport extends Component {
         return (
             <StyledSelectCont>
                 <div className="input-field col s12 m10 l10">
-                    <select className="icons">
-                        <option disabled selected>Choose a member</option>
+                    <select 
+                        value="none"
+                        className="icons"
+                        onChange={(e) => redirect.roomMemberReport(this.props.roomID, e.target.value)}
+                    >
+                        <option disabled value="none">Choose a member</option>
                         {this.renderMemberOptions()}
                     </select>
                     <label>Select a member for individual report</label>

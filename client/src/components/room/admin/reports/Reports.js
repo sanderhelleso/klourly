@@ -25,7 +25,10 @@ class RoomReports extends Component {
                 <div>
                     <div className="col s12 m6 l6">
                         <Filter />
-                        <SelectMemberReport data={this.props.membersData} />
+                        <SelectMemberReport 
+                            roomID={this.props.roomID} 
+                            data={this.props.membersData}
+                        />
                     </div>
                     <RoomReportPreviews 
                         checkins={this.props.checkins}
