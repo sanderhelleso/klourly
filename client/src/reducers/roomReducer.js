@@ -223,7 +223,7 @@ const roomReducer = (state = initialState, action) => {
                     reports: {
                         ...state.activeRoom.reports,
                         options: {
-                            ...state.activeRoom.reports.options,
+                            index: 0,
                             filter: action.payload
                         }
                     }
