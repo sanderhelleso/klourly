@@ -16,8 +16,6 @@ export default class Back extends Component {
             redirect: ''
         };
 
-        console.log(this.props);
-
         switch(this.props.location) {
             case 'dashboard':
                 navigate.label = 'Dashboard';
@@ -36,7 +34,6 @@ export default class Back extends Component {
 
         }
 
-        console.log(navigate);
         return <a onClick={navigate.redirect}><ArrowLeft /> Back to {navigate.label}</a>
 
     }

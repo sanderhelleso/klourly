@@ -13,7 +13,9 @@ export default class SelectMemberReport extends Component {
 
     renderMemberOptions() {
         
-        return Object.values(this.props.data).map(member => {
+        return Object.values(this.props.data)
+            .sort((a, b) => `${a.name}`.localeCompare(`${b.name}`))
+            .map(member => {
             return <option 
                         key={member.id} 
                         data-icon={member.photoUrl}

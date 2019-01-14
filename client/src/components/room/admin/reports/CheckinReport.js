@@ -116,7 +116,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(CheckinReport);
 
 const StyledCont = styled.main`
-    margin: 7.5rem auto;
+    margin-bottom: 7.5rem;
 `;
 
 const StyledReport = styled.div`
