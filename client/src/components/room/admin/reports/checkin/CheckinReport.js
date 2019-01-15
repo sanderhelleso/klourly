@@ -29,7 +29,6 @@ class CheckinReport extends Component {
 
     componentDidMount() {
 
-        console.log(this.props);
         if (this.props.membersData) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
@@ -68,8 +67,9 @@ class CheckinReport extends Component {
 
         if (this.props.reportData && 
             this.props.reportData.checkinID === this.props.match.params.checkinID) {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
             return (
-                <StyledReport className="col s12">
+                <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
                         <Chart chartData={this.props.reportData.chartData} />

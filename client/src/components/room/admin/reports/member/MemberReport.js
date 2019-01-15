@@ -35,7 +35,6 @@ class MemberReport extends Component {
 
     setupMemberReport() {
 
-        console.log(this.props);
 
         if (this.state.dataLoaded) {
 
@@ -70,8 +69,9 @@ class MemberReport extends Component {
     renderMemberReport() {
 
         if (this.props.activeReport && this.props.activeReport.userID === this.props.userData.id) {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
             return(
-                <StyledReport className="col s12">
+                <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
                         <Chart chartData={this.props.activeReport.chartData} />

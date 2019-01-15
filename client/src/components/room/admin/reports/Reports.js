@@ -17,7 +17,6 @@ class RoomReports extends Component {
 
     renderRoomReportPreviews() {
 
-        console.log(this.props.reports);
         if (this.props.reports && this.props.reports.loaded) {
             return (
                 <div>
@@ -93,3 +92,4 @@ const StyledHeader = styled.div`
         margin-bottom: 2rem;
     }
 `;
+

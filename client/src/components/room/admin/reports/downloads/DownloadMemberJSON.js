@@ -63,7 +63,9 @@ class DownloadMemberJSON extends Component {
             room_name: this.props.activeRoom.name,
             member_name: this.props.activeReport.name,
             report: {
-                total_member_checkins: Object.keys(this.props.activeReport.checkins).length,
+                total_member_checkins: this.props.activeReport.checkins 
+                                        ? Object.keys(this.props.activeReport.checkins).length
+                                        : 0,
                 attendendence_in_percentage: this.props.activeReport.attendenceInPercentage,
                 room_checkins_data: this.createCheckinsData()
             }
