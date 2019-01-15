@@ -81,7 +81,8 @@ class CheckinReport extends Component {
                                 <DownloadReports />
                             </div>
                         </StyledDetails>
-                        <ReportMembers  
+                        <ReportMembers 
+                            roomID={this.props.roomID} 
                             data={{
                                 attendies: this.props.reportData.attendies,
                                 roomMembers: this.props.membersData

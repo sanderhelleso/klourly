@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { redirect } from '../../../../helpers/redirect';
 import { format } from '../../../../helpers/format';
 
 export default class ReportMember extends Component {
@@ -9,7 +10,10 @@ export default class ReportMember extends Component {
 
     render() {
         return (
-            <div className="col s12 m4 l4">
+            <div 
+                className="col s12 m4 l4" 
+                onClick={() => redirect.roomMemberReport(this.props.roomID, this.props.data.id)}
+            >
                 <StyledMember attented={this.props.data.attended}>
                     <div className="row">
                         <div className="col s12">
@@ -35,6 +39,12 @@ const StyledMember = styled.div`
 
     margin: 1rem 0;
     opacity: ${props => props.attented ? 1 : 0.4};
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
 
     img {
         margin-top: 0.9rem;

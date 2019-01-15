@@ -21,15 +21,22 @@ class MemberReport extends Component {
 
         if (this.props.userData) {
 
-            const chartData = {
-                labels: Object.values(this.props.userData.checkins).map(() => this.props.userData.name),
-                dataset: Object.values(this.props.userData.checkins).map(value => value).sort((a, b) => a - b)
-            }
+            let labels, dataset = null;
+            let attendedInPercentage = 0;
 
-            const attendedInPercentage = format.getPercentage(
-                                            Object.keys(this.props.userData.checkins).length,
-                                            Object.keys(this.props.roomCheckins).length
-                                        );
+            if (this.props.userData.checkins) {
+                labels = Object.values(this.props.userData.checkins).map(() => this.props.userData.name);
+                dataset = Object.values(this.props.userData.checkins).map(value => value).sort((a, b) => a - b);
+                attendedInPercentage = format.getPercentage(
+                    Object.keys(this.props.userData.checkins).length,
+                    Object.keys(this.props.roomCheckins).length
+                );
+            }
+                
+            const chartData = {
+                labels,
+                dataset
+            }
 
             return(
                 <StyledReport className="col s12">

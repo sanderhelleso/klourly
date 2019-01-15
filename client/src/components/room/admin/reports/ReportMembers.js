@@ -19,6 +19,7 @@ export default class ReportMembers extends Component {
         return Object.values(this.props.data.roomMembers)
                 .sort((a, b) => b.attended - a.attended)
                 .map(member => <ReportMember 
+                                    roomID={this.props.roomID}
                                     data={{
                                         ...member,
                                         timestamp: member.attended 

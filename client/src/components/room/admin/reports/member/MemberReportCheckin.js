@@ -24,11 +24,11 @@ export default class MemberReportCheckin extends Component {
  
     render() {
         return (
-            <div className="col s12 m6 l6 xl4">
-                <StyledCont 
-                    attended={this.props.attended} 
-                    onClick={() => redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID)}
-                >
+            <div 
+                className="col s12 m6 l6 xl4"
+                onClick={() => redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID)}
+            >
+                <StyledCont attended={this.props.attended}>
                     <div className={`member-cont ${this.props.attended ? "attended-cont" : "not-attended-cont"}`}>
                         <div className="attended">
                             {this.renderAttendedIcon()}
