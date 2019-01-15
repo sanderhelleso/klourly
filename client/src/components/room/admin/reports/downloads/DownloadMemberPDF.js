@@ -50,7 +50,7 @@ class DownloadMemberPDF extends Component {
 
     rowHeader(doc, initial) {
 
-        const headerPos = initial ? 75 : 25;
+        const headerPos = initial ? 80 : 25;
         doc.setFontSize(12);
         doc.setTextColor(150);
         doc.text(20, headerPos, 'Checkin');
@@ -86,8 +86,13 @@ class DownloadMemberPDF extends Component {
         doc.setFontSize(10);
         doc.text(155, 22, report_generated_at);
 
-        doc.line(10, 55, 200, 55) // horizontal line
+        doc.line(10, 50, 200, 50) // horizontal line
 
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(16);
+        doc.text(20, 65, `Total Checkins: ${this.props.activeReport.checkins 
+                            ? Object.keys(this.props.activeReport.checkins).length
+                            : 0}/${Object.keys(this.props.activeRoom.checkins).length} (${this.props.activeReport.attendenceInPercentage}%)`);
         this.rowHeader(doc, initial);
 
         let startList = 95;
@@ -136,7 +141,7 @@ class DownloadMemberPDF extends Component {
             }
         });
 
-        doc.save('a4.pdf')
+        doc.save(`member-report-${this.props.activeReport.checkinID}.pdf`)
     }
 
     render() {

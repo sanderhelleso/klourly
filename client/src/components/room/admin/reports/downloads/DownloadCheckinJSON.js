@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { format } from '../../../../../helpers/format';
+import { downloadJSON } from '../../../../../helpers/downloadJSON';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -72,31 +73,9 @@ class DownloadCheckinJSON extends Component {
         return { extension, type, fileName, data };
     }
 
-    downloadJSON() {
-
-        const format = this.format();
-
-        // generate a file blob
-        const blob = new Blob([format.data], { ...format.type });
-
-        // if navigator is present, download file immediatly
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveBlob(blob, `${format.fileName}${format.extension}`);
-            return;
-        }
-
-        // if navigator is not present, manually create file and download
-        const elem = window.document.createElement('a');
-        elem.href = window.URL.createObjectURL(blob);
-        elem.download = `${format.fileName}${format.extension}`;        
-        document.body.appendChild(elem);
-        elem.click();        
-        document.body.removeChild(elem);
-    }
-
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON()}>
+            <a class="waves-effect waves-purple btn-flat" onClick={() => downloadJSON(this.format())}>
                 JSON
             </a>
         )

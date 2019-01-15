@@ -65,7 +65,7 @@ class DownloadPDF extends Component {
         // checkin data
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(16);
-        doc.text(20, 60, `Total Checkins: ${Object.keys(this.props.activeReport.attendies).length} (${this.props.activeReport.attendenceInPercent}%)`);
+        doc.text(20, 60, `Total Attendence: ${Object.keys(this.props.activeReport.attendies).length} (${this.props.activeReport.attendenceInPercent}%)`);
 
         // list names
         doc.setFontSize(12);
@@ -102,7 +102,7 @@ class DownloadPDF extends Component {
         });
         
 
-        doc.save('a4.pdf')
+        doc.save(`checkin-report-${this.props.activeReport.userID}.pdf`);
     }
 
     render() {
