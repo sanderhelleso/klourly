@@ -4,13 +4,13 @@ import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setSpecificCheckinReportAction } from '../../../../actions/room/report/setSpecificCheckinReportAction';
+import { setSpecificCheckinReportAction } from '../../../../../actions/room/report/setSpecificCheckinReportAction';
 
-import Chart from './Chart';
-import ReportMembers from './ReportMembers';
+import Chart from '../Chart';
+import ReportMembers from '../ReportMembers';
 import CheckinReportInfo from './CheckinReportInfo';
-import DownloadReports from './downloads/DownloadReports';
-import Back from '../../../dashboard/Back';
+import DownloadReports from '../downloads/DownloadReports';
+import Back from '../../../../dashboard/Back';
 
 
 class CheckinReport extends Component {

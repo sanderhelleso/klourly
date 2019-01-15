@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { redirect } from '../../../../helpers/redirect';
-import Chart from './Chart';
+import { redirect } from '../../../../../helpers/redirect';
+import Chart from '../Chart';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setSpecificCheckinReportAction } from '../../../../actions/room/report/setSpecificCheckinReportAction';
+import { setSpecificCheckinReportAction } from '../../../../../actions/room/report/setSpecificCheckinReportAction';
 
-class RoomReportPreview extends Component {
+class CheckinReportPreview extends Component {
     constructor(props) {
         super(props);
     }
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ setSpecificCheckinReportAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreview);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckinReportPreview);
 
 const StyledPreview = styled.div`
     margin: 1rem 3rem;

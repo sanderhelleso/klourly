@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import RoomReportPreview from './RoomReportPreview';
-import Pagination from './Pagination';
+import RoomReportPreview from './CheckinReportPreview';
+import Pagination from '../Pagination';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateReportsPaginationLengthAction } from '../../../../actions/room/report/updateReportsPaginationLengthAction';
+import { updateReportsPaginationLengthAction } from '../../../../../actions/room/report/updateReportsPaginationLengthAction';
 
 
-class RoomReportPreviews extends Component {
+class CheckinReportPreviews extends Component {
     constructor(props) {
         super(props);
     }
@@ -77,4 +77,4 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ updateReportsPaginationLengthAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomReportPreviews);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckinReportPreviews);

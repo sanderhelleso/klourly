@@ -5,9 +5,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import BackToRoom from '../../BackToRoom';
-import RoomReportPreviews from './RoomReportPreviews';
-import MemberReportPreviews from './MemberReportPreviews';
+import CheckinReportPreviews from './checkin/CheckinReportPreviews';
 import Filter from './Filter';
 import SelectMemberReport from './SelectMemberReport';
 import Back from '../../../dashboard/Back';
@@ -30,7 +28,7 @@ class RoomReports extends Component {
                             data={this.props.membersData}
                         />
                     </div>
-                    <RoomReportPreviews 
+                    <CheckinReportPreviews 
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
                     />
@@ -57,7 +55,6 @@ class RoomReports extends Component {
                         <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
                     </StyledHeader>
                     {this.renderRoomReportPreviews()}
-                    <MemberReportPreviews />
                 </div>
             </div>
         )

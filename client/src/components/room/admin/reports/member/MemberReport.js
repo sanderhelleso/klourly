@@ -24,25 +24,26 @@ class MemberReport extends Component {
             let labels, dataset = null;
             let attendedInPercentage = 0;
 
+            // if user has checkins available, calculate required checkin stats data
             if (this.props.userData.checkins) {
-                labels = Object.values(this.props.userData.checkins).map(() => this.props.userData.name);
-                dataset = Object.values(this.props.userData.checkins).map(value => value).sort((a, b) => a - b);
+
+                labels = Object.values(this.props.userData.checkins)
+                        .map(() => this.props.userData.name);
+
+                dataset = Object.values(this.props.userData.checkins)
+                        .map(value => value).sort((a, b) => a - b);
+
                 attendedInPercentage = format.getPercentage(
                     Object.keys(this.props.userData.checkins).length,
                     Object.keys(this.props.roomCheckins).length
                 );
-            }
-                
-            const chartData = {
-                labels,
-                dataset
             }
 
             return(
                 <StyledReport className="col s12">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
-                        <Chart chartData={chartData} />
+                        <Chart chartData={{ labels, dataset }} />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">

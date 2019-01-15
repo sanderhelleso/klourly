@@ -37,7 +37,7 @@ import ReportData from './dataPrefetch/ReportData';
 import UserLocation from './dataPrefetch/UserLocation';
 import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
 import Messaging from './messaging/Messaging';
-import CheckinReport from './room/admin/reports/CheckinReport';
+import CheckinReport from './room/admin/reports/checkin/CheckinReport';
 import MemberReport from './room/admin/reports/member/MemberReport';
 
 // Initialize Firebase

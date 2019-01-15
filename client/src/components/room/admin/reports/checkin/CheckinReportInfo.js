@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Cloud, CloudOff } from 'react-feather';
-import { format } from '../../../../helpers/format';
+import { format } from '../../../../../helpers/format';
 
 
 export default class CheckinReportInfo extends Component {
