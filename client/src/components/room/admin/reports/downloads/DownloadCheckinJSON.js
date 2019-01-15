@@ -53,7 +53,7 @@ class DownloadCheckinJSON extends Component {
             checkin_id: this.props.activeReport.checkinID,
             report: {
                 total_checkins: Object.keys(this.props.activeReport.attendies).length,
-                attendende_in_percentage: this.props.activeReport.attendenceInPercent,
+                attendendence_in_percentage: this.props.activeReport.attendenceInPercent,
                 ...this.reportData().report
             }
         }
@@ -72,9 +72,9 @@ class DownloadCheckinJSON extends Component {
         return { extension, type, fileName, data };
     }
 
-    downloadJSON(reportType) {
+    downloadJSON() {
 
-        const format = this.format(reportType);
+        const format = this.format();
 
         // generate a file blob
         const blob = new Blob([format.data], { ...format.type });

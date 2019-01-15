@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { format } from '../../../../../helpers/format';
+import { downloadJSON } from '../../../../../helpers/downloadJSON';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -11,22 +12,33 @@ class DownloadMemberJSON extends Component {
         super(props);
     }
 
-    createMembersData() {
+    createCheckinsData() {
 
-        const members = {};
-        Object.values(this.props.activeRoom.membersData).forEach(member => {
+        const checkins = Object.entries(this.props.activeRoom.checkins)
+            .reverse().map(([checkinID, checkinData]) => {
+                return {
+                    [checkinID]: {
+                        start_time: format.getFormatedDateAndTime(checkinData.startTime),
+                        end_time: format.getFormatedDateAndTime(checkinData.endTime),
+                        checkin_total_attendence_in_percentage: checkinData.attendenceInPercent,
+                        checkin_information: checkinData.attendies 
+                                    ? Object.keys(checkinData.attendies)
+                                    .indexOf(this.props.activeReport.userID) !== -1
+                                    ? {
+                                        attended: 'yes',
+                                        checkedin_at: format.getFormatedDateAndTime(
+                                            checkinData.attendies[this.props.activeReport.userID]) 
+                                    }
+                                    : 'not attended'
+                                    : 'not attended'
+                    }
+                }
+            });
 
-            const name = member.name.split('_').join('_');
-            members[name] = 
-            Object.keys(this.props.activeReport.attendies).indexOf(member.id) !== -1
-            ? {
-                name,
-                attended: true,
-                checkedin_at: `${format.tsToDate(this.props.activeReport.attendies[member.id])} ${format.tsToHHMM(this.props.activeReport.attendies[member.id])}`
-            } : { name, attended: false }
-        });
-
-        return Object.values(members).sort((a, b) => b.attended - a.attended);
+        return {
+            checkins: Object.values(checkins),
+            total_room_checkins: checkins.length
+        }
 
     }
 
@@ -35,13 +47,9 @@ class DownloadMemberJSON extends Component {
         // create meta data for report
         const now = new Date().getTime();
         const report_generated_at = `${format.tsToDate(now)} ${format.tsToHHMM(now)}`;
-        const start_time =          `${format.tsToDate(this.props.activeReport.startTime)} ${format.tsToHHMM(this.props.activeReport.startTime)}`;
-        const end_time =            `${format.tsToDate(this.props.activeReport.endTime)} ${format.tsToHHMM(this.props.activeReport.endTime)}`;
-
 
         return { 
-            meta: { report_generated_at },
-            report: { start_time, end_time, members: this.createMembersData() }
+            meta: { report_generated_at }
         }
     }
 
@@ -50,11 +58,11 @@ class DownloadMemberJSON extends Component {
         const report = {
             ...this.reportData().meta,
             room_name: this.props.activeRoom.name,
-            checkin_id: this.props.activeReport.checkinID,
+            member_name: this.props.activeReport.name,
             report: {
-                total_checkins: Object.keys(this.props.activeReport.attendies).length,
-                attendende_in_percentage: this.props.activeReport.attendenceInPercent,
-                ...this.reportData().report
+                total_member_checkins: Object.keys(this.props.activeReport.checkins).length,
+                attendendence_in_percentage: this.props.activeReport.attendenceInPercentage,
+                room_checkins_data: Object.values(this.createCheckinsData())
             }
         }
 
@@ -64,7 +72,7 @@ class DownloadMemberJSON extends Component {
 
     format() {
 
-        const fileName = `checkin-report-${this.props.activeReport.checkinID}`;
+        const fileName = `member-report-${this.props.activeReport.userID}`;
         const extension = '.json';
         const type = 'application/json';
         const data = this.generateJSONReport();
@@ -72,31 +80,9 @@ class DownloadMemberJSON extends Component {
         return { extension, type, fileName, data };
     }
 
-    downloadJSON(reportType) {
-
-        const format = this.format(reportType);
-
-        // generate a file blob
-        const blob = new Blob([format.data], { ...format.type });
-
-        // if navigator is present, download file immediatly
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveBlob(blob, `${format.fileName}${format.extension}`);
-            return;
-        }
-
-        // if navigator is not present, manually create file and download
-        const elem = window.document.createElement('a');
-        elem.href = window.URL.createObjectURL(blob);
-        elem.download = `${format.fileName}${format.extension}`;        
-        document.body.appendChild(elem);
-        elem.click();        
-        document.body.removeChild(elem);
-    }
-
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON()}>
+            <a class="waves-effect waves-purple btn-flat" onClick={() => downloadJSON(this.format())}>
                 JSON
             </a>
         )

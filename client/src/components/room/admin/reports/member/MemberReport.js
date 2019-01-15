@@ -16,18 +16,31 @@ import MemberReportCheckins from './MemberReportCheckins';
 class MemberReport extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { dataLoaded: false }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.userData !== nextProps.userData) {
+            this.setState({ dataLoaded: true }, () => this.setupMemberReport());
+        }
     }
 
     componentDidMount() {
-        this.setupMemberReport();
+
+        if (this.props.userData) {
+            this.setState({ dataLoaded: true }, () => this.setupMemberReport());
+        }
     }
 
     setupMemberReport() {
 
-        if (this.props.userData) {
+        console.log(this.props);
+
+        if (this.state.dataLoaded) {
 
             let labels, dataset = null;
-            let attendedInPercentage = 0;
+            let attendenceInPercentage = 0;
 
             // if user has checkins available, calculate required checkin stats data
             if (this.props.userData.checkins) {
@@ -38,7 +51,7 @@ class MemberReport extends Component {
                 dataset = Object.values(this.props.userData.checkins)
                         .map(value => value).sort((a, b) => a - b);
 
-                attendedInPercentage = format.getPercentage(
+                attendenceInPercentage = format.getPercentage(
                     Object.keys(this.props.userData.checkins).length,
                     Object.keys(this.props.roomCheckins).length
                 );
@@ -48,7 +61,7 @@ class MemberReport extends Component {
             this.props.setSpecificCheckinReportAction({
                 userID: this.props.userData.id,
                 chartData: { labels, dataset },
-                attendedInPercentage,
+                attendenceInPercentage,
                 ...this.props.userData,
             });
         }
@@ -56,7 +69,7 @@ class MemberReport extends Component {
 
     renderMemberReport() {
 
-        if (this.props.activeReport.userID === this.props.userData.id) {
+        if (this.props.activeReport && this.props.activeReport.userID === this.props.userData.id) {
             return(
                 <StyledReport className="col s12">
                     <div className="col s12 chart">
