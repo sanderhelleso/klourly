@@ -8,11 +8,8 @@ export default class CheckinReportInfo extends Component {
     constructor(props) {
         super(props);
 
-        this.startTime = `${format.tsToDate(this.props.info.startTime)}
-                          ${format.tsToHHMM(this.props.info.startTime)}`;
-                        
-        this.endTime =   `${format.tsToDate(this.props.info.startTime)}
-                          ${format.tsToHHMM(this.props.info.startTime)}`;
+        this.startTime = format.getFormatedDateAndTime(this.props.info.startTime);     
+        this.endTime =  format.getFormatedDateAndTime(this.props.info.endTime);           
     }
 
 

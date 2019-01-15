@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import MemberReportCheckin from './MemberReportCheckin';
 
 export default class MemberReportCheckins extends Component {
@@ -11,10 +10,10 @@ export default class MemberReportCheckins extends Component {
 
     renderCheckins() {
 
-        console.log(this.props);
         return Object.entries(this.props.roomCheckins)
             .reverse().map(([checkinID, checkinData]) => {
             return <MemberReportCheckin 
+                        roomID={this.props.roomID}
                         attended={checkinData.attendies 
                                     ? Object.keys(checkinData.attendies)
                                     .indexOf(this.props.userID) !== -1
@@ -32,17 +31,14 @@ export default class MemberReportCheckins extends Component {
 
     render() {
         return (
-            <StyledCont className="col s12">
+            <div className="col s12">
                 <div className="row">
                     <div className="col s12">
                         {this.renderCheckins()}
                     </div>
                 </div>
-            </StyledCont>
+            </div>
         )
     }
 }
 
-
-const StyledCont = styled.div`
-`;

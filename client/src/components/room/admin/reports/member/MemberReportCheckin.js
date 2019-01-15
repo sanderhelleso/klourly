@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Cloud, CloudOff, CheckCircle, XCircle } from 'react-feather';
 import { format } from '../../../../../helpers/format';
+import { redirect } from '../../../../../helpers/redirect';
+
 
 export default class MemberReportCheckin extends Component {
     constructor(props) {
         super(props);
-
-        console.log(props);
     }
 
     renderAttendedIcon() {
@@ -24,8 +24,11 @@ export default class MemberReportCheckin extends Component {
  
     render() {
         return (
-            <div className="col s12 m6 l4">
-                <StyledCont attended={this.props.attended}>
+            <div className="col s12 m6 l6 xl4">
+                <StyledCont 
+                    attended={this.props.attended} 
+                    onClick={() => redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID)}
+                >
                     <div className={`member-cont ${this.props.attended ? "attended-cont" : "not-attended-cont"}`}>
                         <div className="attended">
                             {this.renderAttendedIcon()}
@@ -48,10 +51,11 @@ const StyledCont = styled.div`
     .member-cont {
         border-radius: 6px;
         padding: 1.25rem;
-        margin: 2.25rem 1.5rem;
+        margin: 2.25rem 0.5rem;
         cursor: pointer;
         transition: 0.3s ease-in-out;
         position: relative;
+        word-break: break-all;
     }
 
     .attended-cont {

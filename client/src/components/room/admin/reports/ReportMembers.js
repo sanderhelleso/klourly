@@ -9,7 +9,7 @@ export default class ReportMembers extends Component {
     renderMembers() {
 
         // render member for each room member and set attended status
-        const attendies = Object.keys(this.props.data.attendies);
+        const attendies = this.props.data.attendies ? Object.keys(this.props.data.attendies) : [];
 
         // add checkin prop to member
         this.props.data.roomMembers.forEach(member => {

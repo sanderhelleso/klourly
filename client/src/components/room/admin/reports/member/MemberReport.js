@@ -45,6 +45,7 @@ class MemberReport extends Component {
                             </div>
                         </StyledDetails>
                         <MemberReportCheckins 
+                            roomID={this.props.roomID}
                             userID={this.props.userData.id}
                             userCheckins={this.props.userData.checkins} 
                             roomCheckins={this.props.roomCheckins}
@@ -75,6 +76,7 @@ const mapStateToProps = (state, props) => {
 
     // get user
     return { 
+            roomID: state.room.activeRoom.id,
             roomCheckins: state.room.activeRoom.checkins,
             userData: state.room.activeRoom.membersData
                         ? Object.values(state.room.activeRoom.membersData)

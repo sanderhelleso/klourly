@@ -17,13 +17,20 @@ class CheckinReport extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            dataLoaded: false
-        }
+        this.state = { dataLoaded: false }
     }
 
     componentWillReceiveProps(nextProps) {
+
         if (this.props.membersData !== nextProps.membersData) {
+            this.setState({ dataLoaded: true }, () => this.prepareReport());
+        }
+    }
+
+    componentDidMount() {
+
+        console.log(this.props);
+        if (this.props.membersData) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
     }
@@ -59,7 +66,8 @@ class CheckinReport extends Component {
 
     renderReport() {
 
-        if (this.props.reportData) {
+        if (this.props.reportData && 
+            this.props.reportData.checkinID === this.props.match.params.checkinID) {
             return (
                 <StyledReport className="col s12">
                     <div className="col s12 chart">

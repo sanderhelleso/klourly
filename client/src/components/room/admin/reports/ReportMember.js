@@ -5,8 +5,6 @@ import { format } from '../../../../helpers/format';
 export default class ReportMember extends Component {
     constructor(props) {
         super(props);
-
-        console.log(props);
     }
 
     render() {

@@ -20,23 +20,12 @@ class RoomReportPreview extends Component {
         }
     }
 
-    toCheckinReport() {
-
-        // update specific checkin report state and redirect
-        this.props.setSpecificCheckinReportAction({
-            chartData: this.generateChartData(),
-            ...this.props.data
-        });
-        
-        redirect.roomCheckinReport(this.props.roomID, this.props.data.checkinID);
-    }
-
     render() {
         return (
             <div className="col s12 m6 l4">
                 <StyledPreview className="col s12">
                     <div className="col s12 chart">
-                        <span>Time of Checkins</span>
+                        <span>Checkins over time</span>
                         <Chart chartData={this.generateChartData()} />
                     </div>
                     <div className="col s12 information">
@@ -49,7 +38,10 @@ class RoomReportPreview extends Component {
                             <h3>{this.props.data.checkinID}</h3>
                             <a 
                                 className="waves-effect waves-purple btn-flat see-details"
-                                onClick={() => this.toCheckinReport()}
+                                onClick={() => redirect.roomCheckinReport(
+                                                this.props.roomID, 
+                                                this.props.data.checkinID)
+                                        }
                             >
                                 See Details
                             </a>

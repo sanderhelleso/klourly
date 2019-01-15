@@ -3,6 +3,7 @@ export const format = {
     tsToDate,
     removeByKey,
     getPercentage,
+    tsToHHMM,
     getFormatedDateAndTime
 }
 

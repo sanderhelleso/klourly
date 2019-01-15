@@ -16,8 +16,6 @@ class ReportData extends Component {
 
     async componentDidMount() {
 
-        console.log('loading...');
-
         // attempt to fetch members data
         const userResponse = await room.getRoomMembers(
                                 this.props.userID, 
