@@ -14,6 +14,10 @@ import DownloadMemberPDF from './DownloadMemberPDF';
 class DownloadReports extends Component {
     constructor(props) {
         super(props);
+        
+        this.state = {
+            toggle: true
+        }
     }
 
     renderDownloads() {
@@ -21,8 +25,19 @@ class DownloadReports extends Component {
         if (this.props.reportType === 'member') {
             return (
                 <div className="col s12 downloads">
-                    <DownloadMemberJSON />
-                    <DownloadMemberPDF />
+                    <DownloadMemberJSON toggle={this.state.toggle} />
+                    <DownloadMemberPDF toggle={this.state.toggle} />
+                    <p>
+                        <label htmlFor="report-toggle">
+                            <input 
+                                id="report-toggle"
+                                type="checkbox" 
+                                checked={this.state.toggle} 
+                                onChange={(e) => this.setState({ toggle: e.target.checked})}
+                            />
+                            <span>Only checkins member attended</span>
+                        </label>
+                    </p>
                 </div>
             )
         }

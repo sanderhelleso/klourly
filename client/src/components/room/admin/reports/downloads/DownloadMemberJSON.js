@@ -14,7 +14,7 @@ class DownloadMemberJSON extends Component {
 
     createCheckinsData() {
 
-        const checkins = Object.entries(this.props.activeRoom.checkins)
+        let checkins = Object.values(Object.entries(this.props.activeRoom.checkins)
             .reverse().map(([checkinID, checkinData]) => {
                 return {
                     [checkinID]: {
@@ -23,20 +23,23 @@ class DownloadMemberJSON extends Component {
                         checkin_total_attendence_in_percentage: checkinData.attendenceInPercent,
                         checkin_information: checkinData.attendies 
                                     ? Object.keys(checkinData.attendies)
-                                    .indexOf(this.props.activeReport.userID) !== -1
+                                        .indexOf(this.props.activeReport.userID) !== -1
                                     ? {
                                         attended: 'yes',
                                         checkedin_at: format.getFormatedDateAndTime(
                                             checkinData.attendies[this.props.activeReport.userID]) 
-                                    }
-                                    : 'not attended'
-                                    : 'not attended'
+                                    } : 'not attended' : 'not attended'
                     }
                 }
-            });
+            }));
+
+        if (this.props.toggle) {
+            checkins = checkins.filter(checkin => 
+                Object.values(checkin)[0].checkin_information !== 'not attended');
+        }
 
         return {
-            checkins: Object.values(checkins),
+            checkins: checkins,
             total_room_checkins: checkins.length
         }
 
@@ -62,7 +65,7 @@ class DownloadMemberJSON extends Component {
             report: {
                 total_member_checkins: Object.keys(this.props.activeReport.checkins).length,
                 attendendence_in_percentage: this.props.activeReport.attendenceInPercentage,
-                room_checkins_data: Object.values(this.createCheckinsData())
+                room_checkins_data: this.createCheckinsData()
             }
         }
 
