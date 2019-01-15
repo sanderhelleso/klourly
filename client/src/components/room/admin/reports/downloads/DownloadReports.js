@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import DownloadJSON from './DownloadJSON';
-import DownloadPDF from './DownloadPDF';
+import DownloadCheckinJSON from './DownloadCheckinJSON';
+import DownloadCheckinPDF from './DownloadCheckinPDF';
+import DownloadMemberJSON from './DownloadMemberJSON';
+import DownloadMemberPDF from './DownloadMemberPDF';
 
 
 class DownloadReports extends Component {
@@ -14,15 +16,33 @@ class DownloadReports extends Component {
         super(props);
     }
 
+    renderDownloads() {
+
+        if (this.props.reportType === 'member') {
+            return (
+                <div className="col s12 downloads">
+                    <DownloadMemberJSON />
+                    <DownloadMemberPDF />
+                </div>
+            )
+        }
+
+        else if (this.props.reportType === 'checkin') {
+            return (
+                <div className="col s12 downloads">
+                    <DownloadCheckinJSON />
+                    <DownloadCheckinPDF />
+                </div>
+            )
+        }
+    }
+
     render() {
         return (
             <StyledDownloads>
                 <div className="download-cont">
                     <h5>Download Report</h5>
-                    <div className="col s12 downloads">
-                        <DownloadJSON />
-                        <DownloadPDF />
-                    </div>
+                    {this.renderDownloads()}
                 </div>
             </StyledDownloads>
         )

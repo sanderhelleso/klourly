@@ -5,6 +5,7 @@ import { format } from '../../../../../helpers/format';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setSpecificCheckinReportAction } from '../../../../../actions/room/report/setSpecificCheckinReportAction';
 
 import Chart from '../Chart';
 import Back from '../../../../dashboard/Back';
@@ -17,7 +18,11 @@ class MemberReport extends Component {
         super(props);
     }
 
-    renderMemberReport() {
+    componentDidMount() {
+        this.setupMemberReport();
+    }
+
+    setupMemberReport() {
 
         if (this.props.userData) {
 
@@ -39,17 +44,30 @@ class MemberReport extends Component {
                 );
             }
 
+            // update specific checkin report state and render
+            this.props.setSpecificCheckinReportAction({
+                userID: this.props.userData.id,
+                chartData: { labels, dataset },
+                attendedInPercentage,
+                ...this.props.userData,
+            });
+        }
+    }
+
+    renderMemberReport() {
+
+        if (this.props.activeReport.userID === this.props.userData.id) {
             return(
                 <StyledReport className="col s12">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
-                        <Chart chartData={{ labels, dataset }} />
+                        <Chart chartData={this.props.activeReport.chartData} />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
                             <MemberReportInfo data={this.props.userData} />
                             <div className="col s12 m12 l7">
-                                <DownloadReports />
+                                <DownloadReports reportType="member" />
                             </div>
                         </StyledDetails>
                         <MemberReportCheckins 
@@ -57,7 +75,7 @@ class MemberReport extends Component {
                             userID={this.props.userData.id}
                             userCheckins={this.props.userData.checkins} 
                             roomCheckins={this.props.roomCheckins}
-                            attendedInPercentage={attendedInPercentage} 
+                            attendedInPercentage={this.props.activeReport.attendedInPercentage} 
                         />
                     </div>
                 </StyledReport>
@@ -84,6 +102,7 @@ const mapStateToProps = (state, props) => {
 
     // get user
     return { 
+            activeReport: state.room.activeRoom.activeReport,
             roomID: state.room.activeRoom.id,
             roomCheckins: state.room.activeRoom.checkins,
             userData: state.room.activeRoom.membersData
@@ -94,7 +113,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ setSpecificCheckinReportAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemberReport);

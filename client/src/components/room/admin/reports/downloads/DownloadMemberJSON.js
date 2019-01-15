@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
-class DownloadJSON extends Component {
+class DownloadMemberJSON extends Component {
     constructor(props) {
         super(props);
     }
@@ -62,19 +62,12 @@ class DownloadJSON extends Component {
     }
 
 
-    format(reportType) {
+    format() {
 
-        let fileName;
-        let extension = '.json';
-        let type = 'application/json';
-        let data = this.generateJSONReport();
-
-        // generate filename depending on report type
-        switch(reportType) {
-            case 'checkin':
-                fileName = `checkin-report-${this.props.activeReport.checkinID}`;
-                break;
-        }
+        const fileName = `checkin-report-${this.props.activeReport.checkinID}`;
+        const extension = '.json';
+        const type = 'application/json';
+        const data = this.generateJSONReport();
 ;
         return { extension, type, fileName, data };
     }
@@ -103,7 +96,7 @@ class DownloadJSON extends Component {
 
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON('checkin')}>
+            <a class="waves-effect waves-purple btn-flat" onClick={() => this.downloadJSON()}>
                 JSON
             </a>
         )
@@ -121,4 +114,4 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DownloadJSON);
+export default connect(mapStateToProps, mapDispatchToProps)(DownloadMemberJSON);

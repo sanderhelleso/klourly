@@ -78,7 +78,7 @@ class CheckinReport extends Component {
                         <StyledDetails className="col s12">
                             <CheckinReportInfo info={this.props.reportData} />
                             <div className="col s12 m12 l7">
-                                <DownloadReports />
+                                <DownloadReports reportType="checkin" />
                             </div>
                         </StyledDetails>
                         <ReportMembers 
