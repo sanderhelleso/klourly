@@ -47,8 +47,8 @@ export default class MemberReportCheckin extends Component {
 }
 
 const StyledCont = styled.div`
-
     .member-cont {
+        z-index: 1000;
         border-radius: 6px;
         padding: 1.25rem;
         margin: 2.25rem 0.5rem;

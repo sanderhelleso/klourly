@@ -88,7 +88,7 @@ class MemberReport extends Component {
                             userID={this.props.userData.id}
                             userCheckins={this.props.userData.checkins} 
                             roomCheckins={this.props.roomCheckins}
-                            attendedInPercentage={this.props.activeReport.attendedInPercentage} 
+                            attendenceInPercentage={this.props.activeReport.attendenceInPercentage} 
                         />
                     </div>
                 </StyledReport>
@@ -171,6 +171,10 @@ const StyledReport = styled.div`
         position: relative;
         padding: 4rem 2rem;
         min-height: 200px;
+
+        @media screen and (max-width: 600px) {
+            padding: 4rem 0.5rem;
+        }
     }
 `;
 

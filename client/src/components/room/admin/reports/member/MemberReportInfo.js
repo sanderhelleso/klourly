@@ -17,8 +17,6 @@ export default class MemberReportInfo extends Component {
                     <h5>Member Report</h5>
                     <h3>{this.props.data.name}</h3>
                 </StyledMemberCont>
-                <div className="col s12 m6 l12">
-                </div>
             </StyledInfo>
         )
     }
