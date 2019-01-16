@@ -12,12 +12,13 @@ class Form extends Component {
     constructor(props) {
         super(props);
 
+        // destructor to only required fields
+        const { newsLetter, occupation, phoneNr, status } = this.props.settings;
+        this.originalSettings = { newsLetter, occupation, phoneNr, status };
         this.state = {
-            settings: (({ newsLetter, occupation, phoneNr, status }) => 
-                      ({ newsLetter, occupation, phoneNr, status }))(this.props.settings)
+            settings: this.originalSettings,
+            changed: false
         }
-
-        console.log(this.state);
     }
 
     componentDidMount() {
@@ -138,6 +139,7 @@ class Form extends Component {
                 <StyledButton
                     className="waves-effect waves-light btn-flat"
                     onClick={this.confirmSettings}
+                    disabled={this.state.changed ? false : true}
                 >
                     Update
                 </StyledButton>
@@ -156,6 +158,13 @@ class Form extends Component {
                 ...this.state.settings,
                 [name]: value
             }
+        }, () => { this.checkChange() });
+    }
+
+    checkChange() {
+        this.setState({ 
+            changed: JSON.stringify(this.state.settings) !== 
+                     JSON.stringify(this.originalSettings)
         });
     }
 
@@ -167,7 +176,7 @@ class Form extends Component {
                 newsLetter: this.state.settings.newsLetter 
                             ? false : true
             }
-        });
+        }, () => { this.checkChange() });
     }
 
     // confirm and save new settings
