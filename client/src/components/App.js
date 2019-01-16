@@ -3,6 +3,8 @@ import { Router, Route, Redirect} from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import history from '../helpers/history';
 import * as firebase from 'firebase';
+import { ToastContainer, Flip, Fade } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // animations
 import 'animate.css';
@@ -168,6 +170,7 @@ class App extends Component {
                     <GlobalDashStyle />
                     {this.renderRoutes()}
                     <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
+                    <ToastContainer transition={Fade} closeButton={false} />
                 </div>
             </Router>
         )

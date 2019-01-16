@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ToastContainer, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -248,10 +246,6 @@ class Settings extends Component {
                         {this.renderNewsLetterCheckBox()}
                     </div>
                 </form>
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
-                />
             </StyledSettings>
         )
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Camera } from 'react-feather';
 import styled from 'styled-components';
 import { dashboard } from '../../../../api/dashboard/dashboard';
+import { notification } from '../../../../helpers/notification';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -36,8 +37,8 @@ class ChangeAvatar extends Component {
         if (response.data.success) {
 
             // update state for avatar (userData)
-            console.log(response);
-            this.props.avatarActions(response.data.photoUrl);
+            this.props.avatarActions(URL.createObjectURL(file));
+            notification.success('Successfully updated avatar!')
         }
 
         else {
