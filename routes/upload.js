@@ -46,6 +46,7 @@ module.exports = app => {
             });
         }
 
+        // re-size image
         const scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
         
         // save file in storage

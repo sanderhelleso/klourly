@@ -6,8 +6,9 @@ import * as firebase from 'firebase';
 import { ToastContainer, Flip, Fade } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// animations
+// impoort animate and materialize
 import 'animate.css';
+import 'materialize-css/dist/css/materialize.min.css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -188,7 +189,144 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const GlobalDashStyle = createGlobalStyle`
+
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+
+
+    * {
+        font-family: 'Open Sans', sans-serif;
+    }
+
     body {
         background-color: #f5f5f5;
+        overflow-x: hidden !important;
+    }
+
+    /* class for text not to be selected or focused */
+    .no-select {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                        supported by Chrome and Opera */
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    }
+
+    a {
+        cursor: pointer;
+    }
+
+    .toast-error {
+        background-color: #e53935 !important;
+        color: #ffcdd2 !important;
+        font-size: 0.95rem !important;
+        text-align: center !important;
+        font-weight: 400;
+    }
+
+    .error-progress-bar {
+        background: #ffcdd2 !important;
+        max-height: 2px;
+    }
+
+    .toast-success {
+        background-color: #66bb6a !important;
+        color: #ffffff !important;
+        font-size: 0.95rem !important;
+        text-align: center !important;
+        font-weight: 400;
+    }
+
+    .success-progress-bar {
+        background: #ffffff !important;
+        max-height: 2px;
+    }
+
+    .redirecting {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%);
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 100;
+        color: #9e9e9e;
+    }
+
+    .linear-loader-cont .progress {
+        max-width: 300px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%);
+    }
+
+    .progress {
+        background-color: #eeeeee !important;
+    }
+
+    .progress .indeterminate {
+        background-color: #7c4dff !important;   
+    }
+
+    .login-loader-cont {
+        opacity: 0.5 !important;
+        max-width: 85%;
+        margin: 0 auto;
+    }
+
+    .login-loader-cont .indeterminate {
+        background-color: #b388ff !important;
+    }
+
+    [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+        border: 2px solid #b388ff !important;
+    }
+
+    [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+        background-color: #b388ff !important;
+    }
+
+    input:focus {
+        border-bottom: 1px solid #b388ff !important;
+        box-shadow: 0 1px 0 0 #b388ff !important;
+    }
+    
+    input:focus + label {
+        color: #b388ff !important;
+    }
+
+    input[type="checkbox"]:checked+span:not(.lever):before {
+        border-right: 2px solid #b388ff;
+        border-bottom: 2px solid #b388ff;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.65em;
+    }
+    
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+    background-color: #e0e0e0;
+    outline: 1px solid #9e9e9e;
+    }
+
+    .room-option {
+        transition: 0.3s ease-in-out;
+        outline: none;
+    }
+
+    .room-option:focus {
+        opacity: 1;
+        -webkit-box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+        box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
     }
 `;
