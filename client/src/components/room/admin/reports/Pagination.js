@@ -8,9 +8,6 @@ import { updateRoomReportsIndexAction } from '../../../../actions/room/report/up
 
 
 class Pagination extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     calculateNextIndex = index => {
 

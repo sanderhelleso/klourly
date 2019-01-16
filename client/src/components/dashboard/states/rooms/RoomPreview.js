@@ -22,7 +22,7 @@ export default class RoomPreview extends Component {
                         });
         }
 
-        return null;
+        return <p>Loading...</p>;
     }
 
     render() {

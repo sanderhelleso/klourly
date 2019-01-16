@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import DashboardDate from './DashboardDate';
@@ -6,23 +6,20 @@ import Options from './Options';
 import Notifications from './Notifications';
 
 
-export default class Toolbar extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Toolbar = () => (
+    <StyledAside 
+        id='dashboard-settings' 
+        className='col s12 m12 l3 z-depth-2 animated fadeIn'
+    >
+        <Options />
+        <SettingsBody>
+            <DashboardDate />
+        </SettingsBody>
+        <Notifications />
+    </StyledAside>    
+);
 
-    render() {
-        return (
-            <StyledAside id='dashboard-settings' className='col s12 m12 l3 z-depth-2 animated fadeIn'>
-                <Options />
-                <SettingsBody>
-                    <DashboardDate />
-                </SettingsBody>
-                <Notifications />
-            </StyledAside>
-        )
-    }
-}
+export default Toolbar;
 
 const StyledAside = styled.aside`
     position: relative;

@@ -5,6 +5,7 @@ export const dashboard = {
     uploadPhoto,
     updateSettings,
     fetchUserData,
+    removeAvatar
 };
 
 // update user avatar
@@ -17,6 +18,31 @@ async function uploadPhoto(data) {
             method: 'post',
             url: '/api/upload/photo',
             data: data
+        });
+
+        // return data recieved from server
+        console.log(response);
+        return response;
+    }
+
+    catch(error) {
+
+        return error.response;
+        console.log(error);
+    }
+}
+
+async function removeAvatar(uid) {
+
+    // send data to endpoint and attempt to remove avatar
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/upload/removeAvatar',
+            data: {
+                uid
+            }
         });
 
         // return data recieved from server

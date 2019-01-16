@@ -18,6 +18,9 @@
     "/api/upload/photo": {
       "target": "http://localhost:5000"
     },
+    "/api/upload/removeAvatar": {
+      "target": "http://localhost:5000"
+    },
     "/api/userData": {
       "target": "http://localhost:5000"
     },

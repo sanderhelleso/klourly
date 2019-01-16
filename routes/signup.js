@@ -20,9 +20,6 @@ module.exports = app => {
         // create new user
         .then(function(userRecord) {
 
-            // minified URL of default avatar
-            const DEFAULT_AVATAR = 'https://tinyurl.com/ybqewu28';
-
             // set the user UID reference for the contents of user.
             const usersRef = signupRef.child(userRecord.uid);
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
@@ -34,7 +31,7 @@ module.exports = app => {
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
-                    photoUrl: DEFAULT_AVATAR,
+                    photoUrl: process.env.DEFAULT_AVATAR,
                     newsLetter: req.body.newsLetter
                 }
             });

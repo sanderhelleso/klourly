@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
 
 // redux
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import './styles/dashboardMain.css';
 
 import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
-import { redirect } from '../../helpers/redirect';
+
 
 class DashboardMain extends Component {
+    constructor(props) {
+        super(props);
+    }
 
     renderMain() {
-        switch(this.props.state.dashboard.dashboardOption) {
+        switch(this.props.dashboardOption) {
             case 1:
-                document.title = "Section 1 - Klouly";
                 return "hi";
 
             case 2:
-                redirect.rooms;
                 return <Rooms />
 
             case 3:
-                document.title = "Section 3 - Klouly";
                 return "hi again";
 
-            // settings
             case 4:
-                redirect.settings;
                 return <Settings />
-   
+
+            default: break;
         }
     }
 
@@ -42,8 +42,12 @@ class DashboardMain extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { dashboardOption: state.dashboard.dashboardOption };
 };
 
-export default connect(mapStateToProps)(DashboardMain);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardMain);

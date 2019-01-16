@@ -13,6 +13,8 @@ import { avatarActions } from '../../../../actions/avatarActions';
 class ChangeAvatar extends Component {
     constructor(props) {
         super(props);
+
+        this.defaultAvatar = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/default%2Fstock.jpg?alt=media&token=5e822bd2-7a98-47e3-aa7d-3ee9b0b8821e';
     }
 
     // trigger hidden file input on avatar click
@@ -45,13 +47,46 @@ class ChangeAvatar extends Component {
 
             // update state for avatar (userData)
             this.props.avatarActions(URL.createObjectURL(file));
-            notification.success('Successfully updated avatar!')
+            notification.success('Successfully updated avatar!');
         }
 
         // something went wrong with upload 
         else {
             notification.error(response.data.message);
         }
+    }
+
+    removeAvatar = async () => {
+
+        // attempt to remove current avatar from user
+        const response = await dashboard.removeAvatar(this.props.userID);
+
+        // check if image was successfully removed
+        if (response.data.success) {
+
+            // update state for avatar (userData)
+            this.props.avatarActions(response.data.defaultAvatar);
+            notification.success('Avatar has been removed');
+        }
+
+        // something went wrong with removal
+        else {
+            notification.error(response.data.message);
+        }
+    }
+
+    renderRemoveAvatar() {
+
+        if (this.props.photoUrl === this.defaultAvatar) return;
+
+        return (
+            <div 
+                className="remove-img waves-effect waves-light"
+                onClick={this.removeAvatar}
+            >
+                <span><Trash2 /></span>
+            </div>
+        )
     }
 
 
@@ -65,9 +100,7 @@ class ChangeAvatar extends Component {
                         className='z-depth-2 animated fadeIn' 
                         alt='Change avatar'
                     />
-                    <div className="remove-img waves-effect waves-light">
-                        <span><Trash2 /></span>
-                    </div>
+                    {this.renderRemoveAvatar()}
                     <input 
                         id='avatar-input' 
                         type='file' onChange={(e) => this.updateAvatar(e)}

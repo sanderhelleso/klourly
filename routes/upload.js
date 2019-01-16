@@ -62,9 +62,26 @@ module.exports = app => {
         const updatedImg = await updatePhotoURL(uid, signedURL[0], type);
 
         res.status(200).json({
-            'success': true,
+            success: true,
             message: 'Successfully uploaded image',
             photoUrl: updatedImg
+        });
+    });
+
+    app.post('/api/upload/removeAvatar', (req, res) => { 
+        
+        // delete avatar from storage
+        bucket.file(`avatars/${req.body.uid}.png`).delete();
+        
+        // set original photoURL for user
+        const avatarRef = db.ref(`users/${req.body.uid}/settings/photoUrl`);
+        avatarRef.set(process.env.DEFAULT_AVATAR);
+
+        // send response back to client with default avatar
+        res.status(200).json({
+            success: true,
+            message: 'Successfully removed avatar',
+            defaultAvatar: process.env.DEFAULT_AVATAR
         });
     });
 }

@@ -21,8 +21,6 @@ class Rooms extends Component {
         this.state = {
             loading: true
         }
-
-        this.initNewRoomCreation = this.initNewRoomCreation.bind(this);
     }
 
     async componentDidMount() {
@@ -60,10 +58,6 @@ class Rooms extends Component {
         this.setState({
             loading: false
         });
-    }
-
-    componentWillMount() {
-        document.title = "Rooms - Klouly";
     }
 
     initNewRoomCreation() {
@@ -127,9 +121,12 @@ const mapStateToProps = state => {
     };
 };
 
-// update created room state
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ nextStageAction, setRoomsOwningAction, setRoomsAttendingAction }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+            nextStageAction, 
+            setRoomsOwningAction, 
+            setRoomsAttendingAction 
+        }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
