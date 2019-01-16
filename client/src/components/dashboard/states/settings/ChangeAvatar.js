@@ -92,7 +92,7 @@ class ChangeAvatar extends Component {
 
     render() {
         return (
-            <StyledAvatar className='col l3 change-avatar-cont'>
+            <StyledAvatar className='col l12 change-avatar-cont'>
                 <div className='change-avatar-cont-overlay'>
                     <img 
                         id='change-avatar' 

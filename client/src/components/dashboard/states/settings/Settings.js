@@ -1,137 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
-// redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { settingsActions } from '../../../../actions/settingsActions';
 import { notification } from '../../../../helpers/notification';
 
 import { dashboard } from '../../../../api/dashboard/dashboard';
 import ChangeAvatar from './ChangeAvatar';
 import Form from './Form';
 
-class Settings extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    // shorthand function to retrieve settings from state
-    userSettings() {
-        return this.props.state.dashboard.userData.settings;
-    }
-
-    renderCancelConfirm() {
-        const FORM_BUTTONS =
-        <div id='confirm-settings'>
-            <a id='cancel-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} onClick={this.cancelSettings} >Cancel</a>
-            <a id='confirm-settings-btn' className="waves-effect waves-light btn z-depth-2" disabled={this.state.notChanged} onClick={this.confirmSettings} >Save Changes</a>
-        </div>
-
-        return FORM_BUTTONS;
-    }
-
-    checkNewsletter(e) {
-        let settings = this.state.settings;
-        this.setState({
-            settings: {
-                ...settings,
-                newsLetter: settings.newsLetter ? false : true
-            }
-        },
-
-        // check equality of current form state
-        () => {
-            setTimeout(() => {
-                this.checkChange();
-            }, 10);
-        });
-    }
-
-    // update form settings with inputed values
-    updateForm(e) {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        let settings = this.state.settings;
-        this.setState({
-            settings: {
-                ...settings,
-                [name]: value
-            }
-        },
-
-        // check equality of current form state
-        () => {
-            setTimeout(() => {
-                this.checkChange();
-            }, 10);
-        });
-    }
-
-    // if forms state is not different, disable update
-    checkChange() {
-        const settings = this.state.settings;
-        const originalSettings = this.props.state.dashboard.userData.settings;
-        if (settings.displayName === originalSettings.displayName && settings.phoneNr === originalSettings.phoneNr && settings.occupation === originalSettings.occupation && settings.status === originalSettings.status && settings.newsLetter === originalSettings.newsLetter) {
-            this.setState({
-                notChanged: true
-            });
-        }
-
-        else {
-            this.setState({
-                notChanged: false
-            });
-        }
-    }
-
-    // cancel and reset form to original state
-    cancelSettings() {
-        this.setState({
-            notChanged: true,
-            settings: {
-                ...this.state.settings,
-                displayName: this.userSettings().displayName,
-                phoneNr: this.userSettings().phoneNr,
-                occupation: this.userSettings().occupation,
-                status: this.userSettings().status,
-                newsLetter: this.userSettings().newsLetter
-            }
-        },
-
-        // update materialize labels
-        () => {
-            this.updateLabels();
-        });
-    }
-
-    // confirm and save new settings
-    confirmSettings() {
-        this.setState({
-            notChanged: true
-        });
-        
-        // settings state without avatar and with uid
-        const settings = this.state.settings;
-        delete settings.avatar; // remove avatar object
-        settings.uid = this.props.state.auth.user.id;
-        settings.photoUrl = this.userSettings().photoUrl;
-
-        // send settings data and update settings
-        dashboard.updateSettings(settings)
-        .then(response => {
-            delete settings.uid; // remove uid
-            notification.settings(true, response.data.message);
-
-            // update state for settings (userData)
-            this.props.settingsActions(settings);
-            localStorage.setItem('userData', JSON.stringify(this.props.state.dashboard.userData));
-
-            // disable confirm / cancel buttons after update
-            this.checkChange();
-        });
-    }
+export default class Settings extends Component {
 
     render() {
         return (
@@ -139,23 +14,15 @@ class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <div className="row">
-                    <ChangeAvatar />
-                    <Form settings={this.props.settings} />
+                    <div className="col l3">
+                        <ChangeAvatar />
+                    </div>
+                    <Form />
                 </div>
             </StyledSettings>
         )
     }
 }
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ settingsActions }, dispatch);
-}
-
-const mapStateToProps = state => {
-    return { settings: state.dashboard.userData.settings };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 
 const StyledSettings = styled.div`

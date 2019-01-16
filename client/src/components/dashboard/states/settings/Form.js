@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-export default class Form extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { settingsActions } from '../../../../actions/settingsActions';
+
+class Form extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { settings: this.props.settings }
+        this.state = {
+            settings: (({ newsLetter, occupation, phoneNr, status }) => 
+                      ({ newsLetter, occupation, phoneNr, status }))(this.props.settings)
+        }
+
+        console.log(this.state);
     }
 
     componentDidMount() {
@@ -13,9 +23,11 @@ export default class Form extends Component {
         // update materialize labels
         Array.from(document.querySelector('form')
         .querySelectorAll('div')).forEach(cont => {
-            cont.querySelector('input, textarea').value !== '' 
-            ? cont.querySelector('label').className = 'active'
-            : '';
+            if (cont.querySelector('input, textarea')) {
+                cont.querySelector('input, textarea').value !== '' 
+                ? cont.querySelector('label').className = 'active'
+                : '';
+            }
         });
     }
 
@@ -103,17 +115,30 @@ export default class Form extends Component {
 
     renderNewsLetterCheckBox() {
         return (
-            <div className="input-field col s12 m6 l6 news-letter-cont">
+            <div className="input-field col s12 m6 l7 news-letter-cont">
                 <p>
                     <label>
                         <input 
                             type="checkbox" 
                             checked={this.state.settings.newsLetter} 
-                            onChange={(e) => this.checkNewsletter(e)} 
+                            onChange={() => this.checkNewsletter()} 
                         />
-                        <span>subscribe to our newsletter</span>
+                        <span>Subscribe to our newsletter</span>
                     </label>
                 </p>
+            </div>
+        )
+    }
+
+    renderUpdateButton() {
+        return (
+            <div className="col s12 m6 l4">
+                <StyledButton
+                    className="waves-effect waves-light btn-flat"
+                    onClick={this.confirmSettings}
+                >
+                    Update
+                </StyledButton>
             </div>
         )
     }
@@ -132,6 +157,31 @@ export default class Form extends Component {
         });
     }
 
+    checkNewsletter = () => {
+
+        this.setState({
+            settings: {
+                ...this.state.settings,
+                newsLetter: this.state.settings.newsLetter 
+                            ? false : true
+            }
+        });
+    }
+
+    // confirm and save new settings
+    confirmSettings = async () => {
+
+        /*// send settings data and update settings
+        const response = await dashboard.updateSettings(this.props.userID, this.state.settings)
+        .then(response => {
+            delete settings.uid; // remove uid
+            notification.settings(true, response.data.message);
+
+            // update state for settings (userData)
+            this.props.settingsActions(settings);
+        });*/
+    }
+
 
     render() {
         return (
@@ -144,12 +194,23 @@ export default class Form extends Component {
                         {this.renderOccupation()}
                         {this.renderStatus()}
                         {this.renderNewsLetterCheckBox()}
+                        {this.renderUpdateButton()}
                     </div>
                 </StyledForm>
             </div>
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ settingsActions }, dispatch);
+}
+
+const mapStateToProps = state => {
+    return { settings: state.dashboard.userData.settings };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 
 const StyledForm = styled.form`
@@ -166,5 +227,25 @@ const StyledForm = styled.form`
 
     .input-field {
         margin-bottom: 2rem;
+    }
+`;
+
+const StyledButton = styled.a`
+    min-width: 100%;
+    text-align: center;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
+    color: #ffffff;
+    line-height: 0;
+    padding: 1.5rem;
+    -webkit-letter-spacing: 2px;
+    -moz-letter-spacing: 2px;
+    -ms-letter-spacing: 2px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
     }
 `;
