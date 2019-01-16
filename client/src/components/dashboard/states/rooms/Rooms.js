@@ -17,10 +17,6 @@ import RoomPreview from './RoomPreview';
 class Rooms extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loading: true
-        }
     }
 
     async componentDidMount() {
@@ -53,20 +49,6 @@ class Rooms extends Component {
                 this.props.setRoomsAttendingAction(response.data.roomsData);
             }
         }
-
-        // finish loading
-        this.setState({
-            loading: false
-        });
-    }
-
-    initNewRoomCreation() {
-        this.props.nextStageAction({
-            stage: 0,
-            lastStage: 7
-        });
-        redirect.newRoom();
-        document.body.overFlow = 'none';
     }
 
     render() {
@@ -75,8 +57,8 @@ class Rooms extends Component {
                 <h3 id='dashboard-title'>My Rooms</h3>
                 <p id='dashboard-intro'>Preview, enter and checkin to rooms</p>
                 <StyledButton
-                    className="waves-effect waves-light btn" 
-                    onClick={this.initNewRoomCreation}
+                    className="waves-effect waves-light btn"
+                    onClick={() => redirect.newRoom()}
                 >
                     Create New
                 </StyledButton>
@@ -165,17 +147,24 @@ const Tabs = styled.div`
     }
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.a`
     margin-top: -7.5rem;
-    background-color: transparent;
-    box-shadow: none;
-    border: 2px solid #00e988;
+    text-align: center;
     background-color: #00e988;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
     color: #ffffff;
     line-height: 0;
     padding: 1.5rem;
-    letter-spacing: 1px;
+    -webkit-letter-spacing: 2px;
+    -moz-letter-spacing: 2px;
+    -ms-letter-spacing: 2px;
+    letter-spacing: 2px;
     font-weight: 600;
+    transition: 0.3s ease-in-out;
     float: right;
+
+    &:hover {
+        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
+        background-color: #00e988;
+    }
 `;
