@@ -53,7 +53,9 @@ const StyledCard = styled.div`
     cursor: pointer;
 
     &:hover {
-        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 0px 18px 56px 0px rgba(46, 82, 217, 0.30);
+        -moz-box-shadow:    0px 18px 56px 0px rgba(46, 82, 217, 0.30);
+        box-shadow:         0px 18px 56px 0px rgba(46, 82, 217, 0.30);
     }
 
 
