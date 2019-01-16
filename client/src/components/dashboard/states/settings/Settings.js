@@ -138,8 +138,10 @@ class Settings extends Component {
             <StyledSettings className='animated fadeIn'>
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
-                <ChangeAvatar />
-                <Form settings={this.props.settings} />
+                <div className="row">
+                    <ChangeAvatar />
+                    <Form settings={this.props.settings} />
+                </div>
             </StyledSettings>
         )
     }
@@ -154,6 +156,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+
 
 const StyledSettings = styled.div`
 

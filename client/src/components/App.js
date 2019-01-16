@@ -315,8 +315,8 @@ const GlobalDashStyle = createGlobalStyle`
     }
     
     ::-webkit-scrollbar-thumb {
-    background-color: #e0e0e0;
-    outline: 1px solid #9e9e9e;
+        background-color: #e0e0e0;
+        outline: 1px solid #9e9e9e;
     }
 
     .room-option {

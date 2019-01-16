@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Camera } from 'react-feather';
+import { Camera, Trash2 } from 'react-feather';
 import styled from 'styled-components';
 import { dashboard } from '../../../../api/dashboard/dashboard';
 import { notification } from '../../../../helpers/notification';
@@ -65,6 +65,9 @@ class ChangeAvatar extends Component {
                         className='z-depth-2 animated fadeIn' 
                         alt='Change avatar'
                     />
+                    <div className="remove-img waves-effect waves-light">
+                        <span><Trash2 /></span>
+                    </div>
                     <input 
                         id='avatar-input' 
                         type='file' onChange={(e) => this.updateAvatar(e)}
@@ -96,6 +99,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ChangeAvatar);
 const StyledAvatar = styled.div`
 
     margin-top: 5vh;
+    position: relative;
 
     #change-avatar {
         width:  150px;
@@ -118,5 +122,29 @@ const StyledAvatar = styled.div`
 
     #avatar-input {
         display: none;
+    }
+
+    .remove-img {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        border-radius: 50%;
+        background-color: #ef5350;
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        z-index: 10000;
+        transition: 0.3s;
+        cursor: pointer;
+        span {
+            display: block;
+            margin-top: 10px;
+
+            svg {
+                height: 18px;
+                width: 18px;
+                stroke: #ffcdd2;
+            }
+        }
     }
 `;

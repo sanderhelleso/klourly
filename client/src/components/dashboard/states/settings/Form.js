@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 export default class Form extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Form extends Component {
 
     componentDidMount() {
         // update materialize labels
-        Array.from(document.querySelector('#form-cont')
+        Array.from(document.querySelector('form')
         .querySelectorAll('div')).forEach(cont => {
             cont.querySelector('input').value !== '' 
             ? cont.querySelector('label').className = 'active'
@@ -20,16 +21,29 @@ export default class Form extends Component {
     // render form field for display name
     renderDisplayName() {
         return (
-            <div className="input-field col l12">
+            <div className="input-field col s12 m6 l6">
                 <input 
                     id="display-name" 
-                    name="displayName" 
                     type="text" 
-                    onChange={(e) => this.updateForm(e)} 
-                    value={this.state.settings.displayName} 
+                    value={this.props.settings.displayName}
+                    disabled={true}
                 />
-                <label htmlFor="display-name" className={''}>Display Name</label>
-                <span className='helper-text'>This could be your firstname, or nickname</span>
+                <label htmlFor="display-name">Display Name</label>
+            </div>
+        )
+    }
+
+    // render form field for email 
+    renderEmail() {
+        return (
+            <div className="input-field col s12 m6 l6">
+                <input 
+                    id="email" 
+                    type="email" 
+                    value={this.props.settings.email}
+                    disabled={true}
+                />
+                <label htmlFor="email">E-Mail</label>
             </div>
         )
     }
@@ -37,7 +51,7 @@ export default class Form extends Component {
     // render form field for phone number
     renderPhoneNumber() {
         return (
-            <div className="input-field col l12">
+            <div className="input-field col s12 m6 l6">
                 <input 
                     id="phone" 
                     name="phoneNr" 
@@ -46,7 +60,7 @@ export default class Form extends Component {
                     value={this.state.settings.phoneNr} 
                 />
                 <label htmlFor="phone" className={''}>Phone Number</label>
-                <span className='helper-text'>Enter a phone number and let people reach you</span>
+                <span className='helper-text'>Makie it easier for people to reach you</span>
             </div>
         )
     }
@@ -54,37 +68,37 @@ export default class Form extends Component {
     // render form field for occupation
     renderOccupation() {
         return (
-            <div className="input-field col l12">
+            <div className="input-field col s12 m6 l6">
                 <input 
                     id='occupation' 
                     name="occupation" 
                     type="text" onChange={(e) => this.updateForm(e)} 
                     value={this.state.settings.occupation} 
                 />
-                <label htmlFor="occupation" className={''}>Current Occupation</label>
-                <span className='helper-text'>Current school, workplace or any other occupation</span>
+                <label htmlFor="occupation">Current Occupation</label>
+                <span className='helper-text'>School, workplace or any other occupation</span>
             </div>
         )
     }
 
     renderStatus() {
         return (
-            <div className="input-field col l12">
+            <div className="input-field col s12 m6 l6">
                 <input id='status' 
                     name="status" 
                     type="text" 
                     onChange={(e) => this.updateForm(e)} 
                     value={this.state.settings.status} 
                 />
-                <label htmlFor="status" className={''}>What I Do</label>
-                <span className='helper-text'>Let people know what you are currently up to</span>
+                <label htmlFor="status">Status</label>
+                <span className='helper-text'>What you are up to?</span>
             </div>
         )
     }
 
     renderNewsLetterCheckBox() {
         return (
-            <div className="input-field col s12 news-letter-cont">
+            <div className="input-field col s12 m6 l6 news-letter-cont">
                 <p>
                     <label>
                         <input 
@@ -92,7 +106,7 @@ export default class Form extends Component {
                             checked={this.state.settings.newsLetter} 
                             onChange={(e) => this.checkNewsletter(e)} 
                         />
-                        <span>subscribe to our newsletter to see whats new!</span>
+                        <span>subscribe to our newsletter</span>
                     </label>
                 </p>
             </div>
@@ -102,15 +116,36 @@ export default class Form extends Component {
 
     render() {
         return (
-            <form className='dashboard-main-cont'>
-                <div id="form-cont" className='col l10 offset-l1'>
-                    {this.renderDisplayName()}
-                    {this.renderPhoneNumber()}
-                    {this.renderOccupation()}
-                    {this.renderStatus()}
-                    {this.renderNewsLetterCheckBox()}
-                </div>
-            </form>
+            <div className="col s12 m12 l9">
+                <StyledForm className="row">
+                    <div className="scroll-cont">
+                        {this.renderEmail()}
+                        {this.renderDisplayName()}
+                        {this.renderPhoneNumber()}
+                        {this.renderOccupation()}
+                        {this.renderStatus()}
+                        {this.renderNewsLetterCheckBox()}
+                    </div>
+                </StyledForm>
+            </div>
         )
     }
 }
+
+
+const StyledForm = styled.form`
+
+    .scroll-cont {
+        padding: 3rem 2rem;
+        max-height: 500px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 0.35em;
+        }
+    }
+
+    .input-field {
+        margin-bottom: 2rem;
+    }
+`;
