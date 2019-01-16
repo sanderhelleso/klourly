@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import './styles/dashboardMain.css';
-
 import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
 

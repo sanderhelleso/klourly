@@ -137,7 +137,7 @@ class Form extends Component {
         return (
             <div className="col s12 m6 l4">
                 <StyledButton
-                    className="waves-effect waves-light btn-flat"
+                    className="waves-effect waves-light btn"
                     onClick={this.confirmSettings}
                     disabled={this.state.changed ? false : true}
                 >
@@ -189,6 +189,8 @@ class Form extends Component {
 
             // update state and display message
             this.props.settingsActions(this.state.settings);
+            this.originalSettings = this.state.settings;
+            this.checkChange();
             notification.success(response.data.message);    
         }
 
