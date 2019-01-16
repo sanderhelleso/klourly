@@ -26,7 +26,10 @@ const dashboardReducer = (state = initialState, action) => {
                 ...state,
                 userData: {
                     ...state.userData,
-                    settings: action.payload
+                    settings: {
+                        ...state.userData.settings,
+                        ...action.payload
+                    }
                 }
             };
 

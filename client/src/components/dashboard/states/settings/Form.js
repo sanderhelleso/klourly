@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { notification } from '../../../../helpers/notification';
+import { dashboard } from '../../../../api/dashboard/dashboard'; 
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -171,15 +173,19 @@ class Form extends Component {
     // confirm and save new settings
     confirmSettings = async () => {
 
-        /*// send settings data and update settings
+        // send settings data and update settings
         const response = await dashboard.updateSettings(this.props.userID, this.state.settings)
-        .then(response => {
-            delete settings.uid; // remove uid
-            notification.settings(true, response.data.message);
+        
+        if (response.data.success) {
 
-            // update state for settings (userData)
-            this.props.settingsActions(settings);
-        });*/
+            // update state and display message
+            this.props.settingsActions(this.state.settings);
+            notification.success(response.data.message);    
+        }
+
+        else {
+            notification.error(response.data.message);    
+        }
     }
 
 
@@ -207,7 +213,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-    return { settings: state.dashboard.userData.settings };
+    return { 
+        userID: state.auth.user.id,
+        settings: state.dashboard.userData.settings
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

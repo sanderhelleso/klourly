@@ -58,7 +58,7 @@ async function removeAvatar(uid) {
 }
 
 // update settings
-async function updateSettings(data) {
+async function updateSettings(uid, updatedSettings) {
 
     // send data to endpoint and attempt to update settings
     try {
@@ -66,7 +66,10 @@ async function updateSettings(data) {
             headers: authHeader(),
             method: 'post',
             url: '/api/updateSettings',
-            data: data
+            data: {
+                uid,
+                updatedSettings
+            }
         });
 
         // return data recieved from server
@@ -74,7 +77,7 @@ async function updateSettings(data) {
     }
 
     catch(error) {
-        console.log(error);
+        return error.response;
     }
 }
 

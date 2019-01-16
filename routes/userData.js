@@ -13,9 +13,8 @@ module.exports = app => {
 
         // retrieve data and send to client
         ref.once('value', snapshot => {
-            console.log(snapshot.val());
             res.status(200).json({
-                status: 'success',
+                success: true,
                 userData: snapshot.val()
             });
         }); // add catch?
@@ -26,15 +25,19 @@ module.exports = app => {
 
         // get user reference in database
         const userRef = db.ref(`users/${req.body.uid}`);
-        delete req.body.uid; // remove uid from body data
 
-        // update settings data in database
-        userRef.update({
-            settings: req.body
-        })
-        .then(() => {
+        // update settings
+        userRef.once('value', snapshot => {
+            userRef.update({
+                settings: {
+                    ...snapshot.val(),
+                    ...req.body.updatedSettings
+                }
+            });
+            
+            // send response back to user
             res.status(200).json({
-                status: 'success',
+                success: true,
                 message: 'Successfully updated settings'
             });
         });
