@@ -19,7 +19,7 @@ function success(message) {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-success',
         progressClassName: 'success-progress-bar',
-        autoClose: 3000,
+        autoClose: 4000,
         toastId: 1
     });
 }
@@ -32,7 +32,7 @@ function error(message) {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-error',
         progressClassName: 'error-progress-bar',
-        autoClose: 3000,
+        autoClose: 4000,
         toastId: 1
     });
 }

@@ -25,6 +25,8 @@ async function uploadPhoto(data) {
     }
 
     catch(error) {
+
+        return error.response;
         console.log(error);
     }
 }

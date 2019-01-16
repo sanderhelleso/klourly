@@ -1,4 +1,5 @@
 const authenticate = require('../middelwares/requireLogin');
+const sharp = require('sharp');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 const admin = require('firebase-admin');
@@ -14,16 +15,25 @@ const storage = new Storage({
 const bucket = storage.bucket(process.env.FIREBASE_STORAGE_BUCKET_KEY);
 const multer = Multer({
     storage: Multer.memoryStorage(),
-    limits: {
-        fileSize: 1 * 1024 * 1024 // no larger than 1mb
-    }
+    limits: { fileSize: 2 * 1024 * 1024 }// no larger than 2mb
 });
 
 
 module.exports = app => {
 
     // get updated settings data from client and attempt to upload
-    app.post('/api/upload/photo', authenticate, multer.single('file'), async (req, res) => {
+    const upload = multer.single('file');
+    app.post('/api/upload/photo', authenticate, async (req, res) => {
+        upload(req, res, function (error) {
+            if (error) {
+                res.status(413).json({
+                    error: req.error,
+                    success: false,
+                    message: 'Image is to large! You can upload an image up to 2mb for your avatar',
+                });
+                return;
+            }
+        });
 
         // avatar file
         const file = req.file;

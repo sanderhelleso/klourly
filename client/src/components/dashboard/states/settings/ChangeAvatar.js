@@ -41,8 +41,9 @@ class ChangeAvatar extends Component {
             notification.success('Successfully updated avatar!')
         }
 
+        // something went wrong with upload 
         else {
-            // do some error message here
+            notification.error(response.data.message);
         }
     }
 
