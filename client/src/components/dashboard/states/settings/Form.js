@@ -29,6 +29,7 @@ export default class Form extends Component {
                     disabled={true}
                 />
                 <label htmlFor="display-name">Display Name</label>
+                <span className='helper-text'>Account registered Name</span>
             </div>
         )
     }
@@ -44,6 +45,7 @@ export default class Form extends Component {
                     disabled={true}
                 />
                 <label htmlFor="email">E-Mail</label>
+                <span className='helper-text'>Account registered E-Mail</span>
             </div>
         )
     }
@@ -137,7 +139,7 @@ const StyledForm = styled.form`
 
     .scroll-cont {
         padding: 3rem 2rem;
-        max-height: 500px;
+        max-height: 600px;
         overflow-y: auto;
 
         &::-webkit-scrollbar {

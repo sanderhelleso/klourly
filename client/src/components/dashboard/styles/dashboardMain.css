@@ -1,6 +1,7 @@
 #dashboard-main {
-    margin: 7.5vh 0 0 0;
-    padding: 0 4% 0 4%;
+    padding: 4%;
+    border-left: 1px solid #e9e9e9;
+    min-height: 100vh;
 }
 
 #dashboard-title {

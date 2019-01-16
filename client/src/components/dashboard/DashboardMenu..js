@@ -12,91 +12,92 @@ class DashboardMenu extends Component {
     constructor(props) {
         super(props);
 
-        this.toogleMenuOption = this.toogleMenuOption.bind(this);
-    }
-
-    // select specific menu option
-    toogleMenuOption(e) {
-
-        // get all possible options
-        const options = Array.from(document.querySelectorAll('.menu-item'));
-
-        // itterate over options and update dashboard
-        options.forEach(option => {
-
-            // current option index
-            let index = options.indexOf(option);
-
-            // check if matching
-            if (option === e.target) {
-
-                options[index].className = 'menu-item menu-item-active';
-
-                // update state with selected option to render dashboard sections
-                this.props.dashboardActions(index + 1);
+        this.size = 30;
+        this.menuItems = {
+            activity: {
+                icon: <Activity size={this.size} />
+            },
+            rooms: {
+                icon: <Grid size={this.size} />
+            },
+            map: {
+                icon: <Map size={this.size} />
+            },
+            settings: {
+                icon: <Settings size={this.size} />
             }
-
-            else {
-
-                // set to default if not active
-                options[index].className = 'menu-item';
-            }
-        });
+        }
     }
 
     componentDidMount() {
 
         // activate menu
-        document.querySelector('.menu-item-active').click();
+        //document.querySelector('.menu-item-active').click();
     }
+
+    renderMenuItems() {
+
+        return Object.entries(this.menuItems)
+        .map(([itemName, value]) => {
+
+            const itemIndex = Object.keys(this.menuItems).indexOf(itemName) + 1;
+            const active = itemIndex === this.props.activeItem ? true : false;
+            if (active) setTimeout(() => { document.querySelector('.menu-item-active').click() }, 10);
+
+            return (
+                <div 
+                    key={itemName}
+                    className={`menu-item waves-effect ${active ? 'menu-item-active' : ''}`}       
+                    onClick={() => active ? {} : this.props.dashboardActions(itemIndex)}
+                >
+                    {value.icon}
+                </div>
+            )
+        });
+    }
+
+   
 
     render() {
         return (
             <StyledMenu id="dashboard-menu" className="col s12 m12 l2">
-                <div className="menu-item" onClick={this.toogleMenuOption} >
-                    <Activity size={30} />
-                </div>
-                <div className="menu-item menu-item-active" onClick={this.toogleMenuOption}>
-                    <Grid size={30} />
-                </div>
-                <div className="menu-item" onClick={this.toogleMenuOption}>
-                    <Map size={30} />
-                </div>
-                <div className="menu-item" onClick={this.toogleMenuOption}>
-                    <Settings size={30} />
-                </div>
+               {this.renderMenuItems()}
             </StyledMenu>
         )
     }
 }
 
 
+const mapStateToProps = state => {
+    return { activeItem: state.dashboard.dashboardOption };
+};
+
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ dashboardActions }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(DashboardMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);
 
 
 const StyledMenu = styled.aside`
     margin: 10vh 0 10vh 0;
     height: 80vh;
+    padding: 0 !important;
 
     .menu-item {
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 25% !important;
-        border-right: 1px solid #e0e0e0;
         opacity: 0.5;
         cursor: pointer;
-        transition: 0.3s ease-in-out;
+        transition: 0.3s linear;
+        border-right: 3px solid transparent;
     }
 
     .menu-item-active {
-        border-right: 1px solid #b388ff;
+        border-right: 3px solid #b388ff;
         opacity: 1;
-        transition: 0.3s ease-in-out;
     }
 
     .menu-item-active svg {
@@ -105,7 +106,7 @@ const StyledMenu = styled.aside`
 
     .menu-item svg {
         stroke: #bdbdbd;
-        z-index: -1;
+        pointer-events: none;
     }
 
     .menu-item:hover {
