@@ -292,12 +292,12 @@ const GlobalDashStyle = createGlobalStyle`
         background-color: #b388ff !important;
     }
 
-    input:focus {
+    input:focus, textarea:focus {
         border-bottom: 1px solid #b388ff !important;
         box-shadow: 0 1px 0 0 #b388ff !important;
     }
     
-    input:focus + label {
+    input:focus + label, textarea:focus + label {
         color: #b388ff !important;
     }
 

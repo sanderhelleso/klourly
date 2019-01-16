@@ -9,10 +9,11 @@ export default class Form extends Component {
     }
 
     componentDidMount() {
+
         // update materialize labels
         Array.from(document.querySelector('form')
         .querySelectorAll('div')).forEach(cont => {
-            cont.querySelector('input').value !== '' 
+            cont.querySelector('input, textarea').value !== '' 
             ? cont.querySelector('label').className = 'active'
             : '';
         });
@@ -85,10 +86,12 @@ export default class Form extends Component {
 
     renderStatus() {
         return (
-            <div className="input-field col s12 m6 l6">
-                <input id='status' 
+            <div className="input-field col s12 m12 l12">
+                <textarea 
+                    id='status' 
+                    className="materialize-textarea"
                     name="status" 
-                    type="text" 
+                    type="text"
                     onChange={(e) => this.updateForm(e)} 
                     value={this.state.settings.status} 
                 />
@@ -113,6 +116,20 @@ export default class Form extends Component {
                 </p>
             </div>
         )
+    }
+
+    // update form settings with inputed values
+    updateForm = e => {
+
+        const name = e.target.name;
+        const value = e.target.value;
+
+        this.setState({
+            settings: {
+                ...this.state.settings,
+                [name]: value
+            }
+        });
     }
 
 
