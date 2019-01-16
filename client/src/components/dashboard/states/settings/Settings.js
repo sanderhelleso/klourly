@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Camera } from 'react-feather';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { avatarActions } from '../../../../actions/avatarActions';
 import { settingsActions } from '../../../../actions/settingsActions';
 import { notification } from '../../../../helpers/notification';
 
 import { dashboard } from '../../../../api/dashboard/dashboard';
+import ChangeAvatar from './ChangeAvatar';
 
 class Settings extends Component {
     constructor(props) {
@@ -19,10 +18,6 @@ class Settings extends Component {
         this.state = {
             notChanged: true,
             settings: {
-                avatar: {
-                    updated: false,
-                    url: this.userSettings().photoUrl
-                },
                 displayName: this.userSettings().displayName,
                 phoneNr: this.userSettings().phoneNr,
                 occupation: this.userSettings().occupation,
@@ -31,7 +26,6 @@ class Settings extends Component {
             }
         }
 
-        this.updateAvatar = this.updateAvatar.bind(this);
         this.updateForm = this.updateForm.bind(this);
         this.cancelSettings = this.cancelSettings.bind(this);
         this.checkNewsletter = this.checkNewsletter.bind(this);
@@ -144,47 +138,6 @@ class Settings extends Component {
         });
     }
 
-    // trigger hidden file input on avatar click
-    selectAvatar() {
-        document.querySelector('#avatar-input').click();
-    }
-
-    updateAvatar(e) {
-        window.URL = window.URL || window.webkitURL || window.mozURL;
-        const file = window.URL.createObjectURL(e.target.files[0]);
-        this.setState({
-            settings: {
-                avatar: {
-                    updated: true,
-                    url: file,
-                    blob: e.target.files[0]
-                }
-            }
-        }, 
-        // send avatar data to endpoint and attempt to update
-        () => {
-
-            // create file blob
-            const file = this.state.settings.avatar.blob;
-            const extension = file.name.split('.').pop();
-            const fd = new FormData();
-
-            // send blob to server, store and set avatar and state
-            fd.append('file', file, `avatar.${this.props.state.auth.user.id}.${extension}`);
-            dashboard.uploadPhoto(fd)
-            .then(response => {
-
-                // update state for avatar (userData)
-                console.log(response);
-                this.props.avatarActions(response.data.photoUrl);
-
-                // update local storage
-                localStorage.setItem('userData', JSON.stringify(this.props.state.dashboard.userData));
-                
-            });
-        });
-    }
-
     // update form settings with inputed values
     updateForm(e) {
         const name = e.target.name;
@@ -285,17 +238,8 @@ class Settings extends Component {
             <StyledSettings className='animated fadeIn'>
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
-                <div className='col l3 change-avatar-cont'>
-                    <div className='change-avatar-cont-overlay'>
-                        <img id='change-avatar' src={this.userSettings().photoUrl} className='z-depth-2 animated fadeIn' alt='Change avatar' />
-                        <div className='avatar-overlay' onClick={this.selectAvatar}>
-                            <div className='avatar-text'><Camera size={40} /><span>Change Avatar</span></div>
-                        </div>
-                    </div>
-                    {this.renderCancelConfirm()}
-                </div>
+                <ChangeAvatar />
                 <form className='dashboard-main-cont'>
-                    <input id='avatar-input' type='file' onChange={this.updateAvatar}/>
                     <div id="form-cont" className='col l10 offset-l1'>
                         {this.renderDisplayName()}
                         {this.renderPhoneNumber()}
@@ -313,41 +257,17 @@ class Settings extends Component {
     }
 }
 
-// attempt to update state for avatar and settings
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ avatarActions, settingsActions }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ settingsActions }, dispatch);
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return { state };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const StyledSettings = styled.div`
-
-    .change-avatar-cont {
-    margin-top: 5vh;
-    }
-
-    #change-avatar {
-        width:  150px;
-        height: 150px;
-        background-position: 50% 50%;
-        background-repeat:   no-repeat;
-        background-size:     cover;
-        margin: 0 auto;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    #change-avatar-title {
-        font-size: 1rem;
-        text-align: center;
-        color: #9e9e9e;
-        font-weight: 400;
-        opacity: 0.7;
-    }
 
     #confirm-settings {
         margin-top: 4rem;
