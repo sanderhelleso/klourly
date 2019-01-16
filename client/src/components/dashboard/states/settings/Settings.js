@@ -9,104 +9,16 @@ import { notification } from '../../../../helpers/notification';
 
 import { dashboard } from '../../../../api/dashboard/dashboard';
 import ChangeAvatar from './ChangeAvatar';
+import Form from './Form';
 
 class Settings extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            notChanged: true,
-            settings: {
-                displayName: this.userSettings().displayName,
-                phoneNr: this.userSettings().phoneNr,
-                occupation: this.userSettings().occupation,
-                status: this.userSettings().status,
-                newsLetter:  this.userSettings().newsLetter
-            }
-        }
-
-        this.updateForm = this.updateForm.bind(this);
-        this.cancelSettings = this.cancelSettings.bind(this);
-        this.checkNewsletter = this.checkNewsletter.bind(this);
-        this.confirmSettings = this.confirmSettings.bind(this);
-    }
-
-    // set page title
-    componentWillMount() {
-        document.title = "Settings - Klourly";
     }
 
     // shorthand function to retrieve settings from state
     userSettings() {
         return this.props.state.dashboard.userData.settings;
-    }
-
-    // render form field for display name
-    renderDisplayName() {
-        const activeField = this.userSettings().displayName ? 'active' : '';
-
-        const FORM_FIELD_DISPLAY_NAME = 
-        <div className="input-field col l12">
-            <input id="display-name" name="displayName" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.displayName} />
-            <label htmlFor="display-name" className={activeField}>Display Name</label>
-            <span className='helper-text'>This could be your firstname, or nickname</span>
-        </div>
-
-        return FORM_FIELD_DISPLAY_NAME;
-    }
-
-    // render form field for phone number
-    renderPhoneNumber() {
-        const activeField = this.userSettings().phoneNr ? 'active' : '';
-
-        const FORM_FIELD_PHONE =
-        <div className="input-field col l12">
-            <input id="phone" name="phoneNr" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.phoneNr} />
-            <label htmlFor="phone" className={activeField}>Phone Number</label>
-            <span className='helper-text'>Enter a phone number and let people reach you</span>
-        </div>
-
-        return FORM_FIELD_PHONE;
-    }
-
-    // render form field for occupation
-    renderOccupation() {
-        const activeField = this.userSettings().occupation ? 'active' : '';
-
-        const FORM_FIELD_OCCUPATION =
-        <div className="input-field col l12">
-            <input id='occupation' name="occupation" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.occupation} />
-            <label htmlFor="occupation" className={activeField}>Current Occupation</label>
-            <span className='helper-text'>Current school, workplace or any other occupation</span>
-        </div>
-
-        return FORM_FIELD_OCCUPATION;
-    }
-
-    renderStatus() {
-        const activeField = this.userSettings().status ? 'active' : '';
-
-        const FORM_FIELD_STATUS =
-        <div className="input-field col l12">
-            <input id='status' name="status" type="text" onChange={(event) => this.updateForm(event)} value={this.state.settings.status} />
-            <label htmlFor="status" className={activeField}>What I Do</label>
-            <span className='helper-text'>Let people know what you are currently up to</span>
-        </div>
-
-        return FORM_FIELD_STATUS;
-    }
-
-    renderNewsLetterCheckBox() {
-        const CHECKBOX = 
-        <div className="input-field col s12 news-letter-cont">
-            <p>
-                <label>
-                    <input type="checkbox" checked={this.state.settings.newsLetter} onChange={(event) => this.checkNewsletter(event)} />
-                    <span>subscribe to our newsletter to see whats new!</span>
-                </label>
-            </p>
-        </div>
-
-        return CHECKBOX;
     }
 
     renderCancelConfirm() {
@@ -194,16 +106,6 @@ class Settings extends Component {
         });
     }
 
-    // update materialize labels
-    updateLabels() {
-        Array.from(document.querySelector('#form-cont')
-        .querySelectorAll('div')).forEach(cont => {
-            if (cont.querySelector('input').value !== '') {
-                cont.querySelector('label').className = 'active';
-            }
-        });
-    }
-
     // confirm and save new settings
     confirmSettings() {
         this.setState({
@@ -237,15 +139,7 @@ class Settings extends Component {
                 <h3 id='dashboard-title'>Settings</h3>
                 <p id='dashboard-intro'>Customize your profile settings</p>
                 <ChangeAvatar />
-                <form className='dashboard-main-cont'>
-                    <div id="form-cont" className='col l10 offset-l1'>
-                        {this.renderDisplayName()}
-                        {this.renderPhoneNumber()}
-                        {this.renderOccupation()}
-                        {this.renderStatus()}
-                        {this.renderNewsLetterCheckBox()}
-                    </div>
-                </form>
+                <Form settings={this.props.settings} />
             </StyledSettings>
         )
     }
@@ -256,7 +150,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-    return { state };
+    return { settings: state.dashboard.userData.settings };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
