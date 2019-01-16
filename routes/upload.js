@@ -1,14 +1,13 @@
-const firebase = require('firebase');
+const authenticate = require('../middelwares/requireLogin');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 const admin = require('firebase-admin');
 const db = admin.database();
 
 // CONNECT TO STORAGE
-const serviceAccount = require("../keys/firebaseServiceAccountKey.json");
 const storage = new Storage({
     projectId: process.env.FIREBASE_PROJECT_ID,
-    keyFilename: './keys/firebaseServiceAccountKey.json'
+    keyFilename: process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH
 });
 
 // FIREBASE STORAGE
@@ -20,12 +19,11 @@ const multer = Multer({
     }
 });
 
-const authenticate = require('../middelwares/requireLogin');
 
 module.exports = app => {
 
     // get updated settings data from client and attempt to upload
-    app.post('/api/upload/photo', authenticate, multer.single('file'), (req, res) => {
+    app.post('/api/upload/photo', authenticate, multer.single('file'), async (req, res) => {
 
         // avatar file
         const file = req.file;
@@ -47,47 +45,33 @@ module.exports = app => {
 
         else {
             res.status(500).json({
-                status: 'error',
-                error: 'Invalid file type'
+                success: false,
+                message: 'Invalid file type'
             });
         }
         
+        // save file in storage
         const bucketFile = bucket.file(storageLocation);
-
-        let url;
         bucketFile.save(new Buffer(file.buffer))
-        bucketFile.getSignedUrl({
+        const signedURL = await bucketFile.getSignedUrl({
             action: 'read',
             expires: '03-09-2491'
-        })
+        });
 
         // get url of created file bucket
         // update photo data
-        .then(signedUrls => {
-            photoUrl = signedUrls[0];
-            updatePhotoURL(uid, photoUrl, type);
-        })
+        const updatedImg = await updatePhotoURL(uid, signedURL[0], type);
 
-        // send succes data to client
-        .then(() => {
-            res.status(200).json({
-                'success': true,
-                photoUrl: url
-            });
-        })
-
-        // catch any error and send status
-        .catch(error => {
-            res.status(500).json({
-                'success': false,
-                error: error
-            });
+        res.status(200).json({
+            'success': true,
+            message: 'Successfully uploaded image',
+            photoUrl: updatedImg
         });
     });
 }
 
 // update and set the new photo
-function updatePhotoURL(uid, url, type) {
+async function updatePhotoURL(uid, url, type) {
 
     let ref; // db ref to update
     let key; // key to set to match state key
@@ -105,8 +89,7 @@ function updatePhotoURL(uid, url, type) {
     // update photo ref
     ref.update({
         [key]: url
-    })
-    .catch(error => {
-        throw error;
     });
+
+    return url;
 }
