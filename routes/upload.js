@@ -13,27 +13,13 @@ const storage = new Storage({
 
 // FIREBASE STORAGE
 const bucket = storage.bucket(process.env.FIREBASE_STORAGE_BUCKET_KEY);
-const multer = Multer({
-    storage: Multer.memoryStorage(),
-    limits: { fileSize: 2 * 1024 * 1024 }// no larger than 2mb
-});
+const multer = Multer({ storage: Multer.memoryStorage() });
 
 
 module.exports = app => {
 
     // get updated settings data from client and attempt to upload
-    const upload = multer.single('file');
-    app.post('/api/upload/photo', authenticate, async (req, res) => {
-        upload(req, res, function (error) {
-            if (error) {
-                res.status(413).json({
-                    error: req.error,
-                    success: false,
-                    message: 'Image is to large! You can upload an image up to 2mb for your avatar',
-                });
-                return;
-            }
-        });
+    app.post('/api/upload/photo', authenticate, multer.single('file'), async (req, res) => {
 
         // avatar file
         const file = req.file;
@@ -59,10 +45,12 @@ module.exports = app => {
                 message: 'Invalid file type'
             });
         }
+
+        const scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
         
         // save file in storage
         const bucketFile = bucket.file(storageLocation);
-        bucketFile.save(new Buffer(file.buffer))
+        bucketFile.save(new Buffer(scaledImg))
         const signedURL = await bucketFile.getSignedUrl({
             action: 'read',
             expires: '03-09-2491'

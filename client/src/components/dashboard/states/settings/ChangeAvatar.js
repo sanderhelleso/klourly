@@ -25,6 +25,13 @@ class ChangeAvatar extends Component {
         // create file blob
         const file = e.target.files[0];
         const extension = file.name.split('.').pop();
+
+        if (extension !== 'png' && extension !== 'jpg' && extension !== 'jpeg') {
+            notification.error('Invalid file format. Please select a PNG or JPG image');
+            e.target.value = '';
+            return;
+        }
+
         const fd = new FormData();
 
         // send blob to server, store and set avatar and state
@@ -56,11 +63,13 @@ class ChangeAvatar extends Component {
                         id='change-avatar' 
                         src={this.props.photoUrl} 
                         className='z-depth-2 animated fadeIn' 
-                        alt='Change avatar' 
+                        alt='Change avatar'
                     />
-                    <form>
-                        <input id='avatar-input' type='file' onChange={(e) => this.updateAvatar(e)}/>
-                    </form>
+                    <input 
+                        id='avatar-input' 
+                        type='file' onChange={(e) => this.updateAvatar(e)}
+                        accept="image/jpeg, image/png"
+                    />
                     <div className='avatar-overlay' onClick={this.selectAvatar}>
                         <div className='avatar-text'><Camera size={40} /><span>Change Avatar</span></div>
                     </div>
