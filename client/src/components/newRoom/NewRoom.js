@@ -13,42 +13,6 @@ export default NewRoom;
 
 const StyledNewRoom = styled.main`
 
-    #new-room-intro h1 {
-        font-weight: 800;
-        font-size: 3.5rem;
-        letter-spacing: 2px;
-        text-transform: capitalize;
-    }
-
-    #new-room-intro-sub {
-        margin-top: -5rem;
-        margin-bottom: 3rem;
-        border-bottom: 1px solid #dadada;
-        padding-bottom: 2rem;
-    }
-
-    #new-room-intro-sub h4 {
-        font-weight: 800;
-        font-size: 2rem;
-        max-width: 15rem;
-        float: right;
-        letter-spacing: 2px;
-        text-transform: capitalize;
-    }
-
-    #new-room-intro-sub h5 {
-        float: left;
-        margin-top: 3.5rem;
-        color: #9e9e9e;
-        font-weight: 300;
-        font-size: 1.5rem;
-    }
-
-    #new-room-intro p {
-        margin: 2.5rem 5.5rem;
-        color: #bdbdbd;
-    }
-
     .room-border {
         min-height: 0.45rem;
         min-width: 40%;
@@ -179,13 +143,6 @@ const StyledNewRoom = styled.main`
         font-weight: 600;
     }
 
-    #confirm-new-room-name {
-        font-size: 1rem;
-        padding: 1.5rem;
-        display: block;
-        margin: 5rem auto;
-    }
-
     #create-room-try-again-btn {
         background-color: #F15F79 !important;
         position: absolute;
@@ -194,15 +151,6 @@ const StyledNewRoom = styled.main`
         transform: translate(-50%);
     }
 
-
-    .new-room-name-disabled {
-        opacity: 0.5 !important;
-        color: #eeeeee !important;
-        cursor: not-allowed;
-        background-color: transparent !important;
-        border: 2px solid #eeeeee !important;
-        box-shadow: none !important;
-    }
 
     #new-room-stage input {
         max-width: 30rem;
@@ -506,36 +454,5 @@ const StyledNewRoom = styled.main`
         opacity: 0;
         transition: 0.3s ease-in-out;
         background-color: rgba(20, 20, 20, 0.9);
-    }
-
-    .step {
-        display: inline-block;
-        padding: 0.75rem;
-        border-radius: 50%;
-        min-width: 3.2rem;
-        background-color: transparent;
-        font-weight: 800;
-    }
-
-    .step-enabled {
-        cursor: pointer;
-        border: 1px solid #00e988;
-        color: #00e988;
-    }
-
-    .step-disabled {
-        color: #bdbdbd;
-        border: 1px solid #bdbdbd;
-        cursor: not-allowed;
-        opacity: 0.6;
-    }
-
-    .step-line {
-        min-height: 1px;
-        min-width: 75px;
-        background-color: #bdbdbd;
-        display: inline-block;
-        margin: 0 0.5rem;
-        opacity: 0.8;
     }
 `;

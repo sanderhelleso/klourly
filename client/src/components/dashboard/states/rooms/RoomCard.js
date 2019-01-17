@@ -98,7 +98,7 @@ const RoomInfo = styled.div`
         font-size: 2.25rem;
         position: absolute;
         top: 25%;
-        left: -65px;
+        left: -75px;
         max-width: 67.5%;
         margin-top: 0;
         word-wrap: break-word;

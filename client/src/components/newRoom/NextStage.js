@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -12,14 +13,7 @@ class NextStage extends Component {
         this.state = {
             message: this.props.message,
             valid: this.props.valid,
-            classNameEnabled: 'waves-effect waves-light btn animated fadeIn',
-            classNameDisabled: 'waves-effect waves-light btn animated fadeIn new-room-name-disabled',
-            id: 'confirm-new-room-name'
         }
-
-        this.renderNext = this.renderNext.bind(this);
-        this.setNextStage = this.setNextStage.bind(this);
-        this.nextStageOnEnterKey = this.nextStageOnEnterKey.bind(this);
     }
 
     // lifecycle, add event on mount
@@ -41,58 +35,57 @@ class NextStage extends Component {
         }
     }
 
-    nextStageOnEnterKey(e) {
-        if (e.keyCode === 13) {
-            document.querySelector(`#${this.state.id}`).click();
-        }
+    nextStageOnEnterKey = e => {
+        if (e.keyCode === 13) document.querySelector('#next-stage').click();
     }
 
-    renderNext() {
-        if (this.state.valid) {
-            return(
-                <button 
-                id={this.state.id} 
-                className={this.state.classNameEnabled} 
-                onClick={this.setNextStage}
-                >
-                {this.state.message}
-                </button>
-            )
-        }
-
-        return(
-            <button 
-                id={this.state.id} 
-                className={this.state.classNameDisabled}
-            >
-                {this.state.message}
-            </button>
-        )
-    }
-
-    setNextStage() {
+    setNextStage = () => {
         this.props.nextStageAction({
-            stage: this.props.state.dashboard.newRoom.stage + 1,
+            stage: this.props.currentStage + 1,
             ...this.props.data
         });
     }
 
     render() {
         return (
-            <div>
-                {this.renderNext()}
-            </div>
+            <StyledButton
+                id="next-stage"
+                className="waves-effect waves-light btn animated fadeIn"
+                disabled={!this.state.valid} 
+                onClick={() => this.state.valid ? this.setNextStage() : {}}
+            >
+                {this.state.message}
+            </StyledButton>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { currentStage: state.dashboard.newRoom.stage };
 };
 
-// update created room state
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NextStage);
+
+const StyledButton = styled.a`
+    box-shadow: none;
+    color: #ffffff;
+    background-color: #00e988;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    line-height: 0;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1.75rem;
+    display: block;
+    max-width: 320px;
+    margin: 8rem auto 0 auto;
+
+    &:hover {
+        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
+        background-color: #00e988;
+    }
+`;

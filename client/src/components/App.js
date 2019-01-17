@@ -190,6 +190,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const GlobalDashStyle = createGlobalStyle`
 
+
     @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
 
@@ -211,10 +212,6 @@ const GlobalDashStyle = createGlobalStyle`
             -ms-user-select: none; /* Internet Explorer/Edge */
                 user-select: none; /* Non-prefixed version, currently
                                         supported by Chrome and Opera */
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     }
 
     a {

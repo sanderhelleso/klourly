@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import NextStage from '../NextStage';
 import { connect } from 'react-redux';
 
@@ -11,47 +12,21 @@ class Intro extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            ...this.props.state.dashboard.newRoom,
-            message: 'Create Room'
-        }
-
-        this.renderIntro = this.renderIntro.bind(this);
-    }
-
-    componentWillMount() {
-        document.title = 'Creating New Room | Klourly'
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.state.dashboard.newRoom) {
-            if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
-                this.setState({
-                    stage: nextProps.state.dashboard.newRoom.stage
-                })
-            }
-        }
-
-        else {
-            this.setState({
-                stage: 1
-            });
-        }
+        this.lastStage = 7;
+        this.message = 'Create New Room';
     }
 
     renderIntro() {       
         
-        if (this.state.stage === 0) {
+        if (this.props.currentStage === 0) {
             return this.mainIntro();
         }
 
-        else if (this.state.stage > 0 && this.state.stage < 8) {
+        else if (this.props.currentStage > 0 && this.props.currentStage < 8) {
             return this.subIntro()
         }
 
-        else {
-            return null;
-        }
+        else return null;
     }
 
     mainIntro() {
@@ -70,7 +45,7 @@ class Intro extends Component {
             <div className="row">
                 <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
                     <h4>{introTxt.heading}</h4>
-                    <h5>{`Step ${this.state.stage} / ${this.state.lastStage}`}</h5>
+                    <h5>{`Step ${this.props.currentStage} / ${this.lastStage}`}</h5>
                 </div>
             </div>
         )
@@ -79,24 +54,68 @@ class Intro extends Component {
 
     render() {
         return (
-            <div>
+            <StyledIntro>
                 {this.renderIntro()}
-                {this.state.stage === 0
-                ?
-                <NextStage
-                message={this.state.message}
-                valid={true} 
-                data={{owner: this.props.state.auth.user.id}}
-                />
-                :
-                null}
-            </div>
+                {this.props.currentStage === 0
+                    ? <NextStage
+                        message={this.message}
+                        valid={true} 
+                        data={{ owner: this.props.userID }}
+                    />
+                    :null
+                }
+            </StyledIntro>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        currentStage: state.dashboard.newRoom.stage
+    };
 };
 
 export default connect(mapStateToProps, null)(Intro);
+
+
+const StyledIntro = styled.div`
+
+    #new-room-intro h1 {
+        font-size: 3.2rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        letter-spacing: 2px;
+        text-transform: capitalize;
+    }
+
+    #new-room-intro-sub {
+        margin-top: -5rem;
+        margin-bottom: 3rem;
+        border-bottom: 1px solid #dadada;
+        padding-bottom: 2rem;
+    }
+
+    #new-room-intro-sub h4 {
+        font-weight: 800;
+        font-size: 2rem;
+        max-width: 15rem;
+        float: right;
+        letter-spacing: 2px;
+        text-transform: capitalize;
+    }
+
+    #new-room-intro-sub h5 {
+        float: left;
+        margin-top: 3.5rem;
+        color: #9e9e9e;
+        font-weight: 300;
+        font-size: 1.5rem;
+    }
+
+    #new-room-intro p {
+        max-width: 520px;
+        margin: 0 auto;
+        color: #9e9e9e;
+    }
+`;

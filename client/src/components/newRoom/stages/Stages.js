@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { ToastContainer, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -23,87 +21,14 @@ import Create from './Create';
 class Stages extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            newRoomSuccess: {},
-            owner: this.props.state.auth.user.id,
-            stage: this.props.state.dashboard.newRoom ? this.props.state.dashboard.newRoom.stage : 6,
-            lastStage: 7
-        }
-
-        this.displayStageStatus = this.displayStageStatus.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props.state.dashboard.newRoom) {
-            if (this.props.state.dashboard.newRoom.stage !== nextProps.state.dashboard.newRoom.stage) {
-                this.setState({
-                    stage: nextProps.state.dashboard.newRoom.stage
-                }, () => {
-                    if (document.querySelector('input[type="text"]')) {
-                        document.querySelector('input[type="text"]').focus();
-                    }
-                });
-            }
-        }
-
-        else {
-            this.props.nextStageAction({
-                stage: 7,
-                lastStage: 7
-            });
-        }   
     }
 
     renderBackToDash() {
-        return this.state.stage < 8 ? <Back /> : null;
-    }
-
-    displayStageStatus() {
-
-        let stageMessage = '';
-        switch (this.state.stage) {
-            case 1:
-                stageMessage = 'Lets start by giving your room a fitting name...';
-                break;
-
-            case 2:
-                stageMessage = 'I want the room to be...';
-                break;
-
-            case 3:
-                stageMessage = 'The room will be used for...';
-                break;
-
-            case 4:
-                stageMessage = 'Authorized users can check into the room within...';
-                break;
-
-            case 5:
-                stageMessage = 'Whats the location the will the room be held...';
-                break;
-
-            case 6:
-                stageMessage = 'The room will be active for users during...';
-                break;
-            
-            case 7:
-                stageMessage = 'Lets finish by adding a fitting cover image to the room...';
-                break;
-        }
-
-        const STATUS = 
-        <div className="animated fadeIn">
-            <h5>{`${stageMessage}`}</h5>
-        </div>
-
-
-        return this.state.stage < 1 || this.state.stage > 7 ? null : STATUS;
+        return this.props.currentStage < 8 ? <Back location="dashboard" /> : null;
     }
 
     currentStage() {
-        switch (this.state.stage) {
+        switch (this.props.currentStage) {
 
             case 1:
                 return <Name />;
@@ -134,29 +59,15 @@ class Stages extends Component {
         }
     }
 
-    renderStage() {
-        const STAGE = 
-        <div id="new-room-stage-cont" className="col s10 offset-s1">
-            {this.currentStage()}
-        </div>
-
-        return STAGE;
-    }
-
     render() {
         return (
             <div>
                 {this.renderBackToDash()}
                 <div id="new-room-stage" className="no-select row">
                     <Intro />
-                    <div id="current-stage-status" className="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-                        {this.displayStageStatus()}
+                    <div id="new-room-stage-cont" className="col s10 offset-s1">
+                        {this.currentStage()}
                     </div>
-                    {this.renderStage()}
-                    <ToastContainer 
-                        transition={Flip}
-                        closeButton={false}
-                    />
                 </div>
             </div>
 
@@ -164,11 +75,14 @@ class Stages extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        currentStage: state.dashboard.newRoom.stage
+    };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
