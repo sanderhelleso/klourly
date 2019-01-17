@@ -200,6 +200,7 @@ const GlobalDashStyle = createGlobalStyle`
 
     body {
         background-color: #f5f5f5;
+        color: #363636;
         overflow-x: hidden !important;
     }
 

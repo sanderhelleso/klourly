@@ -44,8 +44,17 @@ class Intro extends Component {
         return (
             <div className="row">
                 <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
-                    <h4>{introTxt.heading}</h4>
-                    <h5>{`Step ${this.props.currentStage} / ${this.lastStage}`}</h5>
+                    <div className="col s6">
+                        <h5>
+                            <span className="step">Step</span>
+                            {this.props.currentStage}
+                            <span>/</span>
+                            {this.lastStage}
+                        </h5>
+                    </div>
+                    <div className="col s6">
+                        <h4>{introTxt.heading}</h4>
+                    </div>
                 </div>
             </div>
         )
@@ -102,15 +111,32 @@ const StyledIntro = styled.div`
         max-width: 15rem;
         float: right;
         letter-spacing: 2px;
+        margin-top: 5rem;
         text-transform: capitalize;
     }
 
     #new-room-intro-sub h5 {
         float: left;
-        margin-top: 3.5rem;
-        color: #9e9e9e;
-        font-weight: 300;
-        font-size: 1.5rem;
+        color: #bdbdbd;
+        font-weight: 100;
+        font-size: 5rem;
+        opacity: 0.8;
+
+        span {
+            font-size: 3rem;
+            opacity: 0.5;
+            font-weight: 100;
+        }
+
+        .step {
+            margin-bottom: -25px;
+            padding-left: 10px;
+            letter-spacing: 4px;
+            font-size: 1.75rem;
+            text-transform: uppercase;
+            display: block;
+            opacity: 0.8;
+        }
     }
 
     #new-room-intro p {

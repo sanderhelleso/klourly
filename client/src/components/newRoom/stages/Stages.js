@@ -10,7 +10,6 @@ import Back from '../../dashboard/Back';
 // stages
 import Intro from './Intro';
 import Name from './Name';
-import Type from './Type';
 import Purpose from './Purpose';
 import Radius from './Radius';
 import Location from './Location';
@@ -34,24 +33,21 @@ class Stages extends Component {
                 return <Name />;
 
             case 2:
-                return <Type />;
-
-            case 3:
                 return <Purpose />;
             
-            case 4:
+            case 3:
                 return <Radius />;
 
-            case 5:
+            case 4:
                 return <Location />;
 
-            case 6:
+            case 5:
                 return <Times />;
             
-            case 7:
+            case 6:
                 return <Cover />;
 
-            case 8:
+            case 7:
                 return <Create />;
 
             default:

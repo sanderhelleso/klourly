@@ -150,7 +150,7 @@ const Tabs = styled.div`
 const StyledButton = styled.a`
     margin-top: -7.5rem;
     text-align: center;
-    background-color: #00e988;
+    background-color: #12e2a3;
     box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
     color: #ffffff;
     line-height: 0;
@@ -164,7 +164,7 @@ const StyledButton = styled.a`
     float: right;
 
     &:hover {
-        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
-        background-color: #00e988;
+        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+        background-color: #12e2a3;
     }
 `;

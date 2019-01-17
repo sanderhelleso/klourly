@@ -73,7 +73,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(NextStage);
 const StyledButton = styled.a`
     box-shadow: none;
     color: #ffffff;
-    background-color: #00e988;
+    background-color: #12e2a3;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     line-height: 0;
     letter-spacing: 2px;
@@ -83,9 +83,10 @@ const StyledButton = styled.a`
     display: block;
     max-width: 320px;
     margin: 8rem auto 0 auto;
+    clear: both;
 
     &:hover {
-        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
-        background-color: #00e988;
+        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+        background-color: #12e2a3;
     }
 `;
