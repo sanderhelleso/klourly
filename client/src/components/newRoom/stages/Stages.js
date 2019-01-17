@@ -8,7 +8,7 @@ import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 import Back from '../../dashboard/Back';
 
 // stages
-import Intro from './Intro';
+import Intro from '../Intro';
 import Name from './Name';
 import Purpose from './Purpose';
 import Radius from './Radius';
@@ -61,7 +61,7 @@ class Stages extends Component {
                 {this.renderBackToDash()}
                 <div id="new-room-stage" className="no-select row">
                     <Intro />
-                    <div id="new-room-stage-cont" className="col s10 offset-s1">
+                    <div id="new-room-stage-cont" className="col s12">
                         {this.currentStage()}
                     </div>
                 </div>

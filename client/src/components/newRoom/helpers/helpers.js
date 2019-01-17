@@ -4,10 +4,9 @@ export const helpers = {
     selectOption
 }
 
-function selectOption(e, stageOption, props) {
+function selectOption(stageOption, props) {
         
     // animate cards
-    console.log(e.target);
     const cont = document.querySelector('#room-option-cont');
     const options = Array.from(cont.querySelectorAll('.room-option'));
     document.body.style.overflowY = 'hidden';

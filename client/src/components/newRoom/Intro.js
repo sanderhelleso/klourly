@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import NextStage from '../NextStage';
+import NextStage from './NextStage';
 import { connect } from 'react-redux';
 
 const introTxt = {
@@ -12,7 +12,7 @@ class Intro extends Component {
     constructor(props) {
         super(props);
 
-        this.lastStage = 7;
+        this.lastStage = 6;
         this.message = 'Create New Room';
     }
 
@@ -126,6 +126,7 @@ const StyledIntro = styled.div`
             font-size: 3rem;
             opacity: 0.5;
             font-weight: 100;
+            padding: 0 0.25rem;
         }
 
         .step {
