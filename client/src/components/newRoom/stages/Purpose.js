@@ -33,10 +33,10 @@ class Purpose extends Component {
                 text: 'Incorrect billing amounts ends now. Get full control of attendence and billing for your business'
             }
         }
-    }
 
-    openConfirmPurpose = option => {
-
+        this.state = {
+            modalData: {}
+        };
     }
 
     renderCards = () => {
@@ -52,7 +52,7 @@ class Purpose extends Component {
                         tabIndex={0}
                         className={option.className}
                         data-target="confirm-room-purpose-modal" 
-                        onClick={(option) => this.openConfirmPurpose(option)}
+                        onClick={() => this.setState({ modalData: option })}
                     >
                         <div className="cover-cont">
                     </div>
@@ -70,7 +70,7 @@ class Purpose extends Component {
         return (
             <div id="room-option-cont" className="col s12">
                 {this.renderCards()}
-                <ConfirmPurposeModal />
+                <ConfirmPurposeModal data={this.state.modalData} />
             </div>
         )
     }
@@ -146,6 +146,9 @@ const StyledCard = styled.div`
         }
     }
 
+    &:focus {
+        outline:0;
+    }
     &:hover {
         box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.25);
     }
