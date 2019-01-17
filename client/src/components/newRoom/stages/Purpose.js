@@ -3,31 +3,23 @@ import styled from 'styled-components';
 import { Headphones, PieChart, } from 'react-feather';
 import ConfirmPurposeModal from '../helpers/ConfirmPurposeModal';
 
-// redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 
-
-class Purpose extends Component {
+export default class Purpose extends Component {
     constructor(props) {
         super(props);
 
         this.purposeOptions = {
             event: {
-                className: 'animated fadeIn no-select modal-trigger',
                 icon: <Headphones size={35} />,
                 title: 'Event',
                 text: 'Keep track of your events members and schedule. Perfect for any event where attendence is mandatory'
             },
             education: {
-                className: 'animated fadeIn no-select modal-trigger',
                 icon: <PieChart size={35} />,
                 title: 'Education',
                 text: 'Education is important. Get detailed overview of your students attendence and increase productivity'
             },
             business: {
-                className: 'animated fadeIn no-select modal-trigger',
                 icon: <PieChart size={35} />,
                 title: 'Business',
                 text: 'Incorrect billing amounts ends now. Get full control of attendence and billing for your business'
@@ -45,12 +37,12 @@ class Purpose extends Component {
         return Object.values(this.purposeOptions).map(option => {
             i++;
             return (
-                <div className="col s4">
+                <div key={option.title} className="col s4">
                     <StyledCard
                         purpose={option.title.toLowerCase()}
                         even={i % 2 === 0}
                         tabIndex={0}
-                        className={option.className}
+                        className="animated fadeIn no-select modal-trigger"
                         data-target="confirm-room-purpose-modal" 
                         onClick={() => this.setState({ modalData: option })}
                     >
@@ -75,16 +67,6 @@ class Purpose extends Component {
         )
     }
 }
-
-const mapStateToProps = (state) => {
-    return { state };
-};
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ nextStageAction }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Purpose);
 
 const StyledCard = styled.div`
 

@@ -6,6 +6,7 @@ import { materializeJS } from '../../../helpers/materialize';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 
 
 class ConfirmPurposeModal extends Component {
@@ -13,7 +14,7 @@ class ConfirmPurposeModal extends Component {
         super(props);
 
         this.state = {
-            attendence: 95,
+            minimumAttendenceLimit: 95,
             chargeAmount: ''
         }
     }
@@ -29,7 +30,7 @@ class ConfirmPurposeModal extends Component {
         // prepeare modal
         const modal = document.querySelectorAll('.modal');
         materializeJS.M.Modal.init(modal, {
-            endingTop: '10%'
+            endingTop: '15%'
         });
     }
 
@@ -43,17 +44,16 @@ class ConfirmPurposeModal extends Component {
                         type="number"
                         name="attendence"
                         placeholder="95"
-                        value={this.state.attendence}
+                        value={this.state.minimumAttendenceLimit}
                         onChange={(e) => {
-                            console.log(e.target.value.length)
                             if (e.target.value.length < 4) {
                                 if (e.target.value > 100) e.target.value = 100;
-                                this.setState({ attendence: e.target.value })
+                                this.setState({ minimumAttendenceLimit: e.target.value })
                             }
                         }}
                     />
-                    <label for="attendence">Minimum attendence requirement in %</label>
-                    <span class="helper-text">Leave field empty for no requirement</span>
+                    <label htmlFor="attendence">Minimum attendence requirement in %</label>
+                    <span className="helper-text">Leave field empty for no requirement</span>
                 </div>
             </div>
         )
@@ -77,8 +77,8 @@ class ConfirmPurposeModal extends Component {
                                 this.setState({ chargeAmount: e.target.value })
                             }}
                         />
-                        <label for="charge-amount" className="active">Charge amount per attendence ($ dollar)</label>
-                        <span class="helper-text">Leave field empty for no charge amount</span>
+                        <label htmlFor="charge-amount" className="active">Charge amount per attendence ($ dollar)</label>
+                        <span className="helper-text">Leave field empty for no charge amount</span>
                     </div>
                 </div>
             )
@@ -87,9 +87,33 @@ class ConfirmPurposeModal extends Component {
        return null;
     }
 
+    setRoomPurpose = () => {
+
+        const data = {
+            minimumAttendenceLimit: this.state.minimumAttendenceLimit
+            ? this.state.minimumAttendenceLimit
+            : false,
+
+            chargeAmount: this.state.chargeAmount 
+            ? parseFloat(this.state.chargeAmount)
+            : false
+        };
+
+        if (!this.props.data.title === 'Business') {
+            delete data.chargeAmount;
+        }
+
+        // update state
+        this.props.nextStageAction({
+            type: this.props.data.title,
+            stage: this.props.currentStage + 1,
+            attendenceInformation: data
+        });
+    }
+
     render() {
         return (
-            <StyledModal id="confirm-room-purpose-modal" className="modal">
+            <StyledModal id="confirm-room-purpose-modal" className="modal modal-fixed-footer">
                 <StyledModalContent className="modal-content">
                     <h4>{this.props.data.title}</h4>
                     <p>Great! You selected <span>{this.props.data.title}</span> as your room type. Specify the requirements for the room below if needed.</p>
@@ -98,16 +122,24 @@ class ConfirmPurposeModal extends Component {
                         {this.renderChargeAmount()}
                     </div>
                 </StyledModalContent>
+                <div className="modal-footer">
+                    <a className="modal-close waves-effect waves-light btn-flat">Back</a>
+                    <a className="waves-effect waves-purple btn-flat" onClick={this.setRoomPurpose}>Continue</a>
+                </div>
             </StyledModal>
         )
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+const mapStateToProps = (state) => {
+    return { currentStage: state.dashboard.newRoom.stage };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ nextStageAction }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ConfirmPurposeModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPurposeModal);
 
 
 const StyledModal = styled.div`
