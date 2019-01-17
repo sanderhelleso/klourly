@@ -14,20 +14,23 @@ class Purpose extends Component {
         super(props);
 
         this.purposeOptions = {
-            arrangement: {
+            event: {
                 className: 'animated fadeIn no-select',
                 icon: <Headphones size={35} />,
-                title: 'Arrangement'
+                title: 'Event',
+                text: 'Keep track of your events members and schedule. Perfect for any event where attendence is mandatory'
             },
             education: {
                 className: 'animated fadeIn no-select',
                 icon: <PieChart size={35} />,
-                title: 'Education'
+                title: 'Education',
+                text: 'Education is important. Get detailed overview of your students attendence and increase productivity'
             },
-            consultant: {
+            business: {
                 className: 'animated fadeIn no-select',
                 icon: <PieChart size={35} />,
-                title: 'Business'
+                title: 'Business',
+                text: 'Incorrect billing amounts ends now. Get full control of attendence and billing for your business'
             }
         }
     }
@@ -49,8 +52,8 @@ class Purpose extends Component {
                         <div className="cover-cont">
                     </div>
                         <div className="info-cont">
-                            {option.icon}
                             <h5>{option.title}</h5>
+                            <p>{option.text}</p>
                         </div>
                     </StyledCard>
                 </div>
@@ -93,8 +96,8 @@ const StyledCard = styled.div`
         width: 100%;
         transition: 0.3s ease-in-out;
         background: linear-gradient(
-        rgba(166, 81, 223, 0.4),
-        rgba(155, 26, 245, 0.8)),
+        rgba(166, 81, 223, 0.7),
+        rgba(155, 26, 245, 0.7)),
         url(${props => `/img/dashboard/newRoom/${props.purpose}.jpg`});
         background-size: cover;
         background-repeat: no-repeat;
@@ -111,6 +114,7 @@ const StyledCard = styled.div`
     .info-cont {
         padding: 1rem;
         min-height: 165px;
+        max-height: 165px;
         position: relative;
 
         h5 {
@@ -122,12 +126,25 @@ const StyledCard = styled.div`
             color: #ffffff;
         }
 
-        svg {
-            display: none;
+        p {
+            text-align: left;
+            color: #9e9e9e;
+            max-width: 75%;
+            margin: 1rem auto;
+        }
+
+        @media screen and (max-width: 1300px) {
+            p {
+                max-width: 95%;
+            }
         }
     }
 
     &:hover {
         box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.25);
+    }
+
+    @media screen and (max-width: 1300px) {
+        margin: 0;    
     }
 `;
