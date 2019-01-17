@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Headphones, PieChart, } from 'react-feather';
-import { helpers } from '../helpers/helpers';
+import ConfirmPurposeModal from '../helpers/ConfirmPurposeModal';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -15,24 +15,28 @@ class Purpose extends Component {
 
         this.purposeOptions = {
             event: {
-                className: 'animated fadeIn no-select',
+                className: 'animated fadeIn no-select modal-trigger',
                 icon: <Headphones size={35} />,
                 title: 'Event',
                 text: 'Keep track of your events members and schedule. Perfect for any event where attendence is mandatory'
             },
             education: {
-                className: 'animated fadeIn no-select',
+                className: 'animated fadeIn no-select modal-trigger',
                 icon: <PieChart size={35} />,
                 title: 'Education',
                 text: 'Education is important. Get detailed overview of your students attendence and increase productivity'
             },
             business: {
-                className: 'animated fadeIn no-select',
+                className: 'animated fadeIn no-select modal-trigger',
                 icon: <PieChart size={35} />,
                 title: 'Business',
                 text: 'Incorrect billing amounts ends now. Get full control of attendence and billing for your business'
             }
         }
+    }
+
+    openConfirmPurpose = option => {
+
     }
 
     renderCards = () => {
@@ -42,12 +46,13 @@ class Purpose extends Component {
             i++;
             return (
                 <div className="col s4">
-                    <StyledCard 
+                    <StyledCard
                         purpose={option.title.toLowerCase()}
                         even={i % 2 === 0}
                         tabIndex={0}
-                        className={option.className} 
-                        onClick={(e) => helpers.selectOption(e, {purpose: option.title}, this.props)}
+                        className={option.className}
+                        data-target="confirm-room-purpose-modal" 
+                        onClick={(option) => this.openConfirmPurpose(option)}
                     >
                         <div className="cover-cont">
                     </div>
@@ -65,6 +70,7 @@ class Purpose extends Component {
         return (
             <div id="room-option-cont" className="col s12">
                 {this.renderCards()}
+                <ConfirmPurposeModal />
             </div>
         )
     }

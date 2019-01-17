@@ -19,8 +19,6 @@ class DeleteMemberModal extends Component {
         this.state = {
             loading: false
         }
-
-        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
@@ -32,7 +30,7 @@ class DeleteMemberModal extends Component {
         });
     }
 
-    async deleteUser() {
+    deleteUser = async () => {
 
         // set loading state to disable button
         this.setState({
