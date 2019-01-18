@@ -18,6 +18,7 @@ class Location extends Component {
         this.state = {
             locationAddress: '',
             loading: false,
+            initialized: false
         }
     }
 
@@ -35,8 +36,11 @@ class Location extends Component {
             });
 
             setTimeout(() => {
+
                 materializeJS.M.textareaAutoResize(textarea);
-                textarea.focus();
+                if (this.state.initialized) textarea.focus();
+                else this.setState({ initialized: true });
+
             }, 10);
         }
     }

@@ -17,7 +17,7 @@ class SelectLocationMap extends Component {
 
         // initial map config
         this.DEFAULT_ZOOM = 14;
-        this.MAP_HEIGHT = 500;
+        this.MAP_HEIGHT = 450;
 
         // geocoder and coords
         this.geo = new ReverseGeocoder();
