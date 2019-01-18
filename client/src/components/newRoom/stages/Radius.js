@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Compass, Globe, Lock, Home } from 'react-feather';
-import { helpers } from '../helpers/helpers';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -15,30 +14,55 @@ class Radius extends Component {
 
         this.options = [
             {
-                title: '5 Meters',
-                className: 'room-option-stage4-option1',
+                title: '5 Meter',
                 radius: 5,
                 icon: <Lock size={45} />
             },
             {
-                title: '10 Meters',
-                className: 'room-option-stage4-option2',
+                title: '10 Meter',
                 radius: 10,
                 icon: <Compass size={45} />
             },
             {
-                title: '20 Meters',
-                className: 'room-option-stage4-option3',
+                title: '20 Meter',
                 radius: 20,
                 icon: <Globe size={45} />
             },
             {
                 title: 'No Limit',
-                className: 'room-option-stage4-option4',
                 radius: false,
                 icon: <Home size={45} />
             }
         ]
+    }
+
+    selectOption(radius) {
+        
+        // animate cards
+        const cont = document.querySelector('.room-options-cont');
+        const options = Array.from(cont.querySelectorAll('.room-option'));
+        options.forEach(option => {
+            option.style.pointerEvents = 'none';
+            option.classList.remove("fadeIn");
+        });
+
+        let timer = 100;
+        options.forEach(option => {
+            setTimeout(() => {
+                option.classList.add('fadeOutDown');
+            }, timer);
+            timer += 150;
+        });
+
+        setTimeout(() => {
+            document.body.style.overflowY = 'auto';
+
+            // update state
+            this.props.nextStageAction({
+                stage: this.props.currentStage + 1,
+                radius: radius
+            });
+        }, 1200);
     }
 
     renderRadiusOptions = () => {
@@ -47,8 +71,8 @@ class Radius extends Component {
                 <div key={option.radius} className="col s12 m6 l3">
                     <StyledOption
                         tabIndex={0}
-                        className={`animated fadeIn no-select option-${this.options.indexOf(option) + 1}`}
-                        onClick={(event) => helpers.selectOption(event, { radius: option.radius }, this.props)}
+                        className={`animated fadeIn room-option no-select option-${this.options.indexOf(option) + 1}`}
+                        onClick={() => this.selectOption(option.radius)}
                     >
                         {option.icon}
                         <h5>{option.title}</h5>
@@ -60,12 +84,13 @@ class Radius extends Component {
 
     render() {
         return (
-            <div className="col s12">
+            <div className="col s12 room-options-cont">
                 {this.renderRadiusOptions()}
             </div>
         )
     }
 }
+
 
 const mapStateToProps = (state) => {
     return { state };
@@ -84,6 +109,9 @@ const StyledOption = styled.div`
     border-radius: 18px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    min-height: 250px;
+    max-height: 250px;
+    margin: 0.25rem;
 
     h5 {
         color: #ffffff;

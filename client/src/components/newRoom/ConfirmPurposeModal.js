@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Info } from 'react-feather';
-import { materializeJS } from '../../../helpers/materialize';
+import { materializeJS } from '../../helpers/materialize';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 
 class ConfirmPurposeModal extends Component {
@@ -145,7 +145,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPurposeModal)
 
 
 const StyledModal = styled.div`
-    width: 500px;
+    width: 525px;
     padding: 1rem 2rem;
 
     @media (max-width: 450px) {
@@ -160,6 +160,7 @@ const StyledModal = styled.div`
 const StyledModalContent = styled.div`
     position: relative;
     text-align: center;
+    padding: 1rem 4rem !important;
 
     h4 {
         max-width: 180px;

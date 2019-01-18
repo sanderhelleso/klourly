@@ -10,12 +10,12 @@ import Back from '../../dashboard/Back';
 // stages
 import Intro from '../Intro';
 import Name from './Name';
-import Purpose from './Purpose';
 import Radius from './Radius';
 import Location from './Location';
 import Times from './Times';
 import Cover from './Cover';
 import Create from './Create';
+import Type from './Type';
 
 class Stages extends Component {
     constructor(props) {
@@ -87,7 +87,7 @@ class Stages extends Component {
                 return <Name message={this.state.buttonTxt} />;
 
             case 2:
-                return <Purpose />;
+                return <Type />;
             
             case 3:
                 return <Radius />;

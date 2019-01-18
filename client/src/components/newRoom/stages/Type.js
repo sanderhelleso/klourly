@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Headphones, PieChart, } from 'react-feather';
-import ConfirmPurposeModal from '../helpers/ConfirmPurposeModal';
+import ConfirmPurposeModal from '../ConfirmPurposeModal';
 
 
-export default class Purpose extends Component {
+export default class Type extends Component {
     constructor(props) {
         super(props);
 
@@ -74,12 +74,12 @@ const StyledCard = styled.div`
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     background-color: #ffffff;
     transition: 0.3s ease-in-out;
-    border-radius: 4px;
+    border-radius: 18px;
     cursor: pointer;
 
     .cover-cont {
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
         height: 150px;
         width: 100%;
         transition: 0.3s ease-in-out;

@@ -8,13 +8,14 @@ class Intro extends Component {
         super(props);
 
         this.lastStage = 6;
-        this.state = { iconLoaded: false }
+        this.state = { iconLoaded: false, next: false }
     }
 
     componentWillReceiveProps(nextProps) {
 
         if (this.props.stage.icon !== nextProps.stage.icon) {
             this.setState({ iconLoaded: false });
+            setTimeout(() => { this.setState({ next: true }) }, 100);
         }
     }
 
@@ -37,13 +38,15 @@ class Intro extends Component {
                 <div id="new-room-intro" className="center col s12">
                     <h1>{this.props.stage.heading}</h1>
                     <p>{this.props.stage.intro}</p>
-                    <img 
-                        src={this.props.stage.icon} 
-                        alt="Stage Icon" 
-                        onLoad={() => this.setState({ iconLoaded: true })}
-                        className={`stage-icon ${this.state.iconLoaded 
-                                    ? 'icon-loaded' : 'icon-loading'}`} 
-                                />
+                    <div className="icon-cont">
+                        <img 
+                            src={this.props.stage.icon} 
+                            alt="Stage Icon" 
+                            onLoad={() => this.setState({ iconLoaded: true })}
+                            className={`stage-icon ${this.state.iconLoaded 
+                                        ? 'icon-loaded' : 'icon-loading'}`} 
+                        />
+                    </div>
                 </div>
             </div>
         )
@@ -68,20 +71,26 @@ class Intro extends Component {
             </div>
         )
     }
-*/
+*/  
+    renderNext() {
+        if (this.state.next) {
+            return null;
+        }
+
+        return (
+            <NextStage
+                message={this.props.stage.buttonTxt}
+                valid={true} 
+                data={{ owner: this.props.userID }}
+            />
+        )
+    }
 
     render() {
         return (
             <StyledIntro>
                 {this.mainIntro()}
-                {this.props.currentStage === 0
-                    ? <NextStage
-                        message={this.props.stage.buttonTxt}
-                        valid={true} 
-                        data={{ owner: this.props.userID }}
-                    />
-                    :null
-                }
+                {this.renderNext()}
             </StyledIntro>
         )
     }
@@ -102,8 +111,12 @@ const StyledIntro = styled.div`
     margin-top: 7.5vh;
 
     .stage-icon {
-        min-width: 256px;
         transition: 0.3s ease-in-out;
+    }
+
+    .icon-cont {
+        min-height: 256px;
+        max-height: 256px;
     }
 
     .icon-loading {
