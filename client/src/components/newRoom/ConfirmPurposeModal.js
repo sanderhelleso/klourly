@@ -126,7 +126,7 @@ class ConfirmPurposeModal extends Component {
                 </StyledModalContent>
                 <div className="modal-footer">
                     <a className="modal-close waves-effect waves-light btn-flat">Back</a>
-                    <a className="waves-effect waves-purple btn-flat" onClick={this.setRoomPurpose}>Continue</a>
+                    <a className="modal-close waves-effect waves-purple btn-flat" onClick={this.setRoomPurpose}>Continue</a>
                 </div>
             </StyledModal>
         )

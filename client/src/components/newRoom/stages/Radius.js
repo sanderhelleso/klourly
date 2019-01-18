@@ -49,13 +49,12 @@ class Radius extends Component {
         let timer = 100;
         options.forEach(option => {
             setTimeout(() => {
-                option.classList.add('fadeOutDown');
+                option.classList.add('fadeOut');
             }, timer);
             timer += 150;
         });
 
         setTimeout(() => {
-            document.body.style.overflowY = 'auto';
 
             // update state
             this.props.nextStageAction({

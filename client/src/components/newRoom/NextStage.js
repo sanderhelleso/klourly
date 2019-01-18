@@ -10,9 +10,7 @@ class NextStage extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            valid: this.props.valid
-        }
+        this.state = { valid: this.props.valid }
     }
 
     // lifecycle, add event on mount
