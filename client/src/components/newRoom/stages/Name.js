@@ -4,13 +4,12 @@ import { notification } from '../../../helpers/notification';
 import NextStage from '../NextStage';
 
 export default class Name extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             validName: false,
             roomName: null,
-            message: 'Continue',
             placeholder: 'Intro to Programming',
             className: 'animated fadeIn',
             id: 'new-room-name-field',
@@ -20,10 +19,6 @@ export default class Name extends Component {
 
         this.handleRoomName = this.handleRoomName.bind(this);
         this.confirmName = this.confirmName.bind(this);
-    }
-
-    componentWillMount() {
-        document.title = 'Creating New Room | Step 1 / 7 | Klourly'
     }
 
     handleRoomName(e) {
@@ -51,9 +46,9 @@ export default class Name extends Component {
         if (this.state.validName) {
             return(
                 <NextStage 
-                message={this.state.message} 
-                valid={true} 
-                data={{name: this.state.roomName}}
+                    message={this.props.message} 
+                    valid={true} 
+                    data={{name: this.state.roomName}}
                 />
             )
         }
@@ -61,8 +56,8 @@ export default class Name extends Component {
         else {
             return(
                 <NextStage 
-                message={this.state.message} 
-                valid={false} 
+                    message={this.props.message} 
+                    valid={false} 
                 />
             )
         }
@@ -73,12 +68,12 @@ export default class Name extends Component {
             <div className="input-field col s12">
                 <div className="center-align">
                     <input 
-                    id={this.state.id} 
-                    placeholder={this.state.placeholder} 
-                    type={this.state.type} 
-                    className={this.state.className} 
-                    maxLength={this.state.maxLength} 
-                    onChange={(event) => this.handleRoomName(event)}
+                        id={this.state.id} 
+                        placeholder={this.state.placeholder} 
+                        type={this.state.type} 
+                        className={this.state.className} 
+                        maxLength={this.state.maxLength} 
+                        onChange={(event) => this.handleRoomName(event)}
                     />
                     {this.confirmName()}
                 </div>

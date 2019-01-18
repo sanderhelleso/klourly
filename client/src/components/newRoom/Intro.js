@@ -8,6 +8,14 @@ class Intro extends Component {
         super(props);
 
         this.lastStage = 6;
+        this.state = { iconLoaded: false }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props.stage.icon !== nextProps.stage.icon) {
+            this.setState({ iconLoaded: false });
+        }
     }
 
     /*renderIntro() {       
@@ -29,7 +37,13 @@ class Intro extends Component {
                 <div id="new-room-intro" className="center col s12">
                     <h1>{this.props.stage.heading}</h1>
                     <p>{this.props.stage.intro}</p>
-                    <img className="stage-icon" src={this.props.stage.icon} alt="Stage Icon" />
+                    <img 
+                        src={this.props.stage.icon} 
+                        alt="Stage Icon" 
+                        onLoad={() => this.setState({ iconLoaded: true })}
+                        className={`stage-icon ${this.state.iconLoaded 
+                                    ? 'icon-loaded' : 'icon-loading'}`} 
+                                />
                 </div>
             </div>
         )
@@ -85,16 +99,27 @@ export default connect(mapStateToProps, null)(Intro);
 
 const StyledIntro = styled.div`
 
+    margin-top: 7.5vh;
+
     .stage-icon {
         min-width: 256px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .icon-loading {
+        opacity: 0;
+    }
+
+    .icon-loaded {
+        opacity: 1;
     }
 
     #new-room-intro h1 {
-        font-size: 3.2rem;
+        font-size: 3rem;
         font-weight: 800;
         margin-bottom: 2rem;
         letter-spacing: 2px;
-        text-transform: uppercase;
+        text-transform: capitalize;
     }
 
     #new-room-intro-sub {
@@ -139,8 +164,8 @@ const StyledIntro = styled.div`
     }
 
     #new-room-intro p {
-        max-width: 520px;
-        margin: 0 auto;
+        max-width: 550px;
+        margin: 1rem auto;
         color: #9e9e9e;
     }
 `;

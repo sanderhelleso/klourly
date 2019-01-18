@@ -30,7 +30,9 @@ class ConfirmPurposeModal extends Component {
         // prepeare modal
         const modal = document.querySelectorAll('.modal');
         materializeJS.M.Modal.init(modal, {
-            endingTop: '15%'
+            endingTop: '15%',
+            inDuration: 500,
+            outDuration: 500
         });
     }
 

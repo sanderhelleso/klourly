@@ -33,11 +33,15 @@ class Stages extends Component {
     componentWillReceiveProps(nextProps) {
         const cont = document.querySelector('#new-room-stage');
         cont.className = 'no-select row animated fadeOut';
-        setTimeout(() => { this.updateStageInfo() }, 850);
+        setTimeout(() => { this.updateStageInfo() }, 900);
         setTimeout(() => {
             cont.className = 'no-select row animated fadeIn';
             this.setState({ stage: nextProps.currentStage });
-        }, 1200);
+        }, 1000);
+    }
+
+    componentDidMount() {
+        this.updateStageInfo();
     }
 
     renderBackToDash() {
@@ -49,10 +53,28 @@ class Stages extends Component {
 
             case 1:
                 this.setState({
-                    heading: 'Give the room a fitting name',
-                    intro: 'Your room needs a name. We reccomend giving it a descriptive and clear name that is easy for your members to reference and remember.',
+                    heading: 'Your room needs a name',
+                    intro: 'A good name is always important. We reccomend giving it a descriptive and clear name that is easy for your members to reference and remember.',
                     icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-1-256.png?alt=media&token=0b750ca5-8f27-4fb9-8da1-6b471453c3c3',
                     buttonTxt: 'Continue to room type'
+                });
+                break;
+
+            case 2:
+                this.setState({
+                    heading: 'Choose the rooms type',
+                    intro: 'Select the type of room you want to have. Selecting a room type allows you to set minimum attendence limit and show your members the rooms usecase.',
+                    icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-2-256.png?alt=media&token=de468e04-4bdf-4fc8-9fd1-166f326dc36d',
+                    buttonTxt: 'Continue to checkin options'
+                });
+                break;
+
+            case 3:
+                this.setState({
+                    heading: 'Select checkin option',
+                    intro: 'We use your location to decide how close to the room members needs to be. Select a radius depending on the size of the location the room will be held or dont have a limit at all.',
+                    icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-3-256.png?alt=media&token=f3594431-5a2d-4809-b0a8-caa68afd9f38',
+                    buttonTxt: 'Continue to location'
                 });
                 break;
         }
@@ -62,7 +84,7 @@ class Stages extends Component {
         switch (this.state.stage) {
 
             case 1:
-                return <Name />;
+                return <Name message={this.state.buttonTxt} />;
 
             case 2:
                 return <Purpose />;

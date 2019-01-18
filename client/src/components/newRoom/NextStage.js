@@ -11,8 +11,7 @@ class NextStage extends Component {
         super(props);
 
         this.state = {
-            message: this.props.message,
-            valid: this.props.valid,
+            valid: this.props.valid
         }
     }
 
@@ -54,7 +53,7 @@ class NextStage extends Component {
                 disabled={!this.state.valid} 
                 onClick={() => this.state.valid ? this.setNextStage() : {}}
             >
-                {this.state.message}
+                {this.props.message}
             </StyledButton>
         )
     }
