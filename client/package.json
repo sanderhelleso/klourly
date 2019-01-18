@@ -103,6 +103,7 @@
     "npm": "^6.6.0-next.1",
     "open-street-map-reverse-geo-node-client": "^1.0.5",
     "pigeon-maps": "^0.11.10",
+    "pigeon-marker": "^0.3.4",
     "qs": "^6.6.0",
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
