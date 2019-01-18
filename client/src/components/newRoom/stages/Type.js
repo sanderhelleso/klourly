@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Headphones, PieChart, } from 'react-feather';
-import ConfirmPurposeModal from '../ConfirmPurposeModal';
+import ConfirmTypeModal from '../ConfirmTypeModal';
 
 
 export default class Type extends Component {
@@ -62,7 +62,7 @@ export default class Type extends Component {
         return (
             <div id="room-option-cont" className="col s12">
                 {this.renderCards()}
-                <ConfirmPurposeModal data={this.state.modalData} />
+                <ConfirmTypeModal data={this.state.modalData} />
             </div>
         )
     }

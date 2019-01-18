@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 
-class ConfirmPurposeModal extends Component {
+class ConfirmTypeModal extends Component {
     constructor(props) {
         super(props);
 
@@ -141,7 +141,7 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmPurposeModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmTypeModal);
 
 
 const StyledModal = styled.div`
