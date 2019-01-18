@@ -30,11 +30,9 @@
     "firebase-auth-node": "^1.0.3",
     "firebaseauth": "^1.0.0",
     "multer": "^1.4.0",
-    "node-vibrant": "^3.0.0",
     "nodemon": "^1.18.4",
     "npm": "^6.4.1",
     "react": "^16.5.2",
-    "react-live-clock": "^2.0.3",
     "request": "^2.88.0",
     "sharp": "^0.21.2",
     "shortid": "^2.2.13"

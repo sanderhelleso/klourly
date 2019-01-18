@@ -38,6 +38,18 @@ module.exports = app => {
     });
 
     // get data for a specific room
+    app.post('/api/createRoom/getLocationFromCoords', authenticate, (req, res) => {
+        console.log(req.body);
+
+        const config = {
+            latitude: req.body.coords[0],
+            longitude: req.body.coords[1]
+        };
+
+
+    });
+
+    // get data for a specific room
     app.post('/api/getRoom', authenticate, (req, res) => {
 
         // get ref to room by id and fetch data

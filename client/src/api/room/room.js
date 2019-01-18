@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const room = {
     createRoom,
+    getLocationFromCoords,
     getRoom,
     getRooms,
     publishAnnouncement,
@@ -35,6 +36,28 @@ async function createRoom(uid, data) {
         console.log(error);
     }
 } 
+
+// get room location from coords
+async function getLocationFromCoords(uid, coords) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/createRoom/getLocationFromCoords',
+            data: {
+                uid,
+                coords
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+    }
+} 
+
 
 // get room data for a specific room
 async function getRoom(uid, roomID) {

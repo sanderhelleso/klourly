@@ -2,7 +2,7 @@ let userData = JSON.parse(localStorage.getItem('userData'));
 const initialState = userData ? { 
     userData, 
     dashboardOption: 2,
-    newRoom: { stage: 0 }
+    newRoom: { stage: 4 }
 } : {};
 
 const dashboardReducer = (state = initialState, action) => {
