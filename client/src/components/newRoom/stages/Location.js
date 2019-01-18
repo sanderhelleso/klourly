@@ -18,14 +18,17 @@ class Location extends Component {
         return (
             <div>
                 <SelectLocationMap />
+                <h5>{this.props.locationAddress}</h5>
             </div>
         )
     }
 }
 
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        locationAddress: state.dashboard.newRoom.locationAddress
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {

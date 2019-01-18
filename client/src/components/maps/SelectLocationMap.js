@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Map from 'pigeon-maps';
-import { room } from '../../api/room/room';
-import { connect } from 'react-redux';
 import { ReverseGeocoder } from 'open-street-map-reverse-geo-node-client';
+
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 
 class SelectLocationMap extends Component {
@@ -31,7 +34,8 @@ class SelectLocationMap extends Component {
         const result = await this.geo.getReverse(latLng[0], latLng[1]);
         console.log(result);
 
-        if (result) this.setState({ locationName: result.displayName });
+        if (result) this.props.nextStageAction({ locationAddress: result.displayName });
+
     }
 
     renderMap() {
@@ -60,14 +64,22 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(SelectLocationMap);
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ nextStageAction }, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectLocationMap);
 
 const StyledMapCont = styled.div`
 
     text-align: center;
     line-height: 50px;
+    margin-top: 5rem;
 
     div {
         box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+        border-radius: 18px;
     }
 `;
