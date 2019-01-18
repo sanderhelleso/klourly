@@ -41,6 +41,7 @@ class SelectLocationMap extends Component {
     reverseGeoCode = async latLng => {
 
         // get address from coords
+        this.props.nextStageAction({ locationAddress: 'loading' });
         this.setState({ 
             loading: true,
             markerCoords: latLng
