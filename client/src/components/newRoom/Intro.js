@@ -3,21 +3,14 @@ import styled from 'styled-components';
 import NextStage from './NextStage';
 import { connect } from 'react-redux';
 
-const introTxt = {
-    heading: 'Lets create a New Room',
-    intro: 'A room allow you to keep full controll on whats happening. Who is present, when do people show up, who is the least active and much more.'
-}
-
 class Intro extends Component {
     constructor(props) {
         super(props);
 
-        this.icon = `https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-${this.props.currentStage}-256.png?alt=media&token=bbb7bfc7-050b-46f3-8cbf-edcc11f50d57`;
         this.lastStage = 6;
-        this.message = 'Create New Room';
     }
 
-    renderIntro() {       
+    /*renderIntro() {       
         
         if (this.props.currentStage === 0) {
             return this.mainIntro();
@@ -28,24 +21,24 @@ class Intro extends Component {
         }
 
         else return null;
-    }
+    }*/
 
     mainIntro() {
         return(
             <div className="row animated fadeIn">
-                <div id="new-room-intro" className="center col s8 offset-s2">
-                    <h1>{introTxt.heading}</h1>
-                    <p>{introTxt.intro}</p>
-                    <img className="stage-icon" src={this.icon} alt="Stage Icon" />
+                <div id="new-room-intro" className="center col s12">
+                    <h1>{this.props.stage.heading}</h1>
+                    <p>{this.props.stage.intro}</p>
+                    <img className="stage-icon" src={this.props.stage.icon} alt="Stage Icon" />
                 </div>
             </div>
         )
     }
 
-    subIntro() {
+    /*subIntro() {
         return (
             <div className="row">
-                <div id="new-room-intro-sub" className="center col s8 offset-s2 animated fadeIn">
+                <div id="new-room-intro-sub" className="center col s10 offset-s1 animated fadeIn">
                     <div className="col s6">
                         <h5>
                             <span className="step">Step</span>
@@ -61,15 +54,15 @@ class Intro extends Component {
             </div>
         )
     }
-
+*/
 
     render() {
         return (
             <StyledIntro>
-                {this.renderIntro()}
+                {this.mainIntro()}
                 {this.props.currentStage === 0
                     ? <NextStage
-                        message={this.message}
+                        message={this.props.stage.buttonTxt}
                         valid={true} 
                         data={{ owner: this.props.userID }}
                     />
@@ -92,18 +85,21 @@ export default connect(mapStateToProps, null)(Intro);
 
 const StyledIntro = styled.div`
 
+    .stage-icon {
+        min-width: 256px;
+    }
+
     #new-room-intro h1 {
         font-size: 3.2rem;
         font-weight: 800;
         margin-bottom: 2rem;
         letter-spacing: 2px;
-        text-transform: capitalize;
+        text-transform: uppercase;
     }
 
     #new-room-intro-sub {
         margin-top: -5rem;
         margin-bottom: 3rem;
-        border-bottom: 1px solid #dadada;
         padding-bottom: 2rem;
     }
 

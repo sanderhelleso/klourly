@@ -14,11 +14,7 @@ export default NewRoom;
 const StyledNewRoom = styled.main`
 
     #new-room-stage {
-        margin-bottom: 15vh;
-    }
-
-    .stage-icon {
-        min-width: 256px;
+        margin-bottom: 10rem;
     }
 
     .room-border {
