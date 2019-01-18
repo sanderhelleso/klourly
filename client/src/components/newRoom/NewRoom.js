@@ -13,6 +13,14 @@ export default NewRoom;
 
 const StyledNewRoom = styled.main`
 
+    #new-room-stage {
+        margin-bottom: 15vh;
+    }
+
+    .stage-icon {
+        min-width: 256px;
+    }
+
     .room-border {
         min-height: 0.45rem;
         min-width: 40%;
@@ -130,27 +138,6 @@ const StyledNewRoom = styled.main`
         justify-content: center;
         align-items: center;
     }
-
-    #start-new-room, #confirm-new-room-name, #new-room-cover-browse, #create-room-try-again-btn {
-        box-shadow: none;
-        color: #ffffff;
-        background-color: #00e988;
-        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-        line-height: 0;
-        padding: 1.75rem;
-        letter-spacing: 2px;
-        font-size: 1.25rem;
-        font-weight: 600;
-    }
-
-    #create-room-try-again-btn {
-        background-color: #F15F79 !important;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%);
-    }
-
 
     #new-room-stage input {
         max-width: 30rem;

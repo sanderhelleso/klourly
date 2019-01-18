@@ -12,6 +12,7 @@ class Intro extends Component {
     constructor(props) {
         super(props);
 
+        this.icon = `https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-${this.props.currentStage}-256.png?alt=media&token=bbb7bfc7-050b-46f3-8cbf-edcc11f50d57`;
         this.lastStage = 6;
         this.message = 'Create New Room';
     }
@@ -35,6 +36,7 @@ class Intro extends Component {
                 <div id="new-room-intro" className="center col s8 offset-s2">
                     <h1>{introTxt.heading}</h1>
                     <p>{introTxt.intro}</p>
+                    <img className="stage-icon" src={this.icon} alt="Stage Icon" />
                 </div>
             </div>
         )

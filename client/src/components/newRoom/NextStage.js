@@ -82,7 +82,7 @@ const StyledButton = styled.a`
     padding: 1.75rem;
     display: block;
     max-width: 320px;
-    margin: 8rem auto 0 auto;
+    margin: 2rem auto 0 auto;
     clear: both;
 
     &:hover {
