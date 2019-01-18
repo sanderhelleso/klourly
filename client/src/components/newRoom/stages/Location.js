@@ -17,7 +17,7 @@ class Location extends Component {
 
         this.state = {
             locationAddress: '',
-            loading: false
+            loading: false,
         }
     }
 
@@ -46,7 +46,7 @@ class Location extends Component {
             <StyledLocation>
                 <SelectLocationMap />
                 <div className="row">
-                    <div className="textarea-cont input-field col s12">
+                    <div className="textarea-cont input-field col s12 m10 offset-m1 l8 offset-l2">
                         <textarea
                             value={this.state.locationAddress} 
                             className="materialize-textarea"

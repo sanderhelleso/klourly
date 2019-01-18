@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { materializeJS } from '../../helpers/materialize';
 import Map from 'pigeon-maps';
 import Marker from 'pigeon-marker'
 import { ReverseGeocoder } from 'open-street-map-reverse-geo-node-client';
@@ -15,9 +16,8 @@ class SelectLocationMap extends Component {
         super(props);
 
         // initial map config
-        this.MAP_WIDHT = 600;
-        this.MAP_HEIGHT = 400;
         this.DEFAULT_ZOOM = 14;
+        this.MAP_HEIGHT = 500;
 
         // geocoder and coords
         this.geo = new ReverseGeocoder();
@@ -29,13 +29,20 @@ class SelectLocationMap extends Component {
         this.state = { 
             locationName: '',
             loading: false,
-            markerCoords: this.coords
+            markerCoords: this.coords,
+            windowWidth: undefined
          }
 
     }
 
     componentDidMount() {
+        this.handleResize();
         this.reverseGeoCode(this.coords);
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize)
     }
 
     reverseGeoCode = async latLng => {
@@ -53,8 +60,16 @@ class SelectLocationMap extends Component {
 
     }
 
-    renderMap() {
+    handleResize = () => {
+        
+        let width = this.getWidth(window.innerWidth, 3);
+        this.setState({
+            windowWidth: width < 600 ? this.getWidth(window.innerWidth, 3.5) : width
+        }, () => materializeJS.M.textareaAutoResize(document.querySelector('#address')));
+    };
 
+    getWidth(width, margin) {
+        return width - (width / margin);
     }
 
     render() {
@@ -63,8 +78,8 @@ class SelectLocationMap extends Component {
                 <Map 
                     center={this.state.markerCoords} 
                     zoom={this.DEFAULT_ZOOM} 
-                    width={this.MAP_WIDHT} 
                     height={this.MAP_HEIGHT}
+                    width={this.state.windowWidth} 
                     onClick={(e) => this.reverseGeoCode(e.latLng)}
                 >
                     <Marker 
