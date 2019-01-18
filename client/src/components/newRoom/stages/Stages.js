@@ -77,6 +77,15 @@ class Stages extends Component {
                     buttonTxt: 'Continue to location'
                 });
                 break;
+
+            case 4:
+                this.setState({
+                    heading: 'Add a location to the room',
+                    intro: 'You can add the location where the room will be occuring to help your members get to the location easier, by using visual maps and the locations street address',
+                    icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-4-512.png?alt=media&token=86ebea8a-70b4-4538-9df4-8ae7c8fe90aa',
+                    buttonTxt: 'Continue to times'
+                });
+                break;
         }
     }
 

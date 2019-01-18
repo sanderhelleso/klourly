@@ -112,6 +112,8 @@ const StyledIntro = styled.div`
 
     .stage-icon {
         transition: 0.3s ease-in-out;
+        max-width: 330px;
+        max-height: 330px;
     }
 
     .icon-cont {

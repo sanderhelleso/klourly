@@ -91,11 +91,13 @@ class Radius extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-    return { state };
+const mapStateToProps = state => {
+    return { 
+        currentStage: state.dashboard.newRoom.stage
+    };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
