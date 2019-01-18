@@ -16,7 +16,6 @@ class SelectLocationMap extends Component {
         super(props);
 
         // initial map config
-        this.DEFAULT_ZOOM = 14;
         this.MAP_HEIGHT = 450;
 
         // geocoder and coords
@@ -30,6 +29,7 @@ class SelectLocationMap extends Component {
             locationName: '',
             loading: false,
             markerCoords: this.coords,
+            zoom: 14,
             windowWidth: undefined
          }
 
@@ -48,15 +48,27 @@ class SelectLocationMap extends Component {
     reverseGeoCode = async latLng => {
 
         // get address from coords
-        this.props.nextStageAction({ locationAddress: 'loading' });
+        this.props.nextStageAction({ location: { address: 'loading' }});
         this.setState({ 
             loading: true,
-            markerCoords: latLng
+            markerCoords: latLng,
+            zoom: 14
         });
+
         const result = await this.geo.getReverse(latLng[0], latLng[1]);
+        console.log(result);
 
         // update results location
-        if (result) this.props.nextStageAction({ locationAddress: result.displayName });
+        if (result) this.props.nextStageAction({ 
+            location: {
+                address: result.displayName,
+                info: { ...result.address },
+                coords: {
+                    latitude: latLng[0],
+                    longitude: latLng[1]
+                },
+            } 
+        });
 
     }
 
@@ -72,19 +84,24 @@ class SelectLocationMap extends Component {
         return width - (width / margin);
     }
 
+    setZoom = () => {
+        this.setState({ zoom: this.state.zoom < 19 ? this.state.zoom + 1 : 14 });
+    }
+
     render() {
         return (
             <StyledMapCont>
                 <Map 
                     center={this.state.markerCoords} 
-                    zoom={this.DEFAULT_ZOOM} 
+                    zoom={this.state.zoom} 
                     height={this.MAP_HEIGHT}
                     width={this.state.windowWidth} 
                     onClick={(e) => this.reverseGeoCode(e.latLng)}
                 >
                     <Marker 
                         anchor={this.state.markerCoords}
-                        payload={1} 
+                        payload={1}
+                        onClick={this.setZoom}
                     />
                 </Map>
             </StyledMapCont>

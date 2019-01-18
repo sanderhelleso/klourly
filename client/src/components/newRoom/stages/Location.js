@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { materializeJS } from '../../../helpers/materialize';
 
 import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
-import { notification } from '../../../helpers/notification';
 import SelectLocationMap from '../../maps/SelectLocationMap';
+
+import NextStage from '../NextStage';
 
 
 class Location extends Component {
@@ -16,22 +17,25 @@ class Location extends Component {
         super(props);
 
         this.state = {
-            locationAddress: '',
             loading: false,
-            initialized: false
+            initialized: false,
+            location: {
+                address: '',
+                coords: ''
+            }
         }
     }
 
     componentWillReceiveProps(nextProps) {
 
-        if (nextProps.locationAddress === 'loading') this.setState({ loading: true });
+        if (nextProps.location.address === 'loading') this.setState({ loading: true });
 
         else {
 
             const textarea = document.querySelector('#address');
 
             this.setState({
-                locationAddress: nextProps.locationAddress,
+                location: nextProps.location,
                 loading: false
             });
 
@@ -41,7 +45,7 @@ class Location extends Component {
                 if (this.state.initialized) textarea.focus();
                 else this.setState({ initialized: true });
 
-            }, 10);
+            }, 50);
         }
     }
 
@@ -52,15 +56,15 @@ class Location extends Component {
                 <div className="row">
                     <div className="textarea-cont input-field col s12 m10 offset-m1 l8 offset-l2">
                         <textarea
-                            value={this.state.locationAddress} 
+                            value={this.state.location.address} 
                             className="materialize-textarea"
                             id="address" 
                             type="text"
                             disabled={this.state.loading}
-                            onChange={(e) => this.setState({ locationAddress: e.target.value })}
+                            onChange={(e) => this.setState({ location: { address: e.target.value }})}
                         />
                         <label className="active" htmlFor="address">Location Address</label>
-                        <span class="helper-text">
+                        <span className="helper-text">
                             {
                                 this.state.loading 
                                 ? 'Fetching location address...' 
@@ -69,6 +73,11 @@ class Location extends Component {
                         </span>
                     </div>
                 </div>
+                <NextStage 
+                    message={this.props.message} 
+                    valid={!this.state.loading} 
+                    data={{ location: this.state.location.address === '' ? false : this.state.location}}
+                />
             </StyledLocation>
         )
     }
@@ -77,7 +86,7 @@ class Location extends Component {
 
 const mapStateToProps = state => {
     return { 
-        locationAddress: state.dashboard.newRoom.locationAddress
+        location: state.dashboard.newRoom.location
     }
 };
 
@@ -91,6 +100,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Location);
 const StyledLocation = styled.div`
     
     .textarea-cont {
-        margin-top: 4rem;
+        margin: 4rem auto;
+        min-height: 100px;
     }
 `;

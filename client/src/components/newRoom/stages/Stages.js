@@ -102,7 +102,7 @@ class Stages extends Component {
                 return <Radius />;
 
             case 4:
-                return <Location />;
+                return <Location message={this.state.buttonTxt} />;
 
             case 5:
                 return <Times />;
