@@ -68,7 +68,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(NextStage);
 
 const StyledButton = styled.a`
-    box-shadow: none;
     color: #ffffff;
     background-color: #12e2a3;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
