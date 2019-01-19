@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Trash2 } from 'react-feather';
 import { materializeJS } from '../../helpers/materialize';
 import { format } from '../../helpers/format';
 import { DAYS } from '../../helpers/days';
@@ -22,10 +23,9 @@ class Time extends Component {
                 toTime: ''
             };
 
-        console.log(this.state)
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
 
         if (prevProps === this.props) {
             this.props.nextStageAction({
@@ -40,7 +40,16 @@ class Time extends Component {
     componentDidMount() {
 
         // initial state
-        if (!this.props.data) DAYS.forEach(day => this.setState({ [day]: false }));
+        if (!this.props.data) {
+            DAYS.forEach(day => this.setState({ [day]: false }));
+            this.props.nextStageAction({
+                times: { 
+                    ...this.props.times,
+                    [this.props.nr]: this.state
+                }
+            });
+        }
+
         materializeJS.M.Timepicker.init(document.querySelectorAll('.timepicker'), {});
         setTimeout(() => { 
 
@@ -50,13 +59,6 @@ class Time extends Component {
             // add event listeners to from - to time
             Array.from(cont.querySelectorAll('.timepicker'))
             .forEach(ele => ele.addEventListener('change', this.validateTime));
-
-            this.props.nextStageAction({
-                times: { 
-                    ...this.props.times,
-                    [this.props.nr]: this.state
-                }
-            });
             
         }, 700);
     }
@@ -180,11 +182,28 @@ class Time extends Component {
         }
     }
 
+    removeTime = () => {
+
+        // update list of times and remove selected index
+        let timeNum = 1;
+        const newTimes = {};
+        Object.values(format.removeByKey(this.props.times, this.props.nr.toString()))
+        .forEach(time => { newTimes[timeNum] = time; timeNum++ });
+
+        this.props.nextStageAction({ times: newTimes });
+    }
 
     render() {
         return (
             <div className="col s12 m6 l6">
                 <StyledTime id={`time-${this.props.nr}`} className="animated fadeIn">
+                    <span 
+                        className="delete-time" 
+                        title="Remove Time"
+                        onClick={this.removeTime}
+                    >
+                        <Trash2 size={40} />
+                    </span>
                     <div className="time-number">
                         <h5>Time #{this.props.nr}</h5>
                     </div>
@@ -210,6 +229,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Time);
 
+
 const StyledTime = styled.div`
     padding: 2rem;
     box-shadow: 0px 28px 56px rgba(0, 0, 0, 0.09);
@@ -217,11 +237,21 @@ const StyledTime = styled.div`
     margin: 2rem 1rem;
     background-color: #b388ff;
 
+    .delete-time {
+        float: right;
+        z-index: 100;
+        cursor: pointer;
+
+        svg {
+            stroke: #ffcdd2;
+        }
+    }
+
     .help {
         font-size: 0.8rem;
         text-align: center;
         color: #ffffff;
-        opacity: 0.5;
+        opacity: 0.7;
         max-width: 200px;
         margin: 1.5rem auto;
     }
@@ -234,12 +264,13 @@ const StyledTime = styled.div`
         
         h5 {
             letter-spacing: 5px;
-            font-weight: 800;
+            font-weight: 100;
             text-transform: uppercase;
             margin: 1rem 0 2rem 0;
             color: #ffffff;
             opacity: 0.5;
             font-size: 2.5rem;
+            clear: both;
         }
     }
 

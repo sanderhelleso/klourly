@@ -15,30 +15,33 @@ class Times extends Component {
 
     componentWillMount() {
 
-        console.log(this.props);
-        if (this.props.times) this.createTimesFromState();
+        // if times are present in store, render
+        if (this.props.times) this.createTimesFromState(this.props.times);
         else this.setState({ times: [<Time nr={1} data={false} />] });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.times) this.createTimesFromState(nextProps.times);
+    }
 
-    createTimesFromState() {
+
+    createTimesFromState(data) {
 
         const times = [];
-        Object.entries(this.props.times).forEach(([key, time]) => {
-            console.log(time);
+        Object.entries(data).forEach(([key, time]) => {
             times.push(<Time nr={key} data={time} />);
         });
 
         this.setState({ times });
     }
 
-    renderTimes = () => this.state.times.map(time => time);
-
     addTime = () => {
         this.setState({
             times: [...this.state.times, <Time nr={this.state.times.length + 1} data={false} />]
         });
     }
+
+    renderTimes = () => this.state.times.map(time => time);
 
     render() {
         return (
