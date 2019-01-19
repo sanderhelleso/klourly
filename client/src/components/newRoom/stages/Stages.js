@@ -95,6 +95,15 @@ class Stages extends Component {
                     buttonTxt: 'Continue to cover image'
                 });
                 break;
+
+            case 6:
+                this.setState({
+                    heading: 'Set a cover image to the room',
+                    intro: 'Select the days and times the room will be occuring. A room can have as many times as you want and it is a great way to keep your members aware of when things are gonna happen.',
+                    icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-6-256.png?alt=media&token=9a747b74-8379-46b9-92a0-edd9c707601a',
+                    buttonTxt: 'Finish and create room'
+                });
+                break;
         }
     }
 

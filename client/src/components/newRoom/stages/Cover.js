@@ -22,20 +22,9 @@ export default class Cover extends Component {
             message: 'Finish and create room'
         }
 
-        this.setCoverPreview = this.setCoverPreview.bind(this);
-        this.removeCoverPreview = this.removeCoverPreview.bind(this);
-        this.displayCoverFileName = this.displayCoverFileName.bind(this);
-        this.onDrop = this.onDrop.bind(this);
-        this.onDragEnter = this.onDragEnter.bind(this);
-        this.onDragLeave = this.onDragLeave.bind(this);
-        this.onDropRejected = this.onDropRejected.bind(this);
     }
 
-    componentWillMount() {
-        document.title = 'Creating New Room | Step 7 / 7 | Klourly'
-    }
-
-    setCoverPreview() {
+    setCoverPreview = () => {
         return this.state.cover ? this.state.cover[0].preview : 'https://tinyurl.com/ya5kcp2h';
     }
 
@@ -47,17 +36,8 @@ export default class Cover extends Component {
         })
     }
 
-    displayCoverFileName() {
-        const file = this.state.cover;
-        const FILE_NAME =
-        <div className="animated fadeIn">
-            <h5 id="new-room-cover-file-name">{file === null ? '' : file[0].name}</h5>
-        </div>
+    onDrop = file => {
 
-        return this.state.cover === null ? null : FILE_NAME;
-    }
-
-    onDrop(file) {
         if(Array.isArray(file) && file.length) {
             this.setState({
                 cover: file,
@@ -69,16 +49,16 @@ export default class Cover extends Component {
         document.querySelector('#new-room-cover-upload').className = 'col s6';
     }
 
-    onDragEnter(e) {
+    onDragEnter = e => {
         const ele = e.target;
         ele.id === 'new-room-cover-upload' ? ele.className = 'col s12 dropzone-active' : null;
     }
 
-    onDragLeave() {
+    onDragLeave = () => {
         document.querySelector('#new-room-cover-upload').className = 'col s12';
     }
 
-    onDropRejected() {
+    onDropRejected = () => {
         notification.invalidFileUpload(staticTxt.uploadError);
     }
 
@@ -87,29 +67,28 @@ export default class Cover extends Component {
             <div className="row col s12">
                 <div className="col s6">
                     <Dropzone 
-                    id="new-room-cover-upload" 
-                    onDrop={this.onDrop} 
-                    onDragEnter={(event) => this.onDragEnter(event)} 
-                    onDragLeave={this.onDragLeave} 
-                    onDropRejected={this.onDropRejected}
-                    accept="image/jpeg, image/png"
-                    maxSize={524288 * 2}
-                    multiple={false}
+                        id="new-room-cover-upload" 
+                        onDrop={this.onDrop} 
+                        onDragEnter={(event) => this.onDragEnter(event)} 
+                        onDragLeave={this.onDragLeave} 
+                        onDropRejected={this.onDropRejected}
+                        accept="image/jpeg, image/png"
+                        maxSize={524288 * 2}
+                        multiple={false}
                     >
                         <h4>Drag files here</h4>
                         <h5>or</h5>
                         <button 
-                        id="new-room-cover-browse"
-                        className="waves-effect waves-light btn animated fadeIn"
+                            id="new-room-cover-browse"
+                            className="waves-effect waves-light btn animated fadeIn"
                         >
-                        {staticTxt.uploadBtn}
+                            {staticTxt.uploadBtn}
                         </button>
                     </Dropzone>
                 </div>
                 <div id="cover-preview" className={this.state.previewClassname}>
                     <img
                     src={this.setCoverPreview()}
-                    alt={this.displayCoverFileName()}
                     />
                     <div className="overlay" onClick={this.removeCoverPreview}>
                         <div className="cover-preview-text">
