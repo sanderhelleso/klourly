@@ -233,7 +233,7 @@ const GlobalDashStyle = createGlobalStyle`
     }
 
     .toast-success {
-        background-color: #66bb6a !important;
+        background-color: #12e2a3 !important;
         color: #ffffff !important;
         font-size: 0.95rem !important;
         text-align: center !important;

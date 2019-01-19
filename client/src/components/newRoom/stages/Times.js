@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Time from '../Time';
+import NextStage from '../NextStage';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -17,7 +18,7 @@ class Times extends Component {
 
         // if times are present in store, render
         if (this.props.times) this.createTimesFromState(this.props.times);
-        else this.setState({ times: [<Time nr={1} data={false} />] });
+        else this.setState({ times: [] });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,17 +42,33 @@ class Times extends Component {
         });
     }
 
-    renderTimes = () => this.state.times.map(time => time);
+    renderTimes = () => {
+
+        if (this.state.times.length === 0) 
+            return <h5 className="animated fadeIn">No room times added</h5>;
+
+        return this.state.times.map(time => time);
+    }
 
     render() {
         return (
             <div className="col s12">
-                <StyledAddButton 
-                    className="waves-effect waves-light btn animated fadeIn"
-                    onClick={this.addTime}
-                >
-                    Add new time
-                </StyledAddButton>
+                <div className="col s6">
+                    <StyledAddButton 
+                        className="waves-effect waves-light btn animated fadeIn"
+                        onClick={this.addTime}
+                    >
+                        Add new time
+                    </StyledAddButton>
+                </div>
+                <div className="col s6">
+                    <StyledNextCont>
+                        <NextStage 
+                            message={this.props.message} 
+                            valid={true} 
+                        />
+                    </StyledNextCont>
+                </div>
                 <StyledRow className="row">
                     {this.renderTimes()}
                 </StyledRow>
@@ -72,10 +89,30 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Times);
 
 
+
 const StyledRow = styled.div`
     clear: both;
-    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 10rem;
+
+    h5 {
+        text-align: center;
+        margin: 7rem auto;
+        font-size: 2.5rem;
+        font-weight: 100;
+        letter-spacing: 2px;
+        color: #bdbdbd;
+        opacity: 0.8;
+    }
 `;
+
+const StyledNextCont = styled.div`
+    
+    a {
+        float: right !important;
+    }
+`
 
 const StyledAddButton = styled.a`
     box-shadow: none;

@@ -86,6 +86,15 @@ class Stages extends Component {
                     buttonTxt: 'Continue to times'
                 });
                 break;
+
+            case 5:
+                this.setState({
+                    heading: 'Choose the times for your room',
+                    intro: 'Select the days and times the room will be occuring. A room can have as many times as you want and it is a great way to keep your members aware of when things are gonna happen.',
+                    icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-5-256.png?alt=media&token=94f80b8d-4309-4ab0-98e2-841e45cd479e',
+                    buttonTxt: 'Continue to cover image'
+                });
+                break;
         }
     }
 
@@ -105,7 +114,7 @@ class Stages extends Component {
                 return <Location message={this.state.buttonTxt} />;
 
             case 5:
-                return <Times />;
+                return <Times message={this.state.buttonTxt} />;
             
             case 6:
                 return <Cover />;
