@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { materializeJS } from '../../helpers/materialize';
 import { format } from '../../helpers/format';
-import { notification } from '../../helpers/notification';
 import { DAYS } from '../../helpers/days';
 
-export default class Time extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
+
+
+class Time extends Component {
     constructor(props) {
         super(props);
 
@@ -14,6 +19,18 @@ export default class Time extends Component {
             fromTime: '',
             toTime: ''
         };
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (prevProps === this.props) {
+            this.props.nextStageAction({
+                times: { 
+                    ...this.props.times,
+                    [this.props.nr]: this.state
+                }
+            });
+        }
     }
 
     componentDidMount() {
@@ -29,6 +46,13 @@ export default class Time extends Component {
             // add event listeners to from - to time
             Array.from(cont.querySelectorAll('.timepicker'))
             .forEach(ele => ele.addEventListener('change', this.validateTime));
+
+            this.props.nextStageAction({
+                times: { 
+                    ...this.props.times,
+                    [this.props.nr]: this.state
+                }
+            });
             
         }, 700);
     }
@@ -37,7 +61,7 @@ export default class Time extends Component {
         
         return DAYS.map(day => {
             return (
-                <div className={`col l6 ${this.state.checkAll ? 'disabled-checkbox' : ''}`}>
+                <div className={`col s12 m6 l6 ${this.state.checkAll ? 'disabled-checkbox' : ''}`}>
                     <p>
                         <label>
                             <input
@@ -59,7 +83,7 @@ export default class Time extends Component {
     renderCheckAll() {
 
         return (
-            <div className="col l6">
+            <div className="col s12 m6 l6">
                 <p>
                     <label>
                         <input
@@ -155,21 +179,32 @@ export default class Time extends Component {
 
     render() {
         return (
-            <div className="col s12 m10 offset-m1 l6">
+            <div className="col s12 m6 l6">
                 <StyledTime id={`time-${this.props.nr}`} className="animated fadeIn">
                     <div className="time-number">
                         <h5>Time #{this.props.nr}</h5>
                     </div>
-                    <div className="row">
+                    <div className="row checkbox-cont">
                         {this.renderCheckboxes()}
                         {this.renderCheckAll()}
                     </div>
                     {this.renderPickers()}
+                    <p className="help">If not sure or room wont have a specific time schedule, leave empty</p>
                 </StyledTime>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { times: state.dashboard.newRoom.times };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ nextStageAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Time);
 
 const StyledTime = styled.div`
     padding: 2rem;
@@ -177,6 +212,19 @@ const StyledTime = styled.div`
     border-radius: 12px;
     margin: 2rem 1rem;
     background-color: #b388ff;
+
+    .help {
+        font-size: 0.8rem;
+        text-align: center;
+        color: #ffffff;
+        opacity: 0.9;
+        max-width: 200px;
+        margin: 1.5rem auto;
+    }
+
+    .timepicker-digital-display {
+        background-color: #b388ff;
+    }
 
     .time-number {
         
@@ -232,5 +280,11 @@ const StyledTime = styled.div`
     .disabled-checkbox {
         pointer-events: none;
         opacity: 0.8;
+    }
+
+    @media screen and (max-width: 800px) {
+        .checkbox-cont div {
+            min-width: 100%;
+        }
     }
 `;
