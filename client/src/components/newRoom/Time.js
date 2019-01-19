@@ -86,11 +86,10 @@ export default class Time extends Component {
                         name="fromTime"
                         type="text" 
                         className="timepicker" 
-                        readOnly={true}
                         placeholder="09.00 AM"
-                        value={this.state.startTime}
+                        value={this.state.fromTime}
                     />
-                    <label className="active" htmlFor="from-time">Starts At</label>
+                    <label className="active" htmlFor="from-time">Room is starting from...</label>
                 </div>
                 <div className="col s12 input-field">
                     <input 
@@ -99,10 +98,9 @@ export default class Time extends Component {
                         name="toTime"
                         className="timepicker" 
                         placeholder="11.00 AM"
-                        readOnly={true}
-                        value={this.state.endTime}
+                        value={this.state.toTime}
                     />
-                    <label className="active" htmlFor="to-time">Ends At</label>
+                    <label className="active" htmlFor="to-time">And the room is ending at...</label>
                 </div>
             </div>
         )
@@ -114,16 +112,15 @@ export default class Time extends Component {
     }));
 
     validateTime = e => {
-        console.log(e);
 
         const time = e.target.value;
         const type = e.target.name;
         const dateString = format.dateStringToTs(time);
 
-        // start time validation
+        // from time validation
         if (type === 'fromTime') {
 
-            // check if end time is sat
+            // check if to time is sat
             if (this.state.toTime === '') this.setState({ [type]: time });
 
             // if sat, compare and make sure that from time is BEFORE end time
@@ -131,14 +128,27 @@ export default class Time extends Component {
 
                 // if time is valid, set state
                 if (format.dateStringToTs(this.state.toTime) >= dateString) this.setState({ [type]: time });
-
-                // if not, show error to aware user
-                else notification.error('Invalid time!. Looks like the "to time" is before the selected "from time"');
+                
+                // if not, swap
+                else this.setState({ fromTime: this.state.toTime, toTime: time });
             }
         }
 
+        // to time validtion
         else {
 
+            // check if from time is sat
+            if (this.state.toTime === '') this.setState({ [type]: time });
+
+            // if sat, compare and make sure that to time is AFTER from time
+            else {
+
+                // if time is valid, set state
+                if (format.dateStringToTs(this.state.fromTime) <= dateString) this.setState({ [type]: time });
+                
+                // if not, swap
+                else this.setState({ toTime: this.state.toTime, fromTime: time });
+            }
         }
     }
 
