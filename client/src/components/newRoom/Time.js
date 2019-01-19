@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { materializeJS } from '../../helpers/materialize';
+import { format } from '../../helpers/format';
+import { notification } from '../../helpers/notification';
 import { DAYS } from '../../helpers/days';
 
 export default class Time extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { checkAll: false };
+        this.state = { 
+            checkAll: false,
+            fromTime: '',
+            toTime: ''
+        };
     }
 
     componentDidMount() {
@@ -16,7 +22,14 @@ export default class Time extends Component {
         DAYS.forEach(day => this.setState({ [day]: false }));
         materializeJS.M.Timepicker.init(document.querySelectorAll('.timepicker'), {});
         setTimeout(() => { 
-            document.querySelector(`#time-${this.props.nr}`).classList.remove('fadeIn');
+
+            const cont = document.querySelector(`#time-${this.props.nr}`);
+            cont.classList.remove('fadeIn');
+
+            // add event listeners to from - to time
+            Array.from(cont.querySelectorAll('.timepicker'))
+            .forEach(ele => ele.addEventListener('change', this.validateTime));
+            
         }, 700);
     }
 
@@ -43,11 +56,6 @@ export default class Time extends Component {
         });
     }
 
-    checkAll = () => DAYS.forEach(day => this.setState({ 
-        [day]: this.state.checkAll ? false : true,
-        checkAll: this.state.checkAll ? false : true
-    }));
-
     renderCheckAll() {
 
         return (
@@ -73,15 +81,65 @@ export default class Time extends Component {
         return (
             <div className="row picker-cont">
                 <div className="col s12 input-field">
-                    <input id="start-time" type="text" className="timepicker" placeholder="09.00 AM" />
-                    <label className="active" htmlFor="start-time">Starts At</label>
+                    <input 
+                        id="from-time"
+                        name="fromTime"
+                        type="text" 
+                        className="timepicker" 
+                        readOnly={true}
+                        placeholder="09.00 AM"
+                        value={this.state.startTime}
+                    />
+                    <label className="active" htmlFor="from-time">Starts At</label>
                 </div>
                 <div className="col s12 input-field">
-                    <input id="end-time" type="text" className="timepicker" placeholder="11.00 AM" />
-                    <label className="active" htmlFor="end-time">Ends At</label>
+                    <input 
+                        id="to-time" 
+                        type="text"
+                        name="toTime"
+                        className="timepicker" 
+                        placeholder="11.00 AM"
+                        readOnly={true}
+                        value={this.state.endTime}
+                    />
+                    <label className="active" htmlFor="to-time">Ends At</label>
                 </div>
             </div>
         )
+    }
+
+    checkAll = () => DAYS.forEach(day => this.setState({ 
+        [day]: this.state.checkAll ? false : true,
+        checkAll: this.state.checkAll ? false : true
+    }));
+
+    validateTime = e => {
+        console.log(e);
+
+        const time = e.target.value;
+        const type = e.target.name;
+        const dateString = format.dateStringToTs(time);
+
+        // start time validation
+        if (type === 'fromTime') {
+
+            // check if end time is sat
+            if (this.state.toTime === '') this.setState({ [type]: time });
+
+            // if sat, compare and make sure that from time is BEFORE end time
+            else {
+
+                // if time is valid, set state
+                if (format.dateStringToTs(this.state.toTime) >= dateString) this.setState({ [type]: time });
+
+                // if not, show error to aware user
+                else notification.error('Invalid time!. Looks like the "to time" is before the selected "from time"');
+            }
+        }
+
+        else {
+
+        }
     }
 
 

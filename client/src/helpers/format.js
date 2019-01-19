@@ -4,7 +4,8 @@ export const format = {
     removeByKey,
     getPercentage,
     tsToHHMM,
-    getFormatedDateAndTime
+    getFormatedDateAndTime,
+    dateStringToTs
 }
 
 // capitalize given string
@@ -15,6 +16,13 @@ function capitalize(str) {
 // convert a timestamp to date
 function tsToDate(timestamp) {
     return new Date(timestamp).toDateString();
+}
+
+// get ts from a date string
+function dateStringToTs(time) {
+    const now = new Date();
+    const dateString = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${time}`;
+    return new Date(dateString).getTime();
 }
 
 // convert a timestamp to HH:MM
