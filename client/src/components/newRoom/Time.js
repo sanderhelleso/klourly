@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
 import { materializeJS } from '../../helpers/materialize';
 import { format } from '../../helpers/format';
+import { notification } from '../../helpers/notification';
 import { DAYS } from '../../helpers/days';
 
 // redux
@@ -25,9 +26,14 @@ class Time extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state !== nextProps.data) this.setState({ ...nextProps.data});
+    }
+
     componentDidUpdate(prevProps) {
 
         if (prevProps === this.props) {
+
             this.props.nextStageAction({
                 times: { 
                     ...this.props.times,
@@ -190,6 +196,7 @@ class Time extends Component {
         Object.values(format.removeByKey(this.props.times, this.props.nr.toString()))
         .forEach(time => { newTimes[timeNum] = time; timeNum++ });
 
+        notification.success(`Time #${this.props.nr} removed! List numbers has been updated`);
         this.props.nextStageAction({ times: newTimes });
     }
 
