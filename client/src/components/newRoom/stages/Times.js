@@ -2,23 +2,41 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Time from '../Time';
 
-export default class Times extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Times extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            times: [<Time nr={1} />]
-        }
+        this.state = {}
     }
 
-    renderTimes() {
+    componentWillMount() {
 
-        return this.state.times.map(time => time);
+        console.log(this.props);
+        if (this.props.times) this.createTimesFromState();
+        else this.setState({ times: [<Time nr={1} data={false} />] });
     }
+
+
+    createTimesFromState() {
+
+        const times = [];
+        Object.entries(this.props.times).forEach(([key, time]) => {
+            console.log(time);
+            times.push(<Time nr={key} data={time} />);
+        });
+
+        this.setState({ times });
+    }
+
+    renderTimes = () => this.state.times.map(time => time);
 
     addTime = () => {
         this.setState({
-            times: [...this.state.times, <Time nr={this.state.times.length + 1} />]
+            times: [...this.state.times, <Time nr={this.state.times.length + 1} data={false} />]
         });
     }
 
@@ -38,6 +56,18 @@ export default class Times extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return { times: state.dashboard.newRoom.times };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Times);
+
 
 const StyledRow = styled.div`
     clear: both;

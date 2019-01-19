@@ -14,11 +14,15 @@ class Time extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            checkAll: false,
-            fromTime: '',
-            toTime: ''
-        };
+        this.state = this.props.data 
+            ? this.props.data 
+            : { 
+                checkAll: false,
+                fromTime: '',
+                toTime: ''
+            };
+
+        console.log(this.state)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -36,7 +40,7 @@ class Time extends Component {
     componentDidMount() {
 
         // initial state
-        DAYS.forEach(day => this.setState({ [day]: false }));
+        if (!this.props.data) DAYS.forEach(day => this.setState({ [day]: false }));
         materializeJS.M.Timepicker.init(document.querySelectorAll('.timepicker'), {});
         setTimeout(() => { 
 
@@ -217,7 +221,7 @@ const StyledTime = styled.div`
         font-size: 0.8rem;
         text-align: center;
         color: #ffffff;
-        opacity: 0.9;
+        opacity: 0.5;
         max-width: 200px;
         margin: 1.5rem auto;
     }
