@@ -30,7 +30,7 @@ class Room extends Component {
                 }
                 <Parallax
                     blur={{ min: -15, max: 15 }}
-                    bgImage={`${this.props.activeRoom.cover}`}
+                    bgImage={`${this.props.activeRoom.cover.large}`}
                     bgImageAlt={`${this.props.activeRoom.name} cover image`} 
                     strength={200}
                     renderLayer={percentage => (

@@ -20,9 +20,7 @@ module.exports = app => {
         const usersOwningRef = db.ref(`users/${req.body.uid}/rooms/owning`);
         
         // set room id for refrence path
-        usersOwningRef.once('value', snapshot => {
-            usersOwningRef.update([...snapshot.val(), roomData.id]);
-        });
+        usersOwningRef.once('value', snapshot => usersOwningRef.set([...snapshot.val(), roomData.id]));
 
         // update database with new room
         const roomRef = db.ref(`rooms/${roomData.id}`);

@@ -16,4 +16,5 @@ const StyledAvatar = styled.img`
     max-height: 125px;
     min-width: 125px;
     min-height: 125px;
+    background-color: #ffffff;
 `;
