@@ -26,11 +26,23 @@ module.exports = app => {
         const roomRef = db.ref(`rooms/${roomData.id}`);
         roomRef.set(roomData);
 
-        // send back response with roomData for client sync
-        res.status(200).json({
-            success: true,
-            message: 'Successfully created room',
-            roomData
+        // get ref to owner by id recieved from room data and fetch owner data 
+        const ownerRef = db.ref(`users/${roomData.owner}/settings`);
+        ownerRef.once('value', ownerSnapshot => {
+
+            // set owner data to room data
+            roomData.owner = {
+                name: ownerSnapshot.val().displayName,
+                photoUrl: ownerSnapshot.val().photoUrl,
+                id: roomData.owner
+            }
+
+            // send back response with roomData for client sync
+            res.status(200).json({
+                success: true,
+                message: 'Successfully created room',
+                roomData
+            });
         });
     });
 
