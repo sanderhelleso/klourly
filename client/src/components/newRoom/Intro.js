@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import NextStage from './NextStage';
 import { connect } from 'react-redux';
+import CircularLoader from '../loaders/CircularLoader';
 
 class Intro extends Component {
     constructor(props) {
@@ -19,37 +20,35 @@ class Intro extends Component {
         }
     }
 
-    /*renderIntro() {       
-        
-        if (this.props.currentStage === 0) {
-            return this.mainIntro();
-        }
-
-        else if (this.props.currentStage > 0 && this.props.currentStage < 8) {
-            return this.subIntro()
-        }
-
-        else return null;
-    }*/
-
     mainIntro() {
         return(
             <div className="row animated fadeIn">
                 <div id="new-room-intro" className="center col s12">
                     <h1>{this.props.stage.heading}</h1>
                     <p>{this.props.stage.intro}</p>
-                    <div className="icon-cont">
-                        <img 
-                            src={this.props.stage.icon} 
-                            alt="Stage Icon" 
-                            onLoad={() => this.setState({ iconLoaded: true })}
-                            className={`stage-icon ${this.state.iconLoaded 
-                                        ? 'icon-loaded' : 'icon-loading'}`} 
-                        />
-                    </div>
+                    {this.renderImage()}
                 </div>
             </div>
         )
+    }
+
+    renderImage() {
+
+        if (this.props.stage.icon) {
+            return (
+                <div className="icon-cont">
+                    <img 
+                        src={this.props.stage.icon} 
+                        alt="Stage Icon" 
+                        onLoad={() => this.setState({ iconLoaded: true })}
+                        className={`stage-icon ${this.state.iconLoaded 
+                                    ? 'icon-loaded' : 'icon-loading'}`} 
+                    />
+                </div>
+            )
+        }
+
+        else return <CircularLoader size="big" />
     }
 
     /*subIntro() {

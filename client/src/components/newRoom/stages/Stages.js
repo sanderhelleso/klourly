@@ -104,6 +104,14 @@ class Stages extends Component {
                     buttonTxt: 'Finish and create room'
                 });
                 break;
+            
+            case 7:
+                this.setState({
+                    heading: 'Creating new room...',
+                    intro: 'Sit tight while we create your room. This will only take a couple of seconds',
+                    icon: false,
+                });
+                break;
         }
     }
 

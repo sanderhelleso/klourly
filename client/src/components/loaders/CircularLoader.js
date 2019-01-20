@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CircularLoaderSmall = () => (
+const CircularLoader = props => (
 
     <StyledLoaderCont className="animated fadeIn">
-        <div className="preloader-wrapper small active">
+        <div className={`preloader-wrapper ${props.size} active`}>
             <div className="spinner-layer">
                 <div className="circle-clipper left">
                     <div className="circle"></div>
@@ -18,11 +18,11 @@ const CircularLoaderSmall = () => (
     </StyledLoaderCont>
 );
 
-export default CircularLoaderSmall;
+export default CircularLoader;
 
 const StyledLoaderCont = styled.div`
     position: absolute;
-    top: 45%;
+    top: 52.5%;
     left: 50%;
     transform: translate(-50%);
 
