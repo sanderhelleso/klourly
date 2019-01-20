@@ -29,13 +29,18 @@ module.exports = app => {
         // storage bucket location
         let storageLocation;
 
+        // db ref prps
         let id;
+        let ref;
+        let key;
         let scaledImg;
         const type = name.split('.')[0]; // avatar / cover
 
         // set storage location depending on type of photo upload
         if (type === 'avatar') {
             id = name.split('.')[1];
+            ref = db.ref(`users/${id}/settings`);
+            key = 'photoUrl';
             storageLocation = `avatars/${id}.png`;
 
             // re-size to 150x150 for profile picture
@@ -44,6 +49,8 @@ module.exports = app => {
 
         else if (type === 'roomCover') {
             id = shortid.generate();
+            ref = db.ref(`rooms/${id}`);
+            key = 'cover';
             storageLocation = `rooms/${id}/cover.png`;
 
             // re-size to 1280x300 for cover picture
@@ -58,21 +65,21 @@ module.exports = app => {
         }
         
         // save file in storage
-        const bucketFile = bucket.file(storageLocation);
-        bucketFile.save(new Buffer(scaledImg))
+        const bucketFile = await bucket.file(storageLocation);
+        await bucketFile.save(new Buffer(scaledImg));
         const signedURL = await bucketFile.getSignedUrl({
             action: 'read',
             expires: '03-09-2491'
         });
+    
+        // update photo ref
+        ref.update({ [key]: signedURL[0] });
 
-        // get url of created file bucket
-        // update photo data
-        const updatedImg = await updatePhotoURL(id, signedURL[0], type);
-
+        // send back response with url and id
         res.status(200).json({
             success: true,
             message: 'Successfully uploaded image',
-            photoUrl: updatedImg,
+            photoUrl: signedURL[0],
             id
         });
     });
@@ -93,28 +100,4 @@ module.exports = app => {
             defaultAvatar: process.env.DEFAULT_AVATAR
         });
     });
-}
-
-// update and set the new photo
-async function updatePhotoURL(uid, url, type) {
-
-    let ref; // db ref to update
-    let key; // key to set to match state key
-
-    if (type === 'avatar') {
-        ref = db.ref(`users/${uid}/settings`);
-        key = 'photoUrl';
-    }
-
-    else if (type === 'roomCover') {
-        ref = db.ref(`rooms/${uid}`);
-        key = 'cover';
-    }
-
-    // update photo ref
-    ref.update({
-        [key]: url
-    });
-
-    return url;
 }
