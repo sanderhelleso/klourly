@@ -12,54 +12,46 @@ import { room } from '../../../api/room/room';
 
 import Back from '../../dashboard/Back';
 import { redirect } from '../../../helpers/redirect';
+import { notification } from '../../../helpers/notification';
 
 class Create extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { loading: true };
+        this.state = { error: false };
     }
 
-    async componentDidMount() {
+    componentDidMount = () => this.createRoom();
 
-        // attempt to create room
-        let response = await room.createRoom(this.props.userID, this.props.newRoomData);
+    createRoom = async () => {
 
-        console.log(response);
-        if (response.data.success) {
+        // if user dont need to upload cover image, redirect to room now
+        let updatedRoomData;
+        if (this.props.newRoomData.cover) {
 
-            // if user dont need to upload cover image, redirect to room now
-            if (!this.props.newRoomData.cover) this.setState({ loading: false });
+            // attempt to upload cover image, response returns the rooms given ID
+            const coverResponse = await dashboard.uploadPhoto(this.props.newRoomData.blob);
 
-            else {
+            // if error, let user know that default cover has been set
+            if (!coverResponse.data.success) notification.error('Something went wrong when uploading cover image. Default image has been set');
 
-                // if not, attempt to upload the image
-                response = await dashboard.uploadPhoto(this.createFileBlob(response.data.roomData.id));
-                
-                console.log(response);
-                if (response.data.success) {
-                
-                }
-
-                else {
-
-                }
-            }
+            // get created roomID and photoUrl
+            updatedRoomData = { id: coverResponse.data.id, cover: coverResponse.data.photoUrl };
         }
+
+        // attempt to create room with recieved ID
+        let roomResponse = await room.createRoom(
+            this.props.userID, { ...this.props.newRoomData, ...updatedRoomData});
+
+        // validate response success
+        if (roomResponse.data.success) this.setState({ loading: false});            
 
         else {
-            // retry here
+
+            // room creation failed. Notify user and allow user to retry
+            notification.error('Something went wrong when attempting to create room. Please try again');
+            this.setState({ error: true });
         }
-    }
-
-    createFileBlob(id) {
-
-        const file = this.props.newRoomData.cover;
-        const fd = new FormData();
-
-        // send blob to server, store and set cover and state
-        fd.append('file', file, `roomCover.${id}.png`);
-        return fd;
     }
 
     render() {

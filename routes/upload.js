@@ -4,6 +4,7 @@ const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 const admin = require('firebase-admin');
 const db = admin.database();
+const shortid = require('shortid');
 
 // CONNECT TO STORAGE
 const storage = new Storage({
@@ -21,28 +22,31 @@ module.exports = app => {
     // get updated settings data from client and attempt to upload
     app.post('/api/upload/photo', authenticate, multer.single('file'), async (req, res) => {
 
-        // avatar file
+        // fileblob and location
         const file = req.file;
         const name = file.originalname;
 
-        // storage bucket
+        // storage bucket location
+        let storageLocation;
+
+        let id;
         const type = name.split('.')[0]; // avatar / cover
-        let id = name.split('.')[1];
 
         // set storage location depending on type of photo upload
-        let storageLocation; // always png
         if (type === 'avatar') {
+            id = name.split('.')[1];
             storageLocation = `avatars/${id}.png`;
         }
 
         else if (type === 'roomCover') {
+            id = shortid.generate();
             storageLocation = `rooms/${id}/cover.png`;
         }
 
         else {
-            res.status(500).json({
+            res.status(400).json({
                 success: false,
-                message: 'Invalid file type'
+                message: 'Malformed payload'
             });
         }
 
@@ -59,12 +63,13 @@ module.exports = app => {
 
         // get url of created file bucket
         // update photo data
-        const updatedImg = await updatePhotoURL(uid, signedURL[0], type);
+        const updatedImg = await updatePhotoURL(id, signedURL[0], type);
 
         res.status(200).json({
             success: true,
             message: 'Successfully uploaded image',
-            photoUrl: updatedImg
+            photoUrl: updatedImg,
+            id
         });
     });
 

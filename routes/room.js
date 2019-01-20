@@ -8,26 +8,26 @@ module.exports = app => {
     // create new room
     app.post('/api/createRoom', authenticate, (req, res) => {
 
-        // remove stage
+        // create data obj and cleanup props
         const roomData = req.body.roomData;
         delete roomData.stage;
-
-        // create room refrence connected to user
-        const id = shortid.generate();
-        const userRef = db.ref(`users/${req.body.uid}/rooms/owning/${id}`);
-        
-        // set room id for refrence path
-        userRef.set({ name: roomData.name });
-
-        // create room and set its default properties
-        const roomRef = db.ref(`rooms/${id}`);
-
-        roomData.id = id; 
-        roomData.invite =  generateInvitationLink(id);
+        delete roomData.blob;
+        roomData.invite =  generateInvitationLink(roomData.id);
         roomData.members = [];
 
+        // create room refrence connected to user
+        const usersOwningRef = db.ref(`users/${req.body.uid}/rooms/owning`);
+        
+        // set room id for refrence path
+        usersOwningRef.once('value', snapshot => {
+            usersOwningRef.update([...snapshot.val(), roomData.id]);
+        });
+
         // update database with new room
+        const roomRef = db.ref(`rooms/${roomData.id}`);
         roomRef.set(roomData);
+
+        // send back response with roomData for client sync
         res.status(200).json({
             success: true,
             message: 'Successfully created room',

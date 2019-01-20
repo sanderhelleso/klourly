@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 import { notification } from '../../../helpers/notification';
+import { dashboard } from '../../../api/dashboard/dashboard';
 
 import CoverPreview from '../CoverPreview';
 import NextStage from '../NextStage';
@@ -16,7 +17,16 @@ class Cover extends Component {
         super(props);
     }
 
-    onDrop = file => (Array.isArray(file) && file.length) ? this.props.nextStageAction({ cover: file[0].preview }) : null;
+    onDrop = file => {
+
+        if (Array.isArray(file) && file.length) {
+
+            // create file blob
+            const fd = new FormData();
+            fd.append('file', file[0], `roomCover.ROOM_ID.png`);
+            this.props.nextStageAction({ cover: file[0], blob: fd })
+        }
+    }
 
     onDragEnter = e => e.target.id === 'drop-zone' ? e.target.className = 'col s12 dropzone-active' : null;
 
@@ -31,7 +41,8 @@ class Cover extends Component {
                 <StyledDropZone className="col l6">
                     <Dropzone 
                         id="drop-zone"
-                        onDrop={this.onDrop} 
+                        onDrop={this.onDrop}
+                        onChange={(e) => console.log(e)}
                         onDragEnter={this.onDragEnter} 
                         onDragLeave={this.onDragLeave} 
                         onDropRejected={this.onDropRejected}
@@ -60,12 +71,16 @@ class Cover extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { creating: state.dashboard.newRoom.creating };
+};
+
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Cover);
+export default connect(mapStateToProps, mapDispatchToProps)(Cover);
 
 
 

@@ -34,7 +34,7 @@ class CoverPreview extends Component {
                             <Trash2 />
                         </span>
                     </div>
-                    <img src={this.props.src} />
+                    <img src={this.props.src.preview} />
                 </div>
             );
         }
