@@ -80,11 +80,15 @@ class Intro extends Component {
             return null;
         }
 
+        // set default data
         return (
             <NextStage
                 message={this.props.stage.buttonTxt}
                 valid={true} 
-                data={{ owner: this.props.userID }}
+                data={{ owner: this.props.userID,
+                        cover: false,
+                        times: {}
+                    }}
             />
         )
     }

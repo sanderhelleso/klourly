@@ -21,14 +21,12 @@ async function uploadPhoto(data) {
         });
 
         // return data recieved from server
-        console.log(response);
         return response;
     }
 
     catch(error) {
 
         return error.response;
-        console.log(error);
     }
 }
 

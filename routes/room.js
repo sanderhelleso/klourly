@@ -7,7 +7,10 @@ module.exports = app => {
 
     // create new room
     app.post('/api/createRoom', authenticate, (req, res) => {
-        const roomData = JSON.parse(req.body.room);
+
+        // remove stage
+        const roomData = req.body.roomData;
+        delete roomData.stage;
 
         // create room refrence connected to user
         const id = shortid.generate();
@@ -16,37 +19,19 @@ module.exports = app => {
         // set room id for refrence path
         userRef.set({ name: roomData.name });
 
-        // create room
+        // create room and set its default properties
         const roomRef = db.ref(`rooms/${id}`)
         roomData.id = id; // set id to room
-        roomData.invite =  { ...generateInvitationLink(id) }; // create invitation link (1 week)
-        roomData.members = [req.body.uid]; // add owner to memberlist
+        roomData.invite =  generateInvitationLink(id);
+        roomData.members = [];
 
-        // after setting new room data, get all user rooms and send to client
-        roomRef.set({ ...roomData })
-        .then(() => {
-            const roomsRef = db.ref(`users/${req.body.uid}/rooms`);
-            roomsRef.orderByChild('name').once('value', snapshot => {
-                res.status(200).json({
-                    success: true,
-                    message: 'Successfully created room',
-                    id: id,
-                    rooms: snapshot.val()
-                });
-            }); 
+        // update database with new room
+        roomRef.set(roomData);
+        res.status(200).json({
+            success: true,
+            message: 'Successfully created room',
+            roomData
         });
-    });
-
-    // get data for a specific room
-    app.post('/api/createRoom/getLocationFromCoords', authenticate, (req, res) => {
-        console.log(req.body);
-
-        const config = {
-            latitude: req.body.coords[0],
-            longitude: req.body.coords[1]
-        };
-
-
     });
 
     // get data for a specific room

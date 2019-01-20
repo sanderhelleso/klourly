@@ -8,6 +8,7 @@ import { newRoomCreatedAction } from '../../../actions/newRoom/newRoomCreatedAct
 import { enterRoomAction } from '../../../actions/room/enterRoomAction';
 
 import { dashboard } from '../../../api/dashboard/dashboard';
+import { room } from '../../../api/room/room';
 
 import Back from '../../dashboard/Back';
 import { redirect } from '../../../helpers/redirect';
@@ -15,6 +16,13 @@ import { redirect } from '../../../helpers/redirect';
 class Create extends Component {
     constructor(props) {
         super(props);
+    }
+
+    async componentDidMount() {
+
+        // attempt to create room
+        const respone = await room.createRoom(this.props.userID, this.props.newRoomData);
+        console.log(respone);
     }
 
     createFileBlob(id) {
@@ -29,15 +37,15 @@ class Create extends Component {
     }
 
     render() {
-        return (
-            <div className="col s12">
-            </div>
-        )
+        return null;
     }
 }
 
 const mapStateToProps = state => {
-    return { newRoomData: state.dashboard.newRoom };
+    return { 
+        userID: state.auth.user.id,
+        newRoomData: state.dashboard.newRoom
+    };
 };
 
 const mapDispatchToProps = dispatch => {

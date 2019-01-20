@@ -17,7 +17,7 @@ export const room = {
 }
 
 // create new room
-async function createRoom(uid, data) {
+async function createRoom(uid, roomData) {
     try {
         const response = await axios({
             headers: authHeader(),
@@ -25,7 +25,7 @@ async function createRoom(uid, data) {
             url: '/api/createRoom',
             data: {
                 uid,
-                room: data
+                roomData
             }
         });
 
