@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Trash2 } from 'react-feather';
+
 
 export default class CoverPreview extends Component {
     constructor(props) {
@@ -7,9 +9,15 @@ export default class CoverPreview extends Component {
     }
 
     renderImage() {
+
         if (this.props.src) {
             return (
-                <div className="img-cont">
+                <div>
+                    <div id="remove-img">
+                        <span>
+                            <Trash2 />
+                        </span>
+                    </div>
                     <img src={this.props.src} />
                 </div>
             );
@@ -20,7 +28,7 @@ export default class CoverPreview extends Component {
 
     render() {
         return (
-            <StyledImgCont>
+            <StyledImgCont className={`${this.props.src ? 'active-cont' : ''}`}>
                 {this.renderImage()}
             </StyledImgCont>
         )
@@ -32,7 +40,11 @@ const StyledImgCont = styled.div`
     position: relative;
     height: 300px;
     border: 1px solid #bdbdbd;
-    border-radius: 12px;
+    transition: 0.3s ease-in-out;
+
+    &.active-cont {
+        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    }
 
     img {
         width: 100%;
@@ -47,13 +59,5 @@ const StyledImgCont = styled.div`
         letter-spacing: 2px;
         color: #bdbdbd;
         font-weight: 100;
-    }
-
-    .img-cont {
-        position: relative;
-        height: 300px;
-        border-radius: 12px;
-        transition: 0.3s ease-in-out;
-        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     }
 `;

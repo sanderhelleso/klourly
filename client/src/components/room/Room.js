@@ -11,7 +11,6 @@ import Back from '../dashboard/Back';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
-import Location from './location/Location';
 import Menu from './Menu';
 import OwnerAvatar from './OwnerAvatar';
 import Header from './Header';
@@ -80,7 +79,6 @@ class Room extends Component {
                                 <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 room-aside-section">
-                                <Location address={this.props.activeRoom.location.address}/>
                             </div>
                         </div>
                     </div>

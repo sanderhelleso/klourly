@@ -31,7 +31,7 @@ class Cover extends Component {
         }
     }
 
-    onDragEnter = e => e.target.className = 'col s12 dropzone-active';
+    onDragEnter = e => e.target.id === 'drop-zone' ? e.target.className = 'col s12 dropzone-active' : null;
 
     onDragLeave = e => e.target.className = '';
 
