@@ -85,7 +85,7 @@ const dashboardReducer = (state = initialState, action) => {
                     ...state.userData,
                     rooms: {
                         ...state.userData.rooms,
-                        ...action.payload
+                        owning: action.payload
                     }
                 }
             }

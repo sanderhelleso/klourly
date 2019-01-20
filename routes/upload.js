@@ -30,17 +30,24 @@ module.exports = app => {
         let storageLocation;
 
         let id;
+        let scaledImg;
         const type = name.split('.')[0]; // avatar / cover
 
         // set storage location depending on type of photo upload
         if (type === 'avatar') {
             id = name.split('.')[1];
             storageLocation = `avatars/${id}.png`;
+
+            // re-size to 150x150 for profile picture
+            scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
         }
 
         else if (type === 'roomCover') {
             id = shortid.generate();
             storageLocation = `rooms/${id}/cover.png`;
+
+            // re-size to 1280x300 for cover picture
+            scaledImg = await sharp(file.buffer).resize(1024, 450).toBuffer();
         }
 
         else {
@@ -49,9 +56,6 @@ module.exports = app => {
                 message: 'Malformed payload'
             });
         }
-
-        // re-size image
-        const scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
         
         // save file in storage
         const bucketFile = bucket.file(storageLocation);

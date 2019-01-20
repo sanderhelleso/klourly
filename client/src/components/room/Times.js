@@ -7,7 +7,7 @@ export default class Times extends Component {
         super(props);
     }
 
-    sortDays(timeDays) {
+    /*sortDays(timeDays) {
         const sortedDays = [];
         Object.keys(timeDays).forEach(day => {
             sortedDays[DAYS.indexOf(day)] = day;
@@ -36,13 +36,13 @@ export default class Times extends Component {
                 );
             };
         });
-    }
+    }*/
 
 
     render() {
         return (
             <StyledCont>
-                {this.renderTimes()}
+                
             </StyledCont>
         )
     }

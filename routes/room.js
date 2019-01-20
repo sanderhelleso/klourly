@@ -14,6 +14,7 @@ module.exports = app => {
         delete roomData.blob;
         roomData.invite =  generateInvitationLink(roomData.id);
         roomData.members = [];
+        roomData.checkin = { active: false };
 
         // create room refrence connected to user
         const usersOwningRef = db.ref(`users/${req.body.uid}/rooms/owning`);

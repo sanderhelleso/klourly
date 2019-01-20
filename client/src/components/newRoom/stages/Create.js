@@ -44,7 +44,15 @@ class Create extends Component {
             this.props.userID, { ...this.props.newRoomData, ...updatedRoomData});
 
         // validate response success
-        if (roomResponse.data.success) this.setState({ loading: false});            
+        if (roomResponse.data.success) {
+            
+            // update owning rooms state
+            this.props.newRoomCreatedAction([...this.props.owning, updatedRoomData.id]);
+
+            // set active room and redirect
+            this.props.enterRoomAction(roomResponse.data.roomData);
+            redirect.room(updatedRoomData.id);
+        }       
 
         else {
 
@@ -62,7 +70,8 @@ class Create extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        newRoomData: state.dashboard.newRoom
+        newRoomData: state.dashboard.newRoom,
+        owning: state.dashboard.userData.rooms.owning
     };
 };
 
