@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import { Trash2 } from 'react-feather';
 
@@ -64,10 +65,10 @@ export default class Cover extends Component {
 
     render() {
         return (
-            <div className="row col s12">
-                <div className="col s6">
+            <div className="col l12">
+                <StyledDropZone className="col l5">
                     <Dropzone 
-                        id="new-room-cover-upload" 
+                        id="drop-zone"
                         onDrop={this.onDrop} 
                         onDragEnter={(event) => this.onDragEnter(event)} 
                         onDragLeave={this.onDragLeave} 
@@ -78,35 +79,65 @@ export default class Cover extends Component {
                     >
                         <h4>Drag files here</h4>
                         <h5>or</h5>
-                        <button 
-                            id="new-room-cover-browse"
-                            className="waves-effect waves-light btn animated fadeIn"
-                        >
+                        <a className="waves-effect waves-light btn animated fadeIn">
                             {staticTxt.uploadBtn}
-                        </button>
+                        </a>
                     </Dropzone>
-                </div>
-                <div id="cover-preview" className={this.state.previewClassname}>
-                    <img
-                    src={this.setCoverPreview()}
-                    />
-                    <div className="overlay" onClick={this.removeCoverPreview}>
-                        <div className="cover-preview-text">
-                            <Trash2 size={48} />
-                            <br />
-                            <span>REMOVE</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="finish-room-creation-cont" className="col s12">
-                    <NextStage 
-                    message={this.state.message} 
-                    valid={true} 
-                    data={{cover: this.state.cover ? this.state.cover : 'https://tinyurl.com/ya5kcp2h'}}
-                    />
-                    <p>{staticTxt.hint}</p>
+                </StyledDropZone>
+                <div className="col l6 offset-l1">
+                    <p>qweqw</p>
                 </div>
             </div>
         )
-  }
+    }
 }
+
+const StyledDropZone = styled.div`
+
+    #drop-zone {
+
+        border: 3px dashed #bdbdbd !important;
+        border-radius: 12px !important;
+        text-align: center !important;
+        padding: 2.5rem 2rem !important;
+        min-height: 17.5rem;
+        min-width: 100% !important;
+        color: #bdbdbd !important;
+        letter-spacing: 2px !important;
+        transition: 0.5s ease-in-out !important;
+
+        h4 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        h5 {
+            font-weight: 100;
+            pointer-events: none;
+        }
+
+        a {
+            margin: 1rem;
+            font-size: 1rem;
+            background: #A770EF;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #FDB99B, #CF8BF3, #A770EF);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #FDB99B, #CF8BF3, #A770EF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            border: none;
+            line-height: 0;
+            min-width: 225px;
+            padding: 1.5rem;
+            box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+        }
+
+        #new-room-cover-input {
+            display: none;
+        }
+
+        .dropzone-active {
+            border: 3px dashed #7c4dff !important;
+            box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+        }
+    }
+`;
