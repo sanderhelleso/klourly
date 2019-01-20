@@ -40,10 +40,7 @@ module.exports = app => {
         // save file in storage
         const bucketFile = bucket.file(storageLocation);
         bucketFile.save(new Buffer(scaledImg));
-        const signedURL = await bucketFile.getSignedUrl({
-            action: 'read',
-            expires: '03-09-2491'
-        });
+        const signedURL = await bucketFile.getSignedUrl({ action: 'read', expires: '03-09-2491' });
     
         // update photo ref
         ref.set(signedURL[0]);
@@ -59,69 +56,54 @@ module.exports = app => {
     // upload room covers
     app.post('/api/upload/roomCovers', authenticate, multer.single('file'), async (req, res) => {
 
-        // fileblob and location
-        const file = req.file;
-        const name = file.originalname;
-
-        // storage bucket location
-        let storageLocation;
-
-        // db ref prps
-        let id;
-        let ref;
-        let key;
-        let scaledImg;
-        const type = name.split('.')[0]; // avatar / cover
-
-        // set storage location depending on type of photo upload
-        if (type === 'avatar') {
-            id = name.split('.')[1];
-            ref = db.ref(`users/${id}/settings`);
-            key = 'photoUrl';
-            storageLocation = `avatars/${id}.png`;
-
-            // re-size to 150x150 for profile picture
-            scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
-        }
-
-        else if (type === 'roomCover') {
-            id = shortid.generate();
-            ref = db.ref(`rooms/${id}`);
-            key = 'cover';
-            storageLocationLarge = `rooms/${id}/coverLarge.png`;
-            storageLocationSmall = `rooms/${id}/coverSmall.png`;
-
-            // re-size to 1280x300 for cover picture and 300x175 for preview
-            scaledImg = {};
-            scaledImg.large = await sharp(file.buffer).resize(1024, 450).toBuffer();
-            scaledImg.small = await sharp(file.buffer).resize(300, 175).toBuffer();
-        }
-
-        else {
-            res.status(400).json({
-                success: false,
-                message: 'Malformed payload'
-            });
+        // validate file type
+        if (req.file.originalname.split('.')[0] !== 'roomCover') {
+            res.status(400).json({ success: false, message: 'Malformed payload' });
             return;
         }
-        
-        // save file in storage
-        const bucketFile = await bucket.file(storageLocation);
-        await bucketFile.save(new Buffer(scaledImg));
-        const signedURL = await bucketFile.getSignedUrl({
-            action: 'read',
-            expires: '03-09-2491'
-        });
-    
-        // update photo ref
-        ref.update({ [key]: signedURL[0] });
 
-        // send back response with url and id
-        res.status(200).json({
-            success: true,
-            message: 'Successfully uploaded image',
-            photoUrl: signedURL[0],
-            id
+        // fileblob and location
+        const file = req.file;
+        const id = shortid.generate();
+        const ref = db.ref(`rooms/${id}`);
+
+        // bucket locations and files
+        const coverData = {
+            large: {
+                file: await sharp(file.buffer).resize(1024, 450).toBuffer(),
+                storageLocation: `rooms/${id}/coverLarge.png`
+            },
+            small: {
+                file: await sharp(file.buffer).resize(300, 175).toBuffer(),
+                storageLocation: `rooms/${id}/coverSmall.png`
+            }
+        };
+
+        const covers = {}; // new cover to store urls
+        Object.entries(coverData).forEach(async ([size, cover]) => {
+
+            // save file in storage
+            const bucketFile = await bucket.file(cover.storageLocation);
+            await bucketFile.save(new Buffer(cover.file));
+            const signedUrl = await bucketFile.getSignedUrl({ action: 'read', expires: '03-09-2491' });
+
+            // add file to covers object
+            covers[size] = signedUrl[0];
+
+            // once all covers has been set, send back response
+            if (Object.keys(covers).length === Object.keys(coverData).length) {
+
+                // update covers ref
+                ref.update({ cover: covers });
+
+                // send back response with url and id
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully uploaded covers',
+                    covers,
+                    id
+                });
+            }
         });
     });
 

@@ -23,9 +23,12 @@ class Create extends Component {
 
     createRoom = async () => {
 
+        const coverResponse = await room.uploadRoomCovers(this.props.newRoomData.blob);
+        console.log(coverResponse);
+
         // if user dont need to upload cover image, redirect to room now
         let updatedRoomData;
-        if (this.props.newRoomData.cover) {
+        /*if (this.props.newRoomData.cover) {
 
             // attempt to upload cover image, response returns the rooms given ID
             const coverResponse = await room.uploadRoomCovers(this.props.newRoomData.blob);
@@ -57,7 +60,7 @@ class Create extends Component {
             // room creation failed. Notify user and allow user to retry
             notification.error('Something went wrong when attempting to create room. Please try again');
             this.setState({ error: true });
-        }
+        }*/
     }
 
     render() {
