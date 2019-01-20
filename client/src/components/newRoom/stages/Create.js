@@ -16,24 +16,50 @@ import { redirect } from '../../../helpers/redirect';
 class Create extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { loading: true };
     }
 
     async componentDidMount() {
 
         // attempt to create room
-        const respone = await room.createRoom(this.props.userID, this.props.newRoomData);
-        console.log(respone);
+        let response = await room.createRoom(this.props.userID, this.props.newRoomData);
+
+        console.log(response);
+        if (response.data.success) {
+
+            // if user dont need to upload cover image, redirect to room now
+            if (!this.props.newRoomData.cover) this.setState({ loading: false });
+
+            else {
+
+                // if not, attempt to upload the image
+                response = await dashboard.uploadPhoto(this.createFileBlob(response.data.roomData.id));
+                
+                console.log(response);
+                if (response.data.success) {
+                
+                }
+
+                else {
+
+                }
+            }
+        }
+
+        else {
+            // retry here
+        }
     }
 
     createFileBlob(id) {
 
-        const file = this.normalizeRoom().cover;
-        const extension = file.name.split('.').pop();
+        const file = this.props.newRoomData.cover;
         const fd = new FormData();
 
         // send blob to server, store and set cover and state
-        fd.append('file', file, `roomCover.${id}.${extension}`);
-        return dashboard.uploadPhoto(fd)
+        fd.append('file', file, `roomCover.${id}.png`);
+        return fd;
     }
 
     render() {

@@ -20,8 +20,9 @@ module.exports = app => {
         userRef.set({ name: roomData.name });
 
         // create room and set its default properties
-        const roomRef = db.ref(`rooms/${id}`)
-        roomData.id = id; // set id to room
+        const roomRef = db.ref(`rooms/${id}`);
+
+        roomData.id = id; 
         roomData.invite =  generateInvitationLink(id);
         roomData.members = [];
 

@@ -17,7 +17,7 @@ async function uploadPhoto(data) {
             headers: authHeader(),
             method: 'post',
             url: '/api/upload/photo',
-            data: data
+            data
         });
 
         // return data recieved from server

@@ -27,16 +27,16 @@ module.exports = app => {
 
         // storage bucket
         const type = name.split('.')[0]; // avatar / cover
-        const uid = name.split('.')[1];
+        let id = name.split('.')[1];
 
         // set storage location depending on type of photo upload
         let storageLocation; // always png
         if (type === 'avatar') {
-            storageLocation = `avatars/${uid}.png`;
+            storageLocation = `avatars/${id}.png`;
         }
 
         else if (type === 'roomCover') {
-            storageLocation = `rooms/${uid}/cover.png`;
+            storageLocation = `rooms/${id}/cover.png`;
         }
 
         else {
