@@ -19,8 +19,45 @@ const multer = Multer({ storage: Multer.memoryStorage() });
 
 module.exports = app => {
 
-    // get updated settings data from client and attempt to upload
-    app.post('/api/upload/photo', authenticate, multer.single('file'), async (req, res) => {
+    // upload user avatar
+    app.post('/api/upload/userAvatar', authenticate, multer.single('file'), async (req, res) => {
+
+        // validate file type
+        if (req.file.originalname.split('.')[0] !== 'avatar') {
+            res.status(400).json({ success: false, message: 'Malformed payload' });
+            return;
+        }
+
+        // fileblob and location
+        const file = req.file;
+        const id = file.originalname.split('.')[1];
+        const ref = db.ref(`users/${id}/settings/photoUrl`);
+        const storageLocation = `avatars/${id}.png`;
+
+        // re-size to 150x150 for profile picture
+        const scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
+
+        // save file in storage
+        const bucketFile = bucket.file(storageLocation);
+        bucketFile.save(new Buffer(scaledImg));
+        const signedURL = await bucketFile.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491'
+        });
+    
+        // update photo ref
+        ref.set(signedURL[0]);
+
+        // send back response with url and id
+        res.status(200).json({
+            success: true,
+            message: 'Successfully uploaded image',
+            photoUrl: signedURL[0]
+        });
+    });
+
+    // upload room covers
+    app.post('/api/upload/roomCovers', authenticate, multer.single('file'), async (req, res) => {
 
         // fileblob and location
         const file = req.file;
@@ -51,10 +88,13 @@ module.exports = app => {
             id = shortid.generate();
             ref = db.ref(`rooms/${id}`);
             key = 'cover';
-            storageLocation = `rooms/${id}/cover.png`;
+            storageLocationLarge = `rooms/${id}/coverLarge.png`;
+            storageLocationSmall = `rooms/${id}/coverSmall.png`;
 
-            // re-size to 1280x300 for cover picture
-            scaledImg = await sharp(file.buffer).resize(1024, 450).toBuffer();
+            // re-size to 1280x300 for cover picture and 300x175 for preview
+            scaledImg = {};
+            scaledImg.large = await sharp(file.buffer).resize(1024, 450).toBuffer();
+            scaledImg.small = await sharp(file.buffer).resize(300, 175).toBuffer();
         }
 
         else {
@@ -62,6 +102,7 @@ module.exports = app => {
                 success: false,
                 message: 'Malformed payload'
             });
+            return;
         }
         
         // save file in storage

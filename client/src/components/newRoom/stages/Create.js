@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 
 import { newRoomCreatedAction } from '../../../actions/newRoom/newRoomCreatedAction';
 import { enterRoomAction } from '../../../actions/room/enterRoomAction';
-
-import { dashboard } from '../../../api/dashboard/dashboard';
 import { room } from '../../../api/room/room';
 
 import Back from '../../dashboard/Back';
@@ -30,13 +28,13 @@ class Create extends Component {
         if (this.props.newRoomData.cover) {
 
             // attempt to upload cover image, response returns the rooms given ID
-            const coverResponse = await dashboard.uploadPhoto(this.props.newRoomData.blob);
+            const coverResponse = await room.uploadRoomCovers(this.props.newRoomData.blob);
 
             // if error, let user know that default cover has been set
             if (!coverResponse.data.success) notification.error('Something went wrong when uploading cover image. Default image has been set');
 
             // get created roomID and photoUrl
-            updatedRoomData = { id: coverResponse.data.id, cover: coverResponse.data.photoUrl };
+            updatedRoomData = { id: coverResponse.data.id, cover: coverResponse.data.covers };
         }
 
         // attempt to create room with recieved ID

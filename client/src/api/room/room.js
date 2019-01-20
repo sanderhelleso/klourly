@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const room = {
     createRoom,
+    uploadRoomCovers,
     getLocationFromCoords,
     getRoom,
     getRooms,
@@ -34,6 +35,26 @@ async function createRoom(uid, roomData) {
 
     catch(error) {
         console.log(error);
+    }
+} 
+
+// upload room covers for a room
+async function uploadRoomCovers(data) {
+     try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/upload/roomCovers',
+            data
+        });
+
+        // return data recieved from server
+        return response;
+    }
+
+    catch(error) {
+
+        return error.response;
     }
 } 
 

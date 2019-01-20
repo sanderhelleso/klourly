@@ -40,7 +40,7 @@ class ChangeAvatar extends Component {
         fd.append('file', file, `avatar.${this.props.userID}.${extension}`);
 
         // attempt to upload image
-        const response = await dashboard.uploadPhoto(fd);
+        const response = await dashboard.uploadAvatar(fd);
 
         // check if image was successfully uploaded
         if (response.data.success) {

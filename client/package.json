@@ -15,7 +15,10 @@
     "/api/settings": {
       "target": "http://localhost:5000"
     },
-    "/api/upload/photo": {
+    "/api/upload/userAvatar": {
+      "target": "http://localhost:5000"
+    },
+    "/api/upload/roomCovers": {
       "target": "http://localhost:5000"
     },
     "/api/upload/removeAvatar": {
