@@ -99,7 +99,7 @@ class Stages extends Component {
             case 6:
                 this.setState({
                     heading: 'Set a cover image to the room',
-                    intro: 'Select the days and times the room will be occuring. A room can have as many times as you want and it is a great way to keep your members aware of when things are gonna happen.',
+                    intro: 'Picking a good cover image that represent your room is a great way to personolize the room and engage your members.',
                     icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-6-256.png?alt=media&token=9a747b74-8379-46b9-92a0-edd9c707601a',
                     buttonTxt: 'Finish and create room'
                 });
@@ -126,7 +126,7 @@ class Stages extends Component {
                 return <Times message={this.state.buttonTxt} />;
             
             case 6:
-                return <Cover />;
+                return <Cover message={this.state.buttonTxt} />;
 
             case 7:
                 return <Create />;

@@ -1,55 +1,41 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
-import { Trash2 } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
-
-
 import { notification } from '../../../helpers/notification';
+
 import CoverPreview from '../CoverPreview';
 import NextStage from '../NextStage';
-
-const staticTxt = {
-    hint: 'Default cover image will be selected if no other image is uploaded',
-    uploadError: 'Invalid file or image is to large! Maximum file upload size is 1024KB'
-}
 
 class Cover extends Component {
     constructor(props) {
         super(props);
     }
 
-    onDrop = file => {
-
-        // validate file 
-        if (Array.isArray(file) && file.length) {
-            this.props.nextStageAction({ cover: file[0].preview });
-        }
-    }
+    onDrop = file => (Array.isArray(file) && file.length) ? this.props.nextStageAction({ cover: file[0].preview }) : null;
 
     onDragEnter = e => e.target.id === 'drop-zone' ? e.target.className = 'col s12 dropzone-active' : null;
 
     onDragLeave = e => e.target.className = '';
 
-    onDropRejected = () => notification.invalidFileUpload(staticTxt.uploadError);
+    onDropRejected = () => notification.error('Invalid file type! Only images of type PNG and JPEG are allowed');
 
 
     render() {
         return (
             <StlyedCoverCont className="col l12">
-                <StyledDropZone className="col l5">
+                <StyledDropZone className="col l6">
                     <Dropzone 
                         id="drop-zone"
                         onDrop={this.onDrop} 
-                        onDragEnter={(e) => this.onDragEnter(e)} 
+                        onDragEnter={this.onDragEnter} 
                         onDragLeave={this.onDragLeave} 
                         onDropRejected={this.onDropRejected}
                         accept="image/jpeg, image/png"
-                        maxSize={524288 * 2}
                         multiple={false}
                     >
                         <h4>Drag files here</h4>
@@ -59,8 +45,15 @@ class Cover extends Component {
                         </a>
                     </Dropzone>
                 </StyledDropZone>
-                <div className="col l6 offset-l1">
-                    <CoverPreview src={this.props.cover} />
+                <div className="col l6">
+                    <CoverPreview />
+                </div>
+                <div className="col s12">
+                    <p>Default cover image will be selected if no other image is uploaded</p>
+                    <NextStage
+                        message={this.props.message}
+                        valid={true}
+                    />
                 </div>
             </StlyedCoverCont>
         )
@@ -68,32 +61,35 @@ class Cover extends Component {
 }
 
 
-const mapStateToProps = state => {
-    return { cover: state.dashboard.newRoom.cover };
-};
-
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ nextStageAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cover);
+export default connect(null, mapDispatchToProps)(Cover);
 
 
 
 const StlyedCoverCont = styled.div`
     margin-top: 4rem;
+    text-align: center;
+
+    p {
+        margin: 2rem auto 5rem auto;
+        color: #9e9e9e;
+        font-size: 0.8rem;
+    }
 `;
 
 const StyledDropZone = styled.div`
 
     #drop-zone {
 
-        border: 3px dashed #bdbdbd !important;
-        border-radius: 12px !important;
+        height: 300px !important;
+        width: 100% !important;
+        border: 2px dashed #bdbdbd !important;
+        border-radius: 0px !important;
         text-align: center !important;
         padding: 3rem 2rem !important;
-        min-height: 20rem;
-        min-width: 100% !important;
         color: #bdbdbd !important;
         letter-spacing: 2px !important;
         transition: 0.5s ease-in-out !important;
@@ -103,7 +99,7 @@ const StyledDropZone = styled.div`
             text-transform: uppercase;
             font-weight: 600;
             pointer-events: none;
-            margin-top: 2.1rem;
+            margin-top: 2.5rem;
         }
 
         h5 {

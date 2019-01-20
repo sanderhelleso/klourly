@@ -2,18 +2,34 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
+import { notification } from '../../helpers/notification';
 
-export default class CoverPreview extends Component {
+
+class CoverPreview extends Component {
     constructor(props) {
         super(props);
+    }
+
+    removeCover = () =>{
+        this.props.nextStageAction({ cover: false });
+        notification.success('Cover image removed');
     }
 
     renderImage() {
 
         if (this.props.src) {
             return (
-                <div>
-                    <div id="remove-img">
+                <div id="img-cont">
+                    <div 
+                        id="remove-img" 
+                        className="waves-effect waves-light animated fadeIn z-depth-1"
+                        title="Remove Cover"
+                        onClick={this.removeCover}
+                    >
                         <span>
                             <Trash2 />
                         </span>
@@ -35,15 +51,54 @@ export default class CoverPreview extends Component {
     }
 }
 
+
+const mapStateToProps = state => {
+    return { src: state.dashboard.newRoom.cover };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ nextStageAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoverPreview);
+
+
 const StyledImgCont = styled.div`
 
     position: relative;
     height: 300px;
-    border: 1px solid #bdbdbd;
+    border: 2px solid #bdbdbd;
     transition: 0.3s ease-in-out;
+    text-align: center;
 
     &.active-cont {
         box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    }
+
+    #remove-img {
+        width: 55px;
+        height: 55px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #ff5252;
+        position: absolute;
+        top: -20px;
+        right: -15px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+
+        span {
+            display: block;
+            margin-top: 14px;
+
+            svg {
+                stroke : #ffebee;
+            }
+        }
+    }
+
+    #img-cont {
+        height: 100%;
     }
 
     img {
