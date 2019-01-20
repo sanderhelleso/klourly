@@ -22,7 +22,7 @@ export default CircularLoader;
 
 const StyledLoaderCont = styled.div`
     position: absolute;
-    top: 52.5%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%);
 

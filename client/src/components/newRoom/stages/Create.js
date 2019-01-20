@@ -31,7 +31,6 @@ class Create extends Component {
     render() {
         return (
             <div className="col s12">
-                <p>Creating room...</p>
             </div>
         )
     }

@@ -48,7 +48,11 @@ class Intro extends Component {
             )
         }
 
-        else return <CircularLoader size="big" />
+        else return (
+            <div id="loader-cont">
+                <CircularLoader size="big" />
+            </div>
+        )
     }
 
     /*subIntro() {
@@ -108,6 +112,11 @@ export default connect(mapStateToProps, null)(Intro);
 const StyledIntro = styled.div`
 
     margin-top: 7.5vh;
+
+    #loader-cont {
+        position: relative;
+        margin-top: 6.5rem;
+    }
 
     .stage-icon {
         transition: 0.3s ease-in-out;

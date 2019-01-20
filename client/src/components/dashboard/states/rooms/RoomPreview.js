@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import RoomCard from './RoomCard';
+import CircularLoader from '../../../loaders/CircularLoader';
 
 export default class RoomPreview extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class RoomPreview extends Component {
                         });
         }
 
-        return <p>Loading...</p>;
+        return <CircularLoader size="big" />
     }
 
     render() {
@@ -41,6 +42,8 @@ const StyledCont = styled.div`
     padding-right: 2rem;
     padding-bottom: 20vh;
     max-height: 80vh;
+    min-height: 50vh;
+    position: relative;
     
     &::-webkit-scrollbar { 
         display: none;

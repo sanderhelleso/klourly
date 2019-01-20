@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
 
 import LinearLoader from '../loaders/LinearLoader';
+import CircularLoader from '../loaders/CircularLoader';
 
 class RoomData extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class RoomData extends Component {
     }
 
     render() {
-        return <LinearLoader center={true} loading={this.props.loaded ? false : true} />;
+        return this.props.loaded ? null : <CircularLoader size="big" />
     }
 }
 
