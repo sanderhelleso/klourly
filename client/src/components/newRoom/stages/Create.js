@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { newRoomCreatedAction } from '../../../actions/newRoom/newRoomCreatedAction';
 import { enterRoomAction } from '../../../actions/room/enterRoomAction';
+import { nextStageAction } from '../../../actions/newRoom/nextStageAction';
 import { room } from '../../../api/room/room';
 
 import Back from '../../dashboard/Back';
@@ -58,6 +59,9 @@ class Create extends Component {
             notification.error('Something went wrong when attempting to create room. Please try again');
             this.setState({ error: true });
         }
+
+        // reset stage
+        this.props.nextStageAction({ reset: true });
     }
 
     render() {
@@ -74,7 +78,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ newRoomCreatedAction, enterRoomAction }, dispatch);
+    return bindActionCreators({ newRoomCreatedAction, enterRoomAction, nextStageAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
