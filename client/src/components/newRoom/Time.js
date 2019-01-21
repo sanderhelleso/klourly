@@ -174,7 +174,7 @@ class Time extends Component {
         else {
 
             // check if from time is sat
-            if (this.state.toTime === '') this.setState({ [type]: time });
+            if (this.state.fromTime === '') this.setState({ [type]: time });
 
             // if sat, compare and make sure that to time is AFTER from time
             else {

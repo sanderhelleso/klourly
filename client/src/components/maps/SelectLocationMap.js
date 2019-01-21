@@ -56,8 +56,9 @@ class SelectLocationMap extends Component {
         });
 
         try {
+
+            // result set from reverse geocoding from given latlng
             const result = await this.geo.getReverse(latLng[0], latLng[1]);
-            console.log(result);
 
             // update results location
             if (result) this.props.nextStageAction({ 
@@ -94,13 +95,9 @@ class SelectLocationMap extends Component {
         }, () => materializeJS.M.textareaAutoResize(document.querySelector('#address')));
     };
 
-    getWidth(width, margin) {
-        return width - (width / margin);
-    }
+    getWidth = (width, margin) => width - (width / margin);
 
-    setZoom = () => {
-        this.setState({ zoom: this.state.zoom < 19 ? this.state.zoom + 1 : 14 });
-    }
+    setZoom = () => this.setState({ zoom: this.state.zoom < 19 ? this.state.zoom + 1 : 14 });
 
     render() {
         return (
