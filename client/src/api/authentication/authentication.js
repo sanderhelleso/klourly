@@ -26,13 +26,11 @@ async function signup(firstName, lastName, email, password, location, newsLetter
             }
         });
 
-        return response.data;
+        return response;
     }
 
-    // catch and display error
-    catch (error) {
-        return error;
-    };
+    // catch error
+    catch (error) { return error.response };
 }
 
 async function login(email, password) {
@@ -46,25 +44,12 @@ async function login(email, password) {
                 password: password
             }
         });
-        
-        // get response from endpoint
-        // success, store UID in localstorage and redirect to dashboard
-        if (response.data.success) {
-            localStorage.setItem('user', JSON.stringify(response.data.userData.user));            
-        }
 
-        // something went wrong (allready user with email etc..)
-        else {
-            //this.notify('error', response.data.message);
-        }
-
-        return response.data;
+        return response;
     }
 
-    // catch and display error
-    catch (error) {
-        console.log(error);
-    };
+    // catch error
+    catch (error) { return error.response };
 }
 
 // remove user from local storage to log user out
@@ -94,11 +79,8 @@ async function validateUser(uid) {
         return response.data.success;
     }
 
-    // catch and display error
-    catch (error) {
-        console.log(error);
-        return false;
-    }
+    // catch error
+    catch (error) { return error.response };
 }
 
 // check for params and run action depending on params

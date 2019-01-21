@@ -443,10 +443,6 @@ class Form extends Component {
                         <p id="signup-login">Allready have an account? <a onClick={redirect.login}>Login here</a></p>
                     </div>
                 </div>
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
-                />
             </form>
         )
     }

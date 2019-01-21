@@ -123,22 +123,20 @@ class Form extends Component {
         });
 
         // authenticate login credentials
-        const authenticatedUser = await authentication.login(this.state.email, this.state.password);
+        const response = await authentication.login(this.state.email, this.state.password);
+        console.log(response);
 
         // login successfull
-        if (authenticatedUser.success) {
+        if (response.data.success) {
 
             // check for params in case of redirects
             const redirectActions = await authentication.authAndDoAction(
-                this.props.params, authenticatedUser.userData.user.id
+                this.props.params, response.data.user.id
             );
-
-            // set user state
-            const response = await dashboard.fetchUserData(authenticatedUser.userData.user.id);
 
             // set user data
             await this.props.userDataActions(response.data.userData);
-            await this.props.loginAction(authenticatedUser.userData.user);
+            await this.props.loginAction(response.data.user);
 
             // check for valid redirect action and redirect if needed
             if (redirectActions && redirectActions.data.redirectActionSuccess) {
@@ -148,7 +146,7 @@ class Form extends Component {
 
         // login failed
         else {
-            notification.login(false);    
+            notification.error('Invalid e-mail or password. Please try again');    
             this.setState({
                 valid: true,
                 loading: false
@@ -179,24 +177,16 @@ class Form extends Component {
                     </div>
                     <a id="login-signup" onClick={redirect.signup}>Dont have an account?</a>
                 </form>
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
-                />
             </div>
         )
     }
 }
 
-// set initial store state
 const mapStateToProps = state => {
-    return {
-        user: state
-    }
+    return { user: state }
 }
 
-// attempt to update state if login succesfull
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ loginAction, userDataActions }, dispatch);
 }
 

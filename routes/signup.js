@@ -7,27 +7,25 @@ module.exports = app => {
 
     // get signup data from client
     app.post('/api/signup', (req, res) => {
+        
 
         // attempt to create new user
-        const name = `${capitalize(req.body.firstName)} ${capitalize(req.body.lastName)}`
         firebase.auth().createUser({
             email: req.body.email.toLowerCase(),
             emailVerified: false,
+            disabled: false,
             password: req.body.password,
-            displayName: name,
-            disabled: false
         })
-        // create new user
-        .then(function(userRecord) {
+        .then(userRecord => {
 
             // set the user UID reference for the contents of user.
-            const usersRef = signupRef.child(userRecord.uid);
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            const usersRef = signupRef.child(userRecord.uid);
             usersRef.set({
-                location: req.body.location,
+                address: req.body.location,
                 signupDate: signupDate,
                 settings: {
-                    displayName: name,
+                    displayName: `${capitalize(req.body.firstName)} ${capitalize(req.body.lastName)}`,
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
@@ -37,7 +35,6 @@ module.exports = app => {
             });
 
             // send data back to client and login user with localstorage using UID
-            console.log(userRecord);
             res.json({
                 userData: userRecord,
                 message: 'Successfully created new user',
@@ -45,9 +42,8 @@ module.exports = app => {
             });
         })
         
-        // if error, catch and send error to user
+        // catch potensal error that can occur during sign up
         .catch(error => {
-            console.log("Error creating new user:", error);
             res.json({
                 message: error.message,
                 success: false
