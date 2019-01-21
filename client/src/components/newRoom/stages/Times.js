@@ -65,7 +65,11 @@ class Times extends Component {
                     <StyledNextCont>
                         <NextStage 
                             message={this.props.message} 
-                            valid={true} 
+                            valid={true}
+                            data={{
+                                times: this.state.times.length > 0 
+                                ? this.state.times : false
+                            }}
                         />
                     </StyledNextCont>
                 </div>
