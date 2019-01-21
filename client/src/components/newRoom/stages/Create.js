@@ -26,6 +26,9 @@ class Create extends Component {
 
     createRoom = async () => {
 
+        // contains ID and cover images
+        // if no cover is needed, default is set on server
+        // and roomID will be generated in the "createRoom" route
         let updatedRoomData = {};
 
         // if user dont need to upload cover image, redirect to room now
@@ -41,30 +44,37 @@ class Create extends Component {
             updatedRoomData = { id: coverResponse.data.id, cover: coverResponse.data.covers };
         }
 
-        else {
-            // do no cover code here
-        }
 
         // attempt to create room with recieved ID
         let roomResponse = await room.createRoom(
-            this.props.userID, { ...this.props.newRoomData, ...updatedRoomData});
+            this.props.userID, { 
+                ...this.props.newRoomData, 
+                ...updatedRoomData
+            }
+        );
 
         // validate response success
         if (roomResponse.data.success) {
 
+            // get room data from server
+            const roomData  = roomResponse.data.roomData;
+
             // create preview
             const preview = {
-                id: updatedRoomData.id,
-                cover: updatedRoomData.cover.small,
-                name: this.props.newRoomData.name,
-                times: this.props.newRoomData.times 
+                id: roomData.id,
+                cover: roomData.cover.small,
+                name: roomData.name,
+                times: roomData.times 
             }
             
             // update owning rooms state
-            this.props.newRoomCreatedAction([...this.props.owning, updatedRoomData.id]);
+            this.props.newRoomCreatedAction(
+                [...this.props.owning, 
+                roomData.id]
+            );
 
             // set active room, add to preview
-            this.props.enterRoomAction(roomResponse.data.roomData);
+            this.props.enterRoomAction(roomData);
             this.props.setRoomsOwningAction(
                 this.props.owningPreview 
                 ? [...this.props.owningPreview, preview] 
@@ -72,7 +82,7 @@ class Create extends Component {
             );
 
             // redirect to room once ready
-            redirect.room(updatedRoomData.id);
+            redirect.room(roomData.id);
         }       
 
         else {

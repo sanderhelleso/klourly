@@ -12,6 +12,16 @@ module.exports = app => {
         const roomData = req.body.roomData;
         delete roomData.stage;
         delete roomData.blob;
+
+        // if no room cover, set default and generate roomID
+        if (!roomData.cover) {
+            roomData.id = shortid.generate();
+            roomData.cover = {
+                large: process.env.DEFAULT_ROOM_COVER_LARGE,
+                small: process.env.DEFAULT_ROOM_COVER_SMALL,
+            }
+        }
+        
         roomData.invite =  generateInvitationLink(roomData.id);
         roomData.members = [];
         roomData.checkin = { active: false };

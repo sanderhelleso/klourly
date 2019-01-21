@@ -57,7 +57,7 @@ class Form extends Component {
                 <input 
                     id="email" 
                     type="email" 
-                    value={this.props.settings.email}
+                    value={this.props.email}
                     disabled={true}
                 />
                 <label htmlFor="email">E-Mail</label>
@@ -226,7 +226,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        settings: state.dashboard.userData.settings
+        settings: state.dashboard.userData.settings,
+        email: state.auth.user.email
     };
 };
 
