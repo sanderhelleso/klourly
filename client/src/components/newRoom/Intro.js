@@ -87,7 +87,7 @@ class Intro extends Component {
                 valid={true} 
                 data={{ owner: this.props.userID,
                         cover: false,
-                        times: {}
+                        times: false
                     }}
             />
         )

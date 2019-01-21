@@ -46,12 +46,12 @@ class Radius extends Component {
             option.classList.remove("fadeIn");
         });
 
-        let timer = 100;
+        let timer = 0;
         options.forEach(option => {
             setTimeout(() => {
                 option.classList.add('fadeOut');
             }, timer);
-            timer += 150;
+            timer += 100;
         });
 
         setTimeout(() => {
@@ -127,7 +127,7 @@ const StyledOption = styled.div`
         pointer-events: none;
     }
 
-    &:hover {
+    &:hover, &:active, &:focus {
         box-shadow: 0px 36px 72px rgba(0, 0, 0, 0.30);
     }
 

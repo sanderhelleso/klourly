@@ -55,21 +55,35 @@ class SelectLocationMap extends Component {
             zoom: 14
         });
 
-        const result = await this.geo.getReverse(latLng[0], latLng[1]);
-        console.log(result);
+        try {
+            const result = await this.geo.getReverse(latLng[0], latLng[1]);
+            console.log(result);
 
-        // update results location
-        if (result) this.props.nextStageAction({ 
-            location: {
-                address: result.displayName,
-                info: { ...result.address },
-                coords: {
-                    latitude: latLng[0],
-                    longitude: latLng[1]
-                },
-            } 
-        });
-
+            // update results location
+            if (result) this.props.nextStageAction({ 
+                location: {
+                    address: result.displayName,
+                    info: { ...result.address },
+                    coords: {
+                        latitude: latLng[0],
+                        longitude: latLng[1]
+                    },
+                } 
+            });
+        } 
+        
+        catch (error) {
+            this.props.nextStageAction({ 
+                location: {
+                    address: 'Unknown location',
+                    info: false,
+                    coords: {
+                        latitude: latLng[0],
+                        longitude: latLng[1]
+                    },
+                } 
+            });
+        }
     }
 
     handleResize = () => {

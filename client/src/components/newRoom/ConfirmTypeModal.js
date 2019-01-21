@@ -160,7 +160,7 @@ const StyledModal = styled.div`
 const StyledModalContent = styled.div`
     position: relative;
     text-align: center;
-    padding: 1rem 4rem !important;
+    padding: 1rem 4rem;
 
     h4 {
         max-width: 180px;
@@ -199,5 +199,9 @@ const StyledModalContent = styled.div`
 
     .helper-text {
         text-align: left;
+    }
+
+    @media (max-width: 600px) {
+        padding: 0.5rem;
     }
 `;

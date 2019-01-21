@@ -37,7 +37,7 @@ export default class Type extends Component {
         return Object.values(this.purposeOptions).map(option => {
             i++;
             return (
-                <div key={option.title} className="col s4">
+                <div key={option.title} className="col s12 m8 offset-m2 l4">
                     <StyledCard
                         purpose={option.title.toLowerCase()}
                         even={i % 2 === 0}
@@ -126,6 +126,13 @@ const StyledCard = styled.div`
                 max-width: 95%;
             }
         }
+
+        @media screen and (max-width: 1000px) {
+            
+            p {
+                margin: 2.5rem auto;
+            }
+        }
     }
 
     &:focus {
@@ -137,5 +144,9 @@ const StyledCard = styled.div`
 
     @media screen and (max-width: 1300px) {
         margin: 0;    
+    }
+
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 3rem;
     }
 `;

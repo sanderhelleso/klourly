@@ -37,15 +37,14 @@ class Location extends Component {
             this.setState({
                 location: nextProps.location,
                 loading: false
-            });
+            }, () => {
 
-            setTimeout(() => {
-
+                // update fields and focus
+                materializeJS.M.updateTextFields();
                 materializeJS.M.textareaAutoResize(textarea);
                 if (this.state.initialized) textarea.focus();
                 else this.setState({ initialized: true });
-
-            }, 50);
+            });
         }
     }
 
