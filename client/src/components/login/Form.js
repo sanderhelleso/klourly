@@ -124,7 +124,6 @@ class Form extends Component {
 
         // authenticate login credentials
         const response = await authentication.login(this.state.email, this.state.password);
-        console.log(response);
 
         // login successfull
         if (response.data.success) {
