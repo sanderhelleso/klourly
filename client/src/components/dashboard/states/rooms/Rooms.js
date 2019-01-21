@@ -49,8 +49,6 @@ class Rooms extends Component {
                 this.props.setRoomsOwningAction(response.data.roomsData);
             }
         }
-
-        else this.props.setRoomsOwningAction({ empty: true });
     }
 
     async loadAttending() {
@@ -64,8 +62,6 @@ class Rooms extends Component {
                 this.props.setRoomsAttendingAction(response.data.roomsData);
             }
         }
-
-        else this.props.setRoomsAttendingAction({ empty: true });
     }
 
     render() {

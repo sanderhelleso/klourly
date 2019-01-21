@@ -20,7 +20,7 @@ const multer = Multer({ storage: Multer.memoryStorage() });
 module.exports = app => {
 
     // upload user avatar
-    app.post('/api/upload/userAvatar', authenticate, multer.single('file'), async (req, res) => {
+    app.post('/api/upload/userAvatar', multer.single('file'), async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'avatar') {
@@ -61,8 +61,6 @@ module.exports = app => {
             res.status(400).json({ success: false, message: 'Malformed payload' });
             return;
         }
-
-        console.log(123);
 
         // fileblob and location
         const file = req.file;

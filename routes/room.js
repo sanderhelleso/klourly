@@ -92,7 +92,7 @@ module.exports = app => {
                 // get needed preview data
                 const roomPreview = {
                     id: snapshot.val().id,
-                    cover: snapshot.val().cover,
+                    cover: snapshot.val().cover.small,
                     name: snapshot.val().name,
                     times: snapshot.val().times
                 }
@@ -397,7 +397,7 @@ module.exports = app => {
             const usersCheckedinRooms = userSnapshot.val().checkins;
             
             // validate user rooms
-            const userOwnedRooms = userSnapshot.val().rooms;
+            let userOwnedRooms = userSnapshot.val().rooms;
             if (userOwnedRooms) userOwnedRooms = userOwnedRooms.owning;
 
             // if list is empty send back response and return immediatly

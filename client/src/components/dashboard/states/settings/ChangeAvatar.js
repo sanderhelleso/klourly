@@ -46,8 +46,7 @@ class ChangeAvatar extends Component {
         if (response.data.success) {
 
             // update state for avatar (userData)
-            this.props.avatarActions(URL.createObjectURL(file));
-            notification.success('Successfully updated avatar!');
+            notification.success('Successfully updated avatar! Your new avatar will be live around Klourly in a bit');
         }
 
         // something went wrong with upload 
