@@ -6,7 +6,7 @@ import { localStorageHelpers } from '../helpers/localStorage';
 // create redux store
 export const store = createStore(
     reducers,
-    localStorageHelpers.loadState(), // persisted state 
+    localStorageHelpers.loadState(), // persisted state
     compose(
         applyMiddleware(reduxThunk),
         window.devToolsExtension ? window.devToolsExtension() : f => f

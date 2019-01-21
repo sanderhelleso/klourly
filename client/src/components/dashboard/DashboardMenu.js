@@ -5,7 +5,7 @@ import { Map, Activity, Settings, Grid} from 'react-feather';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { dashboardActions } from '../../actions/dashboardActions';
+import { dashboardAction } from '../../actions/dashboardAction';
 
 
 class DashboardMenu extends Component {
@@ -29,11 +29,7 @@ class DashboardMenu extends Component {
         }
     }
 
-    componentDidMount() {
-
-        // activate menu
-        //document.querySelector('.menu-item-active').click();
-    }
+    componentDidMount = () => this.props.dashboardAction(2);
 
     renderMenuItems() {
 
@@ -48,7 +44,7 @@ class DashboardMenu extends Component {
                 <div 
                     key={itemName}
                     className={`menu-item waves-effect ${active ? 'menu-item-active' : ''}`}       
-                    onClick={() => active ? {} : this.props.dashboardActions(itemIndex)}
+                    onClick={() => active ? {} : this.props.dashboardAction(itemIndex)}
                 >
                     {value.icon}
                 </div>
@@ -73,7 +69,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ dashboardActions }, dispatch);
+    return bindActionCreators({ dashboardAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);

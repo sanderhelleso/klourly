@@ -1,4 +1,4 @@
-export const dashboardActions = (dashboardOption) => (
+export const dashboardAction = (dashboardOption) => (
     {
         type: 'DASHBOARD_OPTION',
         payload: dashboardOption

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import DashboardMenu from './DashboardMenu.';
+import DashboardMenu from './DashboardMenu';
 import DashboardMain from './DashboardMain';
 import Toolbar from './toolbar/Toolbar';
 

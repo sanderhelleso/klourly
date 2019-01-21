@@ -1,4 +1,3 @@
-const firebase = require('firebase-admin');
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
@@ -6,8 +5,8 @@ module.exports = (req, res, next) => {
     // get auth header value
     const bearerHeader = req.headers['authorization'];
 
-    // check if bearer is undefined
-    if (typeof bearerHeader !== 'undefined') {
+    // check if bearer is present
+    if (bearerHeader) {
 
         // split at the space and get token from array
         const bearerToken = bearerHeader.split(' ')[1];            
@@ -20,13 +19,11 @@ module.exports = (req, res, next) => {
 
     }
 
-    // forbidden
     else sendForbidden(res);
 };
 
+// forbidden, not authorized
 function sendForbidden(res) {
-
-    // forbidden, not authorized
     res.status(403).json({ 
         success: false,
         error: 'Not authorized',

@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 import locationReducer from './locationReducer';
 import authReducer from "./authReducer";
 import dashboardReducer from './dashboardReducer';

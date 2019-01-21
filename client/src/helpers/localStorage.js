@@ -1,7 +1,8 @@
 
 export const localStorageHelpers = {
     loadState,
-    saveState
+    saveState,
+    initDashboardOptions
 }
 
 /**
@@ -29,4 +30,16 @@ function saveState(state) {
     } 
     
     catch (error) { console.log(error) };
+}
+
+function initDashboardOptions() {
+
+    try {
+        const serializedState = localStorage.getItem('state');
+
+        if (!serializedState) return undefined;
+        return JSON.parse(serializedState).dashboard;
+    } 
+    
+    catch (error) { return undefined };
 }

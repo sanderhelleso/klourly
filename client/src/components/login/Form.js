@@ -6,10 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-// actions and authentication functions
 import { loginAction } from '../../actions/loginActions';
 import { userDataActions } from '../../actions/userDataActions';
-import { dashboard } from '../../api/dashboard/dashboard';
+
+
 import { authentication } from '../../api/authentication/authentication';
 import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
@@ -133,7 +133,7 @@ class Form extends Component {
                 this.props.params, response.data.user.id
             );
 
-            // set user data
+            // set user data and init state
             await this.props.userDataActions(response.data.userData);
             await this.props.loginAction(response.data.user);
 
