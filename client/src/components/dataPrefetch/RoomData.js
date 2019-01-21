@@ -12,6 +12,8 @@ import CircularLoader from '../loaders/CircularLoader';
 class RoomData extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { loaded: this.props.loaded };
     }
 
     async componentDidMount() {
@@ -24,6 +26,8 @@ class RoomData extends Component {
         // if room state is not set or not matching, refetch room data
         else {
 
+            this.setState({ loaded: false });
+
             // attempt to fetch room data
             const response = await room.getRoom(this.props.userID, this.props.match.params.roomID);
 
@@ -34,11 +38,13 @@ class RoomData extends Component {
                     owner: response.data.ownerData
                 });
             }
+
+            this.setState({ loaded: true });
         }
     }
 
     render() {
-        return this.props.loaded ? null : <CircularLoader size="big" />
+        return this.state.loaded ? null : <CircularLoader size="big" />
     }
 }
 
