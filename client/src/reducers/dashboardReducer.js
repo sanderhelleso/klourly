@@ -41,12 +41,10 @@ const dashboardReducer = (state = {}, action) => {
         case 'NEW_ROOM_STAGE':
             return {
                 ...state,
-                newRoom: action.payload.reset 
-                    ? { stage: 0 }
-                    : {
-                        ...state.newRoom,
-                        ...action.payload
-                    }
+                newRoom: {
+                    ...state.newRoom,
+                    ...action.payload
+                }
             }
    
 
@@ -76,7 +74,7 @@ const dashboardReducer = (state = {}, action) => {
         case 'NEW_ROOM_SUCCESS':
             return {
                 ...state,
-                newRoom: {},
+                newRoom: { stage: 0 },
                 userData: {
                     ...state.userData,
                     rooms: {

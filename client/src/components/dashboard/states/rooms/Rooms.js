@@ -34,8 +34,13 @@ class Rooms extends Component {
 
     async loadOwning() {
 
+        console.log(this.props);
+
+
         // check if user has owning rooms to be previewed
         if (this.props.owningList && !this.props.owningPreview) {
+
+            console.log(123);
 
             const response = await room.getRooms(this.props.userID, this.props.owningList);
 

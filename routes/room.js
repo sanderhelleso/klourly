@@ -17,10 +17,16 @@ module.exports = app => {
         roomData.checkin = { active: false };
 
         // create room refrence connected to user
-        const usersOwningRef = db.ref(`users/${req.body.uid}/rooms/owning`);
+        const usersOwningRef = db.ref(`users/${roomData.owner}/rooms/owning`);
         
         // set room id for refrence path
-        usersOwningRef.once('value', snapshot => usersOwningRef.set([...snapshot.val(), roomData.id]));
+        usersOwningRef.once('value', snapshot => {
+            usersOwningRef.set(
+                snapshot.exists()
+                ? [...snapshot.val(), roomData.id] 
+                : [roomData.id]
+            );
+        });
 
         // update database with new room
         const roomRef = db.ref(`rooms/${roomData.id}`);

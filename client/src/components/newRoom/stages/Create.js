@@ -59,9 +59,6 @@ class Create extends Component {
             notification.error('Something went wrong when attempting to create room. Please try again');
             this.setState({ error: true });
         }
-
-        // reset stage
-        this.props.nextStageAction({ reset: true });
     }
 
     render() {
