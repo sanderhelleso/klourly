@@ -1,4 +1,5 @@
 const firebase = require('firebase-admin');
+const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
 
@@ -8,32 +9,19 @@ module.exports = (req, res, next) => {
     // check if bearer is undefined
     if (typeof bearerHeader !== 'undefined') {
 
-            // split at the space and get token from array
-            const bearerToken = bearerHeader.split(' ')[1];
+        // split at the space and get token from array
+        const bearerToken = bearerHeader.split(' ')[1];            
 
-            req.token = bearerToken;
+        jwt.verify(bearerToken, process.env.JWT_SECRET, (error, authData) => {
 
-            // authenticate and go next
-            authenticateUser(req.body.uid, req.token);
+            if (!error && authData.uid === req.body.uid) next();
+            else sendForbidden(res);
+        });
+
     }
 
     // forbidden
     else sendForbidden(res);
-
-    // attempt to authenticate user
-    function authenticateUser(uid, token) {
-        firebase.auth().verifyIdToken(token)
-        .then(decodedToken => {
-
-            
-            // compare decoded uid to given uid
-            if (uid === decodedToken.uid) next();
-
-            else sendForbidden(res);
-
-        })
-        .catch(() => { sendForbidden(res) });
-    }
 };
 
 function sendForbidden(res) {

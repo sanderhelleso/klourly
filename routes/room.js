@@ -402,6 +402,7 @@ module.exports = app => {
                     activeCheckins,
                     success: true,
                     message: 'Successfully fetched active rooms',
+                    empty: true,
                     usersCheckedinRooms: usersCheckedinRooms 
                                          ? usersCheckedinRooms 
                                          : {}
@@ -426,8 +427,8 @@ module.exports = app => {
                        activeCheckins[roomData.checkin.checkinID] = {
                             ...roomData.checkins[roomData.checkin.checkinID],
                             roomID,
-                            membersList: roomData.members.filter(uid => uid !== req.body.uid),
-                            totalMembers: roomData.members.length - 1   // exclude owner from count
+                            membersList: roomData.members,
+                            totalMembers: roomData.members.length
                        };
                     }
 
@@ -440,6 +441,7 @@ module.exports = app => {
                             activeCheckins,
                             success: true,
                             message: 'Successfully fetched active rooms',
+                            empty: false,
                             usersCheckedinRooms: usersCheckedinRooms 
                                                  ? usersCheckedinRooms 
                                                  : {}

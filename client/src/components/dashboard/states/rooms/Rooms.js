@@ -19,7 +19,7 @@ class Rooms extends Component {
         super(props);
     }
 
-    async componentDidMount() {
+    componentDidMount() {
 
         // initialize tabs
         materializeJS.M.Tabs.init(document.querySelector('.tabs'), {});
@@ -27,6 +27,12 @@ class Rooms extends Component {
         /**
          *  if initial load is set, continue and immediatly display previews
          */
+
+         this.loadAttending();
+         this.loadOwning();
+    }
+
+    async loadOwning() {
 
         // check if user has owning rooms to be previewed
         if (this.props.owningList && !this.props.owningPreview) {
@@ -39,6 +45,10 @@ class Rooms extends Component {
             }
         }
 
+        else this.props.setRoomsOwningAction({ empty: true });
+    }
+
+    async loadAttending() {
         // check if user has attending rooms to be previewed
         if (this.props.attendingList && !this.props.attendingPreview) {
 
@@ -49,6 +59,8 @@ class Rooms extends Component {
                 this.props.setRoomsAttendingAction(response.data.roomsData);
             }
         }
+
+        else this.props.setRoomsAttendingAction({ empty: true });
     }
 
     render() {

@@ -16,6 +16,8 @@ module.exports = app => {
             disabled: false,
             password: req.body.password,
         })
+
+        // once user is created, generate custom token
         .then(userRecord => {
 
             // set the user UID reference for the contents of user.

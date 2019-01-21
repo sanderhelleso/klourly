@@ -24,6 +24,8 @@ class ActiveRoomsData extends Component {
         // check if data fetch is successfull
         if (response.data.success) {
 
+            console.log(response.data);
+
             // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
             this.props.setInitialUsersCheckedinRoomsAction(response.data.usersCheckedinRooms);
@@ -44,7 +46,7 @@ class ActiveRoomsData extends Component {
                         checkinID,
                         checkinData: {
                             ...snapshot.val(),
-                            totalMembers: value.totalMembers, // exclude owner
+                            totalMembers: value.totalMembers,
                             membersData: value.membersData,
                             membersList: value.membersList
                         }
