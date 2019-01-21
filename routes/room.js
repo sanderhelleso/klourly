@@ -386,10 +386,13 @@ module.exports = app => {
         const userRef = db.ref(`users/${req.body.uid}`);
         userRef.once('value', userSnapshot => {
             
-            let counter = 0;                                            // itteration counter
-            const activeCheckins = {};                                  // result set
-            const userOwnedRooms = userSnapshot.val().rooms.owning;     // owned room list
-            const usersCheckedinRooms = userSnapshot.val().checkins;    // attending room list
+            let counter = 0;                                         
+            const activeCheckins = {};           
+            const usersCheckedinRooms = userSnapshot.val().checkins;
+            
+            // validate user rooms
+            const userOwnedRooms = userSnapshot.val().rooms;
+            if (userOwnedRooms) userOwnedRooms = userOwnedRooms.owning;
 
             // if list is empty send back response and return immediatly
             if (!userOwnedRooms) {
