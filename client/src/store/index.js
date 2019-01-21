@@ -14,6 +14,4 @@ export const store = createStore(
 );
 
 // subscribe to state changes, update localstorage
-store.subscribe(() => {
-    localStorageHelpers.saveState(store.getState());
-});
+store.subscribe(() => localStorageHelpers.saveState(store.getState()));

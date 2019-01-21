@@ -66,24 +66,6 @@ class App extends Component {
         this.roomRoute = this.roomRoute.bind(this);
     }
 
-    // authenticate user
-    componentWillMount() {
-        this.validateUser();
-    }
-
-    async validateUser() {
-        const user = localStorage.getItem('user');
-        if (user !== null) {
-            const auth = await authentication.validateUser(JSON.parse(user).id);
-            console.log(auth);
-            this.props.validateAction(auth);
-        }
-
-        else {
-            this.props.validateAction(false);
-        }
-    }
-
     // route for handling authentication on auth required routes
     loginRoute() {
         return this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
@@ -177,7 +159,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    return { ...state };
+    return state;
 };
 
 const mapDispatchToProps = dispatch => {

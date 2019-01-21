@@ -1,9 +1,12 @@
 export const authHeader = () => {
 
     // return authorization header token
-    const user = localStorage.getItem('user');
+    try {
 
-    if (user) return { 'Authorization': 'Bearer ' + JSON.parse(user).token };
-
-    else return {};
+        const serializedState = localStorage.getItem('state');
+        if (serializedState) return { Authorization: `Bearer ${JSON.parse(serializedState).auth.user.token}` };
+        return {};
+    } 
+    
+    catch (error) { return {} };
 }
