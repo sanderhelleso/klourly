@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { loginAction } from '../../actions/loginActions';
 import { userDataActions } from '../../actions/userDataActions';
-
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 import { authentication } from '../../api/authentication/authentication';
 import { redirect } from '../../helpers/redirect';
@@ -134,8 +134,9 @@ class Form extends Component {
             );
 
             // set user data and init state
-            await this.props.userDataActions(response.data.userData);
-            await this.props.loginAction(response.data.user);
+            this.props.nextStageAction({ stage: 0 });
+            this.props.userDataActions(response.data.userData);
+            this.props.loginAction(response.data.user);
 
             // check for valid redirect action and redirect if needed
             if (redirectActions && redirectActions.data.redirectActionSuccess) {
@@ -181,12 +182,8 @@ class Form extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return { user: state }
-}
-
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ loginAction, userDataActions }, dispatch);
+    return bindActionCreators({ loginAction, userDataActions, nextStageAction }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Form);

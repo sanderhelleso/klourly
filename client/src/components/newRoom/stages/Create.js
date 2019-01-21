@@ -69,7 +69,7 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         newRoomData: state.dashboard.newRoom,
-        owning: state.dashboard.userData.rooms.owning
+        owning: state.dashboard.userData.rooms ? state.dashboard.userData.rooms.owning : []
     };
 };
 

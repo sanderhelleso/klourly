@@ -1,4 +1,4 @@
-const authenticate = require('../middelwares/requireLogin');
+const authenticate = require('../middelwares/requireAuth');
 const sharp = require('sharp');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
@@ -54,13 +54,15 @@ module.exports = app => {
     });
 
     // upload room covers
-    app.post('/api/upload/roomCovers', authenticate, multer.single('file'), async (req, res) => {
+    app.post('/api/upload/roomCovers', multer.single('file'), async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'roomCover') {
             res.status(400).json({ success: false, message: 'Malformed payload' });
             return;
         }
+
+        console.log(123);
 
         // fileblob and location
         const file = req.file;
