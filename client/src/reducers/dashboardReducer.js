@@ -8,6 +8,12 @@ const dashboardReducer = (state = {}, action) => {
                 dashboardOption: action.payload
             };
 
+        case 'TOGGLE_ACTIVE_TAB':
+            return {
+                ...state,
+                dashboardActiveRoomTab: action.payload
+            };
+
         case 'AVATAR_UPDATE':
             return {
                 ...state,

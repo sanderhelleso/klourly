@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
 import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAction';
 import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';
+import { toggleActiveTabAction } from '../../../../actions/dashboard/toggleActiveTabAction';
 
 import RoomPreview from './RoomPreview';
 
@@ -74,12 +75,18 @@ class Rooms extends Component {
                 <Tabs className="col s12">
                     <ul className="tabs tabs-fixed-width">
                         <li className="tab col s6">
-                            <a className="active" href="#attending">
+                            <a 
+                                className={`${this.props.activeTab === 'attending' ? 'active' : ''}`} 
+                                onClick={() => this.props.toggleActiveTabAction('attending')}
+                                href="#attending">
                                 Attending
                             </a>
                         </li>   
                         <li className="tab col s6">
-                            <a href="#owning">
+                            <a 
+                                className={`${this.props.activeTab === 'owning' ? 'active' : ''}`} 
+                                onClick={() => this.props.toggleActiveTabAction('owning')}
+                                href="#owning">
                                 Owning
                             </a>
                         </li>
@@ -108,7 +115,8 @@ const mapStateToProps = state => {
                         && state.dashboard.userData.rooms.attending) 
                         ? state.dashboard.userData.rooms.attending 
                         : null,
-        attendingPreview: state.room.attendingPreview
+        attendingPreview: state.room.attendingPreview,
+        activeTab: state.dashboard.dashboardActiveRoomTab
     };
 };
 
@@ -116,7 +124,8 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
             nextStageAction, 
             setRoomsOwningAction, 
-            setRoomsAttendingAction 
+            setRoomsAttendingAction,
+            toggleActiveTabAction
         }, dispatch);
 }
 
