@@ -53,7 +53,7 @@ class CheckinStatus extends Component {
                     </Attended>
                     <CheckedinList 
                         roomID={this.props.roomID}
-                        userId={this.props.userID}
+                        userID={this.props.userID}
                         membersList={this.state.statusData.membersList}
                         checkedinMembers={this.state.statusData.attendies}
                     />

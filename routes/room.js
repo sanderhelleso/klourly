@@ -357,8 +357,8 @@ module.exports = app => {
                 checkinData: {
                     timestamp,
                     checkinID,
-                    membersList: snapshot.val().members.filter(uid => uid !== req.body.uid),
-                    totalMembers: snapshot.val().members.length - 1
+                    membersList: snapshot.val().members ? snapshot.val().members : [],
+                    totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
                 }
             });
         });
@@ -379,7 +379,7 @@ module.exports = app => {
 
             // values to calculate the average attendence for the room
             const totalCheckins = checkinSnap.attendies ? Object.keys(checkinSnap.attendies).length : 0;
-            const totalMembers = snapshot.val().members.length - 1;
+            const totalMembers = snapshot.val().members ? snapshot.val().members.length : 0;
             
             roomRef.child(`checkins/${req.body.checkinID}`)
             .update({ 

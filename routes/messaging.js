@@ -14,14 +14,10 @@ module.exports = app => {
 
             // if no ref is set (eg: first time user),
             // set messaging and token ref
-            if (!snapshot.val()) {
-                messagingRef.set({ token: req.body.token });
-            }
+            if (!snapshot.exists()) messagingRef.set({ token: req.body.token });
 
             // if set but token is equal (no need to update)
-            else if (snapshot.val().token !== req.body.token)  {
-                messagingRef.update({ token: req.body.token });
-            }
+            else if (snapshot.val().token !== req.body.token) messagingRef.update({ token: req.body.token });
 
             // send back response with success message
             res.status(200).json({
@@ -50,7 +46,7 @@ module.exports = app => {
             tokenRef.once('value', snapshot => {
 
                 // validate that token is present
-                if (snapshot.val()) {
+                if (snapshot.exists()) {
 
                     // See documentation on defining a message payload.
                     const message = {
@@ -60,8 +56,8 @@ module.exports = app => {
                     
                     // Send a message to the device corresponding to the provided registration token.
                     firebase.messaging().send(message)
-                        .then((response) => console.log('Successfully sent message:', response))
-                        .catch((error) => console.log('Error sending message:', error));
+                        .then(response => console.log('Successfully sent message:', response))
+                        .catch(error => console.log('Error sending message:', error));
                 }
             });
         });

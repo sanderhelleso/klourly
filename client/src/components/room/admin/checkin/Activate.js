@@ -55,7 +55,11 @@ class Activate extends Component {
             });
 
             // send push notifications to subscribed room members
-            token.getRoomMembersToken(response.data.checkinData.membersList, this.props.notificationData);
+            token.getRoomMembersToken(
+                this.props.userID, 
+                response.data.checkinData.membersList, 
+                this.props.notificationData
+            );
         }
     }
 
@@ -75,12 +79,13 @@ class Activate extends Component {
 }
 
 const mapStateToProps = state => {
-    return {  
+    return {
+        userID: state.auth.user.id,
         currentLocation: state.location.coords,
         notificationData: {
             title: 'Room available for checkin',
             body: `"${state.room.activeRoom.name}" just opened for checkin. Register your attendence now!`,
-            icon: state.room.activeRoom.cover,
+            icon: state.room.activeRoom.cover.large,
             click_action: `http://localhost:3000/dashboard/rooms/${state.room.activeRoom.id}`
         }
     };
