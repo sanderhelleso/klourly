@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../../../actions/room/checkin/checkinAvailableAction';
+import { updateUsersCheckedinRoomsAction } from '../../../../actions/room/checkin/updateUsersCheckedinRoomsAction';
 
 
 class Checkin extends Component {
@@ -31,6 +32,12 @@ class Checkin extends Component {
                         this.props.userID, this.props.roomID);
 
         if (response.data.success) {
+
+            // update users checked in rooms
+            this.props.updateUsersCheckedinRoomsAction({
+                roomID: this.props.roomID,
+                checkinID: this.props.availableForCheckin.checkinID
+            });
 
             // update checkin state
             this.props.checkinAvailableAction({
@@ -97,7 +104,8 @@ const mapStateToProps = (state, compProps) => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
-        checkinAvailableAction
+        checkinAvailableAction,
+        updateUsersCheckedinRoomsAction
     }, dispatch);
 }
 

@@ -25,7 +25,8 @@ class CheckinAvailableData extends Component {
     async componentDidMount() {
 
         // itterate over users attending room and add listeners
-        this.props.roomsAttending.forEach(roomID => {
+        if (this.props.roomsAttending)
+            this.props.roomsAttending.forEach(roomID => {
 
             // get room reference
             const roomRef = firebase.database().ref(`rooms/${roomID}`);
