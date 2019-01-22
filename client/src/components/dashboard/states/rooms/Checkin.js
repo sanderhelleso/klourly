@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import * as firebase from 'firebase';
 import { CheckCircle } from 'react-feather';
-import { getWeek } from '../../../../helpers/getWeek';
 
 import { format } from '../../../../helpers/format';
-import { roomAvailableForCheckin } from '../../../../helpers/roomAvailableForCheckin';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -14,7 +11,6 @@ import { connect } from 'react-redux';
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../../../actions/room/checkin/checkinAvailableAction';
-import { updateUsersCheckedinRoomsAction } from '../../../../actions/room/checkin/updateUsersCheckedinRoomsAction';
 
 
 class Checkin extends Component {
@@ -42,22 +38,16 @@ class Checkin extends Component {
                 checkinData: false
             });
 
-            // update users checked in rooms
-            this.props.updateUsersCheckedinRoomsAction({
-                roomID: this.props.roomID,
-                checkinID: this.state.checkinID
-            });
-
             // update users attendence percentage for room
-            const updatedTotal = this.props.attendence[this.props.roomID].totalUserCheckinsForRoom + 1;
+            const updatedTotal = this.props.attendence.totalUserCheckinsForRoom + 1;
             this.props.setRoomAttendenceAction({
                 roomID: this.props.roomID,
                 attendenceData: {
-                    ...this.props.attendence[this.props.roomID],
+                    ...this.props.attendence,
                     totalUserCheckinsForRoom: updatedTotal,
                     attendenceInPercentage: format.getPercentage(
                         updatedTotal,
-                        this.props.attendence[this.props.roomID].totalRoomCheckins
+                        this.props.attendence.totalRoomCheckins
                     )
                 }
             });
@@ -99,7 +89,7 @@ const mapStateToProps = (state, compProps) => {
     return { 
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin[compProps.roomID],
-        attendence: state.room.attendence
+        attendence: state.room.attendence[compProps.roomID]
     };
 };
 
@@ -107,8 +97,7 @@ const mapStateToProps = (state, compProps) => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
-        checkinAvailableAction, 
-        updateUsersCheckedinRoomsAction
+        checkinAvailableAction
     }, dispatch);
 }
 

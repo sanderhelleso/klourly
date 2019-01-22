@@ -1,16 +1,59 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { CheckCircle } from 'react-feather';
-import Attendence from './Attendence';
+import { attendence } from '../../api/room/attendence';
+import { format } from '../../helpers/format';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
+import { checkinAvailableAction } from '../../actions/room/checkin/checkinAvailableAction';
+
+import Attendence from './Attendence';
 
 
 class Checkin extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { loading: false };
+    }
+
+    registerAttendence = async () => {
+
+        // disable button while performing request
+        this.setState({ loading: true });
+
+        // attempt to register attendence
+        const response = await attendence.registerAttendence(
+                        this.props.userID, this.props.activeRoomID);
+
+        if (response.data.success) {
+
+            // update checkin state
+            this.props.checkinAvailableAction({
+                roomID: this.props.activeRoomID,
+                checkinData: false
+            });
+
+            // update users attendence percentage for room
+            console.log(this.props.attendence);
+            const updatedTotal = this.props.attendence.totalUserCheckinsForRoom + 1;
+            this.props.setRoomAttendenceAction({
+                roomID: this.props.activeRoomID,
+                attendenceData: {
+                    ...this.props.attendence,
+                    totalUserCheckinsForRoom: updatedTotal,
+                    attendenceInPercentage: format.getPercentage(
+                        updatedTotal,
+                        this.props.attendence.totalRoomCheckins
+                    )
+                }
+            });
+        } 
+
+        // finish loading
+        this.setState({ loading: false });
     }
 
     renderCheckinBtn() {
@@ -21,7 +64,8 @@ class Checkin extends Component {
             <div>
                 <StyledButton 
                     className="waves-effect waves-light btn animated fadeIn"
-                    disabled={available ? false : true}
+                    disabled={available ? false : true || this.state.loading}
+                    onClick={this.registerAttendence}
                 >
                     {available ? 'Checkin' : 'Unavailable'}
                 </StyledButton>
@@ -41,14 +85,18 @@ class Checkin extends Component {
 
 const mapStateToProps = state => {
     return { 
+        activeRoomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin[state.room.activeRoom.id],
-        attendenceData: state.room.attendence[state.room.activeRoom.id]
+        attendence: state.room.attendence[state.room.activeRoom.id]
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({
+        setRoomAttendenceAction,
+        checkinAvailableAction
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
