@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 
 import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../actions/room/checkin/checkinAvailableAction';
-import { updateUsersCheckedinRoomsAction } from '../../actions/room/checkin/updateUsersCheckedinRoomsAction';
 
 
 class CheckinAvailableData extends Component {
@@ -20,7 +19,6 @@ class CheckinAvailableData extends Component {
     async componentDidMount() {
 
         // itterate over users attending room and add listeners
-        console.log(this.props);
         this.props.roomsAttending.forEach(roomID => {
 
             // get room reference
@@ -98,7 +96,6 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
         checkinAvailableAction, 
-        updateUsersCheckedinRoomsAction
     }, dispatch);
 }
 

@@ -21,77 +21,18 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { available: false }
+        this.state = { available: false, loading: false };
+        console.log(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
 
         // check if room is available for checkin
-        if (!nextProps.availableForCheckin.hasOwnProperty(this.props.roomID)) {
-            this.setState({ available: false });
+        if (nextProps.availableForCheckin && nextProps.availableForCheckin.active) {
+            this.setState({ available: true });
         }
-    }
 
-    async componentDidMount() {
-
-        /*// get room reference
-        const roomRef = firebase.database().ref(`rooms/${this.props.roomID}`);
-
-        // clear all previous listeners
-        roomRef.off('value');
-        roomRef.child('/checkins').off('value');
-        roomRef.child('/checkins').off('child_added');
-
-        // on value change, update state and set checkin mode depending on result
-        roomRef.child('/checkin').on('value', snapshot => {
-
-            // validate if user has already checked into room for this checkin
-            if (this.props.usersCheckedinRooms[this.props.roomID] &&
-                this.props.usersCheckedinRooms[this.props.roomID]
-                .hasOwnProperty(snapshot.val().checkinID)) return;
-
-            // set available
-            this.setState({ 
-                available: snapshot.val().active,
-                checkinID: snapshot.val().checkinID
-            });
-        
-            // update checkin state
-            this.props.checkinAvailableAction({
-                roomID: this.props.roomID,
-                checkinData: snapshot.val().active ? snapshot.val() : false
-            });
-        });
-
-        // prefetch data to only recieve callbacks on new data added
-        let initialDataLoaded = false;
-        roomRef.child('/checkins').once('value', snapshot => {
-            initialDataLoaded = true;
-        });
-
-        // on new checkin, update total potensial attendence
-        roomRef.child('/checkins')
-        .orderByChild('startTime')
-        .limitToLast(1)
-        .on('child_added', () => {
-
-            // if initalData is not loaded, return
-            if (!initialDataLoaded) return;
-
-            // if not, increment total room checkin and update attendence state
-            const updatedTotal = this.props.attendence[this.props.roomID].totalRoomCheckins + 1;
-            this.props.setRoomAttendenceAction({
-                roomID: this.props.roomID,
-                attendenceData: {
-                    ...this.props.attendence[this.props.roomID],
-                    totalRoomCheckins: updatedTotal,
-                    attendenceInPercentage: format.getPercentage(
-                        this.props.attendence[this.props.roomID].totalUserCheckinsForRoom,
-                        updatedTotal
-                    )
-                }
-            });
-        });*/
+        else this.setState({ available: false });
     }
 
     registerAttendence = async () => {
@@ -164,17 +105,16 @@ class Checkin extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, compProps) => {
     return { 
         userID: state.auth.user.id,
-        availableForCheckin: state.room.availableForCheckin,
-        usersCheckedinRooms: state.room.usersCheckedinRooms,
+        availableForCheckin: state.room.availableForCheckin[compProps.roomID],
         attendence: state.room.attendence
     };
 };
 
 // update created room state
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
         checkinAvailableAction, 
