@@ -7,6 +7,13 @@ export default class Times extends Component {
         super(props);
     }
 
+    createDayList(days) {
+        return days.map(day => 
+                <li key={day}>
+                    {day.substring(0, 3).toUpperCase()}
+                </li>)
+    }
+
     renderTimes() {
 
         // room dont have times
@@ -14,24 +21,28 @@ export default class Times extends Component {
 
 
         // find rooms active days and display list
-        return Object.values(this.props.times).map(time => {
+        return Object.values(this.props.times)
+            .filter(time => time !== null) // ERROR: api occasionaly returns 'null' at index 0
+            .map(time => {
 
-            
-            const dayTimes = Object.keys(time).filter(key => 
-                                DAYS.indexOf(key) !== '1' &&
-                                time[key] === true
-                            );
+            // create days list
+            let days;
 
-            console.log(dayTimes);
+            if (time.checkAll) days = <li>Every Day</li>;
+
+            else {
+                const dayTimes = Object.keys(time).filter(key => 
+                    DAYS.indexOf(key) !== '1' &&
+                    time[key] === true
+                );
+
+                days = this.createDayList(dayTimes);
+            }
 
             return(
                 <StyledList>
                     <ul>
-                        {dayTimes.map(day => 
-                            <li key={day}>
-                                {day.substring(0, 3).toUpperCase()}
-                            </li>)
-                        }
+                       {days}
                     </ul>
                     <h5>{time.fromTime} - {time.toTime}</h5>
                 </StyledList>
