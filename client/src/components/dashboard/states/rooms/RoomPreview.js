@@ -10,11 +10,11 @@ export default class RoomPreview extends Component {
 
     renderPreview = () => {
 
+        // check if data was fetched or user dont have rooms
+        if (this.props.empty) return <p>No rooms</p>;
+
         // load data
         if (!this.props.data)  return <CircularLoader size="big" />
-
-        // check if data was fetched or user dont have rooms
-        if (this.props.data.empty) return <p>No rooms</p>;
 
         // render preview card for each room
         return this.props.data.sort((a, b) => a.name.localeCompare(b.name)) .map(room => {

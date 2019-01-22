@@ -18,6 +18,11 @@ import RoomPreview from './RoomPreview';
 class Rooms extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            emptyOwning: false,
+            emptyAttending: false
+        };
     }
 
     componentDidMount() {
@@ -46,6 +51,8 @@ class Rooms extends Component {
                 this.props.setRoomsOwningAction(response.data.roomsData);
             }
         }
+
+        else this.setState({ emptyOwning: true });
     }
 
     async loadAttending() {
@@ -59,6 +66,8 @@ class Rooms extends Component {
                 this.props.setRoomsAttendingAction(response.data.roomsData);
             }
         }
+
+        else this.setState({ emptyAttending: true });
     }
 
     render() {
@@ -93,10 +102,10 @@ class Rooms extends Component {
                     </ul>
                 </Tabs>
                 <div id="owning" className="col s12">
-                    <RoomPreview data={this.props.owningPreview} owning={true} />
+                    <RoomPreview empty={false} data={this.props.owningPreview} owning={true} />
                 </div>
                 <div id="attending" className="col s12">
-                    <RoomPreview data={this.props.attendingPreview} />
+                    <RoomPreview empty={this.state.emptyAttending} data={this.props.attendingPreview} />
                 </div>
             </div>
         )
