@@ -30,7 +30,7 @@ class Times extends Component {
 
         const times = [];
         Object.entries(data).forEach(([key, time]) => {
-            times.push(<Time nr={key} data={time} />);
+            times.push(<Time key={key} nr={key} data={time} />);
         });
 
         this.setState({ times });
@@ -52,8 +52,8 @@ class Times extends Component {
 
     render() {
         return (
-            <div className="col s12">
-                <div className="col s6">
+            <div className="col s12 m12 l12">
+                <div className="col s12 m8 offset-m2 l6">
                     <StyledAddButton 
                         className="waves-effect waves-light btn animated fadeIn"
                         onClick={this.addTime}
@@ -61,7 +61,7 @@ class Times extends Component {
                         Add new time
                     </StyledAddButton>
                 </div>
-                <div className="col s6">
+                <div className="col s12 m8 offset-m2 l6">
                     <StyledNextCont>
                         <NextStage 
                             message={this.props.message} 
@@ -115,6 +115,22 @@ const StyledNextCont = styled.div`
     
     a {
         float: right !important;
+
+        @media screen and (max-width: 1000px) {
+            float: none;
+            min-width: 100%;
+            margin-bottom: 5rem;
+        }
+
+        @media screen and (max-width: 400px) {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @media screen and (max-width: 355px) {
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
     }
 `
 
@@ -137,5 +153,20 @@ const StyledAddButton = styled.a`
         box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
         background-color: #12e2a3;
         color: #ffffff;
+    }
+
+    @media screen and (max-width: 1000px) {
+        float: none;
+        margin: 0;
+    }
+
+    @media screen and (max-width: 400px) {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    @media screen and (max-width: 355px) {
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
     }
 `;

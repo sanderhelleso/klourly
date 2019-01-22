@@ -195,4 +195,25 @@ const StyledIntro = styled.div`
         margin: 1rem auto;
         color: #9e9e9e;
     }
+
+    @media screen and (max-width: 600px) {
+        #new-room-intro h1 {
+            font-size: 2rem;
+        }
+
+        .stage-icon {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .icon-cont {
+            min-height: 200px;
+            max-height: 200px;
+        }
+
+        #new-room-intro p {
+            font-size: 0.9rem;
+            color: #9e9e9e;
+        }
+    }
 `;

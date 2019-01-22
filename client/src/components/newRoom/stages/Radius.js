@@ -14,24 +14,28 @@ class Radius extends Component {
 
         this.options = [
             {
-                title: '5 Meter',
+                title: '5',
                 radius: 5,
-                icon: <Lock size={45} />
+                icon: <Lock size={25} />,
+                meter: 'Meter'
             },
             {
-                title: '10 Meter',
+                title: '10',
                 radius: 10,
-                icon: <Compass size={45} />
+                icon: <Compass size={25} />,
+                meter: 'Meter'
             },
             {
-                title: '20 Meter',
+                title: '20',
                 radius: 20,
-                icon: <Globe size={45} />
+                icon: <Globe size={25} />,
+                meter: 'Meter'
             },
             {
                 title: 'No Limit',
                 radius: false,
-                icon: <Home size={45} />
+                icon: <Home size={25} />,
+                noLimit: true
             }
         ]
     }
@@ -74,7 +78,10 @@ class Radius extends Component {
                         onClick={() => this.selectOption(option.radius)}
                     >
                         {option.icon}
-                        <h5>{option.title}</h5>
+                        <h5 className={`${option.noLimit ? 'no-limit' : ''}`}>
+                            {option.title}
+                        </h5>
+                        <span>{option.meter}</span>
                     </StyledOption>
                 </div>
             );
@@ -85,6 +92,9 @@ class Radius extends Component {
         return (
             <div className="col s12 room-options-cont">
                 {this.renderRadiusOptions()}
+                <div className="col s12">
+                    <StyledInfo>You can change these settings whenever you want</StyledInfo>
+                </div>
             </div>
         )
     }
@@ -103,8 +113,16 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Radius);
 
+const StyledInfo = styled.p`
+    font-size: 0.9rem;
+    color: #9e9e9e;
+    opacity: 0.8;
+    margin-top: 5rem;
+    text-align: center;
+`;
+
 const StyledOption = styled.div`
-    padding: 4rem;
+    padding: 2rem 1rem;
     text-align: center;
     box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
@@ -114,21 +132,34 @@ const StyledOption = styled.div`
     max-height: 250px;
     margin: 0.25rem;
 
+    span {
+        color: #ffffff;
+    }
+
     h5 {
         color: #ffffff;
         opacity: 0.8;
         letter-spacing: 4px;
         line-height: 30px;
+        font-size: 3.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .no-limit {
+        font-size: 2rem;
+        line-height: 35px;
+        margin: 2rem 0;
     }
 
     svg {
         transition: 0.3s ease-in-out;
         stroke: #ffffff;
         pointer-events: none;
+        margin-top: 2rem;
     }
 
     &:hover, &:active, &:focus {
-        box-shadow: 0px 36px 72px rgba(0, 0, 0, 0.30);
+        box-shadow: 0px 36px 72px rgba(0, 0, 0, 0.25);
     }
 
     &.option-1 {
@@ -153,5 +184,9 @@ const StyledOption = styled.div`
         background: #A770EF;  /* fallback for old browsers */
         background: -webkit-linear-gradient(-30deg, #FDB99B, #CF8BF3, #A770EF);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(-30deg, #FDB99B, #CF8BF3, #A770EF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 2rem;
     }
 `;

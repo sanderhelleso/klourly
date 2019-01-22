@@ -73,7 +73,14 @@ class Time extends Component {
         
         return DAYS.map(day => {
             return (
-                <div className={`col s12 m6 l6 ${this.state.checkAll ? 'disabled-checkbox' : ''}`}>
+                <div 
+                    key={day} 
+                    className={`col s6 
+                            ${this.state.checkAll 
+                            ? 'disabled-checkbox' : ''
+                        }`
+                    }
+                >
                     <p>
                         <label>
                             <input
@@ -95,7 +102,7 @@ class Time extends Component {
     renderCheckAll() {
 
         return (
-            <div className="col s12 m6 l6">
+            <div className="col s6">
                 <p>
                     <label>
                         <input
@@ -124,6 +131,7 @@ class Time extends Component {
                         className="timepicker" 
                         placeholder="09.00 AM"
                         value={this.state.fromTime}
+                        onChange={() => {}}
                     />
                     <label className="active" htmlFor="from-time">Room is starting from...</label>
                 </div>
@@ -135,6 +143,7 @@ class Time extends Component {
                         className="timepicker" 
                         placeholder="11.00 AM"
                         value={this.state.toTime}
+                        onChange={() => {}}
                     />
                     <label className="active" htmlFor="to-time">And the room is ending at...</label>
                 </div>
@@ -209,7 +218,7 @@ class Time extends Component {
                         title="Remove Time"
                         onClick={this.removeTime}
                     >
-                        <Trash2 size={40} />
+                        <Trash2 size={37.5} />
                     </span>
                     <div className="time-number">
                         <h5>Time #{this.props.nr}</h5>
@@ -277,8 +286,13 @@ const StyledTime = styled.div`
             color: #ffffff;
             opacity: 0.5;
             font-size: 2.5rem;
-            clear: both;
+            float: left;
         }
+    }
+
+    .checkbox-cont {
+        clear: both;
+
     }
 
     p {
@@ -326,7 +340,21 @@ const StyledTime = styled.div`
 
     @media screen and (max-width: 800px) {
         .checkbox-cont div {
-            min-width: 100%;
+           
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        margin: 2rem 0;
+    }
+
+    @media screen and (max-width: 360px) {
+        [type="checkbox"]+span:not(.lever) {
+            font-size: 0.8rem;
+        }
+
+        [type="checkbox"]+span:not(.lever) {
+            padding-left: 25px;
         }
     }
 `;

@@ -45,7 +45,7 @@ class Stages extends Component {
     }
 
     renderBackToDash() {
-        return this.props.currentStage < 8 ? <Back location="dashboard" /> : null;
+        return this.props.currentStage < 7 ? <Back location="dashboard" /> : null;
     }
 
     updateStageInfo() {
