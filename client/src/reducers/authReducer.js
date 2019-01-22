@@ -1,20 +1,15 @@
 
-let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggedIn: null, user} : {};
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = { loggedIn: false }, action) => {
     switch (action.type) {
+        
         case 'LOGIN_SUCCESS':
-        return {
-            ...state,
-            loggedIn: true,
-            user: action.payload
-        };
-    
-        case 'LOGOUT_SUCCESS':
             return {
-                state: action.payload
-            }
+                ...state,
+                loggedIn: true,
+                user: action.payload
+            };
+    
         
         case 'SIGNUP_SUCCESS':
             return {

@@ -6,9 +6,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { userDataActions } from '../../../actions/userDataActions';
 import { logoutActions } from '../../../actions/logoutActions';
-import { authentication } from '../../../api/authentication/authentication'; 
 
 
 class Options extends Component {
@@ -16,10 +14,10 @@ class Options extends Component {
         super(props);
     }
 
-    // logout user, clearing localstorage and state
-    logOut() {
-        this.props.logoutActions({});
-        authentication.logout();
+    // logout user, clearing localstorage and app state
+    logOut = () => {
+        localStorage.clear();
+        this.props.logoutActions();
     }
 
     render() {
@@ -58,7 +56,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ userDataActions, logoutActions }, dispatch);
+    return bindActionCreators({ logoutActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Options);

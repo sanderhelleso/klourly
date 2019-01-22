@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import reduxThunk from "redux-thunk";
-import reducers from "../reducers";
+import { rootReducer } from "../reducers";
 import { localStorageHelpers } from '../helpers/localStorage';
 
 // create redux store
 export const store = createStore(
-    reducers,
+    rootReducer,
     localStorageHelpers.loadState(), // persisted state
     compose(
         applyMiddleware(reduxThunk),

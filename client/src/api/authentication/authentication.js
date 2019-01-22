@@ -1,11 +1,9 @@
 import { authHeader } from '../../helpers/authHeader';
-import history from '../../helpers/history';
 import axios from 'axios';
 
 export const authentication = {
     signup,
     login,
-    logout,
     validateUser,
     authAndDoAction
 };
@@ -52,11 +50,6 @@ async function login(email, password) {
     catch (error) { return error.response };
 }
 
-// remove user from local storage to log user out
-function logout() {
-    localStorage.clear();
-    history.push('/login');
-}
 
 async function validateUser(uid) {
 
