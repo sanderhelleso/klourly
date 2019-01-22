@@ -20,7 +20,7 @@ class Attendence extends Component {
     async componentDidMount() {
 
         // validate and check if attendence for room is loaded
-        /*if (!this.props.attendenceData) {
+        if (!this.props.attendenceData) {
 
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
@@ -29,7 +29,7 @@ class Attendence extends Component {
                 ...response.data.stats,
                 roomID: this.props.roomID
             });
-        }*/
+        }
     }
 
     renderAttendence() {
@@ -37,11 +37,13 @@ class Attendence extends Component {
         // check if attendence data is loaded
         if (this.props.attendenceData) {
 
+            console.log(this.props);
+
             // once loaded check if user has attended
-            if (this.props.attendenceData.attended) {
+            if (this.props.attendenceData.attendenceInPercentage > 0) {
                 return (
                     <div className="attendence">
-                        {this.props.attendenceData.attendedInPercent}<span>%</span>
+                        {this.props.attendenceData.attendenceInPercentage}<span>%</span>
                         <span className="attended">
                             Attended
                         </span>
