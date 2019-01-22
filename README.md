@@ -1,7 +1,7 @@
 # klourly
 
 
-A flexible, radius based application for taking attendence
+A flexible, radius based application for taking attendance
 <br>
 
 ## Room Preview
