@@ -40,7 +40,7 @@ export default class Times extends Component {
             }
 
             return(
-                <StyledList>
+                <StyledList key={Math.random()}>
                     <ul>
                        {days}
                     </ul>
