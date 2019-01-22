@@ -14,6 +14,7 @@ import Times from './Times';
 import Menu from './Menu';
 import OwnerAvatar from './OwnerAvatar';
 import Header from './Header';
+import DisplayRoomLocationMap from '../maps/DisplayRoomLocationMap';
 
 
 class Room extends Component {
@@ -79,6 +80,10 @@ class Room extends Component {
                                 <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 room-aside-section">
+                                <DisplayRoomLocationMap 
+                                    coords={Object.values(this.props.activeRoom.location.coords)}
+                                    address={this.props.activeRoom.location.address}
+                                />
                             </div>
                         </div>
                     </div>
