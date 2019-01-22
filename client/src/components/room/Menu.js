@@ -6,9 +6,7 @@ import { materializeJS } from '../../helpers/materialize';
 
 export default class Menu extends Component {
 
-    componentDidMount() {
-        materializeJS.M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {});
-    }
+    componentDidMount = () => materializeJS.M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
 
 
     render() {
@@ -16,12 +14,14 @@ export default class Menu extends Component {
             <StyledMenu 
                 className="dropdown-trigger"
                 data-target="room-menu"
+                title="Room settings and options"
             >
-                <Settings size={35} />
+                <Settings size={42} />
                 <ul id="room-menu" className="dropdown-content">
                     <li onClick={() => {redirect.roomAdminCheckin(this.props.id)}}><a><CheckCircle /> Checkin</a></li>
                     <li onClick={() => {redirect.roomAdminMembers(this.props.id)}}><a><Users /> Members</a></li>
                     <li onClick={() => {redirect.roomAdminReports(this.props.id)}}><a><BarChart2 /> Reports</a></li>
+                    <li onClick={() => {redirect.roomAdminAnnouncements(this.props.id)}}><a><MessageSquare /> Post</a></li>
                     <li onClick={() => {redirect.roomAdminSettings(this.props.id)}}><a><Settings /> Settings</a></li>
                 </ul>
             </StyledMenu>
@@ -35,10 +35,5 @@ const StyledMenu = styled.div`
     top: 1rem;
     right: 1rem;
     z-index: 10000;
-
-    svg {
-        stroke: #ffffff;
-        opacity: 0.5;
-    }
 `;
 

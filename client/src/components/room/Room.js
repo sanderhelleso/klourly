@@ -126,6 +126,25 @@ const StyledRoom = styled.div`
 const StyledCover = styled.div`
     position: relative;
     margin-bottom: 7.5rem;
+
+    .dropdown-trigger svg {
+        stroke: #ffffff;
+        opacity: 0.7;
+    }
+
+    #room-menu {
+        z-index: 10000;
+
+        li a {
+            text-align: center !important;
+            border-bottom: 1px solid #eeeeee;
+
+            svg {
+                opacity: 0.5;
+                min-width: 100%;
+            }
+        }
+    }
 `;
 
 const StyledCont = styled.div`

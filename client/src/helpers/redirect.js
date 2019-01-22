@@ -15,6 +15,7 @@ export const redirect = {
     roomAdminCheckin,
     roomAdminMembers,
     roomAdminReports,
+    roomAdminAnnouncements,
     loginWithJoinRoomRedirect,
     redirectActionSuccess,
     roomCheckinReport,
