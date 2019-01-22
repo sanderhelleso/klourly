@@ -52,7 +52,9 @@ class Rooms extends Component {
             }
         }
 
-        else this.setState({ emptyOwning: true });
+        else if (!this.props.owningList && !this.props.owningPreview) {
+            this.setState({ emptyOwning: true });
+        }
     }
 
     async loadAttending() {
@@ -67,7 +69,9 @@ class Rooms extends Component {
             }
         }
 
-        else this.setState({ emptyAttending: true });
+        else if (!this.props.attendingList && !this.props.attendingPreview) {
+            this.setState({ emptyAttending: true });
+        }
     }
 
     render() {

@@ -38,7 +38,13 @@ class Times extends Component {
 
     addTime = () => {
         this.setState({
-            times: [...this.state.times, <Time nr={this.state.times.length + 1} data={false} />]
+            times: [...this.state.times, 
+                    <Time 
+                        key={this.state.times.length + 1} 
+                        nr={this.state.times.length + 1} 
+                        data={false} 
+                    />
+            ]
         });
     }
 
@@ -66,10 +72,6 @@ class Times extends Component {
                         <NextStage 
                             message={this.props.message} 
                             valid={true}
-                            data={{
-                                times: this.state.times.length > 0 
-                                ? this.state.times : false
-                            }}
                         />
                     </StyledNextCont>
                 </div>

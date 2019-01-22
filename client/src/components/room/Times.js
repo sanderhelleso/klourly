@@ -7,42 +7,43 @@ export default class Times extends Component {
         super(props);
     }
 
-    /*sortDays(timeDays) {
-        const sortedDays = [];
-        Object.keys(timeDays).forEach(day => {
-            sortedDays[DAYS.indexOf(day)] = day;
-        });
-        
-        return { ...sortedDays.filter(Boolean) };
-    }
-
     renderTimes() {
 
-        return Object.keys(this.props.times).map(timeKey => {
+        // room dont have times
+        if (!this.props.times) return null;
 
-            // check if current key is object
-            if (typeof this.props.times[timeKey] === 'object') {
 
-                const time = this.props.times[timeKey];
-                return(
-                    <StyledList key={timeKey}>
-                        <ul>{Object.values(this.sortDays(time.days))
-                            .map(day => {
-                                return <li key={day}>{day.substring(0, 3).toUpperCase()}</li>
-                            })}
-                        </ul>
-                        <h5>{time.time.from} - {time.time.to}</h5>
-                    </StyledList>
-                );
-            };
+        // find rooms active days and display list
+        return Object.values(this.props.times).map(time => {
+
+            
+            const dayTimes = Object.keys(time).filter(key => 
+                                DAYS.indexOf(key) !== '1' &&
+                                time[key] === true
+                            );
+
+            console.log(dayTimes);
+
+            return(
+                <StyledList>
+                    <ul>
+                        {dayTimes.map(day => 
+                            <li key={day}>
+                                {day.substring(0, 3).toUpperCase()}
+                            </li>)
+                        }
+                    </ul>
+                    <h5>{time.fromTime} - {time.toTime}</h5>
+                </StyledList>
+            );
         });
-    }*/
+    }
 
 
     render() {
         return (
             <StyledCont>
-                
+                {this.renderTimes()}
             </StyledCont>
         )
     }

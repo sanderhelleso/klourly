@@ -1,7 +1,7 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
 
-const authenticate = require('../middelwares/requireLogin');
+const authenticate = require('../middelwares/requireAuth');
 
 module.exports = app => {
 

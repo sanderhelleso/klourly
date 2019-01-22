@@ -95,7 +95,7 @@ class Intro extends Component {
 
     render() {
         return (
-            <StyledIntro>
+            <StyledIntro createStage={this.props.stage.icon}>
                 {this.mainIntro()}
                 {this.renderNext()}
             </StyledIntro>
@@ -114,8 +114,8 @@ export default connect(mapStateToProps, null)(Intro);
 
 
 const StyledIntro = styled.div`
-
-    margin-top: 7.5vh;
+    ${props => console.log(props)}
+    margin-top: ${props => !props.createStage ? 22.5 : 7.5}vh;
 
     #loader-cont {
         position: relative;
