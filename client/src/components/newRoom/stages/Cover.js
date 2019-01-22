@@ -17,6 +17,11 @@ class Cover extends Component {
         super(props);
     }
 
+    // *NOTE* remove file blob at mount/unmount
+    // leaving blob in memory/ls WILL break application on room creation @ stage 7
+    componentWillMount = () => this.props.nextStageAction({ cover: false });
+    componentWillUnmount = () => this.props.nextStageAction({ cover: false });
+
     onDrop = file => {
 
         if (Array.isArray(file) && file.length) {

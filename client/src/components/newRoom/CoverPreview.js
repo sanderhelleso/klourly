@@ -67,12 +67,13 @@ const StyledImgCont = styled.div`
 
     position: relative;
     height: 300px;
-    border: 2px solid #bdbdbd;
+    border: 1px solid #bdbdbd;
     transition: 0.3s ease-in-out;
     text-align: center;
 
     &.active-cont {
         box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+        border: 0px solid #bdbdbd;
     }
 
     #remove-img {
