@@ -34,7 +34,7 @@ class Checkin extends Component {
 
     async componentDidMount() {
 
-        // get room reference
+        /*// get room reference
         const roomRef = firebase.database().ref(`rooms/${this.props.roomID}`);
 
         // clear all previous listeners
@@ -91,7 +91,7 @@ class Checkin extends Component {
                     )
                 }
             });
-        });
+        });*/
     }
 
     registerAttendence = async () => {

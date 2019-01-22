@@ -98,9 +98,9 @@ const StyledAttendence = styled.div`
 
     .attendence {
         font-weight: 100;
-        font-size: 6rem;
+        font-size: 5.5rem;
         color: #bdbdbd;
-        opacity: 0.5;
+        opacity: 0.6;
 
         span {
             font-size: 1.5rem;

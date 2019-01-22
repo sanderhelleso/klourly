@@ -3,26 +3,35 @@ import styled from 'styled-components';
 import { CheckCircle } from 'react-feather';
 import Attendence from './Attendence';
 
-const staticTxt = {
-    headingActive: 'Register your attendence',
-    headingDisabled: 'Room currently not active'
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-}
 
-export default class Checkin extends Component {
+class Checkin extends Component {
     constructor(props) {
         super(props);
     }
 
     renderCheckinBtn() {
 
-        return (
-            <div>
-                <StyledButton className="waves-effect waves-light">
-                    Check In
-                </StyledButton>
-            </div>
-        )
+        console.log(this.props);
+
+        if (this.props.checkin.active) {
+
+            return (
+                <div>
+                    <StyledButton 
+                        className="waves-effect waves-light btn"
+                        disabled={this.props.userCheckedin}
+                    >
+                        {this.props.userCheckedin ? 'Registered' : 'Checkin'}
+                    </StyledButton>
+                </div>
+            )
+        }
+
+        return <p>Room currently not active</p>
     }
 
     render() {
@@ -35,30 +44,46 @@ export default class Checkin extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        checkin: state.room.activeRoom.checkin,
+        userCheckedin: state.room.usersCheckedinRooms[state.room.activeRoom.id]
+        ? state.room.usersCheckedinRooms[state.room.activeRoom.id][state.room.activeRoom.checkin.checkinID]
+        : false,
+        attendenceData: state.room.attendence[state.room.activeRoom.id]
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
+
+
 const CheckinCont = styled.div`
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 3.5rem;
 `;
 
 const StyledButton = styled.a`
-    background: #FF5F6D;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: #ffffff;
-    box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.09);
+    background-color: #12e2a3;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     line-height: 0;
-    border: none;
-    padding: 1.75rem 0;
-    min-width: 80%;
     letter-spacing: 2px;
     font-size: 1rem;
-    text-align: center;
-    margin: 2rem auto;
-    transition: 0.3s ease-in-out;
-    text-transform: uppercase;
+    font-weight: 600;
+    padding: 1.75rem;
+    display: block;
+    max-width: 70%;
+    margin: 2rem auto 0 auto;
+    clear: both;
 
     &:hover {
-        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.09);
+        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+        background-color: #12e2a3;
     }
 `;
 
