@@ -71,7 +71,7 @@ class Room extends Component {
                         <div id="room-main" className="col l8 m6 s12">
                             <Announcements announcements={this.props.activeRoom.announcements}/>
                         </div>
-                        <div id="room-aside" className="col l4 m6 s12">
+                        <aside id="room-aside" className="col l4 m6 s12">
                             {this.props.activeRoom.owner.id !== this.props.userID
                                  ? <Checkin /> 
                                  : null
@@ -80,12 +80,10 @@ class Room extends Component {
                                 <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 room-aside-section">
-                                <DisplayRoomLocationMap 
-                                    coords={Object.values(this.props.activeRoom.location.coords)}
-                                    address={this.props.activeRoom.location.address}
-                                />
+                                <DisplayRoomLocationMap coords={this.props.activeRoom.location.coords} />
+                                <StyledAddress>{this.props.activeRoom.location.address}</StyledAddress>
                             </div>
-                        </div>
+                        </aside>
                     </div>
                 </StyledCont>
             )
@@ -152,3 +150,13 @@ const StyledCont = styled.div`
         border-right: 1px solid #eeeeee;
     }
 `;
+
+const StyledAddress = styled.h5`
+
+    text-align: center;
+    font-size: 1rem;
+    max-width: 225px;
+    margin: 2rem auto;
+    line-height: 1.7;
+`;
+

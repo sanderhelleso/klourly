@@ -73,7 +73,8 @@ const StyledCont = styled.div`
     .room-times ul li {
         display: inline;
         padding: 0.50rem;
-        color: #bdbdbd;
+        color: #9e9e9e;
+        opacity: 0.8;
         letter-spacing: 1px;
         font-size: 0.75rem;
     }
@@ -101,6 +102,5 @@ const StyledList = styled.div`
     h5 {
         font-size: 1.65rem;
         font-weight: 100;
-        color: #212121;
     }
 `;

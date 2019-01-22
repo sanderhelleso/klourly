@@ -38,7 +38,6 @@ class DashboardMenu extends Component {
 
             const itemIndex = Object.keys(this.menuItems).indexOf(itemName) + 1;
             const active = itemIndex === this.props.activeItem ? true : false;
-            if (active) setTimeout(() => { document.querySelector('.menu-item-active').click() }, 10);
 
             return (
                 <div 

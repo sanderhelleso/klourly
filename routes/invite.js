@@ -12,9 +12,7 @@ module.exports = app => {
 
         // default values
         let status = 404;
-        let response = {
-            redirectActionSuccess: true
-        };
+        let response = { redirectActionSuccess: true };
 
         // check if current invite link is valid AND active
         await roomRef.once('value', async snapshot => {
@@ -38,7 +36,7 @@ module.exports = app => {
             }
 
             // if user is logged in, check if user is already a member of room
-            else if (req.body.uid && snapshot.val().members.indexOf(req.body.uid) !== -1) {
+            else if (req.body.uid && snapshot.val().members && snapshot.val().members.indexOf(req.body.uid) !== -1) {
                 status = 409; // conflict
                 response = {
                     success: false,
@@ -58,7 +56,9 @@ module.exports = app => {
 
                     // add user to room
                     await roomRef.update({
-                        members: [...snapshot.val().members, req.body.uid]
+                        members: snapshot.val().members 
+                        ? [...snapshot.val().members, req.body.uid]
+                        : [req.body.uid]
                     });
 
                     // add room to user
@@ -70,8 +70,6 @@ module.exports = app => {
                             : [req.body.roomID]
                         );
                     });
-
-                    console.log("I GOT RUN ATLEAST");
                 }
 
                 // if not, set required data
@@ -81,7 +79,7 @@ module.exports = app => {
                         redirectActionSucess: false,
                         invitationData: {
                             name: snapshot.val().name,
-                            cover: snapshot.val().cover,
+                            cover: snapshot.val().cover.large,
                         }
                     }
                 }

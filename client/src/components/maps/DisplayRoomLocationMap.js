@@ -11,18 +11,18 @@ export default class DisplayRoomLocationMap extends Component {
         // initial map config
         this.MAP_HEIGHT = 200;
         this.MAP_WIDTH = 200;
-
-        this.state = { zoom: 14 }
+        this.coords = Object.values(this.props.coords);
+        this.state = { zoom: 13 }
 
     }
 
-    setZoom = () => this.setState({ zoom: this.state.zoom < 19 ? this.state.zoom + 1 : 14 });
+    setZoom = () => this.setState({ zoom: this.state.zoom < 19 ? this.state.zoom + 1 : 13 });
 
     render() {
         return (
             <StyledMapCont>
                 <Map 
-                    center={this.props.coords} 
+                    center={this.coords} 
                     zoom={this.state.zoom} 
                     height={this.MAP_HEIGHT}
                     width={this.MAP_WIDTH} 
@@ -38,7 +38,7 @@ export default class DisplayRoomLocationMap extends Component {
 const StyledMapCont = styled.div`
 
     text-align: center;
-    margin-top: 2.5rem;
+    margin-top: 4.5rem;
 
     div {
         box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
