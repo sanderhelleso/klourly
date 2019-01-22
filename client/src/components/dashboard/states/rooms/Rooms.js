@@ -102,7 +102,7 @@ class Rooms extends Component {
                     </ul>
                 </Tabs>
                 <div id="owning" className="col s12">
-                    <RoomPreview empty={false} data={this.props.owningPreview} owning={true} />
+                    <RoomPreview empty={this.state.emptyOwning} data={this.props.owningPreview} owning={true} />
                 </div>
                 <div id="attending" className="col s12">
                     <RoomPreview empty={this.state.emptyAttending} data={this.props.attendingPreview} />

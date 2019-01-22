@@ -38,8 +38,8 @@ module.exports = app => {
         const scaledImg = await sharp(file.buffer).resize(150, 150).toBuffer();
 
         // save file in storage
-        const bucketFile = bucket.file(storageLocation);
-        bucketFile.save(new Buffer(scaledImg));
+        const bucketFile = await bucket.file(storageLocation);
+        await bucketFile.save(new Buffer(scaledImg));
         const signedURL = await bucketFile.getSignedUrl({ action: 'read', expires: '03-09-2491' });
     
         // update photo ref

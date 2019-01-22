@@ -47,6 +47,7 @@ class ChangeAvatar extends Component {
 
             // update state for avatar (userData)
             notification.success('Successfully updated avatar! Your new avatar will be live around Klourly in a bit');
+            this.props.avatarActions(response.data.photoUrl);
         }
 
         // something went wrong with upload 
@@ -80,10 +81,12 @@ class ChangeAvatar extends Component {
 
         return (
             <div 
-                className="remove-img waves-effect waves-light"
+                className="remove-img waves-effect waves-light z-depth-1"
                 onClick={this.removeAvatar}
             >
-                <span><Trash2 /></span>
+                <span>
+                    <Trash2 />
+                </span>
             </div>
         )
     }
@@ -106,7 +109,12 @@ class ChangeAvatar extends Component {
                         accept="image/jpeg, image/png"
                     />
                     <div className='avatar-overlay' onClick={this.selectAvatar}>
-                        <div className='avatar-text'><Camera size={40} /><span>Change Avatar</span></div>
+                        <div className='avatar-text'>
+                            <Camera size={40} />
+                            <span>
+                                Change Avatar
+                            </span>
+                        </div>
                     </div>
                 </div>
             </StyledAvatar>
