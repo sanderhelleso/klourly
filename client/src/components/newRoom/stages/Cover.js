@@ -43,7 +43,7 @@ class Cover extends Component {
     render() {
         return (
             <StlyedCoverCont className="col l12">
-                <StyledDropZone className="col l6">
+                <StyledDropZone className="col s12 m12 l6">
                     <Dropzone 
                         id="drop-zone"
                         onDrop={this.onDrop}
@@ -61,7 +61,7 @@ class Cover extends Component {
                         </a>
                     </Dropzone>
                 </StyledDropZone>
-                <div className="col l6">
+                <div className="col s12 m12 l6">
                     <CoverPreview />
                 </div>
                 <div className="col s12">
@@ -148,5 +148,9 @@ const StyledDropZone = styled.div`
             border: 3px dashed #7c4dff !important;
             box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
         }
+    }
+
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 3rem;
     }
 `;
