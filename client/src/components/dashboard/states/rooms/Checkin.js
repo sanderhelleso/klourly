@@ -35,6 +35,16 @@ class Checkin extends Component {
         else this.setState({ available: false });
     }
 
+    componentWillMount() {
+
+        // check if room is available for checkin
+        if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
+            this.setState({ available: true });
+        }
+
+        else this.setState({ available: false });
+    }
+
     registerAttendence = async () => {
 
         // disable button while performing request
