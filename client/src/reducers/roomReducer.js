@@ -70,6 +70,12 @@ const roomReducer = (state = initialState, action) => {
                 activeCheckins: format.removeByKey(state.activeCheckins, action.payload)
             }
 
+        case 'RESET_CHECKIN_AVAILABLE':
+            return {
+                ...state,
+                availableForCheckin: {}
+            }
+
         case 'CHECKIN_AVAILABLE':
             return {
                 ...state,

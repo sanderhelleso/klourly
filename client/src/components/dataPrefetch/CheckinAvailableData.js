@@ -9,11 +9,17 @@ import { connect } from 'react-redux';
 
 import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../actions/room/checkin/checkinAvailableAction';
-
+import { resetCheckinAvailableAction } from '../../actions/room/checkin/resetCheckinAvailableAction';
 
 class CheckinAvailableData extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
+
+        // clear old checkin available state (if loaded from localstorage)
+        this.props.resetCheckinAvailableAction();
     }
 
     async componentDidMount() {
@@ -40,7 +46,7 @@ class CheckinAvailableData extends Component {
                 // update checkin state
                 this.props.checkinAvailableAction({
                     roomID: roomID,
-                    checkinData: snapshot.val().active ? snapshot.val() : false
+                    checkinData: snapshot.val().active ? { ...snapshot.val(), loaded: true } : false
                 });
             });
 
@@ -95,7 +101,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
-        checkinAvailableAction, 
+        checkinAvailableAction,
+        resetCheckinAvailableAction
     }, dispatch);
 }
 

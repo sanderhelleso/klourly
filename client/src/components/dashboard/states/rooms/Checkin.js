@@ -21,11 +21,8 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { loading: false, loaded: false };
+        this.state = { loading: false };
     }
-
-    // required to avoid button flikcering
-    componentDidMount = () => setTimeout(() => this.setState({ loaded: true }), 1);
 
 
     registerAttendence = async () => {
@@ -76,8 +73,7 @@ class Checkin extends Component {
 
         // only render check in button if not owner
         // and if room is currently available for checkin 
-        if (this.state.loaded &&
-            this.props.availableForCheckin && 
+        if (this.props.availableForCheckin && 
             this.props.availableForCheckin.active) {
 
             return (

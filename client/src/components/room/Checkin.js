@@ -15,23 +15,18 @@ class Checkin extends Component {
 
     renderCheckinBtn() {
 
-        console.log(this.props);
+        const available = this.props.availableForCheckin && this.props.availableForCheckin.active;
 
-        if (this.props.checkin.active) {
-
-            return (
-                <div>
-                    <StyledButton 
-                        className="waves-effect waves-light btn"
-                        disabled={this.props.userCheckedin}
-                    >
-                        {this.props.userCheckedin ? 'Registered' : 'Checkin'}
-                    </StyledButton>
-                </div>
-            )
-        }
-
-        return <p>Room currently not active</p>
+        return (
+            <div>
+                <StyledButton 
+                    className="waves-effect waves-light btn animated fadeIn"
+                    disabled={available ? false : true}
+                >
+                    {available ? 'Checkin' : 'Unavailable'}
+                </StyledButton>
+            </div>
+        )
     }
 
     render() {
@@ -47,10 +42,7 @@ class Checkin extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        checkin: state.room.activeRoom.checkin,
-        userCheckedin: state.room.usersCheckedinRooms[state.room.activeRoom.id]
-        ? state.room.usersCheckedinRooms[state.room.activeRoom.id][state.room.activeRoom.checkin.checkinID]
-        : false,
+        availableForCheckin: state.room.availableForCheckin[state.room.activeRoom.id],
         attendenceData: state.room.attendence[state.room.activeRoom.id]
     }
 }
