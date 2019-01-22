@@ -21,29 +21,12 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { available: false, loading: false };
-        console.log(this.props);
+        this.state = { loading: false, loaded: false };
     }
 
-    componentWillReceiveProps(nextProps) {
+    // required to avoid button flikcering
+    componentDidMount = () => setTimeout(() => this.setState({ loaded: true }), 1);
 
-        // check if room is available for checkin
-        if (nextProps.availableForCheckin && nextProps.availableForCheckin.active) {
-            this.setState({ available: true });
-        }
-
-        else this.setState({ available: false });
-    }
-
-    componentWillMount() {
-
-        // check if room is available for checkin
-        if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
-            this.setState({ available: true });
-        }
-
-        else this.setState({ available: false });
-    }
 
     registerAttendence = async () => {
 
@@ -92,13 +75,14 @@ class Checkin extends Component {
     renderCheckIn() {
 
         // only render check in button if not owner
-        if (this.state.available) {
+        // and if room is currently available for checkin 
+        if (this.state.loaded &&
+            this.props.availableForCheckin && 
+            this.props.availableForCheckin.active) {
 
-            // check if room is currently available for checkin 
             return (
                 <CheckinRoomButton 
-                    className={`waves-effect waves-light btn-flat animated 
-                    ${this.state.available ? 'fadeIn' : 'fadeOut'}`}
+                    className="waves-effect waves-light btn-flat animated fadeIn"
                     onClick={this.registerAttendence}
                     disabled={this.state.loading}
                 >
@@ -136,6 +120,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
 
 
 const CheckinRoomButton = styled.a`
+    opacity: ${props => props.available ? 1 : 0};
     bottom: 55%;
     background: #FF5F6D;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */

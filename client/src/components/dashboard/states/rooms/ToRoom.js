@@ -18,12 +18,24 @@ class ToRoom extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (!nextProps.availableForCheckin.hasOwnProperty(this.props.roomID)) {
-            this.setState({ available: false });
+        // check if room is available for checkin
+        if (nextProps.availableForCheckin && nextProps.availableForCheckin.active) {
+            this.setState({ available: true });
         }
 
-        else this.setState({ available: true });
+        else this.setState({ available: false });
     }
+
+    componentDidMount() {
+
+        // check if room is available for checkin
+        if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
+            this.setState({ available: true });
+        }
+
+        else this.setState({ available: false });
+    }
+
 
 
     render() {
@@ -39,9 +51,9 @@ class ToRoom extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, compProps) => {
     return { 
-        availableForCheckin: state.room.availableForCheckin
+        availableForCheckin: state.room.availableForCheckin[compProps.roomID]
     };
 };
 
