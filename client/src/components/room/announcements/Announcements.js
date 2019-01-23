@@ -10,12 +10,14 @@ export default class Announcements extends Component {
 
     renderAnnouncements() {
         if (this.props.announcements) {
-            return Object.entries(this.props.announcements).map(announcement => {
+            return Object.entries(this.props.announcements)
+            .sort((a, b) => b[1].timestamp - a[1].timestamp)
+            .map(([id, announcement]) => {
                 return (
                     <AnnouncementPreview
-                        key={announcement[0]}
-                        id={announcement[0]}
-                        data={announcement[1]} 
+                        key={id}
+                        id={id}
+                        data={announcement} 
                     />
                 )
             });

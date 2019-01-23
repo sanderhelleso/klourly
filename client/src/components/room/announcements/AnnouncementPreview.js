@@ -34,32 +34,24 @@ class AnnouncementPreview extends Component {
         redirect.announcement(this.props.state.room.activeRoom.id, this.props.id);
     }
 
-    renderReadMore() {
-
-        if (this.state.message.length > 355) {
-            return (
-                <div className="col s12 announcement-readmore-cont">
+    render() {
+        return (
+            <Fade>
+                <StyledAnnouncementPreview className="col s12">
+                    <h5>{this.state.title}</h5>
+                    <span className="time">{format.getFormatedDateAndTime(this.state.timestamp)}</span>
+                    <p>{this.state.message.substring(0, 355)}</p>
+                    <Reactions 
+                        id={this.props.id} 
+                        data={this.state.reactions} 
+                    />
+                    <div className="col s12 announcement-readmore-cont">
                     <button 
                         onClick={this.enterAnnouncement}
                         className="waves-effect waves-light btn animated fadeIn">
                         Read more
                     </button>
                 </div>
-            )
-        }
-
-        return null;
-    }
-
-    render() {
-        return (
-            <Fade>
-                <StyledAnnouncementPreview className="col s12">
-                    <h5>{this.state.title}</h5>
-                    <span>{format.tsToDate(this.state.timestamp)}</span>
-                    <p>{this.state.message.substring(0, 355)}</p>
-                    <Reactions id={this.props.id} data={this.state.reactions} />
-                    {this.renderReadMore()}
                 </StyledAnnouncementPreview>
             </Fade>
         )
@@ -108,8 +100,10 @@ const StyledAnnouncementPreview = styled.div`
         font-weight: 400;
     }
 
-    span {
+    .time {
+        display: block;
         color: #bdbdbd;
+        margin-bottom: 2rem;
     }
 
     p {

@@ -69,6 +69,7 @@ const StyledReactions = styled.div`
         font-size: 1rem;
         z-index: -1000;
         pointer-events: none;
+        color: #363636;
     }
 
     .reacted {

@@ -13,15 +13,10 @@ class Reactions extends Component {
         
         let reacted = false;
         if (props.data.reacted) {
-            reacted = props.data.reacted.indexOf(props.state.auth.user.id) === -1 ? false : true;
+            reacted = props.data.reacted.indexOf(this.props.userID) === -1 ? false : true;
         }
 
-        this.state = {
-            ...props.data,
-            reacted: reacted
-        }
-
-        this.updateReaction = this.updateReaction.bind(this);
+        this.state = { ...props.data, reacted };
     }
 
     getRGB() {
@@ -42,7 +37,7 @@ class Reactions extends Component {
         e.target.style.backgroundColor = 'transparent';
     }
 
-    async updateReaction(e) {
+    updateReaction = async e => {
 
         // disable mouse event to avoid spam
         const ele = e.target;
@@ -65,8 +60,8 @@ class Reactions extends Component {
 
         // attempt to update selected emoji
         const response = await room.updateAnnouncementReaction(
-            this.props.state.auth.user.id,
-            this.props.state.room.activeRoom.id,
+            this.props.userID,
+            this.props.roomID,
             this.props.id,
             this.props.name
         );
@@ -98,9 +93,12 @@ class Reactions extends Component {
     }
 }
 
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+
+const mapStateToProps = state => {
+    return { 
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {

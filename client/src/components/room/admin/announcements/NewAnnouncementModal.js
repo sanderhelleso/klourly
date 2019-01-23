@@ -10,6 +10,7 @@ import { updateAnnouncementsAction } from '../../../../actions/room/announcement
 import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
+import { redirect } from '../../../../helpers/redirect';
 
 import AnnouncementPoll from './AnnouncementPoll';
 
@@ -77,9 +78,6 @@ class NewAnnouncementModal extends Component {
         // check if post was successfull
         if (response.data.success) {
 
-            // close modal
-            document.querySelector('.modal-close').click();
-
             // reset announcement data
             this.setState({ title: '', message: ''});
             this.props.removeAnnouncementPollAction();
@@ -89,6 +87,8 @@ class NewAnnouncementModal extends Component {
                 announcementID: response.data.announcementID,
                 announcement: response.data.announcement
             });
+
+            redirect.announcement(this.props.roomID, response.data.announcementID);
         }
 
         // alert user
@@ -176,7 +176,10 @@ class NewAnnouncementModal extends Component {
 
 
 const mapStateToProps = state => {
-    return { pollData: state.room.activeRoom.newAnnouncement }
+    return {
+        pollData: state.room.activeRoom.newAnnouncement,
+        roomID: state.room.activeRoom.id
+    }
 }
 
 const mapDispatchToProps = dispatch => {
