@@ -85,7 +85,10 @@ class NewAnnouncementModal extends Component {
             this.props.removeAnnouncementPollAction();
 
             // update rooms announcement list
-            this.props.updateAnnouncementsAction(response.data.announcement);
+            this.props.updateAnnouncementsAction({
+                announcementID: response.data.announcementID,
+                announcement: response.data.announcement
+            });
         }
 
         // alert user

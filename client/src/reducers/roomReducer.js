@@ -298,6 +298,17 @@ const roomReducer = (state = initialState, action) => {
                     newAnnouncement: {}
                 }
             }
+
+        case 'UPDATE_ANNOUNCEMENTS':
+            return {
+                ...state,
+                activeRoom: {
+                    announcements: {
+                        ...state.room.activeRoom.announcements,
+                        [action.payload.announcemntID]: action.payload.announcement
+                    }
+                }
+            }
             
         default:
             return state;

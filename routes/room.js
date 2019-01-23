@@ -126,7 +126,8 @@ module.exports = app => {
     app.post('/api/publishAnnouncement', authenticate, (req, res) => {
 
         // get room announcement
-        const roomRef = db.ref(`rooms/${req.body.roomID}/announcements/${shortid.generate()}`);
+        const announcementID = shortid.generate();
+        const roomRef = db.ref(`rooms/${req.body.roomID}/announcements/${announcementID}`);
 
         const announcement = {
             ...req.body.announcement,
@@ -162,7 +163,8 @@ module.exports = app => {
         res.status(200).json({
             success: true,
             message: 'Successfully published announcement',
-            announcement
+            announcementID
+            announcement,
         });
     });
 
