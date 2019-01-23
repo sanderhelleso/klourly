@@ -187,6 +187,10 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        /**
+         * REPORTS
+         */
+
         case 'SET_ROOM_REPORTS_SUCCESS':
             return {
                 ...state,
@@ -263,6 +267,35 @@ const roomReducer = (state = initialState, action) => {
                 activeRoom: {
                     ...state.activeRoom,
                     activeReport: action.payload
+                }
+            }
+
+        
+        /**
+         * ANNOUNCEMENTS
+         */
+
+        case 'ADD_ANNOUNCEMENT_POLL':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    newAnnouncement: {
+                        ...state.activeRoom.newAnnouncement,
+                        poll: action.payload
+                    }
+                }
+            }
+
+        case 'REMOVE_ANNOUNCEMENT_POLL':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    newAnnouncement: {
+                        ...state.activeRoom.newAnnouncement,
+                        poll: false
+                    }
                 }
             }
             

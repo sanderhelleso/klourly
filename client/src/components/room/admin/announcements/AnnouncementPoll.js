@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'; 
-import { BarChart2, X, XSquare } from 'react-feather';
+import { BarChart2, XSquare } from 'react-feather';
 import { Bar } from 'react-chartjs-2';
 
-export default class AnnouncementPoll extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { addAnnouncementPollAction } from '../../../../actions/room/announcement/addAnnouncementPollAction';
+import { removeAnnouncementPollAction } from '../../../../actions/room/announcement/removeAnnouncementPollAction';
+
+
+class AnnouncementPoll extends Component {
     constructor(props) {
         super(props);
 
@@ -45,6 +53,22 @@ export default class AnnouncementPoll extends Component {
         });
     }
 
+    initializePoll = e => {
+
+        if (!this.state.poll) {
+                this.props.addAnnouncementPollAction({ poll: true });
+                this.setState({ poll: true }, 
+                () => {
+                    document.querySelector('#poll-name').focus();
+                });
+        }
+
+        else {
+            this.setState({ poll: false  });
+            this.props.removeAnnouncementPollAction();
+        }
+    }
+
     renderPollToggle() {
         
         return (
@@ -54,12 +78,7 @@ export default class AnnouncementPoll extends Component {
                         <input 
                             type="checkbox"
                             checked={this.state.poll}
-                            onChange={
-                                () => this.setState({ poll: this.state.poll ? false : true }, 
-                                () => this.state.poll 
-                                ? document.querySelector('#poll-name').focus() 
-                                : null
-                            )}
+                            onChange={(e) => this.initializePoll(e)}
                         />
                         <span>Inlude Poll</span>
                     </label>
@@ -79,6 +98,14 @@ export default class AnnouncementPoll extends Component {
         )
     }
 
+    updatePollName = e => {
+
+        this.setState({ pollName: e.target.value });
+        this.props.addAnnouncementPollAction({
+            pollName: e.target.value
+        });
+    }
+
     renderPollName() {
 
         return (
@@ -92,7 +119,7 @@ export default class AnnouncementPoll extends Component {
                     min-length={1} 
                     maxLength={this.MAX_POLL_TITLE_LENGTH}
                     value={this.state.pollName}
-                    onChange={(e) => this.setState({ pollName: e.target.value })}
+                    onChange={(e) => this.updatePollName(e)}
                 />
                 <label htmlFor="poll-Name" className="active">Poll Name</label>
                 <StyledMessage>
@@ -142,8 +169,7 @@ export default class AnnouncementPoll extends Component {
                             </a>
                         </div>
                     </li>
-        });
-        
+        });   
     }
 
     renderAddNewPollOption() {
@@ -168,6 +194,12 @@ export default class AnnouncementPoll extends Component {
                 <StyledButton 
                     className="waves-effect waves-light btn"
                     onClick={this.handleNewPollOption}
+                    disabled={
+                        this.state.pollOption !== '' && 
+                        this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH
+                        ? false 
+                        : true
+                    }
                 >
                     Add
                 </StyledButton>
@@ -203,6 +235,8 @@ export default class AnnouncementPoll extends Component {
                 }],
             },
         });
+
+        this.props.addAnnouncementPollAction({ pollOptions: newData });
     }
 
     render() {
@@ -213,6 +247,23 @@ export default class AnnouncementPoll extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+        addAnnouncementPollAction, 
+        removeAnnouncementPollAction
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPoll);
 
 const StyledPollCont = styled.div`
     padding: 0 2rem;
