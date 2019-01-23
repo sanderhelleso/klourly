@@ -1,44 +1,49 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
+
 import AnnouncementPoll from './AnnouncementPoll';
 
-export default class NewAnnouncementModal extends Component {
+class NewAnnouncementModal extends Component {
     constructor(props) {
         super(props);
 
         this.MAX_LENGTH_TITLE =    50;
         this.MAX_LENGTH_MESSAGE =  2000;
+        this.titleError = `Title must be between 1 - ${this.MAX_LENGTH_TITLE} characters`;
+        this.messageError = `Message must be between 1 - ${this.MAX_LENGTH_MESSAGE} characters`;
+        this.pollError = 'Please include atleast two poll options or remove the poll to continue';
 
         this.state = {
             title: '',
-            message: '',
-            titleError: `Title must be between 1 - ${this.MAX_LENGTH_TITLE} characters`,
-            messageError: `Message must be between 1 - ${this.MAX_LENGTH_MESSAGE} characters`
+            message: ''
         }
     }
 
-    componentDidMount() {
-        const modal = document.querySelectorAll('.modal');
-        materializeJS.M.Modal.init(modal, { endingTop: '7.5%' });
-    }
+    componentDidMount = () => materializeJS.M.Modal.init(
+        document.querySelectorAll('.modal'), { endingTop: '7.5%' }
+    );
 
     updateAnnouncement = e => this.setState({ [e.target.name]: e.target.value });
 
 
-    async publishAnnouncement() {
+    publishAnnouncement = async () => {
 
         // validate title
         if (this.state.title === '' || this.state.title.length > this.MAX_LENGTH_TITLE) {
-            return notification.error(this.state.titleError);
+            return notification.error(this.titleError);
         }
 
         // validate message
         if (this.state.message === '' || this.state.message.length > this.MAX_LENGTH_MESSAGE) {
-            return notification.error(this.state.messageError);
+            return notification.error(this.messageError);
         }
 
         // create announcement data
@@ -47,23 +52,37 @@ export default class NewAnnouncementModal extends Component {
             message: this.state.message
         }
 
+        // check if user needs to add poll
+        if (this.props.pollData.poll) {
+
+            if (!this.props.pollData.pollOptions || this.props.pollData.pollOptions.length < 2) {
+                return notification.error(this.pollError);
+            }
+
+            // create options
+            const options = {};
+            this.props.pollData.pollOptions.forEach(option => {
+                options[option] = { votes: 0 };
+            });
+
+            // set poll options
+            data.poll = { name: this.props.pollData.name, options } 
+        };
+
         // attempt to publish announcement
         const response = await room.publishAnnouncement(this.props.userID, this.props.roomID, data);
 
+        // check if post was successfull
         if (response.data.success) {
 
-            notification.success(response.data.message);
-
-            this.setState({
-                title: '',
-                message: ''
-            });
+            this.setState({ title: '', message: ''});
 
             // close modal
             document.querySelector('.modal-close').click();
         }
 
-        else notification.error(response.data.message);
+        // alert user
+        notification.success(response.data.message);
     }
 
     renderTitle() {
@@ -144,6 +163,18 @@ export default class NewAnnouncementModal extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return { pollData: state.room.activeRoom.newAnnouncement }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewAnnouncementModal);
+
 
 const StyledModal = styled.div`
     min-height: 85%;

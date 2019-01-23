@@ -112,7 +112,10 @@ const roomReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loaded: true,
-                activeRoom: action.payload
+                activeRoom: {
+                    ...action.payload,
+                    newAnnouncement: {}
+                }
             }
 
         case 'OPEN_ANNOUNCEMENT':
@@ -282,7 +285,7 @@ const roomReducer = (state = initialState, action) => {
                     ...state.activeRoom,
                     newAnnouncement: {
                         ...state.activeRoom.newAnnouncement,
-                        poll: action.payload
+                        ...action.payload
                     }
                 }
             }
@@ -292,10 +295,7 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 activeRoom: {
                     ...state.activeRoom,
-                    newAnnouncement: {
-                        ...state.activeRoom.newAnnouncement,
-                        poll: false
-                    }
+                    newAnnouncement: {}
                 }
             }
             
