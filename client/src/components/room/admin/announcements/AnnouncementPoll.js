@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'; 
-import { BarChart2 } from 'react-feather';
+import { BarChart2, X, XSquare } from 'react-feather';
 import { Bar } from 'react-chartjs-2';
 
 export default class AnnouncementPoll extends Component {
@@ -107,6 +107,7 @@ export default class AnnouncementPoll extends Component {
             <StyledPoll className="animated fadeIn">
                 {this.renderPollToggle()}
                 {this.renderPollName()}
+                <p>Poll Preview (Values will display at 0 on publish)</p>
                 <Bar
                     className="animated fadeIn"
                     data={this.state.data}
@@ -114,8 +115,10 @@ export default class AnnouncementPoll extends Component {
                     height={50}
                     options={this.options}
                 />
-                {this.renderPollOptions()}
                 {this.renderAddNewPollOption()}
+                <ul className="collection">
+                    {this.renderPollOptions()}
+                </ul>            
             </StyledPoll>
         )
     }
@@ -123,8 +126,24 @@ export default class AnnouncementPoll extends Component {
     renderPollOptions() {
 
         return this.state.pollOptions.map(option => {
-            return <p>{option}</p>
+            return <li className="collection-item">
+                        <div>
+                            {option}
+                            <a 
+                                className="secondary-content"
+                                onClick={() => {
+                                    this.setState({ 
+                                        pollOption: this.state.pollOptions
+                                        .splice(this.state.pollOptions.indexOf(option), 1)
+                                     }, () => this.updatePoll(false))
+                                }}
+                            >
+                                <XSquare />
+                            </a>
+                        </div>
+                    </li>
         });
+        
     }
 
     renderAddNewPollOption() {
@@ -160,32 +179,30 @@ export default class AnnouncementPoll extends Component {
 
         if (this.state.pollOption !== '' && 
             this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH) {
-
-            // update poll list of options
-            const newData = [...this.state.pollOptions, this.state.pollOption];
-            this.setState({ 
-                pollOption: '',
-                pollOptions: newData,
-                data: {
-                    labels: newData,
-                    datasets: [{ 
-                        label: '# of Votes',
-                        data: newData.map(() => Math.floor(Math.random() * 10) + 3),
-                        backgroundColor: newData.map(() => 'rgba(179, 136, 255, 0.4)'),
-                        borderColor: newData.map(() => 'rgba(179, 136, 255, 0.6)'),
-                    }],
-                },
-            });
+                this.updatePoll(true);
         }
     }
 
-    generateRGB(border) {
+    updatePoll(newPollItem) {
 
-        return `rgba(
-                    ${ Math.floor(Math.random() * 255) + 1}, 
-                    ${ Math.floor(Math.random() * 255) + 1},
-                    ${ Math.floor(Math.random() * 255) + 1}, ${border ? 1 : 0.2}
-                )`;
+        // update poll list of options, if newPollItem we add, else remove
+        const newData = newPollItem 
+        ? [...this.state.pollOptions, this.state.pollOption]
+        : this.state.pollOptions;
+
+        this.setState({ 
+            pollOption: '',
+            pollOptions: newData,
+            data: {
+                labels: newData,
+                datasets: [{ 
+                    label: '# of Votes',
+                    data: newData.map(() => 10),
+                    backgroundColor: newData.map(() => 'rgba(179, 136, 255, 0.4)'),
+                    borderColor: newData.map(() => 'rgba(179, 136, 255, 0.6)'),
+                }],
+            },
+        });
     }
 
     render() {
@@ -199,6 +216,14 @@ export default class AnnouncementPoll extends Component {
 
 const StyledPollCont = styled.div`
     padding: 0 2rem;
+
+    p {
+        color: #bdbdbd;
+    }
+
+    .collection-item svg {
+        stroke: #e57373;
+    }
 `;
 
 const StyledPoll = styled.div`
