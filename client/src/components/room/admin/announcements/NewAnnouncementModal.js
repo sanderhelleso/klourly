@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
+import AnnouncementPoll from './AnnouncementPoll';
 
 export default class NewAnnouncementModal extends Component {
     constructor(props) {
@@ -15,7 +16,6 @@ export default class NewAnnouncementModal extends Component {
         this.state = {
             title: '',
             message: '',
-            poll: false,
             titleError: `Title must be between 1 - ${this.MAX_LENGTH_TITLE} characters`,
             messageError: `Message must be between 1 - ${this.MAX_LENGTH_MESSAGE} characters`
         }
@@ -23,7 +23,7 @@ export default class NewAnnouncementModal extends Component {
 
     componentDidMount() {
         const modal = document.querySelectorAll('.modal');
-        materializeJS.M.Modal.init(modal, { endingTop: '5%' });
+        materializeJS.M.Modal.init(modal, { endingTop: '7.5%' });
     }
 
     updateAnnouncement = e => this.setState({ [e.target.name]: e.target.value });
@@ -76,7 +76,7 @@ export default class NewAnnouncementModal extends Component {
                     id="new-announcement-title" 
                     type="text" 
                     min-length={1} 
-                    maxLength={this.state.maxLengthTitle}
+                    maxLength={this.MAX_LENGTH_TITLE}
                     value={this.state.title}
                     onChange={(e) => this.updateAnnouncement(e)}
                 />
@@ -98,7 +98,7 @@ export default class NewAnnouncementModal extends Component {
                     id="new-announcement-body" 
                     className="materialize-textarea" 
                     minLength={1} 
-                    maxLength={this.state.maxLengthMessage}
+                    maxLength={this.MAX_LENGTH_MESSAGE}
                     value={this.state.message}
                     onChange={(e) => this.updateAnnouncement(e)}
                 ></textarea>
@@ -107,24 +107,6 @@ export default class NewAnnouncementModal extends Component {
                     {this.state.message.length} / {this.MAX_LENGTH_MESSAGE}
                 </StyledMessage>
             </div>
-        )
-    }
-
-    renderPollToggle() {
-        
-        return (
-            <StyledPollToggle className="input-field col s12">
-                <p>
-                    <label>
-                        <input 
-                            type="checkbox"
-                            checked={this.state.poll}
-                            onChange={() => this.setState({ poll: this.state.poll ? false : true })}
-                        />
-                        <span>Inlude Poll</span>
-                    </label>
-                </p>
-            </StyledPollToggle>
         )
     }
 
@@ -137,11 +119,15 @@ export default class NewAnnouncementModal extends Component {
                         <p>Publish a New Announcement</p>
                     </StyledHeader>
                     <div className="row">
-                        <div className="col s12 m8 offset-m2">
+                        <div className="col s12 m12 l6 announcement-cont">
                             <div className="row">
                                 {this.renderTitle()}
                                 {this.renderMessage()}
-                                {this.renderPollToggle()}
+                            </div>
+                        </div>
+                        <div className="col s12 m12 l6">
+                            <div className="row poll-cont">
+                                <AnnouncementPoll />
                             </div>
                         </div>
                     </div>
@@ -160,12 +146,38 @@ export default class NewAnnouncementModal extends Component {
 }
 
 const StyledModal = styled.div`
-    max-height: 90%;
+    min-height: 85%;
+    min-width: 75%;
+
+    .modal-content {
+        padding: 2rem;
+    }
+
+    .poll-cont {
+        border-left: 1px solid #e0e0e0;
+        padding: 2rem 0;
+        min-height: 350px;
+    }
+
+    .announcement-cont {
+        padding-right: 5rem;
+        margin-top: 3rem;
+    }
+
+    @media screen and (min-width: 1300px) {
+        min-width: 1200px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .poll-cont {
+            border-left: none;
+        }
+    }
 `;
 
 const StyledHeader = styled.div`
-    margin-top: 3rem;
-    padding: 1rem 0;
+    margin: 2rem 0.5rem 4rem 0;
+    text-align: left;
 
     h4 {
         font-weight: 800;
@@ -185,11 +197,4 @@ const StyledMessage = styled.span`
     font-weight: 100;
     font-size: 0.9rem;
     float: right;
-`;
-
-const StyledPollToggle = styled.div`
-    p {
-        float: left;
-        margin-top: 0;
-    }
 `;
