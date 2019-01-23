@@ -103,9 +103,12 @@ class AnnouncementPoll extends Component {
 
     updatePollName = e => {
 
-        this.setState({ pollName: e.target.value });
-        this.props.addAnnouncementPollAction({
-            pollName: e.target.value
+        const pollName = e.target.value;
+        this.setState({ pollName });
+        setTimeout(() => {
+            this.props.addAnnouncementPollAction({
+                pollName
+            }, 500);
         });
     }
 

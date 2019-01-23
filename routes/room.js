@@ -163,7 +163,7 @@ module.exports = app => {
         res.status(200).json({
             success: true,
             message: 'Successfully published announcement',
-            announcementID
+            announcementID,
             announcement,
         });
     });

@@ -1,4 +1,4 @@
-export const removeAnnouncementPollAction = (announcementData) => (
+export const updateAnnouncementsAction = (announcementData) => (
     {
         type: 'UPDATE_ANNOUNCEMENTS',
         payload: announcementData
