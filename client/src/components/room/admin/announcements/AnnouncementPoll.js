@@ -7,6 +7,9 @@ export default class AnnouncementPoll extends Component {
     constructor(props) {
         super(props);
 
+        this.MAX_POLL_OPTION_LENGTH = 20;
+        this.MAX_POLL_TITLE_LENGTH = 50;
+
         this.options = {
             maintainAspectRatio: false,
             scales : {
@@ -20,32 +23,26 @@ export default class AnnouncementPoll extends Component {
 
         this.state = {
             poll: false,
-            pollTitle: '',
+            pollName: '',
+            pollOptions: [],
+            pollOption: ''
+        }
+    }
+
+    componentDidMount() {
+        
+        this.setState({
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: this.state.pollOptions,
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    data: [],
+                    backgroundColor: ['rgba(179, 136, 255, 0.4)'],
+                    borderColor:['rgba(179, 136, 255, 0.6)'],
                     borderWidth: 1
                 }]
             },
-        }
+        });
     }
 
     renderPollToggle() {
@@ -60,7 +57,7 @@ export default class AnnouncementPoll extends Component {
                             onChange={
                                 () => this.setState({ poll: this.state.poll ? false : true }, 
                                 () => this.state.poll 
-                                ? document.querySelector('#poll-title').focus() 
+                                ? document.querySelector('#poll-name').focus() 
                                 : null
                             )}
                         />
@@ -88,17 +85,18 @@ export default class AnnouncementPoll extends Component {
             <div className="input-field col s12">
                 <input 
                     required
-                    name="poll-title"
-                    id="poll-title" 
+                    name="poll-name"
+                    id="poll-name" 
                     type="text" 
                     placeholder="My awesome poll"
                     min-length={1} 
-                    maxLength={50}
-                    value={this.state.pollTitle}
+                    maxLength={this.MAX_POLL_TITLE_LENGTH}
+                    value={this.state.pollName}
+                    onChange={(e) => this.setState({ pollName: e.target.value })}
                 />
-                <label htmlFor="poll-title" className="active">Poll Name</label>
+                <label htmlFor="poll-Name" className="active">Poll Name</label>
                 <StyledMessage>
-                    {this.state.pollTitle.length} / {50}
+                    {this.state.pollName.length} / {this.MAX_POLL_TITLE_LENGTH}
                 </StyledMessage>
             </div>
         )
@@ -116,10 +114,79 @@ export default class AnnouncementPoll extends Component {
                     height={50}
                     options={this.options}
                 />
+                {this.renderPollOptions()}
+                {this.renderAddNewPollOption()}
             </StyledPoll>
         )
     }
 
+    renderPollOptions() {
+
+        return this.state.pollOptions.map(option => {
+            return <p>{option}</p>
+        });
+    }
+
+    renderAddNewPollOption() {
+
+        return (
+            <div className="input-field col s12">
+                <input 
+                    required
+                    name="poll-option"
+                    id="poll-option" 
+                    type="text" 
+                    placeholder="Enter a poll option"
+                    min-length={1} 
+                    maxLength={this.MAX_POLL_OPTION_LENGTH}
+                    value={this.state.pollOption}
+                    onChange={(e) => this.setState({ pollOption: e.target.value })}
+                />
+                <label htmlFor="poll-Name" className="active">New Poll Option</label>
+                <StyledMessage>
+                    {this.state.pollOption.length} / {this.MAX_POLL_OPTION_LENGTH}
+                </StyledMessage>
+                <StyledButton 
+                    className="waves-effect waves-light btn"
+                    onClick={this.handleNewPollOption}
+                >
+                    Add
+                </StyledButton>
+            </div>
+        )
+    }
+
+    handleNewPollOption = () => {
+
+        if (this.state.pollOption !== '' && 
+            this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH) {
+
+            // update poll list of options
+            const newData = [...this.state.pollOptions, this.state.pollOption];
+            this.setState({ 
+                pollOption: '',
+                pollOptions: newData,
+                data: {
+                    labels: newData,
+                    datasets: [{ 
+                        label: '# of Votes',
+                        data: newData.map(() => Math.floor(Math.random() * 10) + 3),
+                        backgroundColor: newData.map(() => 'rgba(179, 136, 255, 0.4)'),
+                        borderColor: newData.map(() => 'rgba(179, 136, 255, 0.6)'),
+                    }],
+                },
+            });
+        }
+    }
+
+    generateRGB(border) {
+
+        return `rgba(
+                    ${ Math.floor(Math.random() * 255) + 1}, 
+                    ${ Math.floor(Math.random() * 255) + 1},
+                    ${ Math.floor(Math.random() * 255) + 1}, ${border ? 1 : 0.2}
+                )`;
+    }
 
     render() {
         return (
@@ -141,7 +208,7 @@ const StyledPoll = styled.div`
 
     canvas {
         max-height: 300px;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 `;
 
@@ -167,3 +234,24 @@ const StyledMessage = styled.span`
     font-size: 0.9rem;
     float: right;
 `;
+
+
+const StyledButton = styled.a`
+    color: #ffffff;
+    background-color: #12e2a3;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.05);
+    line-height: 0;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 1.25rem;
+    display: block;
+    max-width: 100px;
+    margin: 1rem 0;
+
+    &:hover {
+        box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
+        background-color: #12e2a3;
+    }
+`;
+
