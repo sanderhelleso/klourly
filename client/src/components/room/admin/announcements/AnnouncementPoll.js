@@ -29,42 +29,45 @@ class AnnouncementPoll extends Component {
             }
         };
 
-        this.state = {
-            poll: false,
-            pollName: '',
-            pollOptions: [],
-            pollOption: ''
-        }
+        this.state = this.initialState();
     }
 
     componentDidMount() {
         
-        this.setState({
-            data: {
-                labels: this.state.pollOptions,
-                datasets: [{
-                    label: '# of Votes',
-                    data: [],
-                    backgroundColor: ['rgba(179, 136, 255, 0.4)'],
-                    borderColor:['rgba(179, 136, 255, 0.6)'],
-                    borderWidth: 1
-                }]
-            },
-        });
+        this.setState({ data: this.initialChartData() });
     }
 
-    initializePoll = e => {
+    initialState = () => ({
+        poll: false,
+        pollName: '',
+        pollOptions: [],
+        pollOption: '',
+        data: {}
+    });
+
+    initialChartData = () => (
+        {
+            labels: this.state.pollOptions,
+            datasets: [{
+                label: '# of Votes',
+                data: this.state.pollOptions,
+                backgroundColor: ['rgba(179, 136, 255, 0.4)'],
+                borderColor:['rgba(179, 136, 255, 0.6)'],
+                borderWidth: 1
+            }]
+        }
+    );
+
+    initializePoll = () => {
 
         if (!this.state.poll) {
-                this.props.addAnnouncementPollAction({ poll: true });
-                this.setState({ poll: true }, 
-                () => {
-                    document.querySelector('#poll-name').focus();
-                });
+            this.props.addAnnouncementPollAction({ poll: true });
+            this.setState({ poll: true, data: this.initialChartData() }, 
+            () => document.querySelector('#poll-name').focus());
         }
 
         else {
-            this.setState({ poll: false  });
+            this.setState(this.initialState());
             this.props.removeAnnouncementPollAction();
         }
     }
@@ -250,10 +253,7 @@ class AnnouncementPoll extends Component {
 
 
 const mapStateToProps = state => {
-    return {
-        userID: state.auth.user.id,
-        roomID: state.room.activeRoom.id
-    }
+    return { pollData: state.room.activeRoom.newAnnouncement.poll }
 }
 
 const mapDispatchToProps = dispatch => {
