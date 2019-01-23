@@ -4,6 +4,8 @@ import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { removeAnnouncementPollAction } from '../../../../actions/room/announcement/removeAnnouncementPollAction';
+import { updateAnnouncementsAction } from '../../../../actions/room/announcement/updateAnnouncementsAction';
 
 import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
@@ -75,10 +77,15 @@ class NewAnnouncementModal extends Component {
         // check if post was successfull
         if (response.data.success) {
 
-            this.setState({ title: '', message: ''});
-
             // close modal
             document.querySelector('.modal-close').click();
+
+            // reset announcement data
+            this.setState({ title: '', message: ''});
+            this.props.removeAnnouncementPollAction();
+
+            // update rooms announcement list
+            this.props.updateAnnouncementsAction(response.data.announcement);
         }
 
         // alert user
@@ -170,7 +177,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({
+        removeAnnouncementPollAction,
+        updateAnnouncementsAction
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAnnouncementModal);

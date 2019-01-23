@@ -123,16 +123,14 @@ module.exports = app => {
     });
 
     // publish a new room announcement
-    app.post('/api/publishAnnouncement', authenticate, async (req, res) => {
+    app.post('/api/publishAnnouncement', authenticate, (req, res) => {
 
         // get room announcement
         const roomRef = db.ref(`rooms/${req.body.roomID}/announcements/${shortid.generate()}`);
-        
-        // set room announcement
-        const setAnnouncement = await roomRef.set({
+
+        const announcement = {
             ...req.body.announcement,
             timestamp: new Date().getTime(),
-            author: req.body.uid,
             reactions: {
                 happy: {
                     emoji: '😄',
@@ -155,14 +153,17 @@ module.exports = app => {
                     count: 0,
                 }
             }
-        });
+        };
+        
+        // set room announcement
+        roomRef.set(announcement);
 
         // send back response
         res.status(200).json({
             success: true,
-            message: 'Successfully published announcement'
+            message: 'Successfully published announcement',
+            announcement
         });
-
     });
 
     // update announcement reaction
