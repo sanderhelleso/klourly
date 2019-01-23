@@ -18,7 +18,7 @@ class RoomAnnouncements extends Component {
     render() {
         return (
             <main id="room-admin-announcement-cont" className="container">
-                <BackToRoom id={this.props.state.room.activeRoom.id} />
+                <BackToRoom id={this.props.roomID} />
                 <StyledHeader>
                     <h3>Announcements</h3>
                     <p>Create, update and manage the rooms announcements</p>
@@ -26,19 +26,14 @@ class RoomAnnouncements extends Component {
                         id="new-room-announcement-btn" 
                         className="waves-effect waves-light btn animated fadeIn modal-trigger"
                         data-target="new-announcement-modal"
-                        onClick={() => { 
-                            setTimeout(() => {
-                                document.querySelector('input').focus();
-                            }, 150);
-                        }}
+                        onClick={() => setTimeout(() => { document.querySelector('input').focus() }, 150)}
                     >
                         New Announcement
                     </StyledButton>
                 </StyledHeader> 
-                <NewAnnouncementModal uid={this.props.state.auth.user.id} roomID={this.props.state.room.activeRoom.id}/>
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
+                <NewAnnouncementModal 
+                    userID={this.props.userID} 
+                    roomID={this.props.roomID}
                 />
             </main>
         )
@@ -47,7 +42,10 @@ class RoomAnnouncements extends Component {
 
 // set initial store state
 const mapStateToProps = (state) => {
-    return { state }
+    return {
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -74,20 +72,21 @@ const StyledHeader = styled.div`
     }
 `;
 
-const StyledButton = styled.button`
-    box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.09);
+const StyledButton = styled.a`
     color: #ffffff;
-    background-color: #00e988;
+    background-color: #12e2a3;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     line-height: 0;
-    padding: 1.5rem 2.2rem;
     letter-spacing: 2px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
-    min-width: 9.5rem;
-    max-width: 9.5rem;
+    padding: 1.75rem;
+    display: block;
+    max-width: 300px;
+    margin: 4rem 0;
 
-    &:hover, &:active, &:focus {
-        background-color: #00e988;
-        box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.2);
+    &:hover {
+        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+        background-color: #12e2a3;
     }
 `;

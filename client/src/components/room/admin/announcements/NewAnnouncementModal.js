@@ -9,45 +9,36 @@ export default class NewAnnouncementModal extends Component {
     constructor(props) {
         super(props);
 
-        const MAX_LENGTH_TITLE =    50;
-        const MAX_LENGTH_MESSAGE =  2000;
+        this.MAX_LENGTH_TITLE =    50;
+        this.MAX_LENGTH_MESSAGE =  2000;
+
         this.state = {
             title: '',
             message: '',
-            maxLengthTitle: MAX_LENGTH_TITLE,
-            maxLengthMessage: MAX_LENGTH_MESSAGE,
-            titleError: `Title must be between 1 - ${MAX_LENGTH_TITLE} characters`,
-            messageError: `Message must be between 1 - ${MAX_LENGTH_MESSAGE} characters`
+            poll: false,
+            titleError: `Title must be between 1 - ${this.MAX_LENGTH_TITLE} characters`,
+            messageError: `Message must be between 1 - ${this.MAX_LENGTH_MESSAGE} characters`
         }
-
-        console.log(props);
-        this.publishAnnouncement = this.publishAnnouncement.bind(this);
     }
 
     componentDidMount() {
         const modal = document.querySelectorAll('.modal');
-        materializeJS.M.Modal.init(modal, {});
+        materializeJS.M.Modal.init(modal, { endingTop: '5%' });
     }
 
-    updateAnnouncement(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+    updateAnnouncement = e => this.setState({ [e.target.name]: e.target.value });
+
 
     async publishAnnouncement() {
 
         // validate title
-        if (this.state.title === '' || this.state.title.length > this.state.maxLengthTitle) {
-            notification.error(this.state.titleError);
-            return;
+        if (this.state.title === '' || this.state.title.length > this.MAX_LENGTH_TITLE) {
+            return notification.error(this.state.titleError);
         }
 
         // validate message
-        if (this.state.message === '' || this.state.message.length > this.state.maxLengthMessage) {
-            notification.error(this.state.messageError);
-            return;
-
+        if (this.state.message === '' || this.state.message.length > this.MAX_LENGTH_MESSAGE) {
+            return notification.error(this.state.messageError);
         }
 
         // create announcement data
@@ -57,10 +48,12 @@ export default class NewAnnouncementModal extends Component {
         }
 
         // attempt to publish announcement
-        const response = await room.publishAnnouncement(this.props.uid, this.props.roomID, data);
+        const response = await room.publishAnnouncement(this.props.userID, this.props.roomID, data);
 
         if (response.data.success) {
+
             notification.success(response.data.message);
+
             this.setState({
                 title: '',
                 message: ''
@@ -70,14 +63,74 @@ export default class NewAnnouncementModal extends Component {
             document.querySelector('.modal-close').click();
         }
 
-        else {
-            notification.error(response.data.message);
-        }
+        else notification.error(response.data.message);
+    }
+
+    renderTitle() {
+
+        return (
+            <div className="input-field col s12">
+                <input 
+                    required
+                    name="title"
+                    id="new-announcement-title" 
+                    type="text" 
+                    min-length={1} 
+                    maxLength={this.state.maxLengthTitle}
+                    value={this.state.title}
+                    onChange={(e) => this.updateAnnouncement(e)}
+                />
+                <label htmlFor="new-announcement-title">Title</label>
+                <StyledMessage>
+                    {this.state.title.length} / {this.MAX_LENGTH_TITLE}
+                </StyledMessage>
+            </div>
+        )
+    }
+
+    renderMessage() {
+        
+        return (
+            <div className="input-field col s12">
+                <textarea 
+                    required
+                    name="message"
+                    id="new-announcement-body" 
+                    className="materialize-textarea" 
+                    minLength={1} 
+                    maxLength={this.state.maxLengthMessage}
+                    value={this.state.message}
+                    onChange={(e) => this.updateAnnouncement(e)}
+                ></textarea>
+                <label htmlFor="new-announcement-body">Message</label>
+                <StyledMessage>
+                    {this.state.message.length} / {this.MAX_LENGTH_MESSAGE}
+                </StyledMessage>
+            </div>
+        )
+    }
+
+    renderPollToggle() {
+        
+        return (
+            <StyledPollToggle className="input-field col s12">
+                <p>
+                    <label>
+                        <input 
+                            type="checkbox"
+                            checked={this.state.poll}
+                            onChange={() => this.setState({ poll: this.state.poll ? false : true })}
+                        />
+                        <span>Inlude Poll</span>
+                    </label>
+                </p>
+            </StyledPollToggle>
+        )
     }
 
     render() {
         return (
-            <div id="new-announcement-modal" className="modal modal-fixed-footer">
+            <StyledModal id="new-announcement-modal" className="modal modal-fixed-footer">
                 <div className="modal-content center-align">
                     <StyledHeader>
                         <h4>New Announcement</h4>
@@ -86,34 +139,9 @@ export default class NewAnnouncementModal extends Component {
                     <div className="row">
                         <div className="col s12 m8 offset-m2">
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <input 
-                                        required
-                                        name="title"
-                                        id="new-announcement-title" 
-                                        type="text" 
-                                        min-length={1} 
-                                        maxLength={this.state.maxLengthTitle}
-                                        value={this.state.title}
-                                        onChange={(e) => this.updateAnnouncement(e)}
-                                    />
-                                    <label htmlFor="new-announcement-title">Title</label>
-                                    <StyledMessage>{this.state.title.length} / {this.state.maxLengthTitle}</StyledMessage>
-                                </div>
-                                <div className="input-field col s12">
-                                    <textarea 
-                                        required
-                                        name="message"
-                                        id="new-announcement-body" 
-                                        className="materialize-textarea" 
-                                        minLength={1} 
-                                        maxLength={this.state.maxLengthMessage}
-                                        value={this.state.message}
-                                        onChange={(e) => this.updateAnnouncement(e)}
-                                    ></textarea>
-                                    <label htmlFor="new-announcement-body">Message</label>
-                                    <StyledMessage>{this.state.message.length} / {this.state.maxLengthMessage}</StyledMessage>
-                                </div>
+                                {this.renderTitle()}
+                                {this.renderMessage()}
+                                {this.renderPollToggle()}
                             </div>
                         </div>
                     </div>
@@ -126,10 +154,14 @@ export default class NewAnnouncementModal extends Component {
                         Publish
                     </button>
                 </div>
-            </div>
+            </StyledModal>
         )
     }
 }
+
+const StyledModal = styled.div`
+    max-height: 90%;
+`;
 
 const StyledHeader = styled.div`
     margin-top: 3rem;
@@ -155,3 +187,9 @@ const StyledMessage = styled.span`
     float: right;
 `;
 
+const StyledPollToggle = styled.div`
+    p {
+        float: left;
+        margin-top: 0;
+    }
+`;

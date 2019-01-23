@@ -16,7 +16,7 @@ export default class Menu extends Component {
                 data-target="room-menu"
                 title="Room settings and options"
             >
-                <Settings size={42} />
+                <Settings size={40} />
                 <ul id="room-menu" className="dropdown-content">
                     <li onClick={() => {redirect.roomAdminCheckin(this.props.id)}}><a><CheckCircle /> Checkin</a></li>
                     <li onClick={() => {redirect.roomAdminMembers(this.props.id)}}><a><Users /> Members</a></li>
