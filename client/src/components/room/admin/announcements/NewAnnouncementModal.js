@@ -189,6 +189,7 @@ const StyledHeader = styled.div`
         color: #bdbdbd;
         font-weight: 400;
         margin-bottom: 2rem;
+        font-size: 1.25rem;
     }
 `;
 
