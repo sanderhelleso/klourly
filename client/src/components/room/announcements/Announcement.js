@@ -45,7 +45,6 @@ class Announcement extends Component {
 
     renderPoll() {
 
-        console.log(this.state);
         if (!this.props.announcement.poll) return null;
 
         return <AnnouncementPoll 

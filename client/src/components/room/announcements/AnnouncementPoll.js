@@ -24,6 +24,7 @@ class AnnouncementPoll extends Component {
         };
 
         this.state = {
+            selectedOption: '',
             data: {
                 labels: Object.keys(this.props.poll.options),
                 datasets: [{
@@ -35,6 +36,25 @@ class AnnouncementPoll extends Component {
                 }]
             }
         }
+    }
+
+    renderPollOptions() {
+        return Object.keys(this.props.poll.options).map(option => {
+            return (
+                <p key={option} className="poll-option">
+                    <label>
+                        <input 
+                            name="group1" 
+                            type="radio"
+                            checked={this.state.selectedOption === option ? true : false} 
+                            onChange={() => this.setState({ selectedOption: option})}
+                        />
+                        <span>{option}</span>
+                    </label>
+                </p>
+            )
+        });
+
     }
 
     render() {
@@ -52,7 +72,8 @@ class AnnouncementPoll extends Component {
                     width={100}
                     height={350}
                     options={this.options}
-                />        
+                /> 
+                {this.renderPollOptions()}   
             </StyledPoll>
         )
     }
