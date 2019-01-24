@@ -4,12 +4,13 @@ import Reactions from './reactions/Reactions';
 import Fade from 'react-reveal/Fade';
 import { redirect } from '../../../helpers/redirect';
 import { format } from '../../../helpers/format';
+import { BarChart2 } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAction';
+import { openAnnouncementAction } from '../../../actions/room/announcement/openAnnouncementAction';
 
 class AnnouncementPreview extends Component {
     constructor(props) {
@@ -34,10 +35,23 @@ class AnnouncementPreview extends Component {
         redirect.announcement(this.props.state.room.activeRoom.id, this.props.id);
     }
 
+    renderChip() {
+
+        if (!this.state.poll) return null;
+
+        return (
+            <div className="chip">
+                <BarChart2 size={16} />
+                Poll
+            </div>
+        )
+    }
+
     render() {
         return (
             <Fade>
                 <StyledAnnouncementPreview className="col s12">
+                    {this.renderChip()}
                     <h5>{this.state.title}</h5>
                     <span className="time">{format.getFormatedDateAndTime(this.state.timestamp)}</span>
                     <p>{this.state.message.substring(0, 355)}</p>
@@ -76,6 +90,18 @@ const StyledAnnouncementPreview = styled.div`
     margin-bottom: 2rem;
     border-bottom: 1px solid #eeeeee;
 
+    .chip {
+        margin-top: 1rem;
+        background-color: #b388ff;
+        color: #ffffff;
+        padding: 0 15px;
+        opacity: 0.8;
+
+        svg {
+            margin: 0 2px -2px 0;
+        }
+    }
+
     .reactions, .announcement-readmore-cont {
         margin-top: 0.5rem;
         padding: 0 !important;
@@ -98,6 +124,7 @@ const StyledAnnouncementPreview = styled.div`
 
     h5 {
         font-weight: 400;
+        margin-top: 7.5px;
     }
 
     .time {

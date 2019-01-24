@@ -6,7 +6,7 @@ import { format } from '../../../helpers/format';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { openAnnouncementAction } from '../../../actions/room/openAnnouncementAction';
+import { openAnnouncementAction } from '../../../actions/room/announcement/openAnnouncementAction';
 
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
@@ -15,9 +15,7 @@ class Announcement extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            dataLoaded: false
-        }
+        this.state = { dataLoaded: false };
     }
 
     componentDidMount() {
@@ -32,9 +30,7 @@ class Announcement extends Component {
                 });
             }
 
-            else {
-                this.roomReady(this.props);
-            }
+            else this.roomReady(this.props);
         }
     }
 
@@ -76,9 +72,12 @@ class Announcement extends Component {
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
                     <h1>{this.state.title}</h1>
-                    <h5>{format.tsToDate(this.state.timestamp)}</h5>
+                    <h5>{format.getFormatedDateAndTime(this.state.timestamp)}</h5>
                     <p>{this.state.message}</p>
-                    <Reactions id={this.props.match.params.announcementID} data={this.state.reactions} />
+                    <Reactions 
+                        id={this.props.match.params.announcementID} 
+                        data={this.state.reactions} 
+                    />
                 </StyledAnnouncement>
             )
         }

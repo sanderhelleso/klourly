@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { removeAnnouncementPollAction } from '../../../../actions/room/announcement/removeAnnouncementPollAction';
 import { updateAnnouncementsAction } from '../../../../actions/room/announcement/updateAnnouncementsAction';
+import { openAnnouncementAction } from '../../../../actions/room/announcement/openAnnouncementAction';
 
 import { room } from '../../../../api/room/room';
 import { materializeJS } from '../../../../helpers/materialize';
@@ -88,6 +89,7 @@ class NewAnnouncementModal extends Component {
                 announcement: response.data.announcement
             });
 
+            this.props.openAnnouncementAction(response.data.announcement);
             redirect.announcement(this.props.roomID, response.data.announcementID);
         }
 
@@ -185,7 +187,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         removeAnnouncementPollAction,
-        updateAnnouncementsAction
+        updateAnnouncementsAction,
+        openAnnouncementAction
     }, dispatch);
 }
 

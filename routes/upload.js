@@ -24,8 +24,7 @@ module.exports = app => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'avatar') {
-            res.status(400).json({ success: false, message: 'Malformed payload' });
-            return;
+            return res.status(400).json({ success: false, message: 'Malformed payload' });
         }
 
         // fileblob and location
@@ -58,8 +57,7 @@ module.exports = app => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'roomCover') {
-            res.status(400).json({ success: false, message: 'Malformed payload' });
-            return;
+            return res.status(400).json({ success: false, message: 'Malformed payload' });
         }
 
         // fileblob and location
