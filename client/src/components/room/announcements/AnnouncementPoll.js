@@ -73,7 +73,18 @@ class AnnouncementPoll extends Component {
                     height={350}
                     options={this.options}
                 /> 
-                {this.renderPollOptions()}   
+                {this.renderPollOptions()}
+                <StyledButton 
+                    className="waves-effect waves-light btn"
+                    onClick={this.handleNewPollOption}
+                    disabled={
+                        this.state.selectedOption === ''
+                        ? true
+                        : false
+                    }
+                >
+                    Vote
+                </StyledButton>
             </StyledPoll>
         )
     }
@@ -129,3 +140,23 @@ const StyledPoll = styled.div`
         color: #bdbdbd;
     }
 `;
+
+const StyledButton = styled.a`
+    color: #ffffff;
+    background-color: #12e2a3;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.05);
+    line-height: 0;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 1.25rem;
+    display: block;
+    max-width: 100px;
+    margin-top: 1.5rem;
+
+    &:hover {
+        box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
+        background-color: #12e2a3;
+    }
+`;
+
