@@ -9,6 +9,7 @@ export const room = {
     getRooms,
     publishAnnouncement,
     updateAnnouncementReaction,
+    voteAnnouncementPoll,
     updateRoomInvite,
     getRoomMembers,
     removeRoomMember,
@@ -164,6 +165,30 @@ async function updateAnnouncementReaction(uid, roomID, announcementID, reactionN
 
     catch(error) {
         console.log(error);
+    }
+}
+
+// vote for an announcements poll
+async function voteAnnouncementPoll(uid, roomID, announcementID, voteOption) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/announcement/voteAnnouncementPoll',
+            data: {
+                uid,
+                roomID,
+                announcementID,
+                voteOption
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
     }
 }
 
