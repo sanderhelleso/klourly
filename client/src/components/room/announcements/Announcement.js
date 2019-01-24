@@ -58,11 +58,12 @@ const mapStateToProps = (state, compProps) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ openAnnouncementAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Announcement);
+
 
 const StyledAnnouncement = styled.section`
     h1 {

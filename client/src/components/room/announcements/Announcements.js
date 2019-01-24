@@ -17,7 +17,6 @@ export default class Announcements extends Component {
                     <AnnouncementPreview
                         key={id}
                         id={id}
-                        data={announcement} 
                     />
                 )
             });

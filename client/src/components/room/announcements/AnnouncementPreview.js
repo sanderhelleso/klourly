@@ -15,29 +15,22 @@ import { openAnnouncementAction } from '../../../actions/room/announcement/openA
 class AnnouncementPreview extends Component {
     constructor(props) {
         super(props);
-
-        this.state =  { 
-            ...props.data,
-            id: props.id
-        };
-
-        this.enterAnnouncement = this.enterAnnouncement.bind(this);
     }
 
     componentWillReceiveProps(nextProps) { 
         this.setState({
-            ...nextProps.state.room.activeRoom.announcements[this.state.id]
+            ...nextProps.activeRoom.announcements[this.props.announcementID]
         })
     }
 
-    enterAnnouncement() {
+    enterAnnouncement = () => {
         this.props.openAnnouncementAction(this.state);
-        redirect.announcement(this.props.state.room.activeRoom.id, this.props.id);
+        redirect.announcement(this.props.roomID, this.props.announcementID);
     }
 
     renderChip() {
 
-        if (!this.state.poll) return null;
+        if (!this.props.announcement.poll) return null;
 
         return (
             <div className="chip">
@@ -52,12 +45,12 @@ class AnnouncementPreview extends Component {
             <Fade>
                 <StyledAnnouncementPreview className="col s12">
                     {this.renderChip()}
-                    <h5>{this.state.title}</h5>
-                    <span className="time">{format.getFormatedDateAndTime(this.state.timestamp)}</span>
-                    <p>{this.state.message.substring(0, 355)}</p>
+                    <h5>{this.props.announcement.title}</h5>
+                    <span className="time">{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</span>
+                    <p>{this.props.announcement.message.substring(0, 355)}</p>
                     <Reactions 
-                        id={this.props.id} 
-                        data={this.state.reactions} 
+                        id={this.props.announcementID} 
+                        data={this.props.announcement.reactions} 
                     />
                     <div className="col s12 announcement-readmore-cont">
                     <button 
@@ -72,9 +65,15 @@ class AnnouncementPreview extends Component {
     }
 }
 
-// set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+
+const mapStateToProps = (state, compProps) => {
+    console.log(compProps);
+    return {
+        roomID: state.room.activeRoom.id,
+        activeRoom: state.room.activeRoom,
+        announcementID: compProps.id,
+        announcement: state.room.activeRoom.announcements[compProps.id]
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
