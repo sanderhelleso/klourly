@@ -14,81 +14,32 @@ import BackToRoom from '../BackToRoom';
 class Announcement extends Component {
     constructor(props) {
         super(props);
-
-        this.state = { dataLoaded: false };
     }
 
-    componentDidMount() {
-
-        // if room state is not set or not matching, refetch room data
-        if (this.props.state.room.activeRoom && this.props.state.room.activeRoom.id === this.props.match.params.roomID) {
-
-            if (this.props.state.room.activeRoom.activeAnnouncement) {
-                this.setState({
-                    ...this.props.state.room.activeRoom.activeAnnouncement,
-                    dataLoaded: true
-                });
-            }
-
-            else this.roomReady(this.props);
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        if (!nextProps.state.room.activeRoom.activeAnnouncement) {
-            this.roomReady(nextProps);
-        }
-    }
-
-    roomReady(props) {
-
-        // check if valid room announcement
-        const activeAnnouncement = props.state.room.activeRoom.announcements[props.match.params.announcementID];
-        if (activeAnnouncement) {
-            this.props.openAnnouncementAction(activeAnnouncement);
-            this.setState({
-                ...activeAnnouncement,
-                dataLoaded: true
-            });
-        }
-
-        // redirect to 404
-    }
-
-    loadRoomData() {
-        return this.state.dataLoaded ? null : null;
-    }
-
-    setTitle() {
-        document.body.style.overflowY = 'auto';
-        document.title = `${this.state.title} | ${this.props.state.room.activeRoom.name} | Klourly`; 
-    }
 
     renderAnnouncement() {
 
-        if (this.state.dataLoaded) {
-            this.setTitle();
+        if (this.props.announcement) {
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l8 offset-l2">
-                    <h1>{this.state.title}</h1>
-                    <h5>{format.getFormatedDateAndTime(this.state.timestamp)}</h5>
-                    <p>{this.state.message}</p>
+                    <h1>{this.props.announcement.title}</h1>
+                    <h5>{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</h5>
+                    <p>{this.props.announcement.message}</p>
                     <Reactions 
-                        id={this.props.match.params.announcementID} 
-                        data={this.state.reactions} 
+                        id={this.props.announcementID} 
+                        data={this.props.announcement.reactions} 
                     />
                 </StyledAnnouncement>
             )
         }
 
-        return this.loadRoomData();
+        return <p>Loading...</p>;
     }
 
     render() {
         return (
             <main className="container">
-                <BackToRoom id={this.props.match.params.roomID} />
+                <BackToRoom id={this.props.roomID} />
                 <div className="row">
                     {this.renderAnnouncement()}
                 </div>
@@ -98,8 +49,13 @@ class Announcement extends Component {
 }
 
 // set initial store state
-const mapStateToProps = (state) => {
-    return { state }
+const mapStateToProps = (state, compProps) => {
+    console.log(compProps);
+    return {
+        roomID: compProps.match.params.roomID,
+        announcementID: compProps.match.params.announcementID,
+        announcement: state.room.activeRoom.announcements[compProps.match.params.announcementID]
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
