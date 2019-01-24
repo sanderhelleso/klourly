@@ -51,6 +51,9 @@
     "/api/updateAnnouncementReaction": {
       "target": "http://localhost:5000"
     },
+    "/api/announcement/voteAnnouncementPoll": {
+      "target": "http://localhost:5000"
+    },
     "/api/updateRoomInvite": {
       "target": "http://localhost:5000"
     },

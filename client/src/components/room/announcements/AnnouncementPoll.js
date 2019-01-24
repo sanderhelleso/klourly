@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import { format } from '../../../helpers/format';
 import { Bar } from 'react-chartjs-2';
 import { BarChart2 } from 'react-feather';
+import { room } from '../../../api/room/room';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { voteAnnouncementPollAction } from '../../../actions/room/announcement/voteAnnouncementPollAction';
+
 
 class AnnouncementPoll extends Component {
     constructor(props) {
@@ -54,7 +57,19 @@ class AnnouncementPoll extends Component {
                 </p>
             )
         });
+    }
 
+    vote = async () => {
+
+        // attempt to register vote for poll
+        const response = await room.voteAnnouncementPoll(
+                            this.props.userID,
+                            this.props.roomID,
+                            this.props.announcementID,
+                            this.state.selectedOption
+                        );
+
+        console.log(response);
     }
 
     render() {
@@ -76,7 +91,7 @@ class AnnouncementPoll extends Component {
                 {this.renderPollOptions()}
                 <StyledButton 
                     className="waves-effect waves-light btn"
-                    onClick={this.handleNewPollOption}
+                    onClick={this.vote}
                     disabled={
                         this.state.selectedOption === ''
                         ? true
@@ -93,16 +108,18 @@ class AnnouncementPoll extends Component {
 
 const mapStateToProps = (state, compProps) => {
     return {
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id,
         poll: state.room.activeRoom.announcements[compProps.announcementID].poll
     }
 }
 
-
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ voteAnnouncementPollAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementPoll);
+
 
 const StyledPoll = styled.div`
     height: 100%;

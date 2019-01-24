@@ -216,6 +216,30 @@ module.exports = app => {
         });
     });
 
+    // vote and update an announcements poll
+    app.post('/api/announcement/voteAnnouncementPoll', authenticate, (req, res) => {
+
+        // get annoucement ref
+        const voteRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/poll/options/${req.body.voteOption}`);
+
+        // get the value and proceed to updte counter
+        voteRef.once('value', snapshot => {
+
+            voteRef.update({
+                votes: snapshot.val().votes + 1,
+                voted: snapshot.val().voted 
+                ? [...snapshot.val().voted, req.body.uid]
+                : [req.body.uid]
+            });
+
+            // send back response with updated invitation link
+            res.status(200).json({
+                success: true,
+                message: 'Thanks! Your vote has been registered',
+            });
+        });
+    });
+
     // get data for an collection of rooms
     app.post('/api/updateRoomInvite', authenticate, async (req, res) => {
 
