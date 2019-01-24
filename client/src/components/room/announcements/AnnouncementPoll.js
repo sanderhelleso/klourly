@@ -42,21 +42,54 @@ class AnnouncementPoll extends Component {
     }
 
     renderPollOptions() {
-        return Object.keys(this.props.poll.options).map(option => {
+
+        console.log(this.props);
+        if (this.props.poll.voted && this.props.poll.voted.hasOwnProperty(this.props.userID)) {
+
+            const usersVoteInfo = this.props.poll.voted[this.props.userID];
+
             return (
-                <p key={option} className="poll-option">
-                    <label>
-                        <input 
-                            name="group1" 
-                            type="radio"
-                            checked={this.state.selectedOption === option ? true : false} 
-                            onChange={() => this.setState({ selectedOption: option})}
-                        />
-                        <span>{option}</span>
-                    </label>
-                </p>
+                <StyledAlreadyVoted>
+                    <p>Your vote <span>{usersVoteInfo.voted}</span> is registered</p>
+                    <span className="registered-at">Registered at {format.getFormatedDateAndTime(usersVoteInfo.timestamp)}</span>
+                </StyledAlreadyVoted>
             )
-        });
+        }
+
+        return (
+            <div>
+                {
+                    Object.keys(this.props.poll.options).map(option => {
+                        return (
+                            <p key={option} className="poll-option">
+                                <label>
+                                    <input 
+                                        name="group1" 
+                                        type="radio"
+                                        checked={this.state.selectedOption === option ? true : false} 
+                                        onChange={() => this.setState({ selectedOption: option})}
+                                    />
+                                    <span>{option}</span>
+                                </label>
+                            </p>
+                        )
+                    })
+                }
+                <StyledButton 
+                    className="waves-effect waves-light btn"
+                    onClick={this.vote}
+                    disabled={
+                        this.state.selectedOption === ''
+                        ? true
+                        : false
+                    }
+                >
+                    Vote
+                </StyledButton>
+            </div>
+        )
+
+        /**/
     }
 
     vote = async () => {
@@ -89,17 +122,6 @@ class AnnouncementPoll extends Component {
                     options={this.options}
                 /> 
                 {this.renderPollOptions()}
-                <StyledButton 
-                    className="waves-effect waves-light btn"
-                    onClick={this.vote}
-                    disabled={
-                        this.state.selectedOption === ''
-                        ? true
-                        : false
-                    }
-                >
-                    Vote
-                </StyledButton>
             </StyledPoll>
         )
     }
@@ -174,6 +196,27 @@ const StyledButton = styled.a`
     &:hover {
         box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
         background-color: #12e2a3;
+    }
+`;
+
+const StyledAlreadyVoted = styled.div`
+
+    margin-top: 3rem;
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 0.30rem;
+
+        span {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #b388ff;
+        }
+    }
+
+    .registered-at {
+        font-size: 0.8rem;
+        color: #bdbdbd;
     }
 `;
 

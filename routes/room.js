@@ -229,7 +229,10 @@ module.exports = app => {
 
             pollRef.update({
                 voted: snapshot.val().voted 
-                ? snapshot.val().voted[req.body.uid] = voteOptions
+                ? {
+                    ...snapshot.val().voted,
+                    [req.body.uid]: voteOptions
+                }
                 : { [req.body.uid]: voteOptions }
             });
 
