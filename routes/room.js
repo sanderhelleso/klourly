@@ -220,16 +220,22 @@ module.exports = app => {
     app.post('/api/announcement/voteAnnouncementPoll', authenticate, (req, res) => {
 
         // get annoucement ref
-        const voteRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/poll/options/${req.body.voteOption}`);
+        const pollRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/poll`);
 
         // get the value and proceed to updte counter
-        voteRef.once('value', snapshot => {
+        pollRef.once('value', snapshot => {
 
-            voteRef.update({
-                votes: snapshot.val().votes + 1,
+            const voteOptions = { voted: req.body.voteOption, timestamp: new Date().getTime() };
+
+            pollRef.update({
                 voted: snapshot.val().voted 
-                ? [...snapshot.val().voted, req.body.uid]
-                : [req.body.uid]
+                ? snapshot.val().voted[req.body.uid] = voteOptions
+                : { [req.body.uid]: voteOptions }
+            });
+
+            console.log(snapshot.val());
+            pollRef.child(`/options/${req.body.voteOption}`).update({
+                votes: snapshot.val().options[req.body.voteOption].votes + 1,
             });
 
             // send back response with updated invitation link
@@ -238,6 +244,8 @@ module.exports = app => {
                 message: 'Thanks! Your vote has been registered',
             });
         });
+
+        /*/options/${req.body.voteOption}`*/
     });
 
     // get data for an collection of rooms
