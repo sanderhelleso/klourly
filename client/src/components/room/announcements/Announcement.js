@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../helpers/format';
-import { Bar } from 'react-chartjs-2';
-import { BarChart2 } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -12,35 +10,11 @@ import { openAnnouncementAction } from '../../../actions/room/announcement/openA
 
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
+import AnnouncementPoll from './AnnouncementPoll';
 
 class Announcement extends Component {
     constructor(props) {
         super(props);
-
-        this.options = {
-            maintainAspectRatio: false,
-            scales : {
-                xAxes : [{
-                    gridLines : {
-                        display : false
-                    }
-                }]
-            }
-        };
-
-        this.state = {
-            data: this.props.announcement.poll
-            ? {
-                labels: Object.keys(this.props.announcement.poll.options),
-                datasets: [{
-                    label: '# of Votes',
-                    data: Object.values(this.props.announcement.poll.options),
-                    backgroundColor: ['rgba(179, 136, 255, 0.4)'],
-                    borderColor:['rgba(179, 136, 255, 0.6)'],
-                    borderWidth: 1
-                }]
-            } : false
-        }
     }
 
     renderAnnouncement() {
@@ -48,13 +22,15 @@ class Announcement extends Component {
         if (this.props.announcement) {
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l10 offset-l1">
-                    <h1>{this.props.announcement.title}</h1>
-                    <h5>{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</h5>
-                    <p>{this.props.announcement.message}</p>
-                    <Reactions 
-                        id={this.props.announcementID} 
-                        data={this.props.announcement.reactions} 
-                    />
+                    <div className="announcement">
+                        <h1>{this.props.announcement.title}</h1>
+                        <h5>{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</h5>
+                        <p>{this.props.announcement.message}</p>
+                        <Reactions 
+                            id={this.props.announcementID} 
+                            data={this.props.announcement.reactions} 
+                        />
+                    </div>
                     <div className="row">
                         <div className="col s12">
                             {this.renderPoll()}
@@ -70,26 +46,14 @@ class Announcement extends Component {
     renderPoll() {
 
         console.log(this.state);
-        if (!this.state.data) return null;
+        if (!this.props.announcement.poll) return null;
 
-        return (
-            <StyledPoll className="animated fadeIn">
-                <div className="chip">
-                    <BarChart2 size={16} />
-                    Poll
-                </div>
-                <h5>{this.props.announcement.poll.name}</h5>
-                <span>Last vote at Thu Jan 24 2019 09:53</span>
-                <Bar
-                    className="animated fadeIn"
-                    data={this.state.data}
-                    width={100}
-                    height={350}
-                    options={this.options}
-                />        
-            </StyledPoll>
-        )
+        return <AnnouncementPoll 
+                    announcementID={this.props.announcementID}
+                    roomID={this.props.roomID}
+                />
     }
+
 
     render() {
         return (
@@ -128,63 +92,27 @@ const StyledAnnouncement = styled.section`
     padding: 5rem !important;
     margin-bottom: 5rem;
 
-    h1 {
+    .announcement {
+        h1 {
         font-size: 3rem;
         text-align: center;
         margin-top: 0;
     }
 
-    h5 {
-        color: #bdbdbd;
-        text-align: center;
-        font-size: 1.25rem;
-        margin-bottom: 3rem;
-    }
-
-    p {
-        clear: both;
-        min-width: 100%;
-        padding: 2rem 0;
-        border-top: 1px solid #eeeeee;
-        color: #757575;
-        font-weight: 400;
-    }
-`;
-
-
-const StyledPoll = styled.div`
-    height: 100%;
-    width: 100%;
-    text-align: left;
-    margin-top: 3rem;
-    border-top: 1px solid #eeeeee;
-
-    h5 {
-        font-size: 2rem;
-        color: #363636;
-        text-align: left;
-        margin-bottom: 0.5rem;
-    }
-
-    .chip {
-        margin-top: 3rem;
-        background-color: #b388ff;
-        color: #ffffff;
-        padding: 0 15px;
-        opacity: 0.8;
-
-        svg {
-            margin: 0 2px -2px 0;
+        h5 {
+            color: #bdbdbd;
+            text-align: center;
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
         }
-    }
 
-    canvas {
-        max-height: 350px;
-        margin: 2rem 0;
-    }
-
-    span {
-        font-size: 0.8rem;
-        color: #bdbdbd;
+        p {
+            clear: both;
+            min-width: 100%;
+            padding: 2rem 0;
+            border-top: 1px solid #eeeeee;
+            color: #757575;
+            font-weight: 400;
+        }
     }
 `;
