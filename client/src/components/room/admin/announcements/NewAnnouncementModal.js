@@ -70,7 +70,7 @@ class NewAnnouncementModal extends Component {
             });
 
             // set poll options
-            data.poll = { name: this.props.pollData.name, options } 
+            data.poll = { name: this.props.pollData.pollName, options } 
         };
 
         // attempt to publish announcement

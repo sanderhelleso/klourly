@@ -43,7 +43,7 @@ export default class Reactions extends Component {
 
     render() {
         return (
-            <StyledReactions className="col l10 m12 s12">
+            <StyledReactions className="col s12 m12 l10">
                 {this.renderReactions()}
             </StyledReactions>
         )

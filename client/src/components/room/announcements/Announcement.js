@@ -78,12 +78,13 @@ class Announcement extends Component {
                     <BarChart2 size={16} />
                     Poll
                 </div>
-                <h5>{this.props.announcement.title}</h5>
+                <h5>{this.props.announcement.poll.name}</h5>
+                <span>Last vote at Thu Jan 24 2019 09:53</span>
                 <Bar
                     className="animated fadeIn"
                     data={this.state.data}
                     width={100}
-                    height={270}
+                    height={350}
                     options={this.options}
                 />        
             </StyledPoll>
@@ -145,13 +146,8 @@ const StyledAnnouncement = styled.section`
         min-width: 100%;
         padding: 2rem 0;
         border-top: 1px solid #eeeeee;
-        border-bottom: 1px solid #eeeeee;
         color: #757575;
         font-weight: 400;
-    }
-
-    .reactions {
-        margin-top: 2rem;
     }
 `;
 
@@ -161,15 +157,17 @@ const StyledPoll = styled.div`
     width: 100%;
     text-align: left;
     margin-top: 3rem;
+    border-top: 1px solid #eeeeee;
 
     h5 {
         font-size: 2rem;
         color: #363636;
         text-align: left;
+        margin-bottom: 0.5rem;
     }
 
     .chip {
-        margin-top: 1rem;
+        margin-top: 3rem;
         background-color: #b388ff;
         color: #ffffff;
         padding: 0 15px;
@@ -181,7 +179,12 @@ const StyledPoll = styled.div`
     }
 
     canvas {
-        max-height: 400px;
-        margin-bottom: 2rem;
+        max-height: 350px;
+        margin: 2rem 0;
+    }
+
+    span {
+        font-size: 0.8rem;
+        color: #bdbdbd;
     }
 `;
