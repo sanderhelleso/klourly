@@ -6,6 +6,8 @@ export default class Announcements extends Component {
     constructor(props) {
         super(props);
 
+        this.noAnnouncementIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
+
     }
 
     renderAnnouncements() {
@@ -22,7 +24,12 @@ export default class Announcements extends Component {
             });
         }
 
-        return <p>No announcements has been posted in this room</p>
+        return (
+            <StyledNoAnnouncements className="animated fadeIn">
+                <img src={this.noAnnouncementIcon} alt="No announcements posted in this room" />
+                <p>No announcements has been posted in this room</p>
+            </StyledNoAnnouncements>
+        )
     }
 
     render() {
@@ -49,5 +56,15 @@ const StyledAnnouncements = styled.div`
         margin: 0 0 5rem 0;
         font-size: 2.5rem;
         text-transform: uppercase;
+    }
+`;
+
+const StyledNoAnnouncements = styled.div`
+
+    text-align: center;
+
+    p {
+        color: #9e9e9e;
+        margin: 0;
     }
 `;

@@ -67,7 +67,6 @@ class AnnouncementPreview extends Component {
 
 
 const mapStateToProps = (state, compProps) => {
-    console.log(compProps);
     return {
         roomID: state.room.activeRoom.id,
         activeRoom: state.room.activeRoom,

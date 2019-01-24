@@ -33,7 +33,7 @@ class Announcement extends Component {
             )
         }
 
-        return <p>Loading...</p>;
+        return <h1>No announcement found</h1>
     }
 
     render() {
@@ -50,11 +50,12 @@ class Announcement extends Component {
 
 // set initial store state
 const mapStateToProps = (state, compProps) => {
-    console.log(compProps);
     return {
         roomID: compProps.match.params.roomID,
         announcementID: compProps.match.params.announcementID,
-        announcement: state.room.activeRoom.announcements[compProps.match.params.announcementID]
+        announcement: state.room.activeRoom.announcements 
+        ? state.room.activeRoom.announcements[compProps.match.params.announcementID]
+        : null
     }
 }
 

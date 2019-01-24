@@ -6,12 +6,21 @@ import CircularLoader from '../../../loaders/CircularLoader';
 export default class RoomPreview extends Component {
     constructor(props) {
         super(props);
+
+        this.noRoomsIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-room-256.png?alt=media&token=dab6b47f-7350-4875-bb7d-ea1e19d07eb3';
     }
 
     renderPreview = () => {
 
         // check if data was fetched or user dont have rooms
-        if (this.props.empty) return <p>No rooms</p>;
+        if (this.props.empty) {
+            return (
+                <StyledNoRooms className="animated fadeIn">
+                    <img src={this.noRoomsIcon} alt="No rooms" />
+                    <p>{`You dont ${this.props.owning ? 'own' : 'attend'} any rooms`}</p>
+                </StyledNoRooms>
+            )
+        }
 
         // load data
         if (!this.props.data)  return <CircularLoader size="big" />
@@ -43,5 +52,16 @@ const StyledCont = styled.div`
     
     &::-webkit-scrollbar { 
         display: none;
+    }
+`;
+
+const StyledNoRooms= styled.div`
+
+    text-align: center;
+    margin-top: 3rem;
+
+    p {
+        color: #9e9e9e;
+        margin: 0;
     }
 `;
