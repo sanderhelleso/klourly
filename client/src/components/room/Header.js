@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import OwnerAvatar from './OwnerAvatar';
 
 const Header = props => (
     <StyledHeader>
         <h5>{props.location}</h5>
         <h1>{props.name}</h1>
         <p>By {props.owner}</p>
+        <OwnerAvatar url={props.photoUrl} />
     </StyledHeader>
 );
 
@@ -34,8 +36,9 @@ const StyledHeader = styled.div`
 
     p {
         text-transform: capitalize;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         opacity: 0.7;
         letter-spacing: 1px;
+        display: inline-block;
     }
 `;

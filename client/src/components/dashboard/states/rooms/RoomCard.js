@@ -13,26 +13,28 @@ export default class RoomCard extends Component {
     render() {
         return (
             <StyledCard 
-                className="col s12 m12 l10 offset-l1"
+                className="col s12 m12 l6"
                 onClick={() => {}}//redirect.room(this.props.data.id)}
             >
-                <div className="row">
-                    <RoomCover className="col s5" url={this.props.data.cover} />
-                    <RoomInfo className="col s7">
-                        <h4>{this.props.data.name.length > 16 
-                            ? `${this.props.data.name.substring(0, 16)}..`
-                            : this.props.data.name}
-                        </h4>
-                        {this.props.owning ? null : <Attendence roomID={this.props.data.id} />}
-                        <ToRoom owning={this.props.owning} roomID={this.props.data.id} />
-                        {this.props.owning 
-                            ? null 
-                            : <Checkin 
-                                times={this.props.data.times}
-                                roomID={this.props.data.id}
-                            />
-                        }
-                    </RoomInfo>
+                <div className="card-cont">
+                    <div className="row">
+                        <RoomCover className="col s5" url={this.props.data.cover} />
+                        <RoomInfo className="col s7">
+                            <h4>{this.props.data.name.length > 16 
+                                ? `${this.props.data.name.substring(0, 16)}..`
+                                : this.props.data.name}
+                            </h4>
+                            {this.props.owning ? null : <Attendence roomID={this.props.data.id} />}
+                            <ToRoom owning={this.props.owning} roomID={this.props.data.id} />
+                            {this.props.owning 
+                                ? null 
+                                : <Checkin 
+                                    times={this.props.data.times}
+                                    roomID={this.props.data.id}
+                                />
+                            }
+                        </RoomInfo>
+                    </div>
                 </div>
             </StyledCard>
         )
@@ -40,19 +42,22 @@ export default class RoomCard extends Component {
 }
 
 const StyledCard = styled.div`
-    transform: scale(1.001);
-    position: relative;
-    margin: 1.5rem 0.5rem;
-    padding: 0 !important;
-    border-radius: 8px;
-    -webkit-box-shadow: 0px 4px 14px 0px rgba(46, 82, 217, 0.30);
-    -moz-box-shadow:    0px 4px 14px 0px rgba(46, 82, 217, 0.30);
-    box-shadow:         0px 4px 14px 0px rgba(46, 82, 217, 0.30);
-    background-color: #ffffff;
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
 
-    &:hover {
+    .card-cont {
+        margin: 1rem;
+        border-radius: 8px;
+        -webkit-box-shadow: 0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+        -moz-box-shadow:    0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+        box-shadow:         0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+        transform: scale(1.001);
+        position: relative;
+        padding: 0 !important;
+        background-color: #ffffff;
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .card-cont:hover {
         -webkit-box-shadow: 0px 18px 56px 0px rgba(46, 82, 217, 0.30);
         -moz-box-shadow:    0px 18px 56px 0px rgba(46, 82, 217, 0.30);
         box-shadow:         0px 18px 56px 0px rgba(46, 82, 217, 0.30);

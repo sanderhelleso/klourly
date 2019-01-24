@@ -22,7 +22,6 @@ export default class Dashboard extends Component {
             <div className='row no-select'>
                 <DashboardMenu />
                 <DashboardMain />
-                <Toolbar />
             </div>
         )
     }

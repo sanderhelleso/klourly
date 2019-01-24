@@ -12,7 +12,7 @@ import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
 import Menu from './Menu';
-import OwnerAvatar from './OwnerAvatar';
+import UserAvatar from './UserAvatar';
 import Header from './Header';
 import DisplayRoomLocationMap from '../maps/DisplayRoomLocationMap';
 
@@ -55,8 +55,9 @@ class Room extends Component {
                     location={this.props.activeRoom.location.name} 
                     name={this.props.activeRoom.name}
                     owner={this.props.activeRoom.owner.name}
+                    photoUrl={this.props.activeRoom.owner.photoUrl}
                 />
-                <OwnerAvatar url={this.props.activeRoom.owner.photoUrl} />
+                <UserAvatar url={this.props.userPhoto} />
             </StyledCover>
         )
     }
@@ -106,7 +107,8 @@ const mapStateToProps = state => {
     return { 
         activeRoom: state.room.activeRoom,
         loaded: state.room.loaded,
-        userID: state.auth.user.id
+        userID: state.auth.user.id,
+        userPhoto: state.dashboard.userData.settings.photoUrl
     }
 }
 

@@ -33,7 +33,7 @@ class DashboardMain extends Component {
 
     render() {
         return (
-            <main id='dashboard-main' className='col s12 m12 l7'>
+            <main id='dashboard-main' className='col s12 m12 l10'>
                 {this.renderMain()}
             </main>
         )

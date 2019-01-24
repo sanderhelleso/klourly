@@ -22,6 +22,7 @@ import Signup from './signup/Signup';
 import Login from './login/Login';
 import NewRoom from './newRoom/NewRoom';
 import Room from './room/Room';
+import LoggedinNavbar from './navigation/LoggedinNavbar';
 import NotFound from './notFound/NotFound';
 
 // import Dashboard
@@ -96,6 +97,7 @@ class App extends Component {
         if (this.props.room.activeRoom) {
             return (
                 <div>
+                    <Route path="/" component={LoggedinNavbar} />
                     <Route exact path="/dashboard/rooms/:roomID" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports" component={Reports} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />
@@ -311,7 +313,7 @@ const GlobalDashStyle = createGlobalStyle`
     }
 
     #dashboard-main {
-        padding: 4%;
+        padding: 5%;
         border-left: 1px solid #e9e9e9;
         min-height: 100vh;
     }
