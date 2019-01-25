@@ -17,9 +17,17 @@ class Announcement extends Component {
         super(props);
     }
 
+    componentDidMount() {
+
+        // update active annoucement
+        if (this.props.announcement)
+            this.props.openAnnouncementAction(this.props.announcement);
+    }
+
     renderAnnouncement() {
 
         if (this.props.announcement) {
+
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l10 offset-l1">
                     <div className="announcement">

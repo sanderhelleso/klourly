@@ -21,9 +21,12 @@ class NewAnnouncementModal extends Component {
 
         this.MAX_LENGTH_TITLE =    50;
         this.MAX_LENGTH_MESSAGE =  2000;
+        this.MAX_POLL_TITLE_LENGTH = 50;
         this.titleError = `Title must be between 1 - ${this.MAX_LENGTH_TITLE} characters`;
         this.messageError = `Message must be between 1 - ${this.MAX_LENGTH_MESSAGE} characters`;
         this.pollError = 'Please include atleast two poll options or remove the poll to continue';
+        this.pollTitleError = 'Please enter a name for your poll';
+
 
         this.state = {
             title: '',
@@ -59,6 +62,14 @@ class NewAnnouncementModal extends Component {
         // check if user needs to add poll
         if (this.props.pollData.poll) {
 
+            // validate modal title
+            if (!this.props.pollData.pollName) return notification.error(this.pollTitleError);
+
+            else if (this.props.pollData.pollName === '' || this.props.pollData.pollName.length > this.MAX_POLL_TITLE_LENGTH) {
+                return notification.error('Poll name ust be between 1-50 characters');
+            }
+
+            // validate options
             if (!this.props.pollData.pollOptions || this.props.pollData.pollOptions.length < 2) {
                 return notification.error(this.pollError);
             }
@@ -79,6 +90,9 @@ class NewAnnouncementModal extends Component {
         // check if post was successfull
         if (response.data.success) {
 
+            // remove modal
+            document.querySelector('.modal-close').click();
+
             // reset announcement data
             this.setState({ title: '', message: ''});
             this.props.removeAnnouncementPollAction();
@@ -89,6 +103,7 @@ class NewAnnouncementModal extends Component {
                 announcement: response.data.announcement
             });
 
+            // redirect to announcement
             this.props.openAnnouncementAction(response.data.announcement);
             redirect.announcement(this.props.roomID, response.data.announcementID);
         }
