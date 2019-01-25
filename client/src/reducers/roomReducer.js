@@ -310,6 +310,24 @@ const roomReducer = (state = initialState, action) => {
                     }
                 }
             }
+
+        case 'VOTE_ANNOUNCEMENT_POLL':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    announcements: {
+                        ...state.activeRoom.announcements,
+                        [action.payload.announcementID]: {
+                            ...state.activeRoom.announcements[action.payload.announcementID],
+                            poll: {
+                                ...state.activeRoom.announcements[action.payload.announcementID].poll,
+                                voted: action.payload.voted
+                            }
+                        }
+                    }
+                }
+            }
             
         default:
             return state;

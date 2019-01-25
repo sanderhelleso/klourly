@@ -4,6 +4,7 @@ import { format } from '../../../helpers/format';
 import { Bar } from 'react-chartjs-2';
 import { BarChart2 } from 'react-feather';
 import { room } from '../../../api/room/room';
+import { notification } from '../../../helpers/notification';
 import * as firebase from 'firebase';
 
 // redux
@@ -31,6 +32,10 @@ class AnnouncementPoll extends Component {
 
         this.state = { selectedOption: '', initialDataLoaded: false };
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
     }
 
     componentWillUnmount() {
@@ -140,8 +145,13 @@ class AnnouncementPoll extends Component {
         if (response.data.success) {
 
             // update voted state
-            this.props.voteAnnouncementPollAction(this.props.announcementID, response.data.voted);
+            this.props.voteAnnouncementPollAction({
+                announcementID: this.props.announcementID,
+                voted: response.data.voted 
+            });
         }
+
+        else notification.error('Something went wrong. Unable to register vote at this time');
 
     }
 

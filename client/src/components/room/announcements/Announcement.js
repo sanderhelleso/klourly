@@ -40,7 +40,7 @@ class Announcement extends Component {
             )
         }
 
-        return <h1>No announcement found</h1>
+        return <p>Loading...</p>
     }
 
     renderPoll() {
