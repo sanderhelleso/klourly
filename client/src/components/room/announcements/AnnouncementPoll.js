@@ -34,10 +34,6 @@ class AnnouncementPoll extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-    }
-
     componentWillUnmount() {
 
         // clear all previous listeners
