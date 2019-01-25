@@ -4,6 +4,7 @@ import { format } from '../../../helpers/format';
 import { Bar } from 'react-chartjs-2';
 import { BarChart2 } from 'react-feather';
 import { room } from '../../../api/room/room';
+import * as firebase from 'firebase';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -14,6 +15,8 @@ import { voteAnnouncementPollAction } from '../../../actions/room/announcement/v
 class AnnouncementPoll extends Component {
     constructor(props) {
         super(props);
+
+        this.pollRef = firebase.database().ref(`rooms/${this.props.roomID}/announcements/${this.props.announcementID}/poll/options`);
 
         this.options = {
             maintainAspectRatio: false,
@@ -26,24 +29,56 @@ class AnnouncementPoll extends Component {
             }
         };
 
-        this.state = {
-            selectedOption: '',
+        this.state = { selectedOption: '', initialDataLoaded: false };
+
+    }
+
+    componentWillUnmount() {
+
+        // clear all previous listeners
+        this.pollRef.off('value');
+        this.pollRef.off('child_added');
+    }
+
+    componentDidMount() {
+
+        // prefetch data to only recieve callbacks on new data added
+        let initialDataLoaded = false;
+        this.pollRef.once('value', snapshot => {
+            initialDataLoaded = true;
+            this.updatePoll(snapshot.val());
+            this.setState({ initialDataLoaded });
+        });
+
+        // on value change, update state and poll
+        this.pollRef.on('value', snapshot => {
+
+            // if initalData is not loaded, return
+            if (!initialDataLoaded) return;
+            this.updatePoll(snapshot.val());
+        });
+    }
+
+    updatePoll(pollData) {
+
+        this.setState({
             data: {
-                labels: Object.keys(this.props.poll.options),
+                labels: Object.keys(pollData),
                 datasets: [{
                     label: '# of Votes',
-                    data: Object.values(this.props.poll.options),
-                    backgroundColor: ['rgba(179, 136, 255, 0.4)'],
-                    borderColor:['rgba(179, 136, 255, 0.6)'],
+                    data: Object.values(pollData).map(val => val.votes),
+                    backgroundColor: Object.keys(pollData).map(() => ['rgba(179, 136, 255, 0.4)']),
+                    borderColor: Object.keys(pollData).map(() => ['rgba(179, 136, 255, 0.6)']),
+                    hoverBackgroundColor: Object.keys(pollData).map(() => ['rgba(179, 136, 255, 0.8)']),
+                    hoverBorderColor:  Object.keys(pollData).map(() => ['rgba(179, 136, 255, 0.6)']),
                     borderWidth: 1
                 }]
             }
-        }
+        });
     }
 
     renderPollOptions() {
 
-        console.log(this.props);
         if (this.props.poll.voted && this.props.poll.voted.hasOwnProperty(this.props.userID)) {
 
             const usersVoteInfo = this.props.poll.voted[this.props.userID];
@@ -56,40 +91,40 @@ class AnnouncementPoll extends Component {
             )
         }
 
-        return (
-            <div>
-                {
-                    Object.keys(this.props.poll.options).map(option => {
-                        return (
-                            <p key={option} className="poll-option">
-                                <label>
-                                    <input 
-                                        name="group1" 
-                                        type="radio"
-                                        checked={this.state.selectedOption === option ? true : false} 
-                                        onChange={() => this.setState({ selectedOption: option})}
-                                    />
-                                    <span>{option}</span>
-                                </label>
-                            </p>
-                        )
-                    })
-                }
-                <StyledButton 
-                    className="waves-effect waves-light btn"
-                    onClick={this.vote}
-                    disabled={
-                        this.state.selectedOption === ''
-                        ? true
-                        : false
+        if (this.state.initialDataLoaded) {
+            return (
+                <div>
+                    {
+                        Object.keys(this.props.poll.options).map(option => {
+                            return (
+                                <p key={option} className="poll-option">
+                                    <label>
+                                        <input 
+                                            name="group1" 
+                                            type="radio"
+                                            checked={this.state.selectedOption === option ? true : false} 
+                                            onChange={() => this.setState({ selectedOption: option})}
+                                        />
+                                        <span>{option}</span>
+                                    </label>
+                                </p>
+                            )
+                        })
                     }
-                >
-                    Vote
-                </StyledButton>
-            </div>
-        )
-
-        /**/
+                    <StyledButton 
+                        className="waves-effect waves-light btn"
+                        onClick={this.vote}
+                        disabled={
+                            this.state.selectedOption === ''
+                            ? true
+                            : false
+                        }
+                    >
+                        Vote
+                    </StyledButton>
+                </div>
+            )
+        }
     }
 
     vote = async () => {
@@ -102,7 +137,12 @@ class AnnouncementPoll extends Component {
                             this.state.selectedOption
                         );
 
-        console.log(response);
+        if (response.data.success) {
+
+            // update voted state
+            this.props.voteAnnouncementPollAction(this.props.announcementID, response.data.voted);
+        }
+
     }
 
     render() {
@@ -132,6 +172,7 @@ const mapStateToProps = (state, compProps) => {
     return {
         userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
+        announcementID: compProps.announcementID,
         poll: state.room.activeRoom.announcements[compProps.announcementID].poll
     }
 }

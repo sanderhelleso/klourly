@@ -226,17 +226,15 @@ module.exports = app => {
         pollRef.once('value', snapshot => {
 
             const voteOptions = { voted: req.body.voteOption, timestamp: new Date().getTime() };
+            const voted = snapshot.val().voted 
+            ? {
+                ...snapshot.val().voted,
+                [req.body.uid]: voteOptions
+            }
+            : { [req.body.uid]: voteOptions };
 
-            pollRef.update({
-                voted: snapshot.val().voted 
-                ? {
-                    ...snapshot.val().voted,
-                    [req.body.uid]: voteOptions
-                }
-                : { [req.body.uid]: voteOptions }
-            });
+            pollRef.update({ voted });
 
-            console.log(snapshot.val());
             pollRef.child(`/options/${req.body.voteOption}`).update({
                 votes: snapshot.val().options[req.body.voteOption].votes + 1,
             });
@@ -245,6 +243,7 @@ module.exports = app => {
             res.status(200).json({
                 success: true,
                 message: 'Thanks! Your vote has been registered',
+                voted
             });
         });
 
