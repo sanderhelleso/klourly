@@ -98,7 +98,7 @@ const StyledAttendence = styled.h5`
     font-size: 4rem;
     position: absolute;
     top: 12.5%;
-    right: 55px;
+    right: 35px;
     color: #bdbdbd;
     opacity: 0.5;
 

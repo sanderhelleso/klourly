@@ -24,9 +24,11 @@ class Attendence extends Component {
 
             const response = await attendence.getAttendence(this.props.userID, this.props.roomID);
 
+            console.log(response);
+
             // update attendence data
             this.props.setRoomAttendenceAction({
-                ...response.data.stats,
+                ...response.data.attendenceData,
                 roomID: this.props.roomID
             });
         }
@@ -35,6 +37,7 @@ class Attendence extends Component {
     renderAttendence() {
 
         // check if attendence data is loaded
+        console.log(this.props);
         if (this.props.attendenceData) {
 
             console.log(this.props);
@@ -64,7 +67,7 @@ class Attendence extends Component {
             }
         }
 
-        return <LinearLoader loading={this.props.attendenceData ? false : true} />;
+        return <p>Loading...</p>
     }
 
     render() {
