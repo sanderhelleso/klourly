@@ -135,24 +135,6 @@ const roomReducer = (state = initialState, action) => {
                     confirmDeleteMember: action.payload
                 }
             }
-        
-        case 'UPDATE_ANNOUNCEMENT_REACTION':
-            return {
-                ...state,
-                activeRoom: {
-                    ...state.activeRoom,
-                    announcements: {
-                        ...state.activeRoom.announcements,
-                        [action.payload.id]: {
-                            ...state.activeRoom.announcements[action.payload.id],
-                            reactions: {
-                                ...state.activeRoom.announcements[action.payload.id].reactions,
-                                [action.payload.name]: action.payload.updatedReaction
-                            }
-                        }
-                    }
-                }
-            }
 
         case 'UPDATE_ROOM_INVITE':
             return {
@@ -277,6 +259,21 @@ const roomReducer = (state = initialState, action) => {
         /**
          * ANNOUNCEMENTS
          */
+
+        case 'UPDATE_ANNOUNCEMENT_REACTIONS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    announcements: {
+                        ...state.activeRoom.announcements,
+                        [action.payload.announcementID]: {
+                            ...state.activeRoom.announcements[action.payload.announcementID],
+                            reactions: action.payload.updatedReactions
+                        }
+                    }
+                }
+            }
 
         case 'ADD_ANNOUNCEMENT_POLL':
             return {

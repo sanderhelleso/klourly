@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateAnnouncementReactionsAction } from '../../../../actions/room/announcement/updateAnnouncementReactionsAction';
 
 import Reaction from './Reaction';
 
@@ -28,7 +29,12 @@ class Reactions extends Component {
 
         // prefetch data to only recieve callbacks on new data added
         let initialDataLoaded = false;
-        this.reactionsRef.once('value', () => initialDataLoaded = true);
+        this.reactionsRef.once('value', snapshot => {
+            initialDataLoaded = true;
+
+            // set initial data to always be up to date if data is stored in localstorage
+            this.setReactions(snapshot.val());
+        });
 
         // on value change, update state and poll
         this.reactionsRef.on('value', snapshot => {
@@ -37,8 +43,17 @@ class Reactions extends Component {
             if (!initialDataLoaded) return;
 
             console.log(snapshot.val());
+            this.setReactions(snapshot.val());
         });
+    }
 
+    setReactions(reactions) {
+
+        // update announcement reaction
+        this.props.updateAnnouncementReactionsAction({
+            announcementID: this.props.announcementID,
+            updatedReactions: reactions
+        });
     }
 
 
@@ -92,7 +107,7 @@ const mapStateToProps = (state, compProps) => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateAnnouncementReactionsAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reactions);
