@@ -36,13 +36,13 @@ class Reactions extends Component {
             this.setReactions(snapshot.val());
         });
 
-        // on value change, update state and poll
+        // on value change, update state and reactions
         this.reactionsRef.on('value', snapshot => {
 
             // if initalData is not loaded, return
             if (!initialDataLoaded) return;
 
-            console.log(snapshot.val());
+            // else update reactions with new data
             this.setReactions(snapshot.val());
         });
     }

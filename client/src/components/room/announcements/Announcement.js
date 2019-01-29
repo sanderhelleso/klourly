@@ -72,7 +72,7 @@ class Announcement extends Component {
     }
 }
 
-// set initial store state
+
 const mapStateToProps = (state, compProps) => {
     return {
         roomID: compProps.match.params.roomID,

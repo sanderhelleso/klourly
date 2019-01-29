@@ -275,6 +275,21 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'UPDATE_ANNOUNCEMENT_COMMENTS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    announcements: {
+                        ...state.activeRoom.announcements,
+                        [action.payload.announcementID]: {
+                            ...state.activeRoom.announcements[action.payload.announcementID],
+                            comments: action.payload.updatedcomments
+                        }
+                    }
+                }
+            }
+
         case 'ADD_ANNOUNCEMENT_POLL':
             return {
                 ...state,
