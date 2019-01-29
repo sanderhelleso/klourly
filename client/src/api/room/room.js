@@ -15,7 +15,8 @@ export const room = {
     removeRoomMember,
     activateRoom,
     deactivateRoom,
-    getActiveRooms
+    getActiveRooms,
+    postAnnouncementComment
 }
 
 // create new room
@@ -316,6 +317,30 @@ async function getActiveRooms(uid) {
             url: '/api/getActiveRooms',
             data: {
                 uid
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+}
+
+// post an comment releated to a rooms announcement
+async function postAnnouncementComment(uid, roomID, announcementID, commentData) {
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/announcement/postAnnouncementComment',
+            data: {
+                uid,
+                roomID,
+                announcementID,
+                commentData
             }
         });
 

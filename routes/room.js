@@ -246,8 +246,26 @@ module.exports = app => {
                 voted
             });
         });
+    });
 
-        /*/options/${req.body.voteOption}`*/
+    // post an comment releated to a rooms announcement
+    app.post('/api/announcement/postAnnouncementComment', authenticate, (req, res) => {
+
+        // get annoucement ref
+        const commentRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/comments`);
+
+        // get the value and proceed to update comments
+        commentRef.once('value', snapshot => {
+
+            // add new comment to comments ref
+            commentRef.push(req.body.commentData);
+
+            // send back response with status
+            res.status(200).json({
+                success: true,
+                message: 'Comment successfully posted',
+            });
+        });
     });
 
     // get data for an collection of rooms
