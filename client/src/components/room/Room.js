@@ -64,6 +64,19 @@ class Room extends Component {
         )
     }
 
+    renderLocation() {
+
+        if (!this.props.activeRoom.location) 
+            return <StyledAddress>This room dont have a default location</StyledAddress>;
+        
+        return (
+            <div>
+                <DisplayRoomLocationMap coords={this.props.activeRoom.location.coords} />
+                <StyledAddress>{this.props.activeRoom.location.address}</StyledAddress>
+            </div>
+        )
+    }
+
     renderRoom() {
 
         if (this.props.activeRoom.id === this.props.match.params.roomID) {
@@ -83,8 +96,7 @@ class Room extends Component {
                                 <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 room-aside-section">
-                                <DisplayRoomLocationMap coords={this.props.activeRoom.location.coords} />
-                                <StyledAddress>{this.props.activeRoom.location.address}</StyledAddress>
+                                {this.renderLocation()}
                             </div>
                         </aside>
                     </div>

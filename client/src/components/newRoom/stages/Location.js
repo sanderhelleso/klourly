@@ -42,6 +42,7 @@ class Location extends Component {
                 // update fields and focus
                 materializeJS.M.updateTextFields();
                 materializeJS.M.textareaAutoResize(textarea);
+                
                 if (this.state.initialized) textarea.focus();
                 else this.setState({ initialized: true });
             });
