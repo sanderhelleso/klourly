@@ -26,7 +26,7 @@ class PostComment extends Component {
     updateComment = e => {
         this.setState({ 
             [e.target.name]: e.target.value,
-            valid: e.target.value !== '' && e.target.value.length <= this.MAX_LENGTH_COMMENT
+            valid: e.target.value.trim() !== '' && e.target.value.length <= this.MAX_LENGTH_COMMENT
         });
     }
 
@@ -36,6 +36,8 @@ class PostComment extends Component {
         if (this.state.comment === '' || this.state.comment.length > this.MAX_LENGTH_COMMENT) {
             return notification.error(this.postError);
         }
+
+        this.setState({ valid: false });
 
         // attempt to post comment
         const response = await room.postAnnouncementComment(
@@ -58,7 +60,10 @@ class PostComment extends Component {
             this.setState({ valid: false, comment: '' });
         }
 
-        else notification.error(response.data.message);
+        else {
+            notification.error(response.data.message);
+            this.setState({ valid: false });
+        }
     }
 
     render() {

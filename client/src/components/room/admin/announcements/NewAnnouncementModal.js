@@ -44,12 +44,12 @@ class NewAnnouncementModal extends Component {
     publishAnnouncement = async () => {
 
         // validate title
-        if (this.state.title === '' || this.state.title.length > this.MAX_LENGTH_TITLE) {
+        if (this.state.title.trim() === '' || this.state.title.length > this.MAX_LENGTH_TITLE) {
             return notification.error(this.titleError);
         }
 
         // validate message
-        if (this.state.message === '' || this.state.message.length > this.MAX_LENGTH_MESSAGE) {
+        if (this.state.message.trim() === '' || this.state.message.length > this.MAX_LENGTH_MESSAGE) {
             return notification.error(this.messageError);
         }
 

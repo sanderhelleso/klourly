@@ -159,22 +159,24 @@ class AnnouncementPoll extends Component {
     renderPollOptions() {
 
         return this.state.pollOptions.map(option => {
-            return <li className="collection-item">
-                        <div>
-                            {option}
-                            <a 
-                                className="secondary-content"
-                                onClick={() => {
-                                    this.setState({ 
-                                        pollOption: this.state.pollOptions
-                                        .splice(this.state.pollOptions.indexOf(option), 1)
-                                     }, () => this.updatePoll(false))
-                                }}
-                            >
-                                <XSquare />
-                            </a>
-                        </div>
-                    </li>
+            return (
+                <li className="collection-item">
+                    <div>
+                        {option}
+                        <a 
+                            className="secondary-content"
+                            onClick={() => {
+                                this.setState({ 
+                                    pollOption: this.state.pollOptions
+                                    .splice(this.state.pollOptions.indexOf(option), 1)
+                                }, () => this.updatePoll(false))
+                            }}
+                        >
+                            <XSquare />
+                        </a>
+                    </div>
+                </li>
+            )
         });   
     }
 
@@ -215,9 +217,9 @@ class AnnouncementPoll extends Component {
 
     handleNewPollOption = () => {
 
-        if (this.state.pollOption !== '' && 
+        if (this.state.pollOption.trim() !== '' && 
             this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH) {
-                this.updatePoll(true);
+            this.updatePoll(true);
         }
     }
 
