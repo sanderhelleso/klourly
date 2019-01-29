@@ -11,6 +11,7 @@ import { openAnnouncementAction } from '../../../actions/room/announcement/openA
 import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
 import AnnouncementPoll from './AnnouncementPoll';
+import Comments from './comments/Comments';
 
 class Announcement extends Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class Announcement extends Component {
                             {this.renderPoll()}
                         </div>
                     </div>
+                    <Comments />
                 </StyledAnnouncement>
             )
         }
