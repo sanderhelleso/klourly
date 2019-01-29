@@ -33,8 +33,8 @@ export default class Comment extends Component {
 
 const StyledComment = styled.div`
 
-    margin: 3rem 0;
-    padding: 1rem;
+    margin: 1rem 0;
+    padding: 1.5rem 1rem 3rem 1rem;
     border-bottom: 1px solid #eeeeee;
 
     .row {

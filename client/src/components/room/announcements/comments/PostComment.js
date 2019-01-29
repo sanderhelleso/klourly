@@ -3,14 +3,40 @@ import styled from 'styled-components';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { notification } from '../../../../helpers/notification';
 
 class PostComment extends Component {
     constructor(props) {
         super(props);
+
+        this.MAX_LENGTH_COMMENT = 500;
+        this.postError = `Post must be between 1 - ${this.MAX_LENGTH_COMMENT} characters`;
+
+        this.state = {
+            valid: false,
+            comment: ''
+        }
     }
 
     componentDidMount() {
         document.querySelector('#post-comment').focus();
+    }
+
+    updateComment = e => {
+        this.setState({ 
+            [e.target.name]: e.target.value,
+            valid: e.target.value !== '' && e.target.value.length <= this.MAX_LENGTH_COMMENT
+        });
+    }
+
+    postComment = () => {
+
+        // validate comment
+        if (this.state.comment === '' || this.state.comment.length > this.MAX_LENGTH_COMMENT) {
+            return notification.error(this.postError);
+        }
+
+        
     }
 
     render() {
@@ -30,11 +56,21 @@ class PostComment extends Component {
                             <p>You</p>
                         </div>
                         <div className="input-field col s12">
-                            <textarea id="post-comment" class="materialize-textarea"></textarea>
+                            <textarea 
+                                id="post-comment" 
+                                name="comment"
+                                className="materialize-textarea"
+                                value={this.state.comment}
+                                onChange={(e) => this.updateComment(e)}
+                            />
                             <label htmlFor="post-comment">Post a new comment</label>
+                            <StyledMessage>
+                                {this.state.comment.length} / {this.MAX_LENGTH_COMMENT}
+                            </StyledMessage>
                             <StyledButton 
                                 className="waves-effect waves-light btn"
-                                disabled="true"
+                                disabled={this.state.valid ? false : true}
+                                onClick={this.postComment}
                             >
                                 Post
                             </StyledButton>
@@ -65,7 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(PostComment);
 const StyledComment = styled.div`
 
     margin: 3rem 0;
-    padding: 1rem;
+    padding: 1rem 1rem 3rem 1rem;
     border-bottom: 1px solid #eeeeee;
 
     .row {
@@ -117,11 +153,17 @@ const StyledButton = styled.a`
     padding: 1.25rem;
     display: block;
     max-width: 100px;
-    margin-top: 0.75rem;
-    float: right;
+    margin-top: 0.2rem;
 
     &:hover {
         box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
         background-color: #12e2a3;
     }
+`;
+
+const StyledMessage = styled.span`
+    color: #9e9e9e;
+    font-weight: 100;
+    font-size: 0.9rem;
+    float: right;
 `;
