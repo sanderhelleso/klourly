@@ -41,7 +41,7 @@ class Announcement extends Component {
                             {this.renderPoll()}
                         </div>
                     </div>
-                    <Comments />
+                    <Comments announcementID={this.props.announcementID} />
                 </StyledAnnouncement>
             )
         }

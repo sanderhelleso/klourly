@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { notification } from '../../../../helpers/notification';
+import { room } from '../../../../api/room/room';
 
 class PostComment extends Component {
     constructor(props) {
@@ -29,14 +30,35 @@ class PostComment extends Component {
         });
     }
 
-    postComment = () => {
+    postComment = async () => {
 
         // validate comment
         if (this.state.comment === '' || this.state.comment.length > this.MAX_LENGTH_COMMENT) {
             return notification.error(this.postError);
         }
 
-        
+        // attempt to post comment
+        const response = await room.postAnnouncementComment(
+            this.props.userID,
+            this.props.roomID,
+            this.props.announcementID,
+            {
+                author: {
+                    displayName: this.props.displayName,
+                    photoUrl: this.props.photoUrl
+                },
+                comment: this.state.comment,
+                postedAt: new Date().getTime()
+            }
+        );
+
+        // display notification depending on result
+        if (response.data.success) {
+            notification.success(response.data.message);
+            this.setState({ valid: false, comment: '' });
+        }
+
+        else notification.error(response.data.message);
     }
 
     render() {

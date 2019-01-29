@@ -12,7 +12,7 @@ export default class Comments extends Component {
                         <h5>Showing 6 comments</h5>
                     </StyledComments>
                 </div>
-                <PostComment />
+                <PostComment announcementID={this.props.announcementID} />
                 <Comment />
                 <Comment />
                 <Comment />
