@@ -56,21 +56,43 @@ class Comments extends Component {
         });
     }
 
+    renderCommentsInfo() {
+
+        // render comments info containing either no comments message or comments amount
+        if (!this.props.comments) return <h5>This announcement dont have any comments yet</h5>;
+        else return <h5>Showing {Object.keys(this.props.comments).length} comments</h5>;
+    }
+
+    renderCommentsCont() {
+
+        // if no comments is present, only render post comment
+        if (!this.props.comments) return <PostComment announcementID={this.props.announcementID} />;
+
+        // if comments are present, render post aswell as comments
+        console.log(this.props.comments);
+        return (
+            <div>
+                <PostComment announcementID={this.props.announcementID} />
+                {this.renderComments()}
+            </div>
+        )
+    }
+
+    renderComments() {
+        return Object.values(this.props.comments)
+                .sort((a, b) => b.postedAt - a.postedAt)
+                .map(comment => <Comment key={comment.postedAt} data={comment} />);
+    }
+
     render() {
         return (
             <div>
                 <div className="row">
                     <StyledComments className="col s12">
-                        <h5>Showing 6 comments</h5>
+                        {this.renderCommentsInfo()}
                     </StyledComments>
                 </div>
-                <PostComment announcementID={this.props.announcementID} />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
+                {this.renderCommentsCont()}
             </div>
         )
     }
@@ -80,7 +102,7 @@ class Comments extends Component {
 const mapStateToProps = (state, compProps) => {
     return { 
         roomID: state.room.activeRoom.id,
-        announcement: state.room.activeRoom
+        comments: state.room.activeRoom
                       .announcements[compProps.announcementID].comments
     }
 }

@@ -284,7 +284,7 @@ const roomReducer = (state = initialState, action) => {
                         ...state.activeRoom.announcements,
                         [action.payload.announcementID]: {
                             ...state.activeRoom.announcements[action.payload.announcementID],
-                            comments: action.payload.updatedcomments
+                            comments: action.payload.updatedComments
                         }
                     }
                 }

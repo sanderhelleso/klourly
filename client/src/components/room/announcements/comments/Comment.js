@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
+import { format } from '../../../../helpers/format';
 
 export default class Comment extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <Fade>
@@ -11,17 +16,18 @@ export default class Comment extends Component {
                         <div className="col l2">
                             <div className="avatar-cont">
                                 <img 
-                                    src="/img/dashboard/stock.jpg" 
+                                    src={this.props.data.author.photoUrl} 
+                                    alt={`${this.props.data.author.displayName}'s avatar`}
                                 />
                             </div>
                         </div>
                         <div className="col l10">
                             <div className="info-cont col s12">
-                                <h5>John Doe</h5>
-                                <p>28 01 2019</p>
+                                <h5>{this.props.data.author.displayName}</h5>
+                                <p>{format.getFormatedDateAndTime(this.props.data.postedAt)}</p>
                             </div>
                             <div className="col s12">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum augue nulla, accumsan vel mollis eu, ultricies vel tellus. Curabitur eu laoreet lectus. Proin nec sollicitudin sapien, volutpat blandit nisi. Proin posuere aliquam turpis quis pellentesque. Morbi facilisis lorem vel neque congue, non dapibus nulla interdum. Sed iaculis sit amet dui tristique dignissim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In et tempor neque, ut congue nisl. Sed cursus dolor in lectus faucibus sagittis. Curabitur varius lectus non interdum sollicitudin.</p>
+                                <p>{this.props.data.comment}</p>
                             </div>
                         </div>
                     </div>
