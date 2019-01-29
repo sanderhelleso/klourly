@@ -22,6 +22,8 @@ class Room extends Component {
         super(props);
     }
 
+    componentWillMount = () => window.scrollTo(0, 0);
+
     renderCover() {
         return (
             <StyledCover className="col s12">

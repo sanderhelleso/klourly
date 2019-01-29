@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { format } from '../../../helpers/format';
 
@@ -18,6 +19,8 @@ class Announcement extends Component {
         super(props);
     }
 
+    componentWillMount = () => window.scrollTo(0, 0);
+
     componentDidMount() {
 
         // update active annoucement
@@ -27,7 +30,6 @@ class Announcement extends Component {
     renderAnnouncement() {
 
         if (this.props.announcement) {
-
             return (
                 <StyledAnnouncement className="animated fadeIn col s12 m10 offset-m1 l10 offset-l1">
                     <div className="announcement">
