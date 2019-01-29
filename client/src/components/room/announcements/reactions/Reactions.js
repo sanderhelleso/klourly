@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Reaction from './Reaction';
 
-export default class Reactions extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+
+class Reactions extends Component {
     constructor(props) {
         super(props);
     }
@@ -28,13 +33,13 @@ export default class Reactions extends Component {
 
     renderReactions() {
 
-        return Object.entries(this.props.data).map(reaction => {
+        return Object.entries(this.props.reactions).map(([key, value]) => {
             return (
                 <Reaction 
-                    key={reaction[0]}
+                    key={key}
                     id={this.props.id}
-                    name={reaction[0]}
-                    data={reaction[1]}
+                    name={key}
+                    data={value}
                 />
             );
         });
@@ -49,6 +54,19 @@ export default class Reactions extends Component {
         )
     }
 }
+
+const mapStateToProps = (state, compProps) => {
+    return {
+        reactions: state.room.activeRoom.announcements[compProps.id].reactions
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reactions);
+
 
 const StyledReactions = styled.div`
 

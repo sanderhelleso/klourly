@@ -20,8 +20,7 @@ class Announcement extends Component {
     componentDidMount() {
 
         // update active annoucement
-        if (this.props.announcement)
-            this.props.openAnnouncementAction(this.props.announcement);
+        if (this.props.announcement) this.props.openAnnouncementAction(this.props.announcement);
     }
 
     renderAnnouncement() {
@@ -34,10 +33,7 @@ class Announcement extends Component {
                         <h1>{this.props.announcement.title}</h1>
                         <h5>{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</h5>
                         <p>{this.props.announcement.message}</p>
-                        <Reactions 
-                            id={this.props.announcementID} 
-                            data={this.props.announcement.reactions} 
-                        />
+                        <Reactions id={this.props.announcementID} />
                     </div>
                     <div className="row">
                         <div className="col s12">

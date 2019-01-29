@@ -48,10 +48,7 @@ class AnnouncementPreview extends Component {
                     <h5>{this.props.announcement.title}</h5>
                     <span className="time">{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</span>
                     <p>{this.props.announcement.message.substring(0, 355)}</p>
-                    <Reactions 
-                        id={this.props.announcementID} 
-                        data={this.props.announcement.reactions} 
-                    />
+                    <Reactions id={this.props.announcementID} />
                     <div className="col s12 announcement-readmore-cont">
                     <button 
                         onClick={this.enterAnnouncement}
