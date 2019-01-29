@@ -33,7 +33,7 @@ class Announcement extends Component {
                         <h1>{this.props.announcement.title}</h1>
                         <h5>{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</h5>
                         <p>{this.props.announcement.message}</p>
-                        <Reactions id={this.props.announcementID} />
+                        <Reactions announcementID={this.props.announcementID} />
                     </div>
                     <div className="row">
                         <div className="col s12">

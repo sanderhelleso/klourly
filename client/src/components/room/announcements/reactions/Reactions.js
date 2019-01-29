@@ -1,15 +1,44 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Reaction from './Reaction';
+import * as firebase from 'firebase';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Reaction from './Reaction';
+
 
 class Reactions extends Component {
     constructor(props) {
         super(props);
+
+        this.reactionsRef = firebase.database().ref(`rooms/${this.props.roomID}/announcements/${this.props.announcementID}/reactions`);
+    }
+
+    componentWillUnmount() {
+
+        // clear all previous listeners
+        this.reactionsRef.off('value');
+        this.reactionsRef.off('child_added');
+    }
+
+    componentDidMount() {
+
+
+        // prefetch data to only recieve callbacks on new data added
+        let initialDataLoaded = false;
+        this.reactionsRef.once('value', () => initialDataLoaded = true);
+
+        // on value change, update state and poll
+        this.reactionsRef.on('value', snapshot => {
+
+            // if initalData is not loaded, return
+            if (!initialDataLoaded) return;
+
+            console.log(snapshot.val());
+        });
+
     }
 
 
@@ -37,7 +66,7 @@ class Reactions extends Component {
             return (
                 <Reaction 
                     key={key}
-                    id={this.props.id}
+                    id={this.props.announcementID}
                     name={key}
                     data={value}
                 />
@@ -57,7 +86,8 @@ class Reactions extends Component {
 
 const mapStateToProps = (state, compProps) => {
     return {
-        reactions: state.room.activeRoom.announcements[compProps.id].reactions
+        roomID: state.room.activeRoom.id,
+        reactions: state.room.activeRoom.announcements[compProps.announcementID].reactions
     }
 }
 
