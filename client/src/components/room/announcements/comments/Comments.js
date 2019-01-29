@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
+import PostComment from './PostComment';
 
 export default class Comments extends Component {
     render() {
@@ -11,6 +12,7 @@ export default class Comments extends Component {
                         <h5>Showing 6 comments</h5>
                     </StyledComments>
                 </div>
+                <PostComment />
                 <Comment />
                 <Comment />
                 <Comment />
