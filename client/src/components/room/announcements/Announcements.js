@@ -57,6 +57,13 @@ const StyledAnnouncements = styled.div`
         font-size: 2.5rem;
         text-transform: uppercase;
     }
+
+    @media screen and (max-width: 600px) {
+        h2 {
+            font-size: 1.75rem;
+            margin: 0 0 2.5rem 0;
+        }
+    }
 `;
 
 const StyledNoAnnouncements = styled.div`

@@ -19,7 +19,7 @@ const StyledHeader = styled.div`
     bottom: 10%;
     left: 5%;
     color: #ffffff;
-    max-width: 50%;
+    max-width: 60%;
 
     h1 {
         font-weight: 800;
@@ -40,5 +40,11 @@ const StyledHeader = styled.div`
         opacity: 0.7;
         letter-spacing: 1px;
         display: inline-block;
+    }
+
+    @media screen and (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
     }
 `;

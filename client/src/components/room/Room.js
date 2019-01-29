@@ -170,6 +170,12 @@ const StyledCont = styled.div`
     #room-main {
         border-right: 1px solid #eeeeee;
     }
+
+    @media screen and (max-width: 600px) {
+        #room-main {
+            padding: 0 !important;
+        }
+    }
 `;
 
 const StyledAddress = styled.h5`

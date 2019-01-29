@@ -19,10 +19,6 @@ class PostComment extends Component {
         }
     }
 
-    componentDidMount() {
-        document.querySelector('#post-comment').focus();
-    }
-
     updateComment = e => {
         this.setState({ 
             [e.target.name]: e.target.value,

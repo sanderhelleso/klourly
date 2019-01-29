@@ -123,7 +123,7 @@ const StyledAnnouncement = styled.section`
     }
 
     @media screen and (max-width: 600px) {
-        padding: 2rem !important;
+        padding: 3rem !important;
 
         .announcement {
             h1 {

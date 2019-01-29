@@ -131,4 +131,10 @@ const StyledAnnouncementPreview = styled.div`
     p {
         color: #757575;
     }
-`
+
+    @media screen and (max-width: 600px) {
+        h5 {
+            font-size: 1.35rem;
+        }
+    }
+`;
