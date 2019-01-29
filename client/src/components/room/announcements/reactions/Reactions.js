@@ -122,7 +122,7 @@ const StyledReactions = styled.div`
     div {
         border: 1px solid #e0e0e0;
         border-radius: 6px;
-        margin: 0 0.5rem;
+        margin: 0.25rem 0.5rem;
         padding: 0.5rem !important;
         cursor: pointer;
         transition: 0.2s ease-in-out;

@@ -99,8 +99,9 @@ const StyledAnnouncement = styled.section`
 
     .announcement {
         h1 {
-        font-size: 3rem;
+        font-size: 2.25rem;
         text-align: center;
+        font-weight: 800;
         margin-top: 0;
     }
 
@@ -114,10 +115,25 @@ const StyledAnnouncement = styled.section`
         p {
             clear: both;
             min-width: 100%;
-            padding: 2rem 0;
+            padding: 3rem 0 2rem 0;
             border-top: 1px solid #eeeeee;
             color: #757575;
             font-weight: 400;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        padding: 2rem !important;
+
+        .announcement {
+            h1 {
+                margin-top: 2rem;
+                font-size: 1.75rem;
+            }
+
+            h5 {
+                font-size: 1rem;
+            }
         }
     }
 `;

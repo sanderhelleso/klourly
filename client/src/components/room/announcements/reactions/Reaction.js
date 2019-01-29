@@ -62,8 +62,8 @@ class Reactions extends Component {
             <div 
                 className={
                     this.state.reacted 
-                    ? "col s2 no-select reacted animated flipInX" 
-                    : "col s2 no-select animated flipInY"
+                    ? "col s3 m2 l2 no-select reacted animated flipInX" 
+                    : "col s3 m2 l2 no-select animated flipInY"
                 }
                 onClick={(e) => this.updateReaction(e)}
                 onMouseEnter={(e) => this.hoverReaction(e)}
