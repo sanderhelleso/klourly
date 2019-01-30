@@ -35,6 +35,7 @@ class Stages extends Component {
         cont.className = 'no-select row animated fadeOut';
         setTimeout(() => { this.updateStageInfo() }, 900);
         setTimeout(() => {
+            window.scrollTo(0, 0);
             cont.className = 'no-select row animated fadeIn';
             this.setState({ stage: nextProps.currentStage });
         }, 1000);

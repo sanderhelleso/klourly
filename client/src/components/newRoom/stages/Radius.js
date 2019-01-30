@@ -50,13 +50,7 @@ class Radius extends Component {
             option.classList.remove("fadeIn");
         });
 
-        let timer = 0;
-        options.forEach(option => {
-            setTimeout(() => {
-                option.classList.add('fadeOut');
-            }, timer);
-            timer += 100;
-        });
+        options.forEach(option => option.classList.add('fadeOut'));
 
         setTimeout(() => {
 
@@ -65,7 +59,7 @@ class Radius extends Component {
                 stage: this.props.currentStage + 1,
                 radius: radius
             });
-        }, 1200);
+        }, 100);
     }
 
     renderRadiusOptions = () => {

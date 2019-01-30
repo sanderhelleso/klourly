@@ -178,16 +178,6 @@ const StyledIntro = styled.div`
             font-weight: 100;
             padding: 0 0.25rem;
         }
-
-        .step {
-            margin-bottom: -25px;
-            padding-left: 10px;
-            letter-spacing: 4px;
-            font-size: 1.75rem;
-            text-transform: uppercase;
-            display: block;
-            opacity: 0.8;
-        }
     }
 
     #new-room-intro p {
