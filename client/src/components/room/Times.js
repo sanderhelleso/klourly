@@ -41,10 +41,8 @@ export default class Times extends Component {
 
             return(
                 <StyledList key={Math.random()}>
-                    <ul>
-                       {days}
-                    </ul>
-                    <h5>{time.fromTime} - {time.toTime}</h5>
+                    <ul>{days}</ul>
+                    <h5>{time.fromTime ? time.fromTime : 'N/A'} - {time.toTime ? time.toTime : 'N/A'}</h5>
                 </StyledList>
             );
         });
