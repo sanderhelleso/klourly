@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { format } from '../../../../helpers/format';
 
 export default class Notification extends Component {
     render() {
@@ -15,7 +16,8 @@ export default class Notification extends Component {
                     </div>
                     <div className="col l10">
                         <div className="info-cont col s12">
-                            <h5>John Doe <span>20.20.2020</span></h5>
+                            <p>{format.tsToHHMM(new Date().getTime())}</p>
+                            <h5>Room "Hello World" just got activated for checkin</h5>
                         </div>
                         <div className="col s12">
                             <a>Enter Room</a>
@@ -55,29 +57,23 @@ const StyledNotification = styled.div`
 
    .info-cont {
         h5 {
-            font-weight: 600;
             font-size: 1.15rem;
-            margin-bottom: 1rem;
+            margin: 0.25rem 0 0.75rem 0;
+        }
 
-            span {
-                color: #9e9e9e;
-                font-size: 0.8rem;
-                opacity: 0.8;
-                margin: 0;
-                font-weight: 400;
-                margin-left: 0.5rem;
-            }
+        p {
+            color: #9e9e9e;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 0rem;
         }
     }
 
     a {
         color: #363636;
         opacity: 0.8;
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 800;
         color: #b388ff;
-        padding: 0.35rem 0.75rem;
-        border: 1px solid #b388ff;
-        opacity: 0.6;
     }
 `;
