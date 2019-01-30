@@ -15,6 +15,26 @@ export default class Notifications extends Component {
                     <NotificationDate />
                     <Notification />
                     <Notification />
+                    <Notification />
+                    <NotificationDate />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <NotificationDate />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
+                    <Notification />
                 </StyledNotifications>
             </div>
         )
@@ -23,4 +43,7 @@ export default class Notifications extends Component {
 
 
 const StyledNotifications = styled.div`
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 70vh;
 `;
