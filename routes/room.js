@@ -27,15 +27,27 @@ module.exports = app => {
         roomData.checkin = { active: false };
 
         // create room refrence connected to user
-        const usersOwningRef = db.ref(`users/${roomData.owner}/rooms/owning`);
+        const userRef = db.ref(`users/${roomData.owner}`);
         
         // set room id for refrence path
-        usersOwningRef.once('value', snapshot => {
-            usersOwningRef.set(
+        userRef.child('rooms/owning').once('value', snapshot => {
+            userRef.child('rooms/owning').set(
                 snapshot.exists()
                 ? [...snapshot.val(), roomData.id] 
                 : [roomData.id]
             );
+        });
+
+        // add notification
+        userRef.child('notifications').push({
+            message: `You just created the room "${roomData.name}".`,
+            timestamp: new Date().getTime(),
+            image: roomData.cover.small,
+            redirect: {
+                redirectText: 'Enter Room',
+                redirectTo: roomData.id,
+                redirectType: 'room'
+            }
         });
 
         // update database with new room
@@ -43,8 +55,7 @@ module.exports = app => {
         roomRef.set(roomData);
 
         // get ref to owner by id recieved from room data and fetch owner data 
-        const ownerRef = db.ref(`users/${roomData.owner}/settings`);
-        ownerRef.once('value', ownerSnapshot => {
+        userRef.child('settings').once('value', ownerSnapshot => {
 
             // set owner data to room data
             roomData.owner = {
