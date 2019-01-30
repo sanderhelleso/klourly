@@ -40,10 +40,23 @@ module.exports = app => {
         req.body.members.forEach(uid => {
 
             // get users messaging ref
-            const tokenRef = db.ref(`users/${uid}/messaging/token`);
+            const userRef = db.ref(`users/${uid}`);
+
+            // add notification
+            console.log(req.body.data);
+            userRef.child('notifications').push({
+                message: req.body.data.body,
+                timestamp: new Date().getTime(),
+                image: req.body.data.icon,
+                redirect: {
+                    redirectText: 'Enter Room',
+                    redirectTo: req.body.data.click_action.split('/')[req.body.data.click_action.length - 1],
+                    redirectType: 'room'
+                }
+            });
 
             // access users messaging token
-            tokenRef.once('value', snapshot => {
+            userRef.child('/messaging/token').once('value', snapshot => {
 
                 // validate that token is present
                 if (snapshot.exists()) {

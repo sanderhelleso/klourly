@@ -266,7 +266,7 @@ module.exports = app => {
         const commentRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/comments`);
 
         // get the value and proceed to update comments
-        commentRef.once('value', snapshot => {
+        commentRef.once('value', () => {
 
             // add new comment to comments ref
             commentRef.push(req.body.commentData);
