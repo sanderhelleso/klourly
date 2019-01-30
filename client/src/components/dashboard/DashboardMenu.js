@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Map, Activity, Settings, Grid} from 'react-feather';
+import { Award, Activity, Settings, Grid} from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -21,7 +21,7 @@ class DashboardMenu extends Component {
                 icon: <Grid size={this.size} />
             },
             map: {
-                icon: <Map size={this.size} />
+                icon: <Award size={this.size} />
             },
             settings: {
                 icon: <Settings size={this.size} />
@@ -84,7 +84,7 @@ const StyledMenu = styled.aside`
         justify-content: center;
         align-items: center;
         min-height: 25% !important;
-        opacity: 0.5;
+        opacity: 0.6;
         cursor: pointer;
         transition: 0.3s linear;
         border-right: 3px solid transparent;
