@@ -43,14 +43,13 @@ module.exports = app => {
             const userRef = db.ref(`users/${uid}`);
 
             // add notification
-            console.log(req.body.data);
             userRef.child('notifications').push({
                 message: req.body.data.body,
                 timestamp: new Date().getTime(),
                 image: req.body.data.icon,
                 redirect: {
                     redirectText: 'Enter Room',
-                    redirectTo: req.body.data.click_action.split('/')[req.body.data.click_action.length - 1],
+                    redirectTo: `/rooms/${req.body.data.click_action.split('/').reverse()[0]}`,
                     redirectType: 'room'
                 }
             });

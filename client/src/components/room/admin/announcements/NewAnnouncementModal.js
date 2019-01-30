@@ -85,7 +85,12 @@ class NewAnnouncementModal extends Component {
         };
 
         // attempt to publish announcement
-        const response = await room.publishAnnouncement(this.props.userID, this.props.roomID, data);
+        const response = await room.publishAnnouncement(
+                            this.props.userID, 
+                            this.props.roomID,
+                            data,
+                            this.props.notificationData
+                        );
 
         // check if post was successfull
         if (response.data.success) {
@@ -194,6 +199,10 @@ class NewAnnouncementModal extends Component {
 
 const mapStateToProps = state => {
     return {
+        notificationData: {
+            icon: state.room.activeRoom.cover.small,
+            name: state.room.activeRoom.name
+        },
         pollData: state.room.activeRoom.newAnnouncement,
         roomID: state.room.activeRoom.id
     }
