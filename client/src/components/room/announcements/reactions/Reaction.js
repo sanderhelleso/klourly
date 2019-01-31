@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { room } from '../../../../api/room/room';
+import { token } from '../../../../api/messaging/token';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -47,7 +48,7 @@ class Reactions extends Component {
         await room.updateAnnouncementReaction(
             this.props.userID,
             this.props.roomID,
-            this.props.id,
+            this.props.id, // announcement ID
             this.props.name
         );
 
@@ -55,6 +56,23 @@ class Reactions extends Component {
 
         // enable mouse event
         ele.style.cursorEvent = 'default';
+
+        // send push notifications to announcement owner (room owner)
+        if (this.state.reacted && this.props.userID !== this.props.ownerID) {
+
+            const notificationData = {
+                title: `New announcement reaction ${this.props.data.emoji}`,
+                body: `"${this.props.displayName}" reacted to your annoucement!`,
+                icon: this.props.photoUrl,
+                click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${this.props.id}`
+            };
+    
+            token.getRoomMembersToken(
+                this.props.userID, 
+                this.props.roomMembers, 
+                notificationData
+            );
+        }
     }
 
     render() {
@@ -80,7 +98,11 @@ class Reactions extends Component {
 
 const mapStateToProps = state => {
     return { 
+        displayName: state.dashboard.userData.settings.displayName,
+        photoUrl: state.dashboard.userData.settings.photoUrl,
+        roomMembers: state.room.activeRoom.members,
         userID: state.auth.user.id,
+        ownerID: state.room.activeRoom.owner,
         roomID: state.room.activeRoom.id
     }
 }

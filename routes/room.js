@@ -168,13 +168,13 @@ module.exports = app => {
     });
 
     // update announcement reaction
-    app.post('/api/updateAnnouncementReaction', authenticate, async (req, res) => {
+    app.post('/api/updateAnnouncementReaction', authenticate, (req, res) => {
 
         // get annoucement ref
         const announcementRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`);
 
         // get the value and proceed to updte counter
-        await announcementRef.once('value', snapshot => {
+        announcementRef.once('value', snapshot => {
 
             // if first reaction, add user and update counter
             if (snapshot.val().reacted === undefined) {

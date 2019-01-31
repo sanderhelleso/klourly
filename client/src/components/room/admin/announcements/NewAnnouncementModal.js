@@ -94,7 +94,7 @@ class NewAnnouncementModal extends Component {
             // send push notifications to subscribed room members
             const notificationData = {
                 title: 'New announcement posted',
-                body: `A new announcement just got posted in "${this.props.roomName}". Lets see whats up!`,
+                body: `A new announcement got posted in "${this.props.roomName}". Lets see whats up!`,
                 icon: this.props.roomCover,
                 click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${response.data.announcementID}`
             };
