@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../../helpers/format';
+import history from '../../../../helpers/history';
 
 export default class Notification extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
-            <StyledNotification>
+            <StyledNotification className="animated fadeIn">
                 <div className="row">
                     <div className="col l2">
                         <div className="avatar-cont">
                             <img 
-                                src="/img/dashboard/stock.jpg" 
+                                src={this.props.data.image}
+                                alt="Notification logo"
                             />
                         </div>
                     </div>
                     <div className="col l10">
                         <div className="info-cont col s12">
-                            <p>{format.tsToHHMM(new Date().getTime())}</p>
-                            <h5>Room "Hello World" just got activated for checkin</h5>
+                            <p>{format.tsToHHMM(this.props.data.timestamp)}</p>
+                            <h5>{this.props.data.message}</h5>
                         </div>
                         <div className="col s12">
-                            <a>Enter Room</a>
+                        
+                            <a onClick={() => {
+                                const route = this.props.data.redirect.redirectTo.split('/');
+                                history.push(route.slice(3, route.length).join('/')); // remove domain form route
+                            }}>
+                                {this.props.data.redirect.redirectText}
+                            </a>
                         </div>
                     </div>
                 </div>

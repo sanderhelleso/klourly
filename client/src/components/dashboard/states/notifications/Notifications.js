@@ -3,43 +3,48 @@ import styled from 'styled-components';
 import Notification from './Notification';
 import NotificationDate from './NotificationDate';
 
-export default class Notifications extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+class Notifications extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    renderNotifications() {
+
+        if (!this.props.notifications) return <p>No notifications</p>;
+
+        return Object.values(this.props.notifications)
+        .reverse().map(notification => {
+            return <Notification key={notification.timestamp} data={notification} />
+        });
+    }
+
+
     render() {
         return (
             <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>Notifications</h3>
                 <p id='dashboard-intro'>The latest news, all in one place</p>
                 <StyledNotifications>
-                    <NotificationDate />
-                    <Notification />
-                    <NotificationDate />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <NotificationDate />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <NotificationDate />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
-                    <Notification />
+                    {this.renderNotifications()}
                 </StyledNotifications>
             </div>
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return { notifications: state.dashboard.userData.notifications }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
 
 
 const StyledNotifications = styled.div`
