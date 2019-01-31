@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { notification } from '../../helpers/notification';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateNotificationsAction } from '../../actions/dashboard/notifications/updateNotificationsAction';
+import { redirect } from '../../helpers/redirect';
+import history from '../../helpers/history';
 
 
 class NotificationsData extends Component {
@@ -45,11 +48,28 @@ class NotificationsData extends Component {
             });
             
             // alert user
-            this.alertUser();
+            this.alertUser(snapshot.val());
         });
     }
 
-    alertUser() {
+    alertUser(data) {
+
+        // display alert
+        const Toast = ({message, redirect}) => (
+            <div onClick={() => {
+                const route = redirect.split('/');
+                history.push(route.slice(3, route.length).join('/')); // remove domain form route
+            }}>
+                {message}
+            </div>
+        );
+
+        notification.notify(
+            <Toast 
+                message={data.message} 
+                redirect={data.redirect.redirectTo} 
+            />
+        );
 
         // play sound
         this.setState({ playSound: true });

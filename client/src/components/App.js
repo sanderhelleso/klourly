@@ -223,7 +223,7 @@ const GlobalDashStyle = createGlobalStyle`
         color: #ffffff !important;
         font-size: 0.95rem !important;
         text-align: center !important;
-        font-weight: 800;
+        font-weight: 400;
     }
 
     .success-progress-bar, .notify-progress-bar {
@@ -232,13 +232,13 @@ const GlobalDashStyle = createGlobalStyle`
     }
 
     .toast-notify {
-        background: #6a3093;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #a044ff, #6a3093);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #a044ff, #6a3093); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: #DA22FF;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         color: #ffffff !important;
         font-size: 0.95rem !important;
         text-align: center !important;
-        font-weight: 800;
+        font-weight: 400;
     }
 
     .redirecting {
