@@ -10,7 +10,7 @@ export default class NotificationDate extends Component {
     render() {
         return (
             <StyledDate>
-                <span className="date">{format.tsToDate(new Date(+(new Date()) - Math.floor(Math.random()*10000000000)).getTime())}</span>
+                <span className="date">{format.tsToDate(this.props.timestamp)}</span>
             </StyledDate>
         )
     }
