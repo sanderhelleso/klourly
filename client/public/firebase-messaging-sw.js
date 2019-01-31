@@ -24,7 +24,7 @@ messaging.setBackgroundMessageHandler(payload => {
 		body: payload.data.body,
 		icon: payload.data.icon,
 		data: { url: payload.data.click_action },
-		actions: [{ action: 'open_url', title: 'Check In Now'}]
+		actions: [{ action: 'open_url', title: 'View Now'}]
 	};
 
 	// launch notification

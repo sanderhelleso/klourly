@@ -85,7 +85,7 @@ const mapStateToProps = state => {
         notificationData: {
             title: 'Room available for checkin',
             body: `"${state.room.activeRoom.name}" just opened for checkin. Register your attendence now!`,
-            icon: state.room.activeRoom.cover.large,
+            icon: state.room.activeRoom.cover.small,
             click_action: `http://localhost:3000/dashboard/rooms/${state.room.activeRoom.id}`
         }
     };

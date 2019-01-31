@@ -125,7 +125,7 @@ async function getRooms(uid, rooms) {
 }
 
 // add a new announcement to coresponding room
-async function publishAnnouncement(uid, roomID, announcement, notificationData) {
+async function publishAnnouncement(uid, roomID, announcement) {
     try {
         const response = await axios({
             headers: authHeader(),
@@ -134,8 +134,7 @@ async function publishAnnouncement(uid, roomID, announcement, notificationData) 
             data: {
                 uid,
                 roomID,
-                announcement,
-                notificationData
+                announcement
             }
         });
 

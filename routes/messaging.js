@@ -30,7 +30,7 @@ module.exports = app => {
 
     // get a messaging token for a user
     app.post('/api/messaging/getToken', (req, res) => {
-
+        // todo
     });
 
     // get all messaging tokens for members of a room
@@ -48,9 +48,8 @@ module.exports = app => {
                 timestamp: new Date().getTime(),
                 image: req.body.data.icon,
                 redirect: {
-                    redirectText: 'Enter Room',
-                    redirectTo: `/rooms/${req.body.data.click_action.split('/').reverse()[0]}`,
-                    redirectType: 'room'
+                    redirectText: 'Take me there',
+                    redirectTo: req.body.data.click_action
                 }
             });
 

@@ -9,6 +9,7 @@ import { updateAnnouncementsAction } from '../../../../actions/room/announcement
 import { openAnnouncementAction } from '../../../../actions/room/announcement/openAnnouncementAction';
 
 import { room } from '../../../../api/room/room';
+import { token } from '../../../../api/messaging/token';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
 import { redirect } from '../../../../helpers/redirect';
@@ -85,15 +86,24 @@ class NewAnnouncementModal extends Component {
         };
 
         // attempt to publish announcement
-        const response = await room.publishAnnouncement(
-                            this.props.userID, 
-                            this.props.roomID,
-                            data,
-                            this.props.notificationData
-                        );
+        const response = await room.publishAnnouncement(this.props.userID, this.props.roomID, data);
 
         // check if post was successfull
         if (response.data.success) {
+
+            // send push notifications to subscribed room members
+            const notificationData = {
+                title: 'New announcement posted',
+                body: `A new announcement just got posted in "${this.props.roomName}". Lets see whats up!`,
+                icon: this.props.roomCover,
+                click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${response.data.announcementID}`
+            };
+
+            token.getRoomMembersToken(
+                this.props.userID, 
+                this.props.roomMembers, 
+                notificationData
+            );
 
             // remove modal
             document.querySelector('.modal-close').click();
@@ -199,12 +209,12 @@ class NewAnnouncementModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        notificationData: {
-            icon: state.room.activeRoom.cover.small,
-            name: state.room.activeRoom.name
-        },
+        roomCover: state.room.activeRoom.cover.small,
+        roomName: state.room.activeRoom.name,
         pollData: state.room.activeRoom.newAnnouncement,
-        roomID: state.room.activeRoom.id
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id,
+        roomMembers: state.room.activeRoom.members
     }
 }
 

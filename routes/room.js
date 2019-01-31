@@ -158,25 +158,6 @@ module.exports = app => {
         // set room announcement
         roomRef.child(`/announcements/${announcementID}`).set(announcement);
 
-        // set notifications about new announcement for room members
-        roomRef.child('members').once('value', snapshot => {
-            snapshot.val().forEach(member => {
-
-                // add notification
-                const userRef = db.ref(`users/${member}/notifications`);
-                userRef.push({
-                    message: `A new announcement got posted in "${req.body.notificationData.name}".`,
-                    timestamp: new Date().getTime(),
-                    image: req.body.notificationData.icon,
-                    redirect: {
-                        redirectText: 'See Announcement',
-                        redirectTo: `/rooms/${req.body.roomID}/announcements/${announcementID}`,
-                        redirectType: 'announcement'
-                    }
-                });
-            });
-        });
-
         // send back response
         res.status(200).json({
             success: true,
