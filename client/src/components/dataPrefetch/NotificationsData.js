@@ -43,11 +43,44 @@ class NotificationsData extends Component {
             this.props.updateNotificationsAction({
                 [snapshot.key]: snapshot.val()
             });
-
-            // play sound
-            this.setState({ playSound: true });
-            setTimeout(() => this.setState({ playSound: false }), 2000);
+            
+            // alert user
+            this.alertUser();
         });
+    }
+
+    alertUser() {
+
+        // play sound
+        this.setState({ playSound: true });
+        setTimeout(() => this.setState({ playSound: false }), 2000);
+
+        // modify title if user is not viewing the page (tabbed out)
+        if (document.hidden) {
+
+            let switcher = 0;
+            const currentPageTitle = document.title;
+            const modifyTab = setInterval(() => {
+
+                // if user is viewing page again, clear interval
+                if (!document.hidden) {
+                    clearInterval(modifyTab);
+                    switcher = 0;
+                }
+
+                // else keep switching ;)
+                if (switcher === 1) {
+                    document.title = '👋 New Notifications | Klourly';
+                    switcher--;
+                }
+
+                else {
+                    document.title = currentPageTitle;
+                    switcher++;
+                }
+
+            }, 2000);
+        }
     }
 
     render() {
