@@ -3,7 +3,6 @@ import * as firebase from 'firebase';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setInitialNotificationsAction } from '../../actions/dashboard/notifications/setInitialNotificationsAction';
 import { updateNotificationsAction } from '../../actions/dashboard/notifications/updateNotificationsAction';
 
 
@@ -28,18 +27,20 @@ class NotificationsData extends Component {
         this.notificationsRef.once('value', snapshot => {
             initialDataLoaded = true;
 
-            console.log(snapshot.val());
             // set initial data to always be up to date if data is stored in localstorage
+            this.props.updateNotificationsAction(snapshot.exists() ? snapshot.val() : false);
         });
 
         // on value change, update state and notifications
-        this.notificationsRef.on('value', snapshot => {
+        this.notificationsRef.on('child_added', snapshot => {
 
             // if initalData is not loaded, return
             if (!initialDataLoaded) return;
 
             // else update notifications with new data
-            console.log(snapshot.val());
+            this.props.updateNotificationsAction({
+                [snapshot.key]: snapshot.val()
+            });
         });
     }
 
@@ -58,7 +59,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
-        setInitialNotificationsAction,
         updateNotificationsAction 
     }, dispatch);
 }

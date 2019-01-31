@@ -90,6 +90,21 @@ const dashboardReducer = (state = {}, action) => {
                 }
             }
 
+        /**
+         * NOTIFICATIONS
+        */
+        case 'UPDATE_NOTIFICATIONS':
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    notifications: {
+                        ...state.userData.notifications,
+                        ...action.payload
+                    }
+                }
+            }
+
         default:
             return state;
     }
