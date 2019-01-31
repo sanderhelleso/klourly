@@ -21,7 +21,6 @@ class Reactions extends Component {
 
         // clear all previous listeners
         this.reactionsRef.off('value');
-        this.reactionsRef.off('child_added');
     }
 
     componentDidMount() {

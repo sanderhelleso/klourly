@@ -36,14 +36,15 @@ class Comments extends Component {
         });
 
         // on value change, update state and comments
-        this.commentsRef.on('value', snapshot => {
+        this.commentsRef.on('child_added', snapshot => {
 
             // if initalData is not loaded, return
             if (!initialDataLoaded) return;
 
             // else update comments with new data
-            this.setComments(snapshot.val());
-            console.log(snapshot.val());
+            this.setComments({
+                [snapshot.key]: snapshot.val()
+            });
         });
     }
 
