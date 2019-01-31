@@ -10,7 +10,7 @@ export default class Notification extends Component {
 
     render() {
         return (
-            <StyledNotification className="animated fadeIn">
+            <StyledNotification>
                 <div className="row">
                     <div className="col l2">
                         <div className="avatar-cont">

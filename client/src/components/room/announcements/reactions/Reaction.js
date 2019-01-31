@@ -17,7 +17,10 @@ class Reactions extends Component {
             reacted = props.data.reacted.indexOf(this.props.userID) === -1 ? false : true;
         }
 
-        this.state = { reacted };
+        this.state = { 
+            reacted,
+            lastReacted: 0
+        };
     }
 
     getRGB() {
@@ -52,13 +55,16 @@ class Reactions extends Component {
             this.props.name
         );
 
-        this.setState({ reacted: this.state.reacted ? false : true });
+        // set reacted state
+        this.setState({  reacted: this.state.reacted ? false : true });
 
         // enable mouse event
         ele.style.cursorEvent = 'default';
 
         // send push notifications to announcement owner (room owner)
-        if (this.state.reacted && this.props.userID !== this.props.ownerID) {
+        if (this.state.reacted && 
+            this.props.userID !== this.props.ownerID &&
+            new Date().getTime() - this.state.lastReacted >= 60000) { // only send notification each min to avoid spam
 
             const notificationData = {
                 title: `New announcement reaction ${this.props.data.emoji}`,
@@ -73,6 +79,9 @@ class Reactions extends Component {
                 notificationData
             );
         }
+
+        // update reacted at time
+        this.setState({ lastReacted: new Date().getTime() });
     }
 
     render() {
