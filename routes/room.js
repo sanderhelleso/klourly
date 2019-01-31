@@ -251,18 +251,21 @@ module.exports = app => {
     app.post('/api/announcement/postAnnouncementComment', authenticate, (req, res) => {
 
         // get annoucement ref
-        const commentRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/comments`);
+        const commentsRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/comments`);
 
         // get the value and proceed to update comments
-        commentRef.once('value', () => {
+        commentsRef.once('value', snapshot => {
 
             // add new comment to comments ref
-            commentRef.push(req.body.commentData);
+            commentsRef.push(req.body.commentData);
 
             // send back response with status
             res.status(200).json({
                 success: true,
                 message: 'Comment successfully posted',
+                commentators: snapshot.exists() ? [...new Set(Object.values(snapshot.val())
+                                .filter(comment => comment.author.userID !== req.body.uid)
+                                .map(comment => comment.author.userID))] : []
             });
         });
     });

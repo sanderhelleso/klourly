@@ -69,7 +69,7 @@ class Reactions extends Component {
     
             token.getRoomMembersToken(
                 this.props.userID, 
-                this.props.roomMembers, 
+                [this.props.ownerID], 
                 notificationData
             );
         }
@@ -100,9 +100,8 @@ const mapStateToProps = state => {
     return { 
         displayName: state.dashboard.userData.settings.displayName,
         photoUrl: state.dashboard.userData.settings.photoUrl,
-        roomMembers: state.room.activeRoom.members,
         userID: state.auth.user.id,
-        ownerID: state.room.activeRoom.owner,
+        ownerID: state.room.activeRoom.owner.id,
         roomID: state.room.activeRoom.id
     }
 }

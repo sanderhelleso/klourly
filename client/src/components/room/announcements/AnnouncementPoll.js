@@ -4,6 +4,7 @@ import { format } from '../../../helpers/format';
 import { Bar } from 'react-chartjs-2';
 import { BarChart2 } from 'react-feather';
 import { room } from '../../../api/room/room';
+import { token } from '../../../api/messaging/token';
 import { notification } from '../../../helpers/notification';
 import * as firebase from 'firebase';
 
@@ -140,6 +141,23 @@ class AnnouncementPoll extends Component {
 
         if (response.data.success) {
 
+            // send push notification to announcement owner (room owner)
+            if (this.props.userID !== this.props.ownerID) {
+
+                const notificationData = {
+                    title: `New announcement poll vote`,
+                    body: `Your announcement poll recieved a new vote!`,
+                    icon: this.props.cover,
+                    click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${this.props.announcementID}`
+                };
+        
+                token.getRoomMembersToken(
+                    this.props.userID, 
+                    [this.props.ownerID], 
+                    notificationData
+                );
+            }
+
             // update voted state
             this.props.voteAnnouncementPollAction({
                 announcementID: this.props.announcementID,
@@ -176,9 +194,10 @@ class AnnouncementPoll extends Component {
 
 const mapStateToProps = (state, compProps) => {
     return {
+        cover: state.room.activeRoom.cover.small,
         userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
-        announcementID: compProps.announcementID,
+        ownerID: state.room.activeRoom.owner.id,
         poll: state.room.activeRoom.announcements[compProps.announcementID].poll
     }
 }

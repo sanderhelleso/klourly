@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { notification } from '../../../../helpers/notification';
 import { room } from '../../../../api/room/room';
+import { token } from '../../../../api/messaging/token';
 
 class PostComment extends Component {
     constructor(props) {
@@ -43,7 +45,8 @@ class PostComment extends Component {
             {
                 author: {
                     displayName: this.props.displayName,
-                    photoUrl: this.props.photoUrl
+                    photoUrl: this.props.photoUrl,
+                    userID: this.props.userID
                 },
                 comment: this.state.comment,
                 postedAt: new Date().getTime()
@@ -52,8 +55,26 @@ class PostComment extends Component {
 
         // display notification depending on result
         if (response.data.success) {
+
             notification.success(response.data.message);
             this.setState({ valid: false, comment: '' });
+
+            // send push notifications to all previous commentators
+            if (this.props.userID !== this.props.ownerID) {
+
+                const notificationData = {
+                    title: `New announcement comment`,
+                    body: `"${this.props.displayName}" commented on your announcement!`,
+                    icon: this.props.photoUrl,
+                    click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${this.props.announcementID}`
+                };
+        
+                token.getRoomMembersToken(
+                    this.props.userID, 
+                    response.data.commentators.filter(comment => comment), 
+                    notificationData
+                );
+            }
         }
 
         else {
@@ -110,7 +131,8 @@ const mapStateToProps = state => {
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
         displayName: state.dashboard.userData.settings.displayName,
-        photoUrl: state.dashboard.userData.settings.photoUrl
+        photoUrl: state.dashboard.userData.settings.photoUrl,
+        ownerID: state.room.activeRoom.owner.id,
     }
 }
 

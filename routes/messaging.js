@@ -54,7 +54,7 @@ module.exports = app => {
             });
 
             // access users messaging token
-            userRef.child('/messaging/token').once('value', snapshot => {
+            userRef.child('messaging/token').once('value', snapshot => {
 
                 // validate that token is present
                 if (snapshot.exists()) {
