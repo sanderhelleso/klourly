@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 export const notification = {
     success,
     error,
+    notify,
     login,
     signup,
     settings,
@@ -33,7 +34,20 @@ function error(message) {
         className: 'toast-error',
         progressClassName: 'error-progress-bar',
         autoClose: 4000,
-        toastId: 1
+        toastId: 2
+    });
+}
+
+// default notification
+function notify(message) {
+
+    // prompt error if condition is not met
+    toast(message, {
+        position: toast.POSITION.BOTTOM_LEFT,
+        className: 'toast-notify',
+        progressClassName: 'notify-progress-bar',
+        autoClose: 4000,
+        toastId:3
     });
 }
 
