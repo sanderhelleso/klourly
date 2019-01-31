@@ -11,6 +11,8 @@ class NotificationsData extends Component {
         super(props);
 
         this.notificationsRef = firebase.database().ref(`users/${this.props.userID}/notifications`);
+
+        this.state = { playSound: false }
     }
 
     componentWillUnmount() {
@@ -41,11 +43,15 @@ class NotificationsData extends Component {
             this.props.updateNotificationsAction({
                 [snapshot.key]: snapshot.val()
             });
+
+            // play sound
+            this.setState({ playSound: true });
+            setTimeout(() => this.setState({ playSound: false }), 2000);
         });
     }
 
     render() {
-        return null;
+        return this.state.playSound ? <audio src="/sound/notification.mp3" autoPlay/> : null;
     }
 }
 

@@ -39,7 +39,6 @@ class AnnouncementPoll extends Component {
 
         // clear all previous listeners
         this.pollRef.off('value');
-        this.pollRef.off('child_added');
     }
 
     componentDidMount() {
