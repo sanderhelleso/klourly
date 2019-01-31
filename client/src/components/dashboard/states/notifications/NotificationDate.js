@@ -19,14 +19,14 @@ export default class NotificationDate extends Component {
 const StyledDate = styled.div`
 
     min-width: 100%;
+    padding-right: 1rem;
     text-align: center;
     position: sticky;
     z-index: 1000;
     border-bottom: 1px solid #e0e0e0;
-    margin: 3rem 0;
+    margin: 3rem auto;
     background-color: #f5f5f5;
     top: 0;
-
 
     span {
         display: inline-block;

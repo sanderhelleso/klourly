@@ -67,4 +67,5 @@ const StyledNotifications = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 70vh;
+    padding-bottom: 5rem;
 `;

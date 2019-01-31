@@ -60,6 +60,8 @@ class NotificationsData extends Component {
 
             let switcher = 0;
             const currentPageTitle = document.title;
+            const notificationTitle = '👋 New Notifications | Klourly';
+            document.title = notificationTitle;
             const modifyTab = setInterval(() => {
 
                 // if user is viewing page again, clear interval
@@ -70,7 +72,7 @@ class NotificationsData extends Component {
 
                 // else keep switching ;)
                 if (switcher === 1) {
-                    document.title = '👋 New Notifications | Klourly';
+                    document.title = notificationTitle;
                     switcher--;
                 }
 
