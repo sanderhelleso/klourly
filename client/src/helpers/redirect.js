@@ -19,7 +19,8 @@ export const redirect = {
     loginWithJoinRoomRedirect,
     redirectActionSuccess,
     roomCheckinReport,
-    roomMemberReport
+    roomMemberReport,
+    notification
 };
 
 function home() {
@@ -107,4 +108,9 @@ function roomCheckinReport(roomID, checkinID) {
 
 function roomMemberReport(roomID, userID) {
     history.push(`/dashboard/rooms/${roomID}/admin/reports/member/${userID}`);
+}
+
+function notification(fullUrl) {
+    const route = fullUrl.split('/');
+    history.push(`/${route.slice(3, route.length).join('/')}`); // remove domain form route
 }

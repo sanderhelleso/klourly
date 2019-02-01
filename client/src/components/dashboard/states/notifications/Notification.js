@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../../helpers/format';
-import history from '../../../../helpers/history';
+import { redirect } from '../../../../helpers/redirect';
 
 export default class Notification extends Component {
     constructor(props) {
@@ -27,10 +27,7 @@ export default class Notification extends Component {
                         </div>
                         <div className="col s12">
                         
-                            <a onClick={() => {
-                                const route = this.props.data.redirect.redirectTo.split('/');
-                                history.push(route.slice(3, route.length).join('/')); // remove domain form route
-                            }}>
+                            <a onClick={() => redirect.notification(this.props.data.redirect.redirectTo)}>
                                 {this.props.data.redirect.redirectText}
                             </a>
                         </div>

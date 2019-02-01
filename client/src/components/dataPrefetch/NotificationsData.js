@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateNotificationsAction } from '../../actions/dashboard/notifications/updateNotificationsAction';
 import { redirect } from '../../helpers/redirect';
-import history from '../../helpers/history';
 
 
 class NotificationsData extends Component {
@@ -56,11 +55,8 @@ class NotificationsData extends Component {
     alertUser(data) {
 
         // display alert
-        const Toast = ({message, img, redirect}) => (
-            <StyledNotify onClick={() => {
-                const route = redirect.split('/');
-                history.push(route.slice(3, route.length).join('/')); // remove domain form route
-            }}>
+        const Toast = ({ message, img, url }) => (
+            <StyledNotify onClick={() => redirect.notification(url)}>
                 <img src={img} alt="" />
                 <p>{message}</p>
             </StyledNotify>
@@ -70,7 +66,7 @@ class NotificationsData extends Component {
             <Toast 
                 message={data.message} 
                 img={data.image}
-                redirect={data.redirect.redirectTo} 
+                url={data.redirect.redirectTo} 
             />
         );
 
