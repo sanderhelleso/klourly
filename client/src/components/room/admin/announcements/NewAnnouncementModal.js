@@ -112,12 +112,6 @@ class NewAnnouncementModal extends Component {
             this.setState({ title: '', message: ''});
             this.props.removeAnnouncementPollAction();
 
-            // update rooms announcement list
-            this.props.updateAnnouncementsAction({
-                announcementID: response.data.announcementID,
-                announcement: response.data.announcement
-            });
-
             // redirect to announcement
             this.props.openAnnouncementAction(response.data.announcement);
             redirect.announcement(this.props.roomID, response.data.announcementID);

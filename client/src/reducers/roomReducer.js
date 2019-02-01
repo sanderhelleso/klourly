@@ -321,10 +321,11 @@ const roomReducer = (state = initialState, action) => {
                     ...state.activeRoom,
                     announcements: {
                         ...state.activeRoom.announcements,
-                        [action.payload.announcementID]: action.payload.announcement
+                        ...action.payload.updatedAnnouncements
                     }
                 }
             }
+                
 
         case 'VOTE_ANNOUNCEMENT_POLL':
             return {
