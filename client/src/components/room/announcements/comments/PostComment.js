@@ -60,18 +60,33 @@ class PostComment extends Component {
             this.setState({ valid: false, comment: '' });
 
             // send push notifications to all previous commentators
-            if (this.props.userID !== this.props.ownerID) {
+            const notificationData = {
+                title: `New announcement comment`,
+                body: `"${this.props.displayName}" also commented on an announcement you commented on!`,
+                icon: this.props.photoUrl,
+                click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${this.props.announcementID}`
+            };
 
-                const notificationData = {
-                    title: `New announcement comment`,
-                    body: `"${this.props.displayName}" commented on your announcement!`,
-                    icon: this.props.photoUrl,
-                    click_action: `http://localhost:3000/dashboard/rooms/${this.props.roomID}/announcements/${this.props.announcementID}`
-                };
-        
+            // validate if owner has commented
+            let commentators = response.data.commentators;
+            const ownerCommented = commentators.indexOf(this.props.ownerID) !== -1;
+            const ownerIsCommenting = this.props.userID === this.props.ownerID;
+            if (ownerIsCommenting && ownerCommented) commentators.filter(commentator => commentator !== this.props.ownerID);
+
+            // to commentators
+            console.log(commentators);
+            token.getRoomMembersToken(
+                this.props.userID,
+                commentators.filter(commentator => commentator), 
+                notificationData
+            );
+
+            // to owner, if owner has not commented
+            if (!ownerCommented && !ownerIsCommenting) {
+                notificationData.body = `"${this.props.displayName}" commented on your announcement!`;
                 token.getRoomMembersToken(
-                    this.props.userID, 
-                    response.data.commentators.filter(comment => comment), 
+                    this.props.userID,
+                    [this.props.ownerID], 
                     notificationData
                 );
             }

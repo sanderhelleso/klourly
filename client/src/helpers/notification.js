@@ -46,7 +46,7 @@ function notify(message) {
         position: toast.POSITION.BOTTOM_LEFT,
         className: 'toast-notify',
         progressClassName: 'notify-progress-bar',
-        autoClose: 4000
+        autoClose: 5000
     });
 }
 

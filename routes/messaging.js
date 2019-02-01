@@ -43,9 +43,8 @@ module.exports = app => {
             const userRef = db.ref(`users/${uid}`);
 
             // add notification
-            const mainMessage = req.body.data.body.split('.'); // index 0 is most important for post-notifications
             userRef.child('notifications').push({
-                message: mainMessage.length > 0 ? mainMessage[0] : req.body.data.body,
+                message: req.body.data.body,
                 timestamp: new Date().getTime(),
                 image: req.body.data.icon,
                 redirect: {

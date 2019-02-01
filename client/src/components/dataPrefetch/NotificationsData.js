@@ -136,17 +136,17 @@ const StyledNotify = styled.div`
     img {
         float: left;
         max-width: 22.5%;
-        max-height: 100%;
+        max-height: 70px;
         min-width: 22.5%;
-        min-height: 100%;
+        min-height: 70px;
     }
 
     p {
         position: absolute;
-        top: 25%;
-        left: 65%;
+        top: 35%;
+        left: 62%;
         text-align: left;
-        min-width: 75%;
+        min-width: 70%;
         transform: translate(-50%);
         font-size: 0.8rem;
         font-weight: 400;
