@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import * as firebase from 'firebase';
 import { notification } from '../../helpers/notification';
 
@@ -55,18 +56,20 @@ class NotificationsData extends Component {
     alertUser(data) {
 
         // display alert
-        const Toast = ({message, redirect}) => (
-            <div onClick={() => {
+        const Toast = ({message, img, redirect}) => (
+            <StyledNotify onClick={() => {
                 const route = redirect.split('/');
                 history.push(route.slice(3, route.length).join('/')); // remove domain form route
             }}>
-                {message}
-            </div>
+                <img src={img} alt="" />
+                <p>{message}</p>
+            </StyledNotify>
         );
 
         notification.notify(
             <Toast 
                 message={data.message} 
+                img={data.image}
                 redirect={data.redirect.redirectTo} 
             />
         );
@@ -125,3 +128,27 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationsData);
+
+const StyledNotify = styled.div`
+
+    position: relative;
+
+    img {
+        float: left;
+        max-width: 22.5%;
+        max-height: 100%;
+        min-width: 22.5%;
+        min-height: 100%;
+    }
+
+    p {
+        position: absolute;
+        top: 25%;
+        left: 65%;
+        text-align: left;
+        min-width: 75%;
+        transform: translate(-50%);
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+`;

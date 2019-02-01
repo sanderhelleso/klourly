@@ -157,7 +157,15 @@ class App extends Component {
                     <GlobalDashStyle />
                     {this.renderRoutes()}
                     <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
-                    <ToastContainer transition={Fade} closeButton={false} />
+                    <ToastContainer 
+                        transition={Fade} 
+                        closeButton={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        pauseOnVisibilityChange
+                        draggable
+                        pauseOnHover
+                    />
                 </div>
             </Router>
         )
@@ -211,6 +219,7 @@ const GlobalDashStyle = createGlobalStyle`
         font-size: 0.95rem !important;
         text-align: center !important;
         font-weight: 400;
+        border-radius: 4px;
     }
 
     .error-progress-bar {
@@ -224,6 +233,7 @@ const GlobalDashStyle = createGlobalStyle`
         font-size: 0.95rem !important;
         text-align: center !important;
         font-weight: 400;
+        border-radius: 4px;
     }
 
     .success-progress-bar, .notify-progress-bar {
@@ -232,6 +242,7 @@ const GlobalDashStyle = createGlobalStyle`
     }
 
     .toast-notify {
+        padding: 0;
         background: #DA22FF;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -239,6 +250,7 @@ const GlobalDashStyle = createGlobalStyle`
         font-size: 0.95rem !important;
         text-align: center !important;
         font-weight: 400;
+        border-radius: 4px;
     }
 
     .redirecting {
