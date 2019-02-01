@@ -69,8 +69,9 @@ class Create extends Component {
             
             // update owning rooms state
             this.props.newRoomCreatedAction(
-                [...this.props.owning, 
-                roomData.id]
+                this.props.owning 
+                ? [...this.props.owning, roomData.id]
+                : [roomData.id]
             );
 
             // set active room, add to preview

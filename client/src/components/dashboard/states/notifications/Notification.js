@@ -54,20 +54,21 @@ const StyledNotification = styled.div`
     .avatar-cont {
 
         img {
-            margin: 1rem 0;
+            margin: 1.1rem 0;
             border-radius: 50%;
             box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-            min-height: 45px;
-            min-width: 45px;
-            max-height: 45px;
-            max-width: 45px;
+            min-height: 50px;
+            min-width: 50px;
+            max-height: 50px;
+            max-width: 50px;
         }
     }
 
    .info-cont {
         h5 {
-            font-size: 1.15rem;
-            margin: 0.25rem 0 0.75rem 0;
+            font-size: 1rem;
+            font-weight: 400;
+            margin: 0.5rem 0 0.75rem 0;
         }
 
         p {
@@ -79,10 +80,10 @@ const StyledNotification = styled.div`
     }
 
     a {
-        color: #363636;
         opacity: 0.8;
-        font-size: 1rem;
-        font-weight: 800;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 1px;
         color: #b388ff;
     }
 `;
