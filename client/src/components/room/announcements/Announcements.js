@@ -6,12 +6,24 @@ export default class Announcements extends Component {
     constructor(props) {
         super(props);
 
+        this.lastScroll;
         this.noAnnouncementIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
-
     }
 
+    
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }  
+
     renderAnnouncements() {
+
+        // if room has announcements
         if (this.props.announcements && Object.keys(this.props.announcements).length > 0) {
+
+            // add event to load data on cont scroll end
+            window.addEventListener('scroll', this.handleScroll);
+
+            // render announcemnts in descending order (date posted)
             return Object.entries(this.props.announcements)
             .sort((a, b) => b[1].timestamp - a[1].timestamp)
             .map(([id, announcement]) => {
@@ -23,7 +35,7 @@ export default class Announcements extends Component {
                 )
             });
         }
-
+    
         return (
             <StyledNoAnnouncements className="animated fadeIn">
                 <img src={this.noAnnouncementIcon} alt="No announcements posted in this room" />
@@ -32,11 +44,28 @@ export default class Announcements extends Component {
         )
     }
 
+    handleScroll = () => {
+        console.log(window.scrollY);
+
+        // only on scrollDown direction
+        if (window.scrollY > this.lastScroll) {
+
+            const announcementsCont = document.querySelector('#announcements-cont');
+            if (window.scrollY >= (announcementsCont.offsetTop + 200)) {
+                console.log('scrolled past div');
+            }
+        }
+
+        this.lastScroll = window.scrollY;
+    }
+
     render() {
         return (
             <StyledAnnouncements>
                 <h2>Announcements</h2>
-                {this.renderAnnouncements()}
+                <div id="announcements-cont" className="row">
+                    {this.renderAnnouncements()}
+                </div>
             </StyledAnnouncements>
         )
     }
