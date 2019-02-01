@@ -11,7 +11,7 @@ export default class Announcements extends Component {
     }
 
     renderAnnouncements() {
-        if (this.props.announcements) {
+        if (this.props.announcements && Object.keys(this.props.announcements).length > 0) {
             return Object.entries(this.props.announcements)
             .sort((a, b) => b[1].timestamp - a[1].timestamp)
             .map(([id, announcement]) => {

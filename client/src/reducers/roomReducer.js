@@ -319,7 +319,7 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 activeRoom: {
                     ...state.activeRoom,
-                    announcements: {
+                    announcements: !action.payload ? {} : {
                         ...state.activeRoom.announcements,
                         ...action.payload.updatedAnnouncements
                     }

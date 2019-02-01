@@ -28,8 +28,11 @@ class Reactions extends Component {
 
         // prefetch data to only recieve callbacks on new data added
         let initialDataLoaded = false;
-        this.reactionsRef.once('value', () => {
+        this.reactionsRef.once('value', snapshot => {
             initialDataLoaded = true;
+
+            // set initial data to always be up to date if data is stored in localstorage
+            this.setReactions(snapshot.val());
         });
 
         // on value change, update state and reactions

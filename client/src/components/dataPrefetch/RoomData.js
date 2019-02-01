@@ -24,6 +24,9 @@ class RoomData extends Component {
         if (this.state.listeners) {
             this.state.listeners.announcementsRef.off('value');
             this.state.listeners.announcementsRef.off('child_added');
+
+            // remove announcements from active room to be refetched at limit for performence
+            this.setAnnouncements(false);
         }
     }
 
@@ -74,15 +77,21 @@ class RoomData extends Component {
 
             // prefetch data to only recieve callbacks on new data added
             let initialDataLoaded = false;
-            this.state.listeners.announcementsRef.once('value', snapshot => {
+            this.state.listeners.announcementsRef
+            .orderByChild('timestamp')
+            .limitToLast(3)
+            .once('value', snapshot => {
                 initialDataLoaded = true;
 
                 // update rooms announcement list to be up to date on room render
-                this.setAnnouncements(snapshot.val());
+                if (snapshot.exists()) this.setAnnouncements(snapshot.val());
             });
 
             // on value change, update state and announcements
-            this.state.listeners.announcementsRef.on('child_added', snapshot => {
+            this.state.listeners.announcementsRef
+            .orderByChild('timestamp')
+            .limitToLast(1)
+            .on('child_added', snapshot => {
 
                 // if initalData is not loaded, return
                 if (!initialDataLoaded) return;
@@ -90,7 +99,7 @@ class RoomData extends Component {
                 // update rooms announcement list
                 this.setAnnouncements({
                     [snapshot.key]: snapshot.val()
-                })
+                });
             });
         });
     }

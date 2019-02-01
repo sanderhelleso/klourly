@@ -76,7 +76,10 @@ module.exports = app => {
                 res.status(200).json({
                     success: true,
                     message: 'Successfully fetched room',
-                    roomData: roomSnapshot.val(),
+                    roomData: {
+                        ...roomSnapshot.val(),
+                        announcements: false // retrieve on client for listener and limit
+                    },
                     ownerData: {
                         name: ownerSnapshot.val().displayName,
                         photoUrl: ownerSnapshot.val().photoUrl,
