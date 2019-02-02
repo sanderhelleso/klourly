@@ -42,7 +42,6 @@ class RoomData extends Component {
 
         // fetch new data if navigation from one active room to another directly via router
         if (this.props.activeRoom && this.props.activeRoom.id !== nextProps.match.params.roomID) {
-            this.setState({ annoncementLimit: this.DEFAULT_ANNOUNCEMENT_LIMIT });
             this.loadData();
         }
 
@@ -90,22 +89,24 @@ class RoomData extends Component {
             .limitToLast(this.state.announcementLimit)
             .once('value', snapshot => {
 
+                console.log(this.state);
+
                 // update rooms announcement list to be up to date on room render
                 if (snapshot.exists()) {
-
-                    console.log('fetching ' + this.state.announcementLimit);
-                    console.log('children in collection ' + snapshot.numChildren());
 
                     // update fetch announcement
                     this.setAnnouncements(snapshot.val());
 
+                    // check if collection has more childs
+                    if (snapshot.numChildren() < this.state.announcementLimit) {
+                        this.props.loadNewAnnouncementsAction('ALL_LOADED');
+                        return this.setState({ hasAnnouncementsLeft: false });
+                    }
+
                     // allow user to keep fetching annoucements
                     if (fetchNew) this.props.loadNewAnnouncementsAction(false);
 
-                    // check if collection has more childs
-                    if (snapshot.numChildren() < this.state.announcementLimit) {
-                        return this.setState({ hasAnnouncementsLeft: false });
-                    }
+
                 }
 
                 // notifiy listeners that they can start listening for child added
@@ -139,6 +140,8 @@ class RoomData extends Component {
                     [snapshot.key]: snapshot.val()
                 });
             });
+
+            this.props.loadNewAnnouncementsAction(false);
         });
     }
 

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { loadNewAnnouncementsAction } from '../../../actions/room/announcement/loadNewAnnouncementsAction';
 
 import AnnouncementPreview from './AnnouncementPreview';
+import CircularLoader from '../../loaders/CircularLoader';
 
 class Announcements extends Component {
     constructor(props) {
@@ -50,13 +51,26 @@ class Announcements extends Component {
         )
     }
 
+    renderLoader() {
+
+        if (!this.props.fetcingNextAnnoucements || 
+            this.props.fetcingNextAnnoucements === 'ALL_LOADED') 
+            return null;
+
+        return (
+            <StyledLoaderCont>
+                <CircularLoader size="small" />
+            </StyledLoaderCont>
+        )
+    }
+
     handleScroll = () => {
 
         // only on scrollDown direction and prev content loaded
         if (window.scrollY > this.lastScroll && !this.props.fetcingNextAnnoucements) {
 
             // if user has scrolled to end of div
-            if (window.scrollY >= (document.querySelector('#announcements-cont').offsetHeight)) {
+            if (window.scrollY >= (document.querySelector('#announcements-cont').offsetHeight - 200)) {
 
                 // load new data if available
                 if (!this.state.loadEventFired) {
@@ -77,6 +91,7 @@ class Announcements extends Component {
                 <div id="announcements-cont" className="row">
                     {this.renderAnnouncements()}
                 </div>
+                {this.renderLoader()}
             </StyledAnnouncements>
         )
     }
@@ -129,4 +144,10 @@ const StyledNoAnnouncements = styled.div`
         color: #9e9e9e;
         margin: 0;
     }
+`;
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 20px;
+    min-width: 100%;
 `;
