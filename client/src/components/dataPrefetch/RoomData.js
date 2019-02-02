@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
 import { updateAnnouncementsAction } from '../../actions/room/announcement/updateAnnouncementsAction';
+import { loadNewAnnouncementsAction } from '../../actions/room/announcement/loadNewAnnouncementsAction';
 
 import LinearLoader from '../loaders/LinearLoader';
 import CircularLoader from '../loaders/CircularLoader';
@@ -15,7 +16,13 @@ class RoomData extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { loaded: this.props.loaded };
+        this.DEFAULT_ANNOUNCEMENT_LIMIT = 3;
+
+        this.state = { 
+            loaded: this.props.loaded,
+            announcementLimit: this.DEFAULT_ANNOUNCEMENT_LIMIT, // updated on scroll
+            initialAnnouncementsLoaded: false
+        };
     }
 
     componentWillUnmount() {
@@ -34,7 +41,14 @@ class RoomData extends Component {
 
         // fetch new data if navigation from one active room to another directly via router
         if (this.props.activeRoom && this.props.activeRoom.id !== nextProps.match.params.roomID) {
+            this.setState({ annoncementLimit: this.DEFAULT_ANNOUNCEMENT_LIMIT });
             this.loadData();
+        }
+
+        if (!this.props.fetcingNextAnnoucements && nextProps.fetcingNextAnnoucements) {
+            this.setState({ 
+                announcementLimit: this.state.announcementLimit + this.DEFAULT_ANNOUNCEMENT_LIMIT,
+            }, () => this.fetchAnnouncements(true));
         }
     }
 
@@ -66,6 +80,25 @@ class RoomData extends Component {
         }
     }
 
+    fetchAnnouncements(fetchNew) {
+
+        // prefetch data to only recieve callbacks on new data added
+        this.state.listeners.announcementsRef
+        .orderByChild('timestamp')
+        .limitToLast(this.state.announcementLimit)
+        .once('value', snapshot => {
+            this.setState({ initialAnnouncementsLoaded: true });
+
+            // update rooms announcement list to be up to date on room render
+            if (snapshot.exists()) {
+
+                // update fetch announcement
+                this.setAnnouncements(snapshot.val());
+                if (fetchNew) this.props.loadNewAnnouncementsAction(false);
+            }
+        });
+    }
+
     setListeners() {
 
         // set db refs
@@ -75,17 +108,7 @@ class RoomData extends Component {
             }
         }, () => {
 
-            // prefetch data to only recieve callbacks on new data added
-            let initialDataLoaded = false;
-            this.state.listeners.announcementsRef
-            .orderByChild('timestamp')
-            .limitToLast(3)
-            .once('value', snapshot => {
-                initialDataLoaded = true;
-
-                // update rooms announcement list to be up to date on room render
-                if (snapshot.exists()) this.setAnnouncements(snapshot.val());
-            });
+            this.fetchAnnouncements();
 
             // on value change, update state and announcements
             this.state.listeners.announcementsRef
@@ -94,7 +117,7 @@ class RoomData extends Component {
             .on('child_added', snapshot => {
 
                 // if initalData is not loaded, return
-                if (!initialDataLoaded) return;
+                if (!this.state.initialAnnouncementsLoaded) return;
 
                 // update rooms announcement list
                 this.setAnnouncements({
@@ -121,14 +144,18 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         loaded: state.room.loaded,
-        activeRoom: state.room.activeRoom
+        activeRoom: state.room.activeRoom,
+        fetcingNextAnnoucements: state.room.activeRoom 
+        ? state.room.activeRoom.fetcingNextAnnoucements
+        : false
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         enterRoomAction,
-        updateAnnouncementsAction
+        updateAnnouncementsAction,
+        loadNewAnnouncementsAction
     }, dispatch);
 }
 

@@ -42,22 +42,20 @@ class AnnouncementPreview extends Component {
 
     render() {
         return (
-            <Fade>
-                <StyledAnnouncementPreview className="col s12">
-                    {this.renderChip()}
-                    <h5>{this.props.announcement.title}</h5>
-                    <span className="time">{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</span>
-                    <p>{this.props.announcement.message.substring(0, 355)}</p>
-                    <Reactions announcementID={this.props.announcementID} />
-                    <div className="col s12 announcement-readmore-cont">
-                    <button 
-                        onClick={this.enterAnnouncement}
-                        className="waves-effect waves-light btn animated fadeIn">
-                        Read more
-                    </button>
-                </div>
-                </StyledAnnouncementPreview>
-            </Fade>
+            <StyledAnnouncementPreview className="col s12 animated fadeIn">
+                {this.renderChip()}
+                <h5>{this.props.announcement.title}</h5>
+                <span className="time">{format.getFormatedDateAndTime(this.props.announcement.timestamp)}</span>
+                <p>{this.props.announcement.message.substring(0, 355)}</p>
+                <Reactions announcementID={this.props.announcementID} />
+                <div className="col s12 announcement-readmore-cont">
+                <button 
+                    onClick={this.enterAnnouncement}
+                    className="waves-effect waves-light btn animated fadeIn">
+                    Read more
+                </button>
+            </div>
+        </StyledAnnouncementPreview>
         )
     }
 }

@@ -325,7 +325,15 @@ const roomReducer = (state = initialState, action) => {
                     }
                 }
             }
-                
+
+        case 'LOAD_NEW_ANNOUNCEMENTS':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    fetcingNextAnnoucements: action.payload
+                }
+            }   
 
         case 'VOTE_ANNOUNCEMENT_POLL':
             return {

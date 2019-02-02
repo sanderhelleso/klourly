@@ -11,10 +11,10 @@ class Announcements extends Component {
     constructor(props) {
         super(props);
 
-        this.lastScroll;
+        this.lastScroll; // decide if user has scrolled downwars or not
         this.noAnnouncementIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
 
-        this.state = { loading: false };
+        this.state = { loadEventFired: false };
     }
 
     
@@ -46,17 +46,23 @@ class Announcements extends Component {
     }
 
     handleScroll = () => {
-        console.log(window.scrollY);
 
         // only on scrollDown direction and prev content loaded
-        if (window.scrollY > this.lastScroll && !this.state.loading) {
+        if (window.scrollY > this.lastScroll && !this.props.fetcingNextAnnoucements) {
 
             const announcementsCont = document.querySelector('#announcements-cont');
             if (window.scrollY >= (announcementsCont.offsetTop + 200)) {
-                console.log('scrolled past div');
+
+                if (!this.state.loadEventFired) {
+
+                    this.setState({ loadEventFired: true });
+                    console.log('fetching data...');
+                    this.props.loadNewAnnouncementsAction(true);
+                }
             }
         }
 
+        // update last scrolled pos
         this.lastScroll = window.scrollY;
     }
 
@@ -74,7 +80,10 @@ class Announcements extends Component {
 
 
 const mapStateToProps = state => {
-    return { announcements: state.room.activeRoom.announcements }
+    return { 
+        announcements: state.room.activeRoom.announcements,
+        fetcingNextAnnoucements: state.room.activeRoom.fetcingNextAnnoucements
+    }
 }
 
 const mapDispatchToProps = dispatch => {
