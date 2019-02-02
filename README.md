@@ -5,12 +5,12 @@ A flexible, radius based application for taking attendance
 <br>
 
 ## Room Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyroom.png"></img>
+<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme1.png"></img>
 <br>
 
 
 ## Rooms Overview Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyRooms.png"></img>
+<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme2.png"></img>
 <br>
 
 ## User Settings Preview
