@@ -85,12 +85,12 @@ class Room extends Component {
                     {this.renderCover()}
                     <div className="row room-flex-s">
                         <div id="room-main" className="col l8 m6 s12">
-                            <Announcements announcements={this.props.activeRoom.announcements}/>
+                            <Announcements />
                         </div>
                         <aside id="room-aside" className="col l4 m6 s12">
                             {this.props.activeRoom.owner.id !== this.props.userID
-                                 ? <Checkin /> 
-                                 : null
+                                ? <Checkin /> 
+                                : null
                             }
                             <div className="col s12 room-aside-section">
                                 <Times times={this.props.activeRoom.times} />

@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { loadNewAnnouncementsAction } from '../../../actions/room/announcement/loadNewAnnouncementsAction';
+
 import AnnouncementPreview from './AnnouncementPreview';
 
-export default class Announcements extends Component {
+class Announcements extends Component {
     constructor(props) {
         super(props);
 
         this.lastScroll;
         this.noAnnouncementIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
+
+        this.state = { loading: false };
     }
 
     
@@ -25,15 +32,9 @@ export default class Announcements extends Component {
 
             // render announcemnts in descending order (date posted)
             return Object.entries(this.props.announcements)
-            .sort((a, b) => b[1].timestamp - a[1].timestamp)
-            .map(([id, announcement]) => {
-                return (
-                    <AnnouncementPreview
-                        key={id}
-                        id={id}
-                    />
-                )
-            });
+                .sort((a, b) => b[1].timestamp - a[1].timestamp)
+                .map(([id, announcement]) => <AnnouncementPreview key={id} id={id} />
+            );
         }
     
         return (
@@ -47,8 +48,8 @@ export default class Announcements extends Component {
     handleScroll = () => {
         console.log(window.scrollY);
 
-        // only on scrollDown direction
-        if (window.scrollY > this.lastScroll) {
+        // only on scrollDown direction and prev content loaded
+        if (window.scrollY > this.lastScroll && !this.state.loading) {
 
             const announcementsCont = document.querySelector('#announcements-cont');
             if (window.scrollY >= (announcementsCont.offsetTop + 200)) {
@@ -70,6 +71,18 @@ export default class Announcements extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return { announcements: state.room.activeRoom.announcements }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ loadNewAnnouncementsAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Announcements);
+
 
 const StyledAnnouncements = styled.div`
 
