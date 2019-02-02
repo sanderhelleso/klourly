@@ -13,18 +13,22 @@ export default class RoomCard extends Component {
     render() {
         return (
             <StyledCard 
-                className="col s12 m12 l6"
+                className="col s12 m6 l4"
                 onClick={() => {}}//redirect.room(this.props.data.id)}
             >
                 <div className="card-cont">
                     <div className="row">
-                        <RoomCover className="col s5" url={this.props.data.cover} />
-                        <RoomInfo className="col s7">
-                            <h4>{this.props.data.name.length > 16 
-                                ? `${this.props.data.name.substring(0, 16)}..`
-                                : this.props.data.name}
-                            </h4>
+                        <RoomCover className="col s12" url={this.props.data.cover}>
                             {this.props.owning ? null : <Attendence roomID={this.props.data.id} />}
+                        </RoomCover>
+                        <RoomInfo className="col s12">
+                            <div className="info-cont">
+                                <p>{this.props.data.type}</p>
+                                <h4>{this.props.data.name.length > 16
+                                    ? `${this.props.data.name.substring(0, 14)}..`
+                                    : this.props.data.name}
+                                </h4>
+                            </div>
                             <ToRoom owning={this.props.owning} roomID={this.props.data.id} />
                             {this.props.owning 
                                 ? null 
@@ -45,7 +49,7 @@ const StyledCard = styled.div`
 
     .card-cont {
         margin: 1rem;
-        border-radius: 8px;
+        border-radius: 18px;
         -webkit-box-shadow: 0px 4px 14px 0px rgba(46, 82, 217, 0.30);
         -moz-box-shadow:    0px 4px 14px 0px rgba(46, 82, 217, 0.30);
         box-shadow:         0px 4px 14px 0px rgba(46, 82, 217, 0.30);
@@ -54,15 +58,7 @@ const StyledCard = styled.div`
         padding: 0 !important;
         background-color: #ffffff;
         transition: 0.3s ease-in-out;
-        cursor: pointer;
     }
-
-    .card-cont:hover {
-        -webkit-box-shadow: 0px 18px 56px 0px rgba(46, 82, 217, 0.30);
-        -moz-box-shadow:    0px 18px 56px 0px rgba(46, 82, 217, 0.30);
-        box-shadow:         0px 18px 56px 0px rgba(46, 82, 217, 0.30);
-    }
-
 
     .col {
         min-height: 175px;
@@ -76,72 +72,52 @@ const StyledCard = styled.div`
 `;
 
 const RoomCover = styled.div`
-    transform: scale(1.001);
-    background: linear-gradient(to right,
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 1)),
+    background: linear-gradient(215deg,
+    rgba(166, 81, 223, 0.9),
+    rgba(166, 81, 223, 0.7),
+    rgba(155, 26, 245, 0.3),
+    rgba(155, 26, 245, 0.3)),
     url(${props => props.url});
     background-size: cover;
     background-repeat: no-repeat;
+    background-position-y: 60%;
     height: 100%;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
     transition: 0.3s ease-in-out;
-
-    &:hover {
-        opacity: 1;
-    }
 `;
 
 const RoomInfo = styled.div`
-    transform: scale(1.001);
     position: relative;
     height: 101%;
+    padding: 1rem;
 
-    h4 {
-        font-weight: 800;
-        font-size: 2.25rem;
-        position: absolute;
-        top: 25%;
-        left: -75px;
-        max-width: 67.5%;
-        margin-top: 0;
-        word-wrap: break-word;
-    }
+    .info-cont {
 
-    a {
-        border-radius: 50%;
-        transition: 0.3s linear;
-        min-height: 52px;
-        max-height: 52px;
-        min-width: 52px;
-        max-width: 52px;
-        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-        position: absolute;
-        right: -25px;
-        color: #ffffff;
+        margin: 1.25rem;
 
-        &:hover {
-            box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+        h4 {
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 2rem;
+            word-wrap: break-word;
+            margin-top: 0;
         }
 
-        svg {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%);
-            height: 20px;
-            width: 20px;
+        p {
+            margin-top: 0;
+            margin-bottom: 0.20rem;
+            color: #bdbdbd;
+        }
+
+        @media (max-width: 1300px) {
+            h4 {
+                font-size: 2rem;
+            }       
         }
     }
 
     .btn-flat.btn-flat[disabled] {
         color: #ffffff !important;
-    }
-
-    @media (max-width: 1300px) {
-        h4 {
-            font-size: 2rem;
-        }       
     }
 `;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../helpers/redirect';
-import { ArrowRight } from 'react-feather';
+import { ArrowRight, ChevronRight } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -45,7 +45,7 @@ class ToRoom extends Component {
                 notAvailable={this.props.owning || !this.state.available}
                 onClick={() => redirect.room(this.props.roomID)}
             >
-                <ArrowRight />
+                <span>Enter Room</span><ChevronRight />
             </ToRoomButton>
         )
     }
@@ -66,8 +66,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(ToRoom);
 
 
 const ToRoomButton = styled.a`
-    bottom: ${props => (props.owning || props.notAvailable) ? '35%' : '15%'};
-    background: #9796f0;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    color: #b388ff;
+    font-weight: 800;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+
+    svg {
+        margin-bottom: -6px;
+        stroke: #e0e0e0;
+    }
 `;

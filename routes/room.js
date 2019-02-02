@@ -106,7 +106,7 @@ module.exports = app => {
                     id: snapshot.val().id,
                     cover: snapshot.val().cover.small,
                     name: snapshot.val().name,
-                    times: snapshot.val().times
+                    type: snapshot.val().type
                 }
 
                 // push room preview data to array
@@ -117,7 +117,7 @@ module.exports = app => {
                     res.status(200).json({
                         success: true,
                         message: 'Successfully fetched rooms',
-                        roomsData: rooms,
+                        roomsData: rooms
                     });
                 }
             });

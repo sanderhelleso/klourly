@@ -16,7 +16,7 @@ class RoomData extends Component {
     constructor(props) {
         super(props);
 
-        this.DEFAULT_ANNOUNCEMENT_LIMIT = 3;
+        this.DEFAULT_ANNOUNCEMENT_LIMIT = 20;
 
         this.state = { 
             loaded: this.props.loaded,

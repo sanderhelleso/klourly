@@ -43,26 +43,14 @@ class Attendence extends Component {
         // check if room attendence is sat / loaded
         if (this.props.attendence[this.props.roomID]) {
 
-            if (this.props.attendence[this.props.roomID].attendenceInPercentage === 0 ||
-                !this.props.attendence[this.props.roomID].attendenceInPercentage) {
-                return (
-                    <NotAttended className="animated fadeIn">
-                        <Cloud size={50} />
-                        <p>Not Attended</p>
-                    </NotAttended>
-                )
-            }
-
-            else {
-                return (
-                    <div className="animated fadeIn">
-                        {this.props.attendence[this.props.roomID].attendenceInPercentage}<span>%</span>
-                        <span className="attended">
-                            Attended
-                        </span>
-                    </div>                        
-                )
-            }
+            return (
+                <div className="animated fadeIn">
+                    {this.props.attendence[this.props.roomID].attendenceInPercentage}<span>%</span>
+                    <span className="attended">
+                        Attended
+                    </span>
+                </div>                        
+            )
         }
 
         return null;
@@ -95,12 +83,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(Attendence);
 const StyledAttendence = styled.h5`
 
     font-weight: 100;
-    font-size: 4rem;
+    font-size: 3rem;
     position: absolute;
-    top: 12.5%;
-    right: 35px;
-    color: #bdbdbd;
-    opacity: 0.5;
+    top: 10px;
+    right: 20px;
+    color: #ffffff;
+    opacity: 0.8;
+    margin: 0;
+    text-align: center;
 
     span {
         font-size: 1.15rem;
@@ -108,11 +98,13 @@ const StyledAttendence = styled.h5`
 
     .attended {
         display: block;
-        font-size: 1.15rem;
-        margin-top: -35px;
+        font-size: 0.7rem;
+        margin-top: -27.5px;
         text-align: center;
         letter-spacing: 1.5px;
-        color: #9e9e9e;
+        font-weight: 400;
+        color: #ffffff;
+        text-transform: uppercase;
     }     
 `;
 

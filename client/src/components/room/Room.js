@@ -11,7 +11,7 @@ import Back from '../dashboard/Back';
 import Checkin from './Checkin';
 import Announcements from './announcements/Announcements';
 import Times from './Times';
-import Menu from './Menu';
+import RoomMenu from './RoomMenu';
 import UserAvatar from './UserAvatar';
 import Header from './Header';
 import DisplayRoomLocationMap from '../maps/DisplayRoomLocationMap';
@@ -28,7 +28,7 @@ class Room extends Component {
         return (
             <StyledCover className="col s12">
                 {this.props.activeRoom.owner.id === this.props.userID
-                    ? <Menu id={this.props.activeRoom.id}/> 
+                    ? <RoomMenu id={this.props.activeRoom.id}/> 
                     : null
                 }
                 <Parallax
@@ -40,9 +40,9 @@ class Room extends Component {
                         <div
                             style={{
                                 position: 'absolute',
-                                background: `linear-gradient(to right,
-                                rgba(118, 0, 255, ${percentage * 1.5}),
-                                rgb(141, 58, 235, ${percentage * 1}))`,
+                                background: `linear-gradient(215deg,
+                                rgba(166, 81, 223, ${percentage * 1.5}),
+                                rgb(155, 26, 245, ${percentage * 1}))`,
                                 left: '0%',
                                 top: '0%',
                                 width: '100%',
@@ -143,6 +143,11 @@ const StyledCover = styled.div`
     position: relative;
     margin-bottom: 7.5rem;
 
+    .react-parallax {
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+    }
+
     .dropdown-trigger svg {
         stroke: #ffffff;
         opacity: 0.7;
@@ -168,6 +173,7 @@ const StyledCont = styled.div`
     padding-bottom: 5rem;
     background-color: #ffffff;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    border-radius: 18px;
 
     #room-admin-settings-btn {
         position: absolute;

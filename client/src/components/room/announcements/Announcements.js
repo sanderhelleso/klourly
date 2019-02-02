@@ -70,7 +70,7 @@ class Announcements extends Component {
         if (window.scrollY > this.lastScroll && !this.props.fetcingNextAnnoucements) {
 
             // if user has scrolled to end of div
-            if (window.scrollY >= (document.querySelector('#announcements-cont').offsetHeight - 200)) {
+            if (window.scrollY >= (document.querySelector('#announcements-cont').offsetHeight)) {
 
                 // load new data if available
                 if (!this.state.loadEventFired) {
