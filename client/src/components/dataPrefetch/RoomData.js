@@ -21,7 +21,8 @@ class RoomData extends Component {
         this.state = { 
             loaded: this.props.loaded,
             announcementLimit: this.DEFAULT_ANNOUNCEMENT_LIMIT, // updated on scroll
-            initialAnnouncementsLoaded: false
+            initialAnnouncementsLoaded: false,
+            hasAnnouncementsLeft: true
         };
     }
 
@@ -83,20 +84,34 @@ class RoomData extends Component {
     fetchAnnouncements(fetchNew) {
 
         // prefetch data to only recieve callbacks on new data added
-        this.state.listeners.announcementsRef
-        .orderByChild('timestamp')
-        .limitToLast(this.state.announcementLimit)
-        .once('value', snapshot => {
-            this.setState({ initialAnnouncementsLoaded: true });
+        if (this.state.hasAnnouncementsLeft) {
+            this.state.listeners.announcementsRef
+            .orderByChild('timestamp')
+            .limitToLast(this.state.announcementLimit)
+            .once('value', snapshot => {
 
-            // update rooms announcement list to be up to date on room render
-            if (snapshot.exists()) {
+                // update rooms announcement list to be up to date on room render
+                if (snapshot.exists()) {
 
-                // update fetch announcement
-                this.setAnnouncements(snapshot.val());
-                if (fetchNew) this.props.loadNewAnnouncementsAction(false);
-            }
-        });
+                    console.log('fetching ' + this.state.announcementLimit);
+                    console.log('children in collection ' + snapshot.numChildren());
+
+                    // update fetch announcement
+                    this.setAnnouncements(snapshot.val());
+
+                    // allow user to keep fetching annoucements
+                    if (fetchNew) this.props.loadNewAnnouncementsAction(false);
+
+                    // check if collection has more childs
+                    if (snapshot.numChildren() < this.state.announcementLimit) {
+                        return this.setState({ hasAnnouncementsLeft: false });
+                    }
+                }
+
+                // notifiy listeners that they can start listening for child added
+                this.setState({ initialAnnouncementsLoaded: true });
+            });
+        }
     }
 
     setListeners() {

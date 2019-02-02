@@ -17,10 +17,15 @@ class Announcements extends Component {
         this.state = { loadEventFired: false };
     }
 
-    
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    }  
+    componentWillReceiveProps(nextProps) {
+
+        // allow user to keep scrolling to fetch new
+        if (this.state.loadEventFired && !nextProps.fetcingNextAnnoucements) {
+            this.setState({ loadEventFired: false });
+        }
+    }
+
+    componentWillUnmount = () => window.removeEventListener('scroll', this.handleScroll);
 
     renderAnnouncements() {
 
@@ -50,13 +55,12 @@ class Announcements extends Component {
         // only on scrollDown direction and prev content loaded
         if (window.scrollY > this.lastScroll && !this.props.fetcingNextAnnoucements) {
 
-            const announcementsCont = document.querySelector('#announcements-cont');
-            if (window.scrollY >= (announcementsCont.offsetTop + 200)) {
+            // if user has scrolled to end of div
+            if (window.scrollY >= (document.querySelector('#announcements-cont').offsetHeight)) {
 
+                // load new data if available
                 if (!this.state.loadEventFired) {
-
                     this.setState({ loadEventFired: true });
-                    console.log('fetching data...');
                     this.props.loadNewAnnouncementsAction(true);
                 }
             }
