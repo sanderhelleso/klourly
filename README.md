@@ -40,8 +40,3 @@ A flexible, radius based application for taking attendance
 ## Authors
 
 * **Sander Hellesø**
-
-## License
-
-This project is licensed under the No License
- * You are not permitted to use, modify, or share the software for any purpose.
