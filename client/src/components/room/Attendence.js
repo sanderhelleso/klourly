@@ -37,10 +37,7 @@ class Attendence extends Component {
     renderAttendence() {
 
         // check if attendence data is loaded
-        console.log(this.props);
         if (this.props.attendenceData) {
-
-            console.log(this.props);
 
             // once loaded check if user has attended
             if (this.props.attendenceData.attendenceInPercentage > 0) {
@@ -53,21 +50,16 @@ class Attendence extends Component {
                     </div>  
                 )
             }
-
-            // user hat not attended
-            else {
-                return (
-                    <div className="attendence">
-                        <div className="not-attended">
-                            <Cloud size={70} />
-                            <p>Not Attended</p>
-                        </div>
-                    </div>  
-                )
-            }
         }
 
-        return <p>Loading...</p>
+        return (
+            <div className="attendence">
+                <div className="not-attended">
+                    <Cloud size={70} />
+                    <p>Not Attended</p>
+                </div>
+            </div>  
+        )
     }
 
     render() {

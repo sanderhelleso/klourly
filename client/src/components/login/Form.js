@@ -147,7 +147,7 @@ class Form extends Component {
                         // update rooms with newly invited room
                         if (userData.rooms) {
                             userData.rooms.attending = userData.rooms.attending 
-                            ? [...userData.rooms.attending, redirectActions.data.roomData.id]
+                            ? [...userData.rooms.attending, redirectActions.data.invitedRoomID]
                             : [redirectActions.data.invitedRoomID];
                         }
 
