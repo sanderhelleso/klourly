@@ -20,9 +20,20 @@ import DisplayRoomLocationMap from '../maps/DisplayRoomLocationMap';
 class Room extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {};
     }
 
-    componentWillMount = () => window.scrollTo(0, 0);
+    componentWillMount() {
+        window.scrollTo(0, 0);
+        this.updateDimensions();
+    }
+
+    componentWillUnmount = () => window.removeEventListener('resize', this.updateDimensions);
+
+    componentDidMount = () => window.addEventListener('resize', this.updateDimensions);
+
+    updateDimensions = () => this.setState({ windowWidth: window.innerWidth });
 
     renderCover() {
         return (
@@ -33,20 +44,25 @@ class Room extends Component {
                 }
                 <Parallax
                     blur={{ min: -15, max: 15 }}
-                    bgImage={`${this.props.activeRoom.cover.large}`}
+                    bgImage={`${this.state.windowWidth > 480 
+                        ? this.props.activeRoom.cover.large 
+                        : this.props.activeRoom.cover.small}`
+                    }
                     bgImageAlt={`${this.props.activeRoom.name} cover image`} 
                     strength={200}
                     renderLayer={percentage => (
                         <div
                             style={{
                                 position: 'absolute',
-                                background: `linear-gradient(215deg,
-                                rgba(166, 81, 223, ${percentage * 1.5}),
+                                background: `linear-gradient(35deg,
+                                rgba(166, 81, 223, ${percentage * 1.6}),
                                 rgb(155, 26, 245, ${percentage * 1})) no-repeat center center`,
                                 left: '0%',
                                 top: '0%',
                                 width: '100%',
                                 height: '100%',
+                                'background-size': 'cover',
+                                overflow: 'hidden'
                             }}
                         />
                     )}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { attendence } from '../../api/room/attendence';
 import { format } from '../../helpers/format';
+import { notification } from '../../helpers/notification';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -44,7 +45,6 @@ class Checkin extends Component {
             });
 
             // update users attendence percentage for room
-            console.log(this.props.attendence);
             const updatedTotal = this.props.attendence.totalUserCheckinsForRoom + 1;
             this.props.setRoomAttendenceAction({
                 roomID: this.props.activeRoomID,
@@ -57,6 +57,9 @@ class Checkin extends Component {
                     )
                 }
             });
+
+            // notify user
+            notification.success(response.data.message);
         } 
 
         // finish loading

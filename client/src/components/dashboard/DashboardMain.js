@@ -88,4 +88,8 @@ const StyledDashboard = styled.div`
     .dashboard-main-cont::-webkit-scrollbar { 
         display: none;
     }
+
+    @media screen and (max-width: 1000px) {
+        padding: 6.5% 5%;
+    }
 `;

@@ -99,8 +99,8 @@ const RoomCover = styled.div`
     background: linear-gradient(215deg,
     rgba(166, 81, 223, 0.9),
     rgba(166, 81, 223, 0.7),
-    rgba(155, 26, 245, 0.3),
-    rgba(155, 26, 245, 0.3)),
+    rgba(155, 26, 245, 0.4),
+    rgba(155, 26, 245, 0.4)),
     url(${props => props.url}) no-repeat center center;
     background-size: cover;
     overflow: hidden;
