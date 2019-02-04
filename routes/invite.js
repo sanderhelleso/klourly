@@ -12,7 +12,10 @@ module.exports = app => {
 
         // default values
         let status = 404;
-        let response = { redirectActionSuccess: true };
+        let response = { 
+            redirectActionSuccess: true,
+            mode: 'NEW_ROOM_INVITE'
+        };
 
         // check if current invite link is valid AND active
         await roomRef.once('value', async snapshot => {
@@ -53,6 +56,9 @@ module.exports = app => {
 
                 // check for present callback
                 if (req.body.cb === 'joinRoom') {
+
+                    // pass along room preview data
+                    response.invitedRoomID = snapshot.val().id
 
                     // add user to room
                     await roomRef.update({

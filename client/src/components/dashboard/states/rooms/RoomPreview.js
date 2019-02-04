@@ -35,15 +35,6 @@ export default class RoomPreview extends Component {
         return (
             <StyledCont className="row main-rooms-cont">
                 {this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}{this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}{this.renderPreview()}
-                {this.renderPreview()}
-                {this.renderPreview()}
             </StyledCont>
         )
     }

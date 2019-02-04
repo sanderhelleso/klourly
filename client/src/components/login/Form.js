@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { loginAction } from '../../actions/loginActions';
+import { setRoomsAttendingAction } from '../../actions/room/setRoomsAttendingAction';
 import { userDataActions } from '../../actions/userDataActions';
 import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
@@ -133,13 +134,38 @@ class Form extends Component {
                 this.props.params, response.data.user.id
             );
 
+            // check for valid redirect action and merge new data
+            let shouldRedirect = false;
+            let userData = response.data.userData;
+
+            if (redirectActions && redirectActions.data.redirectActionSuccess) {
+                shouldRedirect = true;
+                
+                switch (redirectActions.data.mode) {
+                    case 'NEW_ROOM_INVITE':
+
+                        // update rooms with newly invited room
+                        if (userData.rooms) {
+                            userData.rooms.attending = userData.rooms.attending 
+                            ? [...userData.rooms.attending, redirectActions.data.roomData.id]
+                            : [redirectActions.data.invitedRoomID];
+                        }
+
+                        else userData.rooms = { attending: [redirectActions.data.invitedRoomID] };
+                        break;
+
+                    default: break;
+                }
+
+            }
+
             // set user data and init state
             this.props.nextStageAction({ stage: 0 });
-            this.props.userDataActions(response.data.userData);
+            this.props.userDataActions(userData);
             this.props.loginAction(response.data.user);
 
-            // check for valid redirect action and redirect if needed
-            if (redirectActions && redirectActions.data.redirectActionSuccess) {
+            // redirect if needed
+            if (shouldRedirect) {
                 redirect.redirectActionSuccess(this.props.params.cb, this.props.params.roomID, null);
             }
         }
@@ -183,7 +209,12 @@ class Form extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ loginAction, userDataActions, nextStageAction }, dispatch);
+    return bindActionCreators({ 
+        loginAction, 
+        userDataActions, 
+        nextStageAction,
+        setRoomsAttendingAction
+    }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Form);

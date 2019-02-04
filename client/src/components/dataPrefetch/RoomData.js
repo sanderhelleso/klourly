@@ -40,11 +40,6 @@ class RoomData extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        // fetch new data if navigation from one active room to another directly via router
-        if (this.props.activeRoom && this.props.activeRoom.id !== nextProps.match.params.roomID) {
-            this.loadData();
-        }
-
         if (!this.props.fetcingNextAnnoucements && nextProps.fetcingNextAnnoucements) {
             this.setState({ 
                 announcementLimit: this.state.announcementLimit + this.DEFAULT_ANNOUNCEMENT_LIMIT,

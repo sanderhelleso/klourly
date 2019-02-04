@@ -45,7 +45,12 @@ class Attendence extends Component {
 
             return (
                 <div className="animated fadeIn">
-                    {this.props.attendence[this.props.roomID].attendenceInPercentage}<span>%</span>
+                    {
+                        this.props.attendence[this.props.roomID].attendenceInPercentage 
+                        ? this.props.attendence[this.props.roomID].attendenceInPercentage
+                        : 0
+                    }
+                    <span>%</span>
                     <span className="attended">
                         Attended
                     </span>
