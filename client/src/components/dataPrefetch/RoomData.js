@@ -9,7 +9,7 @@ import { enterRoomAction } from '../../actions/room/enterRoomAction';
 import { updateAnnouncementsAction } from '../../actions/room/announcement/updateAnnouncementsAction';
 import { loadNewAnnouncementsAction } from '../../actions/room/announcement/loadNewAnnouncementsAction';
 
-import LinearLoader from '../loaders/LinearLoader';
+import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
 
 class RoomData extends Component {
@@ -70,6 +70,9 @@ class RoomData extends Component {
                 this.props.enterRoomAction({ ...response.data.roomData, owner: response.data.ownerData });
                 this.setListeners();
             }
+
+            // room not found or something went wrong, redirect
+            else redirect.dashboard();
 
             this.setState({ loaded: true });
         }

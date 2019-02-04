@@ -68,6 +68,14 @@ module.exports = app => {
         const roomRef = db.ref(`rooms/${req.body.roomID}`)
         roomRef.once('value', roomSnapshot => {
 
+            // check if room exists
+            if (!roomSnapshot.exists()) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Invalid roomID, could not find room'
+                });
+            }
+
             // get ref to owner by id recieved from room data and fetch owner data 
             const ownerRef = db.ref(`users/${roomSnapshot.val().owner}/settings`);
             ownerRef.once('value', ownerSnapshot => {

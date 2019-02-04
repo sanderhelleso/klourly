@@ -37,6 +37,7 @@ async function createRoom(uid, roomData) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 } 
 
@@ -55,7 +56,6 @@ async function uploadRoomCovers(data) {
     }
 
     catch(error) {
-
         return error.response;
     }
 } 
@@ -78,6 +78,7 @@ async function getLocationFromCoords(uid, coords) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 } 
 
@@ -100,6 +101,7 @@ async function getRoom(uid, roomID) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 } 
 
@@ -121,6 +123,7 @@ async function getRooms(uid, rooms) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 }
 
@@ -143,6 +146,7 @@ async function publishAnnouncement(uid, roomID, announcement) {
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 }
 
@@ -166,6 +170,7 @@ async function updateAnnouncementReaction(uid, roomID, announcementID, reactionN
 
     catch(error) {
         console.log(error);
+        return error.response;
     }
 }
 
