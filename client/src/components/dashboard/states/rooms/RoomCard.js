@@ -63,11 +63,35 @@ const StyledCard = styled.div`
     .col {
         min-height: 175px;
         max-height: 175px;
-        padding: 0;
+        padding: 0 !important;
     }
 
     .row {
         margin: 0;
+    }
+
+    @media screen and (max-width: 1150px) {
+        .card-cont {
+            margin: 1rem 0.15rem;
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        .card-cont {
+            margin: 1.25rem 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        .card-cont {
+            margin: 1rem 0.25rem;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .card-cont {
+            margin: 2rem 1rem;
+        }
     }
 `;
 
@@ -77,10 +101,9 @@ const RoomCover = styled.div`
     rgba(166, 81, 223, 0.7),
     rgba(155, 26, 245, 0.3),
     rgba(155, 26, 245, 0.3)),
-    url(${props => props.url});
+    url(${props => props.url}) no-repeat center center;
     background-size: cover;
-    background-repeat: no-repeat;
-    background-position-y: 60%;
+    overflow: hidden;
     height: 100%;
     border-top-left-radius: 18px;
     border-top-right-radius: 18px;

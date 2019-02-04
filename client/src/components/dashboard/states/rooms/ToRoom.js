@@ -10,39 +10,13 @@ import { connect } from 'react-redux';
 class ToRoom extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            available: false
-        }
     }
-
-    componentWillReceiveProps(nextProps) {
-
-        // check if room is available for checkin
-        if (nextProps.availableForCheckin && nextProps.availableForCheckin.active) {
-            this.setState({ available: true });
-        }
-
-        else this.setState({ available: false });
-    }
-
-    componentDidMount() {
-
-        // check if room is available for checkin
-        if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
-            this.setState({ available: true });
-        }
-
-        else this.setState({ available: false });
-    }
-
-
 
     render() {
         return (
             <ToRoomButton 
                 className="waves-effect waves-light btn-flat"
-                notAvailable={this.props.owning || !this.state.available}
+                notAvailable={this.props.owning}
                 onClick={() => redirect.room(this.props.roomID)}
                 title="Enter room to see more"
             >

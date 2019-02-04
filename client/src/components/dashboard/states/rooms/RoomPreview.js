@@ -35,23 +35,37 @@ export default class RoomPreview extends Component {
         return (
             <StyledCont className="row main-rooms-cont">
                 {this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}{this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}{this.renderPreview()}
+                {this.renderPreview()}
+                {this.renderPreview()}
             </StyledCont>
         )
     }
 }
 
 const StyledCont = styled.div`
-    overflow: auto;
-    padding-top: 5vh;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-bottom: 20vh;
-    max-height: 80vh;
-    min-height: 50vh;
+    overflow-y: auto;
+    padding: 3rem 0.5rem 7.5rem 0.5rem;
+    min-height: 70vh;
+    max-height: 70vh;
     position: relative;
     
     &::-webkit-scrollbar { 
         display: none;
+    }
+
+    @media screen and (max-width: 1000px) {
+        padding: 3rem 2rem 10rem 2rem;
+    }
+
+    @media screen and (max-width: 700px) {
+        padding: 3rem 0.5rem 10rem 0.5rem;
     }
 `;
 

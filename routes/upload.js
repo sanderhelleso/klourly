@@ -72,7 +72,7 @@ module.exports = app => {
                 storageLocation: `rooms/${id}/coverLarge.png`
             },
             small: {
-                file: await sharp(file.buffer).resize(300, 175).toBuffer(),
+                file: await sharp(file.buffer).resize(480, 175).toBuffer(),
                 storageLocation: `rooms/${id}/coverSmall.png`
             }
         };

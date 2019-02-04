@@ -42,7 +42,7 @@ class Room extends Component {
                                 position: 'absolute',
                                 background: `linear-gradient(215deg,
                                 rgba(166, 81, 223, ${percentage * 1.5}),
-                                rgb(155, 26, 245, ${percentage * 1}))`,
+                                rgb(155, 26, 245, ${percentage * 1})) no-repeat center center`,
                                 left: '0%',
                                 top: '0%',
                                 width: '100%',
