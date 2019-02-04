@@ -48,7 +48,7 @@ export default class RoomCard extends Component {
 const StyledCard = styled.div`
 
     .card-cont {
-        margin: 1rem;
+        margin: 1.5rem 0.5rem;
         border-radius: 18px;
         -webkit-box-shadow: 0px 4px 14px 0px rgba(46, 82, 217, 0.30);
         -moz-box-shadow:    0px 4px 14px 0px rgba(46, 82, 217, 0.30);
@@ -115,9 +115,5 @@ const RoomInfo = styled.div`
                 font-size: 2rem;
             }       
         }
-    }
-
-    .btn-flat.btn-flat[disabled] {
-        color: #ffffff !important;
     }
 `;

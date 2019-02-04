@@ -44,6 +44,7 @@ class ToRoom extends Component {
                 className="waves-effect waves-light btn-flat"
                 notAvailable={this.props.owning || !this.state.available}
                 onClick={() => redirect.room(this.props.roomID)}
+                title="Enter room to see more"
             >
                 <span>Enter Room</span><ChevronRight />
             </ToRoomButton>

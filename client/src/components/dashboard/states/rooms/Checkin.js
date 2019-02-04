@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { CheckCircle } from 'react-feather';
-
+import { CheckCircle, Check } from 'react-feather';
 import { format } from '../../../../helpers/format';
+import { notification } from '../../../../helpers/notification';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { attendence } from '../../../../api/room/attendence';
 import { setRoomAttendenceAction } from '../../../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../../../actions/room/checkin/checkinAvailableAction';
@@ -58,6 +57,9 @@ class Checkin extends Component {
                     )
                 }
             });
+
+            // notify user
+            notification.success(response.data.message);
         } 
 
         // finish loading
@@ -75,11 +77,12 @@ class Checkin extends Component {
 
             return (
                 <CheckinRoomButton 
-                    className="waves-effect waves-light btn-flat animated fadeIn"
+                    className="waves-effect waves-light btn-flat animated bounceIn"
                     onClick={this.registerAttendence}
                     disabled={this.state.loading}
+                    title="Checkin to room"
                 >
-                    <CheckCircle />
+                    <Check />
                 </CheckinRoomButton>
             );
         }
@@ -112,8 +115,32 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
 
 
-const CheckinRoomButton = styled.a`
+const CheckinRoomButton = styled.button`
     opacity: ${props => props.available ? 1 : 0};
     bottom: 55%;
     background-color: #12e2a3;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -15px;
+    left: -15px;
+    min-height: 65px;
+    min-width: 65px;
+    max-height: 65px;
+    max-width: 65px;
+    color: #ffffff;
+    box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+    }
+
+    svg {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%);            
+        height: 30px;
+        width: 30px;
+        opacity: 0.8;
+    }
 `;
