@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { ToastContainer, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -12,6 +10,8 @@ import { userDataActions } from '../../actions/userDataActions';
 import { nextStageAction } from '../../actions/newRoom/nextStageAction';
 
 import { authentication } from '../../api/authentication/authentication';
+import { token } from '../../api/messaging/token';
+
 import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
 
@@ -147,11 +147,24 @@ class Form extends Component {
                         // update rooms with newly invited room
                         if (userData.rooms) {
                             userData.rooms.attending = userData.rooms.attending 
-                            ? [...userData.rooms.attending, redirectActions.data.invitedRoomID]
-                            : [redirectActions.data.invitedRoomID];
+                            ? [...userData.rooms.attending, redirectActions.data.invitedRoomData.id]
+                            : [redirectActions.data.invitedRoomData.id];
                         }
 
-                        else userData.rooms = { attending: [redirectActions.data.invitedRoomID] };
+                        else userData.rooms = { attending: [redirectActions.data.invitedRoomData.id] };
+
+                        // send push notifications to room owner that user have joined
+                        token.getRoomMembersToken(
+                            response.data.user.id, 
+                            [redirectActions.data.invitedRoomData.ownerID], 
+                            {
+                                title: 'User joined your room',
+                                body: `"${userData.settings.displayName}" just joined your room!`,
+                                icon: userData.settings.photoUrl,
+                                click_action: `http://localhost:3000/dashboard/rooms/${redirectActions.data.invitedRoomData.id}`
+                            }
+                        );
+
                         break;
 
                     default: break;

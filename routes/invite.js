@@ -58,7 +58,10 @@ module.exports = app => {
                 if (req.body.cb === 'joinRoom') {
 
                     // pass along room preview data
-                    response.invitedRoomID = snapshot.val().id
+                    response.invitedRoomData = {
+                        id: snapshot.val().id,
+                        ownerID: snapshot.val().owner
+                    }
 
                     // add user to room
                     await roomRef.update({
