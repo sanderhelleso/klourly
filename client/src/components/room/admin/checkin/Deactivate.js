@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { StyledButtonMain } from '../../../styles/buttons';
 import { room } from '../../.././../api/room/room';
 
 // redux
@@ -22,13 +22,17 @@ class Deactivate extends Component {
     render() {
         return (
             <div className="col s6">
-                <button
-                    className={`waves-effect waves-light ${this.props.active ? 'active-btn' : 'disabled-btn'}`}
+                <StyledButtonMain
+                    className={`waves-effect waves-light btn animated fadeIn ${
+                        this.props.active 
+                        ? 'active-btn' 
+                        : 'disabled-btn'
+                    }`}
                     disabled={!this.props.active}
                     onClick={this.deactivateRoom}
                 >
                     Deactivate
-                </button>
+                </StyledButtonMain>
             </div>
         )
     }

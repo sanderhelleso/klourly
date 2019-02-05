@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { StyledButtonMain } from '../../../styles/buttons';
 import * as firebase from 'firebase';
-import { notificaton } from '../.././../../helpers/notification';
+import { notification } from '../.././../../helpers/notification';
 import { room } from '../../.././../api/room/room';
 import { token } from '../../.././../api/messaging/token';
 
@@ -19,7 +20,7 @@ class Activate extends Component {
 
     activateRoom = async () => {
 
-        if (!this.props.gotLocation) return notificaton.error(this.NO_LOCATION_ERROR);
+        if (!this.props.gotLocation) return notification.error(this.NO_LOCATION_ERROR);
 
         // attempt to activate the current room
         const response = await room.activateRoom(
@@ -69,13 +70,18 @@ class Activate extends Component {
     render() {
         return (
             <div className="col s6">
-                <button
-                    className={`waves-effect waves-light ${this.props.active ? 'disabled-btn' : 'active-btn'}`}
+                <StyledButtonMain
+                    className={`waves-effect waves-light btn animated fadeIn"
+                    ${
+                        this.props.active 
+                        ? 'disabled-btn' 
+                        : 'active-btn'
+                    }`}
                     disabled={this.props.active}
                     onClick={this.activateRoom}
                 >
                     Activate
-                </button>
+                </StyledButtonMain>
             </div>
         )
     }
