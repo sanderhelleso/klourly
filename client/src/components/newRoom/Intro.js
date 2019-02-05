@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 import { bindActionCreators } from 'redux';
@@ -84,26 +84,6 @@ class Intro extends Component {
         )
     }
 
-    /*subIntro() {
-        return (
-            <div className="row">
-                <div id="new-room-intro-sub" className="center col s10 offset-s1 animated fadeIn">
-                    <div className="col s6">
-                        <h5>
-                            <span className="step">Step</span>
-                            {this.props.currentStage}
-                            <span>/</span>
-                            {this.lastStage}
-                        </h5>
-                    </div>
-                    <div className="col s6">
-                        <h4>{introTxt.heading}</h4>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-*/  
     renderNext() {
 
         if (this.state.next) return null;
