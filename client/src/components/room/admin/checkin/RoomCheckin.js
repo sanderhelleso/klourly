@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import { redirect } from '../../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -29,13 +30,18 @@ class AdminCheckin extends Component {
                         Looks like this room dont have any members that can checkin.
                         Go and spread the word and come back in a bit to try again.
                     </p>
+                    <StyledLink 
+                        onClick={() => redirect.roomAdminMembers(this.props.roomID)}
+                    >
+                        Invite Members
+                    </StyledLink>
                 </StyledHeader>
             )
         }
 
         return (
             <Fragment>
-                <StyledHeader className="col s12 m12 l6 animated fadeIn">
+                <StyledHeader gotMembers={true} className="col s12 m12 l6 animated fadeIn">
                     <h3>Activate Checkin</h3>
                     <p>
                         Active and make the room available for members to checkin.
@@ -107,11 +113,12 @@ const StyledHeader = styled.div`
     min-height: 220px !important;
 
     h3 {
+        margin-top: ${props => props.gotMembers ? 3 : 0}rem;
         margin-bottom: 2rem;
         font-weight: 800;
         letter-spacing: 2px;
         text-transform: capitalize;
-        font-size: 2rem;
+        font-size: ${props => props.gotMembers ? 3 : 2}rem;
     }
 
     p {
@@ -119,5 +126,12 @@ const StyledHeader = styled.div`
         font-weight: 400;
         max-width: 550px;
         margin: 1rem auto;
+        margin-bottom: ${props => props.gotMembers ? 1 : 1.25}rem;
     }
+`;
+
+const StyledLink = styled.a`
+    color: #b388ff;
+    font-weight: 800;
+    font-size: 1.25rem;
 `;
