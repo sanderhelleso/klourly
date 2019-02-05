@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import { StyledButtonCancel } from '../styles/buttons';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -46,15 +47,17 @@ class Intro extends Component {
 
         if (this.props.currentStage > 0 && this.props.currentStage < 7) {
            return (
-                <StyledCancel
-                    className="waves-effect waves-light btn animated fadeInDown"
-                    onClick={() => {
-                        this.props.resetNewRoomProgressAction();
-                        notification.success('New Room progress has been reset!')
-                    }}
-                >
-                    Reset Progress
-                </StyledCancel>
+               <StyledBtnCont>
+                    <StyledButtonCancel
+                        className="waves-effect waves-light btn animated fadeInDown"
+                        onClick={() => {
+                            this.props.resetNewRoomProgressAction();
+                            notification.success('New Room progress has been reset!')
+                        }}
+                    >
+                        Reset Progress
+                    </StyledButtonCancel>
+               </StyledBtnCont>
            )
         }
 
@@ -220,22 +223,8 @@ const StyledIntro = styled.div`
     }
 `;
 
-const StyledCancel = styled.a`
-    color: #ffffff;
-    background-color: #bdbdbd;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1.75rem;
-    color: #757575;
+const StyledBtnCont = styled.div`
     position: absolute;
     right: 0;
     top: -155px;
-
-    &:hover {
-        background-color: #bdbdbd;
-        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    }
 `;

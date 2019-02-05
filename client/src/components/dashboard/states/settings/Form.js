@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { StyledButtonMain } from '../../../styles/buttons';
 import { notification } from '../../../../helpers/notification';
 import { dashboard } from '../../../../api/dashboard/dashboard'; 
 
@@ -136,13 +137,13 @@ class Form extends Component {
     renderUpdateButton() {
         return (
             <div className="col s12 m6 l4">
-                <StyledButton
+                <StyledButtonMain
                     className="waves-effect waves-light btn"
                     onClick={this.confirmSettings}
                     disabled={this.state.changed ? false : true}
                 >
                     Update
-                </StyledButton>
+                </StyledButtonMain>
             </div>
         )
     }
@@ -248,25 +249,5 @@ const StyledForm = styled.form`
 
     .input-field {
         margin-bottom: 2rem;
-    }
-`;
-
-const StyledButton = styled.a`
-    min-width: 100%;
-    text-align: center;
-    background-color: #00e988;
-    box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
-    color: #ffffff;
-    line-height: 0;
-    padding: 1.5rem;
-    -webkit-letter-spacing: 2px;
-    -moz-letter-spacing: 2px;
-    -ms-letter-spacing: 2px;
-    letter-spacing: 2px;
-    font-weight: 600;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-        box-shadow: 0px 9px 28px rgba(0,0,0,0.15);
     }
 `;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { StyledButtonMain } from '../styles/buttons';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -37,14 +37,14 @@ class NextStage extends Component {
 
     render() {
         return (
-            <StyledButton
+            <StyledButtonMain
                 id="next-stage"
                 className="waves-effect waves-light btn animated fadeIn"
                 disabled={!this.state.valid} 
                 onClick={() => this.state.valid ? this.setNextStage() : {}}
             >
                 {this.props.message}
-            </StyledButton>
+            </StyledButtonMain>
         )
     }
 }
@@ -58,23 +58,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NextStage);
-
-const StyledButton = styled.a`
-    color: #ffffff;
-    background-color: #12e2a3;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1.75rem;
-    display: block;
-    max-width: 320px;
-    margin: 2rem auto 0 auto;
-    clear: both;
-
-    &:hover {
-        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
-        background-color: #12e2a3;
-    }
-`;

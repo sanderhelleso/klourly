@@ -14,6 +14,7 @@ import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttend
 import { toggleActiveTabAction } from '../../../../actions/dashboard/toggleActiveTabAction';
 
 import RoomPreview from './RoomPreview';
+import { StyledButtonMain } from '../../../styles/buttons';
 
 class Rooms extends Component {
     constructor(props) {
@@ -79,12 +80,14 @@ class Rooms extends Component {
             <div className='animated fadeIn'>
                 <h3 id='dashboard-title'>My Rooms</h3>
                 <p id='dashboard-intro'>Preview, enter and checkin to rooms</p>
-                <StyledButton
-                    className="waves-effect waves-light btn"
-                    onClick={() => redirect.newRoom()}
-                >
-                    Create New
-                </StyledButton>
+                <StyledBtnCont>
+                    <StyledButtonMain
+                        className="waves-effect waves-light btn animated fadeIn"
+                        onClick={() => redirect.newRoom()}
+                    >
+                        Create New
+                    </StyledButtonMain>
+                </StyledBtnCont>
                 <Tabs className="col s12">
                     <ul className="tabs tabs-fixed-width">
                         <li className="tab col s6">
@@ -178,24 +181,7 @@ const Tabs = styled.div`
     }
 `;
 
-const StyledButton = styled.a`
-    margin-top: -7.5rem;
-    text-align: center;
-    background-color: #12e2a3;
-    box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
-    color: #ffffff;
-    line-height: 0;
-    padding: 1.5rem;
-    -webkit-letter-spacing: 2px;
-    -moz-letter-spacing: 2px;
-    -ms-letter-spacing: 2px;
-    letter-spacing: 2px;
-    font-weight: 600;
-    transition: 0.3s ease-in-out;
+const StyledBtnCont = styled.div`
+    margin-top: -9.25rem;
     float: right;
-
-    &:hover {
-        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
-        background-color: #12e2a3;
-    }
 `;
