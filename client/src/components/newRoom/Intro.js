@@ -24,12 +24,28 @@ class Intro extends Component {
         return(
             <div className="row animated fadeIn">
                 <div id="new-room-intro" className="center col s12">
+                    {this.renderCancel()}
                     <h1>{this.props.stage.heading}</h1>
                     <p>{this.props.stage.intro}</p>
                     {this.renderImage()}
                 </div>
             </div>
         )
+    }
+
+    renderCancel() {
+
+        if (this.props.currentStage > 0 && this.props.currentStage < 7) {
+           return (
+                <StyledCancel
+                    className="waves-effect waves-light btn animated fadeInDown"
+                >
+                    Reset Progress
+                </StyledCancel>
+           )
+        }
+
+        return null;
     }
 
     renderImage() {
@@ -76,9 +92,8 @@ class Intro extends Component {
     }
 */  
     renderNext() {
-        if (this.state.next) {
-            return null;
-        }
+
+        if (this.state.next)  return null;
 
         // set default data
         return (
@@ -114,8 +129,8 @@ export default connect(mapStateToProps, null)(Intro);
 
 
 const StyledIntro = styled.div`
-    ${props => console.log(props)}
     margin-top: ${props => !props.createStage ? 22.5 : 7.5}vh;
+    position: relative;
 
     #loader-cont {
         position: relative;
@@ -205,5 +220,25 @@ const StyledIntro = styled.div`
             font-size: 0.9rem;
             color: #9e9e9e;
         }
+    }
+`;
+
+const StyledCancel = styled.a`
+    color: #ffffff;
+    background-color: #bdbdbd;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    line-height: 0;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1.75rem;
+    color: #757575;
+    position: absolute;
+    right: 0;
+    top: -155px;
+
+    &:hover {
+        background-color: #bdbdbd;
+        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     }
 `;
