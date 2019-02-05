@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { notificaton } from '../.././../../helpers/notification';
 import { room } from '../../.././../api/room/room';
 import { token } from '../../.././../api/messaging/token';
 
@@ -13,10 +14,12 @@ class Activate extends Component {
     constructor(props) {
         super(props);
 
-        this.activateRoom = this.activateRoom.bind(this);
+        this.NO_LOCATION_ERROR = 'Unable to activate room with radius because we are unable to fetch your location. Please try again';
     }
 
-    async activateRoom() {
+    activateRoom = async () => {
+
+        if (!this.props.gotLocation) return notificaton.error(this.NO_LOCATION_ERROR);
 
         // attempt to activate the current room
         const response = await room.activateRoom(
@@ -81,6 +84,7 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
+        gotLocation: state.location.gotLocation,
         currentLocation: state.location.coords,
         notificationData: {
             title: 'Room available for checkin',
