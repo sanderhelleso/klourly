@@ -6,6 +6,7 @@ import { room } from '../../.././../api/room/room';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { deactivateCheckinAction } from '../../../../actions/room/checkin/deactivateCheckinAction';
+import { notification } from '../../../../helpers/notification';
 
 
 class Deactivate extends Component {
@@ -15,8 +16,17 @@ class Deactivate extends Component {
 
     deactivateRoom = async () => {
 
-        await room.deactivateRoom(this.props.userID, this.props.roomID, this.props.checkinID);
         this.props.deactivateCheckinAction(this.props.checkinID);
+        const response = await room.deactivateRoom(
+                            this.props.userID, 
+                            this.props.roomID, 
+                            this.props.checkinID
+                        );
+
+        // display notification
+        response.data.success 
+        ? notification.success(response.data.value) 
+        : notification.error(response.data.value);
     }
 
     render() {

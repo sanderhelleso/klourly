@@ -18,7 +18,7 @@ export default class CheckedInMember extends Component {
     render() {
         return (
             <StyledMember checkedin={this.props.data.checkedin} >
-                <img src={this.props.data.photoUrl} alt="Checked in members avatar" />
+                <img src={this.props.data.photoUrl} alt="" />
                 <div className="member-info">
                     <h5>{this.props.data.name}</h5>
                     {this.renderCheckedinTime()}
@@ -65,5 +65,4 @@ const StyledMember = styled.div`
         }
     }
 `;
-
 

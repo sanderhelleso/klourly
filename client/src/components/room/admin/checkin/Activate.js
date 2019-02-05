@@ -32,6 +32,9 @@ class Activate extends Component {
         // validate that checkin was successfully started
         if (response.data.success) {
 
+            // notify user
+            notification.success(response.data.message);
+
             // get checkin ref of newly generated checkin
             const checkinID = response.data.checkinData.checkinID;
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
@@ -65,6 +68,9 @@ class Activate extends Component {
                 this.props.notificationData
             );
         }
+
+        // notify user about potensial errors
+        else notification.error(response.data.message);
     }
 
     render() {
