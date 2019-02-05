@@ -268,7 +268,7 @@ async function removeRoomMember(uid, roomID) {
 }
 
 // activate the given room for checkin
-async function activateRoom(uid, roomID, checkinData) {
+async function activateRoom(uid, roomID, checkinData, radius) {
     try {
         const response = await axios({
             headers: authHeader(),
@@ -277,7 +277,8 @@ async function activateRoom(uid, roomID, checkinData) {
             data: {
                 uid,
                 roomID,
-                checkinData
+                checkinData,
+                radius
             }
         });
 

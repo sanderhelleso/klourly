@@ -26,7 +26,8 @@ class Activate extends Component {
         const response = await room.activateRoom(
                             this.props.userID, 
                             this.props.roomID, 
-                            this.props.currentLocation
+                            this.props.currentLocation,
+                            this.props.radiusOption
                         );
         
         // validate that checkin was successfully started
@@ -96,6 +97,7 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
+        radiusOption: state.room.activeRoom.radius,
         gotLocation: state.location.gotLocation,
         currentLocation: state.location.coords,
         notificationData: {

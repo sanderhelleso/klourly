@@ -400,12 +400,13 @@ module.exports = app => {
 
         // update checkin data
         roomRef.update({
+            radius: req.body.radius,
             checkin: {
                 timestamp,
                 checkinID,
                 active: true,
                 coords: req.body.checkinData
-            },
+            }
         });
 
         // set checkin ref for members

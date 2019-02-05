@@ -36,6 +36,7 @@ class RadiusOptions extends Component {
                 <p key={option.title}>
                     <label>
                         <input 
+                            className="with-gap"
                             name="group1" 
                             type="radio" 
                             value={option.radius} 
@@ -64,8 +65,6 @@ class RadiusOptions extends Component {
         )
     }
 }
-
-
 
 const mapStateToProps = state => {
     return { radiusOption: state.room.activeRoom.radius };
