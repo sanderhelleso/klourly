@@ -240,6 +240,8 @@ const StyledModal = styled.div`
     .announcement-cont {
         padding-right: 5rem;
         margin-top: 3rem;
+        position: sticky;
+        top: 0;
     }
 
     @media screen and (min-width: 1300px) {

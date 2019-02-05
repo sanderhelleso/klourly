@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import BackToRoom from '../../BackToRoom';
 import NewAnnouncementModal from './NewAnnouncementModal';
+import { StyledButtonMain } from '../../../styles/buttons';
 
 
 class RoomAnnouncements extends Component {
@@ -22,14 +23,16 @@ class RoomAnnouncements extends Component {
                 <StyledHeader>
                     <h3>Announcements</h3>
                     <p>Create, update and manage the rooms announcements</p>
-                    <StyledButton 
-                        id="new-room-announcement-btn" 
-                        className="waves-effect waves-light btn animated fadeIn modal-trigger"
-                        data-target="new-announcement-modal"
-                        onClick={() => setTimeout(() => { document.querySelector('input').focus() }, 150)}
-                    >
-                        New Announcement
-                    </StyledButton>
+                    <StyledBtnCont>
+                        <StyledButtonMain 
+                            id="new-room-announcement-btn" 
+                            className="waves-effect waves-light btn animated fadeIn modal-trigger"
+                            data-target="new-announcement-modal"
+                            onClick={() => setTimeout(() => { document.querySelector('input').focus() }, 150)}
+                        >
+                            New Announcement
+                        </StyledButtonMain>
+                    </StyledBtnCont>
                 </StyledHeader> 
                 <NewAnnouncementModal 
                     userID={this.props.userID} 
@@ -72,21 +75,10 @@ const StyledHeader = styled.div`
     }
 `;
 
-const StyledButton = styled.a`
-    color: #ffffff;
-    background-color: #12e2a3;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1.75rem;
-    display: block;
-    max-width: 300px;
-    margin: 4rem 0;
+const StyledBtnCont = styled.div`
+    margin: 4rem 0 2rem 0;
 
-    &:hover {
-        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
-        background-color: #12e2a3;
+    a {
+        margin: 0 !important;
     }
 `;

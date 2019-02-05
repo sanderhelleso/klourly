@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import { addAnnouncementPollAction } from '../../../../actions/room/announcement/addAnnouncementPollAction';
 import { removeAnnouncementPollAction } from '../../../../actions/room/announcement/removeAnnouncementPollAction';
+import { StyledButtonMain } from '../../../styles/buttons';
 
 
 class AnnouncementPoll extends Component {
@@ -32,10 +33,7 @@ class AnnouncementPoll extends Component {
         this.state = this.initialState();
     }
 
-    componentDidMount() {
-        
-        this.setState({ data: this.initialChartData() });
-    }
+    componentDidMount = () =>this.setState({ data: this.initialChartData() });
 
     initialState = () => ({
         poll: false,
@@ -199,18 +197,20 @@ class AnnouncementPoll extends Component {
                 <StyledMessage>
                     {this.state.pollOption.length} / {this.MAX_POLL_OPTION_LENGTH}
                 </StyledMessage>
-                <StyledButton 
-                    className="waves-effect waves-light btn"
-                    onClick={this.handleNewPollOption}
-                    disabled={
-                        this.state.pollOption !== '' && 
-                        this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH
-                        ? false 
-                        : true
-                    }
-                >
-                    Add
-                </StyledButton>
+                <StyledBtnCont>
+                    <StyledButtonMain 
+                        className="waves-effect waves-light btn"
+                        onClick={this.handleNewPollOption}
+                        disabled={
+                            this.state.pollOption !== '' && 
+                            this.state.pollOption.length <= this.MAX_POLL_OPTION_LENGTH
+                            ? false 
+                            : true
+                        }
+                    >
+                        Add
+                    </StyledButtonMain>
+                </StyledBtnCont>
             </div>
         )
     }
@@ -317,22 +317,12 @@ const StyledMessage = styled.span`
 `;
 
 
-const StyledButton = styled.a`
-    color: #ffffff;
-    background-color: #12e2a3;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.05);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 1.25rem;
-    display: block;
-    max-width: 100px;
-    margin: 1rem 0;
+const StyledBtnCont = styled.div`
 
-    &:hover {
-        box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
-        background-color: #12e2a3;
+    a {
+        padding: 1.25rem !important;
+        max-width: 100px !important;
+        margin: 1rem 0 !important;
     }
 `;
 

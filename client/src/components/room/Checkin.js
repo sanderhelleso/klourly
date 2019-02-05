@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { StyledButtonMain } from '../styles/buttons';
 import { attendence } from '../../api/room/attendence';
 import { format } from '../../helpers/format';
 import { notification } from '../../helpers/notification';
@@ -72,13 +73,13 @@ class Checkin extends Component {
 
         return (
             <div>
-                <StyledButton 
+                <StyledButtonMain 
                     className="waves-effect waves-light btn animated fadeIn"
                     disabled={available ? false : true || this.state.loading}
                     onClick={this.registerAttendence}
                 >
                     {available ? 'Checkin' : 'Unavailable'}
-                </StyledButton>
+                </StyledButtonMain>
             </div>
         )
     }
@@ -86,8 +87,10 @@ class Checkin extends Component {
     render() {
         return (
             <CheckinCont className="col s12">
-                <Attendence />
-                {this.renderCheckinBtn()}
+                <div id="attendance-cont">
+                    <Attendence />
+                    {this.renderCheckinBtn()}
+                </div>
             </CheckinCont>
         )
     }
@@ -116,26 +119,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(Checkin);
 const CheckinCont = styled.div`
     text-align: center;
     margin-bottom: 3.5rem;
-`;
-
-const StyledButton = styled.a`
-    color: #ffffff;
-    background-color: #12e2a3;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1.75rem;
-    display: block;
-    max-width: 70%;
-    margin: 2rem auto 0 auto;
-    clear: both;
-
-    &:hover {
-        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
-        background-color: #12e2a3;
+    
+    #attendance-cont {
+        max-width: 90%;
+        margin: 0 auto;
     }
 `;
-
 
