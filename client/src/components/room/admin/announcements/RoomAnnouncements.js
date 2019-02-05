@@ -65,7 +65,8 @@ const StyledHeader = styled.div`
     h3 {
         font-weight: 800;
         letter-spacing: 3px;
-        text-transform: uppercase;
+        font-size: 3rem;
+        text-transform: capitalize;
     }
 
     p {

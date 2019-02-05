@@ -10,6 +10,7 @@ import Activate from './Activate';
 import Deactivate from './Deactivate';
 import BackToRoom from '../../BackToRoom';
 import CheckinStatus from './CheckinStatus';
+import RadiusOptions from './RadiusOptions';
 
 class AdminCheckin extends Component {
     constructor(props) {
@@ -50,6 +51,7 @@ class AdminCheckin extends Component {
                         once the room is deactivated, a detailed report is created.
                     </p>
                     <div className="row">
+                        <RadiusOptions />
                         <StyledButtonsCont className="col s12">
                             <Activate 
                                 active={this.props.activeCheckin.active} 
@@ -113,7 +115,7 @@ const StyledHeader = styled.div`
     min-height: 220px !important;
 
     h3 {
-        margin-top: ${props => props.gotMembers ? 3 : 0}rem;
+        margin-top: ${props => props.gotMembers ? 1 : 0}rem;
         margin-bottom: 2rem;
         font-weight: 800;
         letter-spacing: 2px;

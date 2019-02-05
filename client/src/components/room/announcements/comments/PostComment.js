@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { StyledButtonMain } from '../../../styles/buttons';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -126,13 +127,15 @@ class PostComment extends Component {
                             <StyledMessage>
                                 {this.state.comment.length} / {this.MAX_LENGTH_COMMENT}
                             </StyledMessage>
-                            <StyledButton 
-                                className="waves-effect waves-light btn"
-                                disabled={this.state.valid ? false : true}
-                                onClick={this.postComment}
-                            >
-                                Post
-                            </StyledButton>
+                            <StyledBtnCont>
+                                <StyledButtonMain
+                                    className="waves-effect waves-light btn"
+                                    disabled={this.state.valid ? false : true}
+                                    onClick={this.postComment}
+                                >
+                                    Post
+                                </StyledButtonMain>
+                            </StyledBtnCont>
                         </div>
                     </div>
                 </div>
@@ -202,22 +205,12 @@ const StyledComment = styled.div`
     }
 `;
 
-const StyledButton = styled.a`
-    color: #ffffff;
-    background-color: #12e2a3;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.05);
-    line-height: 0;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 1.25rem;
-    display: block;
-    max-width: 100px;
-    margin-top: 0.2rem;
+const StyledBtnCont = styled.div`
 
-    &:hover {
-        box-shadow: 0px 12px 28px rgba(0,0,0,0.10);
-        background-color: #12e2a3;
+    a {
+        padding: 1.25rem !important;
+        max-width: 100px !important;
+        margin: 1rem 0 !important;
     }
 `;
 

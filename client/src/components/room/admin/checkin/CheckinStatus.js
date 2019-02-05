@@ -100,14 +100,14 @@ const StyledStatus = styled.div`
     box-shadow:         0px 4px 14px 0px rgba(46, 82, 217, 0.30);
     border-radius: 12px;
     background-color: #ffffff;
-    min-height: 350px !important;
+    min-height: 420px !important;
     text-align: center;
     margin-bottom: 5rem;
 `;
 
 const NotActive = styled.div`
     position: absolute;
-    top: 30%;
+    top: 32.5%;
     left: 50%;
     transform: translate(-50%);
 
@@ -120,7 +120,7 @@ const NotActive = styled.div`
     }
 
     svg {
-        stroke: #8c9eff;
+        stroke: #b388ff ;
         opacity: 0.4;
     }
 `;
@@ -152,8 +152,4 @@ const Attended = styled.div`
         font-size: 1.1rem;
         opacity: 0.7;
     }
-`;
-
-const AttendedDetails = styled.div`
-    padding-bottom: 4rem;
 `;
