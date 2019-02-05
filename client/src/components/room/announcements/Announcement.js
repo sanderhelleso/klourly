@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { format } from '../../../helpers/format';
 
@@ -13,6 +12,7 @@ import Reactions from './reactions/Reactions';
 import BackToRoom from '../BackToRoom';
 import AnnouncementPoll from './AnnouncementPoll';
 import Comments from './comments/Comments';
+import CircularLoader from '../../loaders/CircularLoader';
 
 class Announcement extends Component {
     constructor(props) {
@@ -48,7 +48,7 @@ class Announcement extends Component {
             )
         }
 
-        return <p>Loading...</p>
+        return <CircularLoader size="big" />
     }
 
     renderPoll() {

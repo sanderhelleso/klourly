@@ -103,6 +103,10 @@ const StyledStatus = styled.div`
     min-height: 420px !important;
     text-align: center;
     margin-bottom: 5rem;
+
+    @media screen and (max-width: 1000px) {
+        margin-top: 3rem;
+    }
 `;
 
 const NotActive = styled.div`

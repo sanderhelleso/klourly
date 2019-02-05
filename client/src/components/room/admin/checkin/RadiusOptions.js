@@ -84,6 +84,14 @@ const StyledOptions = styled.div`
     padding-top: 1.25rem !important;
     padding-left: 1.75rem !important;
 
+    @media screen and (max-width: 1000px) {
+        text-align: center;
+    }
+
+    @media screen and (max-width: 420px) {
+        text-align: left;
+    }
+
     h5 {
         color: #9e9e9e;
         font-size: 1.5rem;
@@ -93,5 +101,9 @@ const StyledOptions = styled.div`
     p {
         display: inline-block;
         margin: 1rem  1.5rem 0 0 !important;
+
+        @media screen and (max-width: 420px) {
+            display: block;
+        }
     }
 `;

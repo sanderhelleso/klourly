@@ -184,4 +184,10 @@ const Tabs = styled.div`
 const StyledBtnCont = styled.div`
     margin-top: -9.25rem;
     float: right;
+
+    @media screen and (max-width: 550px) {
+        float: left;
+        margin-top: -3rem;
+        margin-bottom: 4rem;
+    }
 `;
