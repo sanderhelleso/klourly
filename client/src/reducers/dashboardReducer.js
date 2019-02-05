@@ -44,36 +44,16 @@ const dashboardReducer = (state = {}, action) => {
                 userData: action.payload
             };
 
+        /**
+         * NEW ROOM
+        */
+
         case 'NEW_ROOM_STAGE':
             return {
                 ...state,
                 newRoom: {
                     ...state.newRoom,
                     ...action.payload
-                }
-            }
-   
-
-        case 'NEW_ROOM_LOCATION':
-            return {
-                ...state,
-                newRoom: {
-                    ...state.newRoom,
-                    location: {
-                        ...action.payload
-                    }
-                }
-            }
-
-        case 'NEW_ROOM_ADDRESS':
-            return {
-                ...state,
-                newRoom: {
-                    ...state.newRoom,
-                    location: {
-                        ...state.newRoom.location,
-                        address: action.payload
-                    }
                 }
             }
         
@@ -90,9 +70,16 @@ const dashboardReducer = (state = {}, action) => {
                 }
             }
 
+        case 'RESET_NEW_ROOM_PROGRESS':
+            return {
+                ...state,
+                newRoom: { stage: 0 }
+            }
+
         /**
          * NOTIFICATIONS
         */
+
         case 'UPDATE_NOTIFICATIONS':
             return {
                 ...state,

@@ -14,22 +14,14 @@ class NextStage extends Component {
     }
 
     // lifecycle, add event on mount
-    componentDidMount() {
-        document.addEventListener('keyup', this.nextStageOnEnterKey);
-    }
+    componentDidMount = () => document.addEventListener('keyup', this.nextStageOnEnterKey);
 
     // remove event on unmount
-    componentWillUnmount() {
-        document.removeEventListener('keyup', this.nextStageOnEnterKey);
-    }
+    componentWillUnmount = () => document.removeEventListener('keyup', this.nextStageOnEnterKey);
 
     // update disabled / enabled state depending on props recieved
     componentWillReceiveProps(nextProps) {
-        if (this.props !== nextProps) {
-            this.setState({
-                valid: nextProps.valid
-            });
-        }
+        if (this.props !== nextProps) this.setState({  valid: nextProps.valid  });
     }
 
     nextStageOnEnterKey = e => {

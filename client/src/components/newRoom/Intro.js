@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import NextStage from './NextStage';
+
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { resetNewRoomProgressAction } from '../../actions/newRoom/resetNewRoomProgressAction';
+
+import NextStage from './NextStage';
 import CircularLoader from '../loaders/CircularLoader';
+import { notification } from '../../helpers/notification';
 
 class Intro extends Component {
     constructor(props) {
@@ -14,9 +19,13 @@ class Intro extends Component {
 
     componentWillReceiveProps(nextProps) {
 
+
         if (this.props.stage.icon !== nextProps.stage.icon) {
             this.setState({ iconLoaded: false });
-            setTimeout(() => { this.setState({ next: true }) }, 100);
+
+            setTimeout(() => { 
+                this.setState({ next: this.props.currentStage === 0 ? false : true }
+            )}, 100);
         }
     }
 
@@ -39,6 +48,10 @@ class Intro extends Component {
            return (
                 <StyledCancel
                     className="waves-effect waves-light btn animated fadeInDown"
+                    onClick={() => {
+                        this.props.resetNewRoomProgressAction();
+                        notification.success('New Room progress has been reset!')
+                    }}
                 >
                     Reset Progress
                 </StyledCancel>
@@ -93,7 +106,7 @@ class Intro extends Component {
 */  
     renderNext() {
 
-        if (this.state.next)  return null;
+        if (this.state.next) return null;
 
         // set default data
         return (
@@ -125,7 +138,11 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(Intro);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ resetNewRoomProgressAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Intro);
 
 
 const StyledIntro = styled.div`

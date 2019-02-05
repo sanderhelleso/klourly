@@ -28,7 +28,9 @@ class Location extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (nextProps.location.address === 'loading') this.setState({ loading: true });
+        if (!nextProps.location) return;
+
+        else if (nextProps.location.address === 'loading') this.setState({ loading: true });
 
         else {
 
@@ -42,9 +44,6 @@ class Location extends Component {
                 // update fields and focus
                 materializeJS.M.updateTextFields();
                 materializeJS.M.textareaAutoResize(textarea);
-                
-                if (this.state.initialized) textarea.focus();
-                else this.setState({ initialized: true });
             });
         }
     }

@@ -21,18 +21,26 @@ class Stages extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            stage: this.props.currentStage,
+        this.intro = {
             heading: "Let's create a New Room",
             intro: 'A room allow you to keep full controll on whats happening. Who is present, when do people show up, who is the least active and much more.',
             icon: 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-0-256.png?alt=media&token=bbb7bfc7-050b-46f3-8cbf-edcc11f50d57',
             buttonTxt: 'Im ready!'
+        };
+
+        this.state = {
+            stage: this.props.currentStage,
+            ...this.intro
         }
     }
 
     componentWillReceiveProps(nextProps) {
+
+        // fade out current stage
         const cont = document.querySelector('#new-room-stage');
         cont.className = 'no-select row animated fadeOut';
+
+        // update and fade in new stage
         setTimeout(() => { this.updateStageInfo() }, 900);
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -51,6 +59,10 @@ class Stages extends Component {
 
     updateStageInfo() {
         switch (this.props.currentStage) {
+
+            case 0:
+                this.setState(this.intro);
+                break;
 
             case 1:
                 this.setState({
