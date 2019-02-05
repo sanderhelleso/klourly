@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateRoomRadiusForCheckinAction } from '../../../../actions/room/checkin/updateRoomRadiusForCheckinAction';
 
 class RadiusOptions extends Component {
     constructor(props) {
@@ -32,14 +33,20 @@ class RadiusOptions extends Component {
     renderRadiusOptions = () => {
         return this.options.map(option => {
             return (
-                <p>
+                <p key={option.title}>
                     <label>
                         <input 
                             name="group1" 
                             type="radio" 
                             value={option.radius} 
-                            checked={this.props.radiusOption === option.value ? true : false}
-                            onChange={() => console.log('123')} 
+                            checked={this.props.radiusOption === option.radius ? true : false}
+                            onChange={(e) => 
+                                this.props.updateRoomRadiusForCheckinAction(
+                                    e.target.value !== 'false' // 'No Limit' returns boolean as string
+                                    ? parseInt(e.target.value)
+                                    : false
+                                )
+                            } 
                         />
                         <span>{option.title}</span>
                     </label>
@@ -51,7 +58,7 @@ class RadiusOptions extends Component {
     render() {
         return (
             <StyledOptions className="col s12">
-                <h5>Select Radius</h5>
+                <h5>Select Radius Limit</h5>
                 {this.renderRadiusOptions()}
             </StyledOptions>
         )
@@ -65,7 +72,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateRoomRadiusForCheckinAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RadiusOptions);

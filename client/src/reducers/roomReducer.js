@@ -10,6 +10,10 @@ const initialState = {
 const roomReducer = (state = initialState, action) => {
     switch (action.type) {
 
+        /**
+         * ROOM SETUP
+        */
+
         case 'SET_ROOMS_OWNING':
             return {
                 ...state,
@@ -31,6 +35,10 @@ const roomReducer = (state = initialState, action) => {
                 }
             } 
 
+        /**
+         * ACTIVATE / ACTIVE ROOM
+        */
+
         case 'SET_INITIAL_ACTIVE_ROOM_STATUS_SUCCESS':
             return {
                 ...state,
@@ -47,6 +55,15 @@ const roomReducer = (state = initialState, action) => {
                         ...action.payload 
                     }
                 },
+            }
+
+        case 'UPDATE_ROOM_RADIUS_FOR_CHECKIN':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    radius: action.payload
+                }
             }
 
         case 'UPDATE_ACTIVATE_ROOM_STATUS_SUCCESS':
