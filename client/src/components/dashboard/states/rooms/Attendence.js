@@ -112,20 +112,3 @@ const StyledAttendence = styled.h5`
         text-transform: uppercase;
     }     
 `;
-
-const NotAttended = styled.div`
-
-    margin-top: -5px;
-    text-align: center;
-
-    svg {
-        stroke: #b388ff;
-        opacity: 0.6;
-    }
-
-    p {
-        font-size: 1.25rem;
-        margin-top: -20px;
-        color: #9e9e9e;
-    }
-`;

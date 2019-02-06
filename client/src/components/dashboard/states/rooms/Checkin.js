@@ -18,7 +18,10 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { loading: false };
+        this.state = { 
+            loading: false,
+            valid: false
+        };
     }
 
 
@@ -69,8 +72,24 @@ class Checkin extends Component {
 
     validateDistance() {
 
-        // if no room radius requirment, skip this step
-        //if ()
+        // check if radius is required, if not proceed to render checkin button
+        if (!this.props.availableForCheckin.radius) return true;
+
+        // if we cant fetch users location when radius is required
+        if (!this.props.currentUserLocation.gotLocation) return false;
+
+        // calculate distance
+        const distance = getDistance(
+            this.props.currentUserLocation.coords.latitude,
+            this.props.currentUserLocation.coords.longitude,
+            this.props.availableForCheckin.coords.latitude,
+            this.props.availableForCheckin.coords.longitude,
+        );
+
+        // if within distance, proceed to render checkin button
+        if (distance <= this.props.availableForCheckin.radius) return true;
+
+        return false;
     }
 
 
@@ -78,14 +97,16 @@ class Checkin extends Component {
 
         // only render check in button if not owner
         // and if room is currently available for checkin 
-        if (this.props.availableForCheckin && 
-            this.props.availableForCheckin.active) {
+        if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
+
+            // validate that user is within distance of sat radius
+            const withinDistance = this.validateDistance();
 
             return (
                 <CheckinRoomButton 
-                    className="waves-effect waves-light btn-flat animated bounceIn"
-                    onClick={this.registerAttendence}
-                    disabled={this.state.loading}
+                    className="waves-effect waves-light btn animated bounceIn"
+                    onClick={withinDistance ? this.registerAttendence : null} // to handle DOM manip by client
+                    disabled={this.state.loading || !withinDistance}
                     title="Checkin to room"
                 >
                     <Check />
@@ -139,6 +160,7 @@ const CheckinRoomButton = styled.button`
 
     &:hover {
         box-shadow: 0px 18px 56px rgba(0, 0, 0, 0.2);
+        background-color: #12e2a3;
     }
 
     svg {
