@@ -10,8 +10,10 @@ module.exports = app => {
 
         // create data obj and cleanup props
         const roomData = req.body.roomData;
+        const radius = roomData.radius;
         delete roomData.stage;
         delete roomData.blob;
+        delete roomData.radius;
 
         // if no room cover, set default and generate roomID
         if (!roomData.cover) {
@@ -41,6 +43,7 @@ module.exports = app => {
         // update database with new room
         const roomRef = db.ref(`rooms/${roomData.id}`);
         roomRef.set(roomData);
+        roomRef.child('checkin').set({ radius });
 
         // get ref to owner by id recieved from room data and fetch owner data 
         userRef.child('settings').once('value', ownerSnapshot => {
@@ -400,10 +403,10 @@ module.exports = app => {
 
         // update checkin data
         roomRef.update({
-            radius: req.body.radius,
             checkin: {
                 timestamp,
                 checkinID,
+                radius: req.body.radius,
                 active: true,
                 coords: req.body.checkinData
             }
@@ -439,11 +442,17 @@ module.exports = app => {
         // get ref to rooms members by id and checkins re
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
 
-        // update checkin data
-        roomRef.update({ checkin: { active: false } });
-
         // set endtime of deactivated checkin time
         roomRef.once('value', snapshot => {
+
+            // update checkin data
+            roomRef.update({ 
+                checkin: { 
+                    active: false, 
+                    radius: snapshot.val().checkin.radius 
+                }     
+            });
+
             const checkinSnap = snapshot.val().checkins[req.body.checkinID];
 
             // values to calculate the average attendence for the room

@@ -51,8 +51,9 @@ const roomReducer = (state = initialState, action) => {
                 activeRoom: {
                     ...state.activeRoom,
                     checkin: {
-                        active: true,
-                        ...action.payload 
+                        ...state.activeRoom.checkin,
+                        ...action.payload,
+                        active: true
                     }
                 },
             }
@@ -62,7 +63,10 @@ const roomReducer = (state = initialState, action) => {
                 ...state,
                 activeRoom: {
                     ...state.activeRoom,
-                    radius: action.payload
+                    checkin: {
+                        ...state.activeRoom.checkin,
+                        radius: action.payload
+                    }
                 }
             }
 
@@ -81,7 +85,8 @@ const roomReducer = (state = initialState, action) => {
                 activeRoom: {
                     ...state.activeRoom,
                     checkin: {
-                        active: false
+                        active: false,
+                        radius: state.activeRoom.checkin.radius
                     }
                 },
                 activeCheckins: format.removeByKey(state.activeCheckins, action.payload)

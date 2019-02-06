@@ -22,3 +22,5 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
 
 // convert degrees to radius
 const deg2rad = deg => deg * (Math.PI / 180);
+
+export default getDistance;

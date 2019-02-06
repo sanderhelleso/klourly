@@ -67,7 +67,7 @@ class RadiusOptions extends Component {
 }
 
 const mapStateToProps = state => {
-    return { radiusOption: state.room.activeRoom.radius };
+    return { radiusOption: state.room.activeRoom.checkin.radius };
 };
 
 const mapDispatchToProps = dispatch => {

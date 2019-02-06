@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { CheckCircle, Check } from 'react-feather';
+import {  Check } from 'react-feather';
 import { format } from '../../../../helpers/format';
 import { notification } from '../../../../helpers/notification';
+import getDistance from '../../../../helpers/getDistance';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -66,6 +67,11 @@ class Checkin extends Component {
         this.setState({ loading: false });
     }
 
+    validateDistance() {
+
+        // if no room radius requirment, skip this step
+        //if ()
+    }
 
 
     renderCheckIn() {
@@ -99,7 +105,8 @@ const mapStateToProps = (state, compProps) => {
     return { 
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin[compProps.roomID],
-        attendence: state.room.attendence[compProps.roomID]
+        attendence: state.room.attendence[compProps.roomID],
+        currentUserLocation: state.location
     };
 };
 

@@ -47,7 +47,8 @@ class CheckinAvailableData extends Component {
                 // update checkin state
                 this.props.checkinAvailableAction({
                     roomID: roomID,
-                    checkinData: snapshot.val().active ? { ...snapshot.val(), loaded: true } : false
+                    checkinData: snapshot.val().active 
+                    ? { ...snapshot.val(), loaded: true } : false
                 });
             });
 

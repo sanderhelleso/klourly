@@ -97,7 +97,7 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
-        radiusOption: state.room.activeRoom.radius,
+        radiusOption: state.room.activeRoom.checkin.radius,
         gotLocation: state.location.gotLocation,
         currentLocation: state.location.coords,
         notificationData: {
