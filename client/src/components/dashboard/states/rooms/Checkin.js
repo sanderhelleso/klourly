@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {  Check } from 'react-feather';
 import { format } from '../../../../helpers/format';
 import { notification } from '../../../../helpers/notification';
-import getDistance from '../../../../helpers/getDistance';
+import validateDistance from '../../../../helpers/validateDistance';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -24,15 +24,13 @@ class Checkin extends Component {
         };
     }
 
-
     registerAttendence = async () => {
 
         // disable button while performing request
         this.setState({ loading: true });
 
         // attempt to register attendence
-        const response = await attendence.registerAttendence(
-                        this.props.userID, this.props.roomID);
+        const response = await attendence.registerAttendence(this.props.userID, this.props.roomID);
 
         if (response.data.success) {
 
@@ -70,29 +68,6 @@ class Checkin extends Component {
         this.setState({ loading: false });
     }
 
-    validateDistance() {
-
-        // check if radius is required, if not proceed to render checkin button
-        if (!this.props.availableForCheckin.radius) return true;
-
-        // if we cant fetch users location when radius is required
-        if (!this.props.currentUserLocation.gotLocation) return false;
-
-        // calculate distance
-        const distance = getDistance(
-            this.props.currentUserLocation.coords.latitude,
-            this.props.currentUserLocation.coords.longitude,
-            this.props.availableForCheckin.coords.latitude,
-            this.props.availableForCheckin.coords.longitude,
-        );
-
-        // if within distance, proceed to render checkin button
-        if (distance <= this.props.availableForCheckin.radius) return true;
-
-        return false;
-    }
-
-
     renderCheckIn() {
 
         // only render check in button if not owner
@@ -100,7 +75,7 @@ class Checkin extends Component {
         if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
 
             // validate that user is within distance of sat radius
-            const withinDistance = this.validateDistance();
+            const withinDistance = validateDistance(this.props.availableForCheckin, this.props.currentUserLocation);
 
             return (
                 <CheckinRoomButton 
