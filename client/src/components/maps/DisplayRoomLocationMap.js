@@ -27,7 +27,7 @@ export default class DisplayRoomLocationMap extends Component {
                     height={this.MAP_HEIGHT}
                     width={this.MAP_WIDTH} 
                 >
-                    <Marker anchor={this.state.markerCoords} />
+                    <Marker anchor={this.coords} />
                 </Map>
             </StyledMapCont>
         )

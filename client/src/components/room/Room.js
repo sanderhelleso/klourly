@@ -61,7 +61,7 @@ class Room extends Component {
                                 top: '0%',
                                 width: '100%',
                                 height: '100%',
-                                'background-size': 'cover',
+                                'backgroundSize': 'cover',
                                 overflow: 'hidden'
                             }}
                         />

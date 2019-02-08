@@ -1,4 +1,10 @@
 import styled from 'styled-components';
+import theme from 'styled-theming';
+
+const backgroundColor = theme('mode', {
+  light: '#12e2a3',
+  dark: '#b388ff',
+});
 
 const BUTTON_STYLES = `
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
@@ -17,12 +23,12 @@ const BUTTON_STYLES = `
 
 export const StyledButtonMain = styled.a`
     color: #ffffff;
-    background-color: #12e2a3;
+    background-color: ${backgroundColor};
     ${BUTTON_STYLES};
 
     &:hover {
         box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
-        background-color: #12e2a3;
+        background-color: ${backgroundColor};
     }
 `;
 

@@ -14,7 +14,6 @@ export default class RoomCard extends Component {
         return (
             <StyledCard 
                 className="col s12 m6 l4"
-                onClick={() => {}}//redirect.room(this.props.data.id)}
             >
                 <div className="card-cont">
                     <div className="row">

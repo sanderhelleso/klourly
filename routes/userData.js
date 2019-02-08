@@ -24,22 +24,15 @@ module.exports = app => {
     app.post('/api/updateSettings', authenticate, (req, res) => {
 
         // get user reference in database
-        const userRef = db.ref(`users/${req.body.uid}`);
+        const settingsRef = db.ref(`users/${req.body.uid}/settings`);
 
         // update settings
-        userRef.once('value', snapshot => {
-            userRef.update({
-                settings: {
-                    ...snapshot.val(),
-                    ...req.body.updatedSettings
-                }
-            });
-            
-            // send response back to user
-            res.status(200).json({
-                success: true,
-                message: 'Successfully updated settings'
-            });
+        settingsRef.update(req.body.updatedSettings);
+
+        // send response back to user
+        res.status(200).json({
+            success: true,
+            message: 'Successfully updated settings'
         });
     });
 }

@@ -34,6 +34,9 @@ class Checkin extends Component {
 
         if (response.data.success) {
 
+            // notify user
+            notification.success(response.data.message);
+
             // update users checked in rooms
             this.props.updateUsersCheckedinRoomsAction({
                 roomID: this.props.roomID,
@@ -45,6 +48,17 @@ class Checkin extends Component {
                 roomID: this.props.roomID,
                 checkinData: false
             });
+
+            // handle first ever attending
+            if (!this.props.attendence) {
+                return this.props.setRoomAttendenceAction({
+                    roomID: this.props.roomID,
+                    attendenceData: {
+                        totalUserCheckinsForRoom: 0,
+                        attendenceInPercentage: format.getPercentage(0, 1)
+                    }
+                });
+            }
 
             // update users attendence percentage for room
             const updatedTotal = this.props.attendence.totalUserCheckinsForRoom + 1;
@@ -59,9 +73,6 @@ class Checkin extends Component {
                     )
                 }
             });
-
-            // notify user
-            notification.success(response.data.message);
         } 
 
         // finish loading

@@ -115,7 +115,7 @@ module.exports = app => {
                 // get needed preview data
                 const roomPreview = {
                     id: snapshot.val().id,
-                    cover: snapshot.val().cover.small,
+                    cover: snapshot.val().cover.medium,
                     name: snapshot.val().name,
                     type: snapshot.val().type
                 }

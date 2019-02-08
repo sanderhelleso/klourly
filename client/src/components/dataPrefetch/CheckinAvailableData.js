@@ -67,6 +67,18 @@ class CheckinAvailableData extends Component {
                 // if initalData is not loaded, return
                 if (!initialDataLoaded) return;
 
+
+                // handle first ever attending
+                if (!this.props.attendence[roomID]) {
+                    return this.props.setRoomAttendenceAction({
+                        roomID: roomID,
+                        attendenceData: {
+                            totalRoomCheckins: 0,
+                            attendenceInPercentage: format.getPercentage(0, 1)
+                        }
+                    });
+                }
+
                 // if not, increment total room checkin and update attendence state
                 const updatedTotal = this.props.attendence[roomID].totalRoomCheckins + 1;
                 this.props.setRoomAttendenceAction({
