@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const CircularLoader = props => (
 
-    <StyledLoaderCont className="animated fadeIn">
+    <StyledLoaderCont className="animated fadeIn circular-loader">
         <div className={`preloader-wrapper ${props.size} active`}>
             <div className="spinner-layer">
                 <div className="circle-clipper left">

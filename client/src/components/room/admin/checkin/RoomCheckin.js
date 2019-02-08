@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { redirect } from '../../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -11,33 +10,18 @@ import Deactivate from './Deactivate';
 import BackToRoom from '../../BackToRoom';
 import CheckinStatus from './CheckinStatus';
 import RadiusOptions from './RadiusOptions';
+import NoMembersPlaceholder from '../../placeholders/NoMembersPlaceholder';
 
 class AdminCheckin extends Component {
     constructor(props) {
         super(props);
-
-        this.noMembersIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
     }
 
     renderComponent() {
 
         // cant perform checkin if room dont have any members
         if (!this.props.members || this.props.members.length === 0) {
-            return (
-                <StyledHeader className="col s12 m12 l12 animated fadeIn">
-                    <h3>This room dont have any members yet</h3>
-                    <img src={this.noMembersIcon} alt="No members in this room" />
-                    <p>
-                        Looks like this room dont have any members that can checkin.
-                        Go and spread the word and come back in a bit to try again.
-                    </p>
-                    <StyledLink 
-                        onClick={() => redirect.roomAdminMembers(this.props.roomID)}
-                    >
-                        Invite Members
-                    </StyledLink>
-                </StyledHeader>
-            )
+            return <NoMembersPlaceholder text="checkin" includeLink={true} />
         }
 
         return (
@@ -108,7 +92,6 @@ const StyledButtonsCont = styled.div`
     text-align: center;
 `;
 
-
 const StyledHeader = styled.div`
 
     text-align: center;
@@ -130,10 +113,4 @@ const StyledHeader = styled.div`
         margin: 1rem auto;
         margin-bottom: ${props => props.gotMembers ? 1 : 1.25}rem;
     }
-`;
-
-const StyledLink = styled.a`
-    color: #b388ff;
-    font-weight: 800;
-    font-size: 1.25rem;
 `;
