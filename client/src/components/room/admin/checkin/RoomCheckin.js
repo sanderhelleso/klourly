@@ -22,7 +22,7 @@ class AdminCheckin extends Component {
     renderComponent() {
 
         // cant perform checkin if room dont have any members
-        if (!this.props.members) {
+        if (!this.props.members || this.props.members.length === 0) {
             return (
                 <StyledHeader className="col s12 m12 l12 animated fadeIn">
                     <h3>This room dont have any members yet</h3>
