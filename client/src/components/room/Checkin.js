@@ -4,6 +4,7 @@ import { StyledButtonMain } from '../styles/buttons';
 import { attendence } from '../../api/room/attendence';
 import { format } from '../../helpers/format';
 import { notification } from '../../helpers/notification';
+import validateDistance from '../../helpers/validateDistance';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -69,14 +70,21 @@ class Checkin extends Component {
 
     renderCheckinBtn() {
 
+        // validate that room is available
         const available = this.props.availableForCheckin && this.props.availableForCheckin.active;
+
+        // validate that user is within distance of sat radius
+        let withinDistance = false;
+        if (available) {
+            withinDistance = validateDistance(this.props.availableForCheckin, this.props.currentUserLocation);
+        }
 
         return (
             <div>
                 <StyledButtonMain 
                     className="waves-effect waves-light btn animated fadeIn"
-                    disabled={available ? false : true || this.state.loading}
-                    onClick={this.registerAttendence}
+                    disabled={available && withinDistance ? false : true || this.state.loading}
+                    onClick={available && withinDistance ? this.registerAttendence : null}
                 >
                     {available ? 'Checkin' : 'Unavailable'}
                 </StyledButtonMain>
@@ -101,7 +109,8 @@ const mapStateToProps = state => {
         activeRoomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin[state.room.activeRoom.id],
-        attendence: state.room.attendence[state.room.activeRoom.id]
+        attendence: state.room.attendence[state.room.activeRoom.id],
+        currentUserLocation: state.location
     }
 }
 

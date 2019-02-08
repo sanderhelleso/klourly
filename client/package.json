@@ -106,6 +106,7 @@
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
     "firebase": "^5.7.2",
+    "geolib": "^2.0.24",
     "history": "^4.7.2",
     "jspdf": "^1.5.3",
     "materialize-css": "^1.0.0-rc.2",

@@ -42,7 +42,7 @@ export default class RoomPreview extends Component {
 
 const StyledCont = styled.div`
     overflow-y: auto;
-    padding: 3rem 0.5rem 7.5rem 0.5rem;
+    padding: 3rem 1.3rem 7.5rem 1.3rem;
     min-height: 70vh;
     max-height: 70vh;
     position: relative;
@@ -56,7 +56,7 @@ const StyledCont = styled.div`
     }
 
     @media screen and (max-width: 700px) {
-        padding: 3rem 0.5rem 10rem 0.5rem;
+        padding: 3rem 1.3rem 10rem 1.3rem;
     }
 `;
 
