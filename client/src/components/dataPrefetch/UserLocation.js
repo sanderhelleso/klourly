@@ -24,11 +24,11 @@ export default class UserLocation extends Component {
         store.dispatch(this.watchLocation());
     }
 
-    /*componentWillUnmount() {
+    componentWillUnmount() {
 
         // on unmount, remove watcher
         navigator.geolocation.clearWatch(this.watchID);
-    }*/
+    }
 
     watchLocation = () => {
 
