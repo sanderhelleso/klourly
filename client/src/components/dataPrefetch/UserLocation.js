@@ -9,9 +9,9 @@ export default class UserLocation extends Component {
         super(props);
 
         this.GEO_LOCATION_OPTIONS = { 
-            enableHighAccuracy: true,   // get hgihest possible accurance
+            enableHighAccuracy: true,   // get highest possible accurance
             timeout: 5000,              // timeout after 5 sec
-            maximumAge: 1000,           // 1 sec max age
+            maximumAge: 0,              // 0 sec max age
             distanceFilter: 1           // update every 1m
         };
 

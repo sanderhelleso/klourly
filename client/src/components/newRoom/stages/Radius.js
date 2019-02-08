@@ -14,20 +14,20 @@ class Radius extends Component {
 
         this.options = [
             {
-                title: '5',
-                radius: 5,
+                title: '30',
+                radius: 30,
                 icon: <Lock size={25} />,
                 meter: 'Meter'
             },
             {
-                title: '10',
-                radius: 10,
+                title: '60',
+                radius: 60,
                 icon: <Compass size={25} />,
                 meter: 'Meter'
             },
             {
-                title: '20',
-                radius: 20,
+                title: '120',
+                radius: 120,
                 icon: <Globe size={25} />,
                 meter: 'Meter'
             },

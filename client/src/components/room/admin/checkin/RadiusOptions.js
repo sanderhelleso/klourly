@@ -12,16 +12,16 @@ class RadiusOptions extends Component {
 
         this.options = [
             {
-                title: '5',
-                radius: 5,
+                title: '30',
+                radius: 30,
             },
             {
-                title: '10',
-                radius: 10,
+                title: '60',
+                radius: 60,
             },
             {
-                title: '20',
-                radius: 20,
+                title: '120',
+                radius: 120,
             },
             {
                 title: 'No Limit',

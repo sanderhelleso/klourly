@@ -1,6 +1,10 @@
 
 import geolib from 'geolib';
 
+// allowed potensial margin offset location fetch depening on returen accuracy
+const DISTANCE_MARGIN_HIGH_ACCURACY = 10;
+const DISTANCE_MARGIN_LOW_ACCURACY = 100;
+
 // validate the difference in location between user and checkin location
 const validateDistance = (checkinOptions, userLocation) => {
 
@@ -12,13 +16,19 @@ const validateDistance = (checkinOptions, userLocation) => {
 
     // validate if two lat,lng positions is within given radius
     console.log('validation pos...');
+    console.log(userLocation);
+
+    const getOffset = userLocation.coords.accuracy <= 50 
+                     ? DISTANCE_MARGIN_HIGH_ACCURACY
+                     : DISTANCE_MARGIN_LOW_ACCURACY;
+
     return geolib.isPointInCircle({ 
             latitude: userLocation.coords.latitude,
             longitude: userLocation.coords.longitude 
         }, {
             latitude: checkinOptions.coords.latitude, 
             longitude: checkinOptions.coords.longitude
-        }, checkinOptions.radius
+        }, checkinOptions.radius + getOffset // checkin radius and offset
     );
 }
 
