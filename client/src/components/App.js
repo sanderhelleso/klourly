@@ -1,20 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Router, Route, Redirect} from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import history from '../helpers/history';
 import * as firebase from 'firebase';
-import { ToastContainer, Flip, Fade } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Fade } from 'react-toastify';
+import { ThemeProvider } from 'styled-components';
 
-// impoort animate and materialize
 import 'animate.css';
 import 'materialize-css/dist/css/materialize.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
-// redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import { authentication } from '../api/authentication/authentication';
 import { validateAction } from '../actions/validateActions';
 
 import Landing from './landing/Landing';
@@ -25,7 +22,6 @@ import Room from './room/Room';
 import LoggedinNavbar from './navigation/LoggedinNavbar';
 import NotFound from './notFound/NotFound';
 
-// import Dashboard
 import Dashboard from './dashboard/Dashboard';
 import JoinRoom from './joinRoom/JoinRoom';
 import Announcement from './room/announcements/Announcement';
@@ -34,7 +30,6 @@ import RoomMembers from './room/admin/members/RoomMembers';
 import RoomCheckin from './room/admin/checkin/RoomCheckin';
 import Reports from './room/admin/reports/Reports';
 
-// data fetchers
 import RoomData from './dataPrefetch/RoomData';
 import ReportData from './dataPrefetch/ReportData';
 import UserLocation from './dataPrefetch/UserLocation';
@@ -97,7 +92,7 @@ class App extends Component {
     renderRoomRoutes() {
         if (this.props.room.activeRoom) {
             return (
-                <div>
+                <Fragment>
                     <Route path="/" component={LoggedinNavbar} />
                     <Route exact path="/dashboard/rooms/:roomID" component={Room} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports" component={Reports} />
@@ -108,7 +103,7 @@ class App extends Component {
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports/checkin/:checkinID" component={CheckinReport} />
                     <Route exact path="/dashboard/rooms/:roomID/admin/reports/member/:memberID" component={MemberReport} />
                     <Route path="/dashboard/rooms/:roomID/admin/reports" component={ReportData} />
-                </div>
+                </Fragment>
             )
         }
 
@@ -121,7 +116,7 @@ class App extends Component {
 
         else if (this.props.auth.loggedIn) {
             return (
-                <div>
+                <Fragment>
                     {this.renderRoomRoutes()}
                     <Route exact path="/" component={this.landingRoute} />
                     <Route exact path="/signup" component={this.signupRoute} />
@@ -134,18 +129,18 @@ class App extends Component {
                     <NotificationsData />
                     <CheckinAvailableData />
                     <ActiveRoomsData />
-                </div>
+                </Fragment>
             )
         }
 
         else {
             return (
-                <div>
+                <Fragment>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
                     <Route path="/dashboard" component={this.login} />
-                </div>
+                </Fragment>
             )
         }
     }
@@ -153,20 +148,22 @@ class App extends Component {
     render() {
         return (
             <Router history={history}>
-                <div id="main-app-cont">
-                    <GlobalDashStyle />
-                    {this.renderRoutes()}
-                    <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
-                    <ToastContainer 
-                        transition={Fade} 
-                        closeButton={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        pauseOnVisibilityChange
-                        draggable
-                        pauseOnHover
-                    />
-                </div>
+                <ThemeProvider theme={{ mode: 'light' }}>
+                    <div id="main-app-cont">
+                        <GlobalDashStyle />
+                        {this.renderRoutes()}
+                        <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
+                        <ToastContainer 
+                            transition={Fade} 
+                            closeButton={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            pauseOnVisibilityChange
+                            draggable
+                            pauseOnHover
+                        />
+                    </div>
+                </ThemeProvider>
             </Router>
         )
     }

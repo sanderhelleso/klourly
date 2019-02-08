@@ -13,15 +13,15 @@ const validateDistance = (checkinOptions, userLocation) => {
 
     // if we cant fetch users location when radius is required
     if (!userLocation.gotLocation) return false;
+    
+     // get required offset
+     const getOffset = userLocation.coords.accuracy <= 50 
+                      ? DISTANCE_MARGIN_HIGH_ACCURACY
+                      : DISTANCE_MARGIN_LOW_ACCURACY;
 
-    // validate if two lat,lng positions is within given radius
-    console.log('validation pos...');
     console.log(userLocation);
-
-    const getOffset = userLocation.coords.accuracy <= 50 
-                     ? DISTANCE_MARGIN_HIGH_ACCURACY
-                     : DISTANCE_MARGIN_LOW_ACCURACY;
-
+ 
+     // validate if two lat,lng positions is within given radius
     return geolib.isPointInCircle({ 
             latitude: userLocation.coords.latitude,
             longitude: userLocation.coords.longitude 
