@@ -15,22 +15,16 @@ class InvitationLink extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
-        this.state = {
-            ...this.props.activeRoom.invite,
-            loadingNewInvite: false
-        }
-
-        this.generateNewLink = this.generateNewLink.bind(this);
+        this.state = { loadingNewInvite: false };
     }
 
     renderLink() {
         return (
             <StyledInvite>
                 <h4>Invitation Link</h4>
-                <h5>{this.state.url}</h5>
-                <p>Valid from {format.tsToDate(this.state.validFrom)} to {format.tsToDate(this.state.validTo)}</p>
-                {this.renderAvailableBadge(this.state.validTo)}
+                <h5>{this.props.invite.url}</h5>
+                <p>Valid from {format.tsToDate(this.props.invite.validFrom)} to {format.tsToDate(this.props.invite.validTo)}</p>
+                {this.renderAvailableBadge(this.props.invite.validTo)}
                 <GenerateNewBtn 
                     className="waves-effect waves-purple btn-flat"
                     disabled={this.state.loadingNewInvite}
@@ -45,12 +39,8 @@ class InvitationLink extends Component {
 
     renderLoadingIcon() {
         return this.state.loadingNewInvite 
-        ? 
-        <Rotate>
-            <RefreshCw size={22} /> 
-        </Rotate>
-        : 
-        <RefreshCw size={17}/>;
+        ? <Rotate><RefreshCw size={22} /></Rotate>
+        : <RefreshCw size={17}/>;
     }
 
     renderAvailableBadge(validTo) {
@@ -63,16 +53,12 @@ class InvitationLink extends Component {
         return <AvailableBadge>Available</AvailableBadge>
     }
 
-    async generateNewLink() {
+    generateNewLink = async () => {
         
         // disable button whie loading new invite
-        this.setState({
-            loadingNewInvite: true
-        });
+        this.setState({ loadingNewInvite: true });
 
-        const response = await room.updateRoomInvite(
-                        this.props.user.id, 
-                        this.props.activeRoom.id);
+        const response = await room.updateRoomInvite(this.props.user.id, this.props.roomID);
 
         // new invite generation successfull
         if (response.data.success) {
@@ -86,15 +72,10 @@ class InvitationLink extends Component {
         }
 
         // new invite generation failed
-        else {
-            notification.error(response.data.message);
-        }
+        else notification.error(response.data.message);
 
         // loading of new invite finished, enable button
-        this.setState({
-            loadingNewInvite: false
-        });
-
+        this.setState({ loadingNewInvite: false });
     }
 
     render() {
@@ -110,7 +91,8 @@ class InvitationLink extends Component {
 const mapStateToProps = state => {
     return { 
         user: state.auth.user,
-        activeRoom: state.room.activeRoom
+        roomID: state.room.activeRoom.id,
+        invite: state.room.activeRoom.invite
     }
 }
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Eye, EyeOff } from 'react-feather';
 import styled from 'styled-components';
-import { ToastContainer, Flip } from 'react-toastify';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -81,10 +80,6 @@ class RoomMembers extends Component {
                 </div>
                 <MembersList />
                 {this.renderConfirmDeleteModal()}
-                <ToastContainer 
-                    transition={Flip}
-                    closeButton={false}
-                />
             </main>
         )
     }
