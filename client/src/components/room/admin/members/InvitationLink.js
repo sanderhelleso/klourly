@@ -22,13 +22,15 @@ class InvitationLink extends Component {
         return (
             <StyledInvite>
                 <h4>Invitation Link</h4>
-                <h5>{this.props.invite.url}</h5>
+                <h5 onClick={(e) => this.copyUrl(e)}>
+                    {this.props.invite.url}
+                </h5>
                 <p>Valid from {format.tsToDate(this.props.invite.validFrom)} to {format.tsToDate(this.props.invite.validTo)}</p>
                 {this.renderAvailableBadge(this.props.invite.validTo)}
                 <GenerateNewBtn 
                     className="waves-effect waves-purple btn-flat"
                     disabled={this.state.loadingNewInvite}
-                    onClick={this.generateNewLink}
+                    onClick={!this.state.loadingNewInvite ? this.generateNewLink : null}
                 >
                     {this.renderLoadingIcon()}
                     Generate New
@@ -51,6 +53,17 @@ class InvitationLink extends Component {
         }
 
         return <AvailableBadge>Available</AvailableBadge>
+    }
+
+    copyUrl = e => {
+
+        // only run if copy is suported in browser
+        if (document.queryCommandSupported('copy')) {
+            navigator.clipboard.writeText(e.target.innerHTML);
+            notification.success('Link copied to clipboard');
+        }
+
+        else notification.error('This browser dont support copy-to-clipboard');
     }
 
     generateNewLink = async () => {
@@ -161,10 +174,6 @@ const GenerateNewBtn = styled.button`
     background-color: #eeeeee;
     border-radius: 4px;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-
-    &:focus, &:active {
-        background-color: #eeeeee;
-    }
 
     svg {
         margin-bottom: -3.5px;

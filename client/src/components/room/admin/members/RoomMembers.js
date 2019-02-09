@@ -45,12 +45,9 @@ class RoomMembers extends Component {
 
         return (
             <RenderLinkBtn 
-                className="waves-effect waves-purple btn-flat"
-                
-                onClick={() => 
-                this.setState({
-                    linkHidden: this.state.linkHidden ? false : true
-                })}>
+                className="waves-effect waves btn-flat"
+                onClick={() => this.setState({ linkHidden: this.state.linkHidden ? false : true })}
+            >
                 {this.state.linkHidden ? <Eye size={18} /> : <EyeOff size={18} />}
                 {this.state.linkHidden ? 'Show' : 'Hide'} Invitation Link
             </RenderLinkBtn>
@@ -71,7 +68,7 @@ class RoomMembers extends Component {
             <main className="container">
                 <BackToRoom id={this.props.roomID} />
                 <div className="row">
-                    <StyledHeader className="col s12 m6 l6">
+                    <StyledHeader className="col s12 m6 l6 animated fadeIn">
                         <h3>Members</h3>
                         <p>Invite, remove and see memebers of the room</p>
                         {this.renderLinkBtn()}
@@ -114,7 +111,7 @@ const StyledHeader = styled.div`
     }
 
     p {
-        color: #bdbdbd;
+        color: #9e9e9e;
         font-weight: 400;
         margin-bottom: 2rem;
     }
@@ -124,13 +121,10 @@ const RenderLinkBtn = styled.button`
 
     min-width: 225px;
     font-weight: 600;
-    color: #757575;
-    background-color: #eeeeee;
+    font-size: 0.9rem;
+    background-color: #e0e0e0;
     border-radius: 4px;
-
-    &:focus, &:active {
-        background-color: #eeeeee;
-    }
+    color: #757575;
 
     svg {
         margin-bottom: -3.5px;
