@@ -128,6 +128,6 @@ const RenderLinkBtn = styled.button`
 
     svg {
         margin-bottom: -3.5px;
-        margin-right: 5px;
+        margin-right: 10px;
     }
 `;

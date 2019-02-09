@@ -23,12 +23,12 @@ class InvitationLink extends Component {
             <StyledInvite>
                 <h4>Invitation Link</h4>
                 <h5 onClick={(e) => this.copyUrl(e)}>
-                    {this.props.invite.url}
+                    {`${this.getHostname()}${this.props.invite.url}`}
                 </h5>
-                <p>Valid from {format.tsToDate(this.props.invite.validFrom)} to {format.tsToDate(this.props.invite.validTo)}</p>
+                <p>Valid from <span>{format.getFormatedDateAndTime(this.props.invite.validFrom)}</span> to <span>{format.getFormatedDateAndTime(this.props.invite.validTo)}</span></p>
                 {this.renderAvailableBadge(this.props.invite.validTo)}
                 <GenerateNewBtn 
-                    className="waves-effect waves-purple btn-flat"
+                    className="waves-effect waves-purple btn"
                     disabled={this.state.loadingNewInvite}
                     onClick={!this.state.loadingNewInvite ? this.generateNewLink : null}
                 >
@@ -48,12 +48,12 @@ class InvitationLink extends Component {
     renderAvailableBadge(validTo) {
 
         // check if validTo is less than todays time
-        if (parseInt(validTo) < new Date().getTime()) {
-            return <ExpiredBadge>Expired</ExpiredBadge>
-        }
-
-        return <AvailableBadge>Available</AvailableBadge>
+        return parseInt(validTo) < new Date().getTime() 
+        ? <ExpiredBadge><span>Expired</span></ExpiredBadge>
+        : <AvailableBadge><span>Available</span></AvailableBadge>;
     }
+
+    getHostname = () => (new URL(window.location.href)).hostname;
 
     copyUrl = e => {
 
@@ -145,16 +145,27 @@ const StyledInvite = styled.div`
         font-size: 0.9rem;
         margin-bottom: 1rem;
         opacity: 0.7;
+
+        span {
+            font-weight: 800;
+            opacity: 1;
+        }
     }
 `;
 
 const AvailableBadge = styled.span`
-    background-color: #66bb6a;
+    background-color: #12e2a3;
     color: #ffffff;
     font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 100;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+
+    span {
+        opacity: 1;
+    }
 `;
 
 const ExpiredBadge = styled.span`
@@ -169,6 +180,7 @@ const ExpiredBadge = styled.span`
 const GenerateNewBtn = styled.button`
     font-weight: 600;
     margin-left: 1rem;
+    margin-top: -2px;
     font-size: 0.9rem;
     color: #757575;
     background-color: #eeeeee;
@@ -177,7 +189,7 @@ const GenerateNewBtn = styled.button`
 
     svg {
         margin-bottom: -3.5px;
-        margin-right: 5px;
+        margin-right: 10px;
     }
 `;
 
