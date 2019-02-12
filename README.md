@@ -32,6 +32,7 @@ A flexible, radius based application for taking attendance
 * Node.js
 * Express
 * Firebase
+* Chart.js
 * Firebase-Node-SDK
 * Axios
 * Materialize.css
