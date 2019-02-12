@@ -217,6 +217,7 @@ const GlobalDashStyle = createGlobalStyle`
         text-align: center !important;
         font-weight: 400;
         border-radius: 4px;
+        z-index: 100000000;
     }
 
     .error-progress-bar {
@@ -231,6 +232,7 @@ const GlobalDashStyle = createGlobalStyle`
         text-align: center !important;
         font-weight: 400;
         border-radius: 4px;
+        z-index: 100000000;
     }
 
     .success-progress-bar, .notify-progress-bar {

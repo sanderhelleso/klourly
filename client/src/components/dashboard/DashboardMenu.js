@@ -118,7 +118,7 @@ const StyledMenu = styled.aside`
         border-right: none;
         position: fixed;
         bottom: 0;
-        z-index: 100000;
+        z-index: 1000;
         background-color: #b388ff;
         -webkit-box-shadow: 0px -1px 30px 0px rgba(0, 0, 0, 0.2);
         -moz-box-shadow:    0px -1px 30px 0px rgba(0, 0, 0, 0.2);

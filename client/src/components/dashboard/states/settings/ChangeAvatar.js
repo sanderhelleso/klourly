@@ -176,6 +176,21 @@ const StyledAvatar = styled.div`
         position: relative;
     }
 
+    @media screen and (max-width: 993px) {
+
+        margin-top: 2.5vh;
+        
+        #change-avatar {
+            width:  120px;
+            height: 120px;
+        }
+
+        .change-avatar-cont-overlay {
+            width:  120px;
+            height: 120px;
+        }
+    }
+
     .change-avatar-cont-overlay:hover .avatar-overlay {
         opacity: 1;
     }
