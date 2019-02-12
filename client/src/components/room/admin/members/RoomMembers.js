@@ -115,6 +115,10 @@ const StyledHeader = styled.div`
         font-weight: 400;
         margin-bottom: 2rem;
     }
+
+    @media screen and (max-width: 600px) {
+        text-align: center;
+    }
 `;
 
 const RenderLinkBtn = styled.button`

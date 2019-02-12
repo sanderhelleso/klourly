@@ -280,6 +280,10 @@ const StyledPollCont = styled.div`
     .collection-item svg {
         stroke: #e57373;
     }
+
+    @media screen and (max-width: 600px) {
+        padding: 0;
+    }
 `;
 
 const StyledPoll = styled.div`
@@ -299,6 +303,10 @@ const StyledPollPlaceholder = styled.div`
     p {
         max-width: 75%;
         margin: 1rem auto;
+
+        @media screen and (max-width: 600px) {
+            max-width: 100%;
+        }
     }
 
     svg {

@@ -25,8 +25,8 @@ class Deactivate extends Component {
 
         // display notification
         response.data.success 
-        ? notification.success(response.data.value) 
-        : notification.error(response.data.value);
+        ? notification.success(response.data.message) 
+        : notification.error(response.data.message);
     }
 
     render() {

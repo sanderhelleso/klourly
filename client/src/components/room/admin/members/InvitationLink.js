@@ -28,7 +28,7 @@ class InvitationLink extends Component {
                 <p>Valid from <span>{format.getFormatedDateAndTime(this.props.invite.validFrom)}</span> to <span>{format.getFormatedDateAndTime(this.props.invite.validTo)}</span></p>
                 {this.renderAvailableBadge(this.props.invite.validTo)}
                 <GenerateNewBtn 
-                    className="waves-effect waves-purple btn"
+                    className="waves-effect waves-purple btn-flat"
                     disabled={this.state.loadingNewInvite}
                     onClick={!this.state.loadingNewInvite ? this.generateNewLink : null}
                 >

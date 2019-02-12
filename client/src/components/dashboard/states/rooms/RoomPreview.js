@@ -57,6 +57,10 @@ const StyledCont = styled.div`
     @media screen and (max-width: 700px) {
         padding: 3rem 1.3rem 10rem 1.3rem;
     }
+
+    @media screen and (max-width: 400px) and (max-width: 640px) {
+        padding: 3rem 1.3rem 20rem 1.3rem;
+    }
 `;
 
 const StyledNoRooms= styled.div`

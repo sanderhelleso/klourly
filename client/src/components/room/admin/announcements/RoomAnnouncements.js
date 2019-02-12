@@ -74,6 +74,19 @@ const StyledHeader = styled.div`
         font-weight: 400;
         margin-bottom: 2rem;
     }
+
+    @media screen and (max-width: 600px) {
+
+        text-align: center;
+
+        h3 {
+            font-size: 2.25rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
 `;
 
 const StyledBtnCont = styled.div`
@@ -81,5 +94,13 @@ const StyledBtnCont = styled.div`
 
     a {
         margin: 0 !important;
+    }
+
+    @media screen and (max-width: 600px) {
+        margin: 4rem auto 2rem auto;
+        
+        a {
+            max-width: 100%;
+        }
     }
 `;

@@ -252,6 +252,11 @@ const StyledModal = styled.div`
         .poll-cont {
             border-left: none;
         }
+
+        .announcement-cont {
+            position: relative;
+            padding-right: 0;
+        }
     }
 `;
 
@@ -270,6 +275,24 @@ const StyledHeader = styled.div`
         font-weight: 400;
         margin-bottom: 2rem;
         font-size: 1.25rem;
+    }
+
+    @media screen and (max-width: 800px) {
+        
+        h4  {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        
+        h4  {
+            font-size: 1.5rem;
+        }
     }
 `;
 

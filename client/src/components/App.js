@@ -17,28 +17,12 @@ import { validateAction } from '../actions/validateActions';
 import Landing from './landing/Landing';
 import Signup from './signup/Signup';
 import Login from './login/Login';
-import NewRoom from './newRoom/NewRoom';
 import Room from './room/Room';
-import LoggedinNavbar from './navigation/LoggedinNavbar';
-import NotFound from './notFound/NotFound';
 
 import Dashboard from './dashboard/Dashboard';
 import JoinRoom from './joinRoom/JoinRoom';
-import Announcement from './room/announcements/Announcement';
-import RoomAnnouncements from './room/admin/announcements/RoomAnnouncements';
-import RoomMembers from './room/admin/members/RoomMembers';
-import RoomCheckin from './room/admin/checkin/RoomCheckin';
-import Reports from './room/admin/reports/Reports';
-
-import RoomData from './dataPrefetch/RoomData';
-import ReportData from './dataPrefetch/ReportData';
-import UserLocation from './dataPrefetch/UserLocation';
-import ActiveRoomsData from './dataPrefetch/ActiveRoomsData';
-import Messaging from './messaging/Messaging';
-import CheckinReport from './room/admin/reports/checkin/CheckinReport';
-import MemberReport from './room/admin/reports/member/MemberReport';
-import CheckinAvailableData from './dataPrefetch/CheckinAvailableData';
-import NotificationsData from './dataPrefetch/NotificationsData';
+import LoggedInRoutes from './routes/LoggedInRoutes';
+import DefaultRoutes from './routes/DefaultRoutes';
 
 // Initialize Firebase
 const config = {
@@ -56,93 +40,32 @@ firebase.initializeApp(config);
 class App extends Component {
     constructor(props) {
         super(props);
-
-        this.landingRoute = this.landingRoute.bind(this);
-        this.loginRoute = this.loginRoute.bind(this);
-        this.signupRoute = this.signupRoute.bind(this);
-        this.dashboardRoute = this.dashboardRoute.bind(this);
-        this.roomRoute = this.roomRoute.bind(this);
     }
 
     // route for handling authentication on auth required routes
-    loginRoute() {
-        return this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
-    }
+    loginRoute = () =>
+        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
 
-    signupRoute() {
-        return this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
-    }
+    signupRoute = () => 
+        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
 
-    landingRoute() {
-        return this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
-    }
+    landingRoute = () =>
+        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
 
-    dashboardRoute() {
-        return this.props.auth.loggedIn ? <Dashboard /> : <Redirect to="/" />;
-    }
+    dashboardRoute = () =>
+        this.props.auth.loggedIn ? <Dashboard /> : <Redirect to="/" />;
 
-    roomRoute() {
-        return this.props.auth.loggedIn ? <Room /> : <Redirect to="/" />;
-    }
-
-    login() {
-        return <Redirect to="/login" />
-    }
-
-    renderRoomRoutes() {
-        if (this.props.room.activeRoom) {
-            return (
-                <Fragment>
-                    <Route path="/" component={LoggedinNavbar} />
-                    <Route exact path="/dashboard/rooms/:roomID" component={Room} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/reports" component={Reports} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/checkin" component={RoomCheckin} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/announcements" component={RoomAnnouncements} />
-                    <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/reports/checkin/:checkinID" component={CheckinReport} />
-                    <Route exact path="/dashboard/rooms/:roomID/admin/reports/member/:memberID" component={MemberReport} />
-                    <Route path="/dashboard/rooms/:roomID/admin/reports" component={ReportData} />
-                </Fragment>
-            )
-        }
-
-        return null;
-    }
+    roomRoute = () => 
+        this.props.auth.loggedIn ? <Room /> : <Redirect to="/" />;
 
     renderRoutes() {
 
         if (this.props.auth.loggedIn === null) return null;
 
-        else if (this.props.auth.loggedIn) {
-            return (
-                <Fragment>
-                    {this.renderRoomRoutes()}
-                    <Route exact path="/" component={this.landingRoute} />
-                    <Route exact path="/signup" component={this.signupRoute} />
-                    <Route exact path="/login" component={this.loginRoute} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/dashboard/new-room" component={NewRoom} />
-                    <Route path="/dashboard/rooms/:roomID" component={RoomData} />
-                    <Messaging />
-                    <UserLocation />
-                    <NotificationsData />
-                    <CheckinAvailableData />
-                    <ActiveRoomsData />
-                </Fragment>
-            )
-        }
+        else if (this.props.auth.loggedIn) 
+             return <LoggedInRoutes includeRoom={this.props.room.activeRoom} />
 
-        else {
-            return (
-                <Fragment>
-                    <Route exact path="/" component={Landing} />
-                    <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/login" component={Login} />
-                    <Route path="/dashboard" component={this.login} />
-                </Fragment>
-            )
-        }
+        else return <DefaultRoutes />
     }
 
     render() {
