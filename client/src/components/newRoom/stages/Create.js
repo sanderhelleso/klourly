@@ -47,10 +47,8 @@ class Create extends Component {
 
         // attempt to create room with recieved ID
         let roomResponse = await room.createRoom(
-            this.props.userID, { 
-                ...this.props.newRoomData, 
-                ...updatedRoomData
-            }
+            this.props.userID, 
+            { ...this.props.newRoomData, ...updatedRoomData }
         );
 
         // validate response success
@@ -62,7 +60,7 @@ class Create extends Component {
             // create preview
             const preview = {
                 id: roomData.id,
-                cover: roomData.cover.small,
+                cover: roomData.cover.medium,
                 name: roomData.name,
                 times: roomData.times 
             }

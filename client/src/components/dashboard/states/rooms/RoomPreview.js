@@ -26,9 +26,8 @@ export default class RoomPreview extends Component {
         if (!this.props.data)  return <CircularLoader size="big" />
 
         // render preview card for each room
-        return this.props.data.sort((a, b) => a.name.localeCompare(b.name)) .map(room => {
-                    return <RoomCard key={room.id} data={room} owning={this.props.owning} />
-                });
+        return this.props.data.sort((a, b) => a.name.localeCompare(b.name)).map(room => 
+                <RoomCard key={room.id} data={room} owning={this.props.owning} />);
     }
 
     render() {
