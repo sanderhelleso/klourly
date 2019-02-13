@@ -10,11 +10,13 @@ import RoomMembers from '../room/admin/members/RoomMembers';
 import RoomCheckin from '../room/admin/checkin/RoomCheckin';
 import Reports from '../room/admin/reports/Reports';
 import LoggedinNavbar from '../navigation/LoggedinNavbar';
+import RoomData from '../dataPrefetch/RoomData';
 import Room from '../room/Room';
 
 const RoomRoutes = () => (
     <Fragment>
         <Route path="/" component={LoggedinNavbar} />
+        <Route path="/dashboard/rooms/:roomID" component={RoomData} />
         <Route exact path="/dashboard/rooms/:roomID" component={Room} />
         <Route exact path="/dashboard/rooms/:roomID/admin/reports" component={Reports} />
         <Route exact path="/dashboard/rooms/:roomID/admin/members" component={RoomMembers} />

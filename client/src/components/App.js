@@ -14,12 +14,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { validateAction } from '../actions/validateActions';
 
-import Landing from './landing/Landing';
-import Signup from './signup/Signup';
-import Login from './login/Login';
-import Room from './room/Room';
-
-import Dashboard from './dashboard/Dashboard';
 import JoinRoom from './joinRoom/JoinRoom';
 import LoggedInRoutes from './routes/LoggedInRoutes';
 import DefaultRoutes from './routes/DefaultRoutes';
@@ -42,28 +36,12 @@ class App extends Component {
         super(props);
     }
 
-    // route for handling authentication on auth required routes
-    loginRoute = () =>
-        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Login />;
-
-    signupRoute = () => 
-        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Signup />;
-
-    landingRoute = () =>
-        this.props.auth.loggedIn ? <Redirect to="/dashboard" /> : <Landing />;
-
-    dashboardRoute = () =>
-        this.props.auth.loggedIn ? <Dashboard /> : <Redirect to="/" />;
-
-    roomRoute = () => 
-        this.props.auth.loggedIn ? <Room /> : <Redirect to="/" />;
-
     renderRoutes() {
 
         if (this.props.auth.loggedIn === null) return null;
 
         else if (this.props.auth.loggedIn) 
-             return <LoggedInRoutes includeRoom={this.props.room.activeRoom} />
+            return <LoggedInRoutes includeRoom={this.props.room.activeRoom} />
 
         else return <DefaultRoutes />
     }
