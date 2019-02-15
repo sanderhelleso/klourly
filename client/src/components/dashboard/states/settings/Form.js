@@ -241,7 +241,6 @@ const StyledForm = styled.form`
         padding: 3rem 2rem;
         max-height: 600px;
         overflow-y: auto;
-        margin-top: 2.5rem;
 
         &::-webkit-scrollbar {
             width: 0.35em;
@@ -249,6 +248,7 @@ const StyledForm = styled.form`
 
         @media screen and (max-width: 993px) {
             max-height: 40vh;
+            margin-top: 2.5rem;
         }
 
         @media screen and (max-width: 360px) AND (max-height: 640px) {

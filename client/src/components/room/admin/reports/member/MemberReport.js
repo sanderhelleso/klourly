@@ -74,7 +74,11 @@ class MemberReport extends Component {
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
-                        <Chart chartData={this.props.activeReport.chartData} />
+                        <Chart 
+                            chartData={this.props.activeReport.chartData}
+                            userID={this.props.userData.id} 
+                            roomCheckins={this.props.roomCheckins}
+                        />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
@@ -160,10 +164,9 @@ const StyledReport = styled.div`
 
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
-        padding: 0;
-        padding-top: 70px;
-        background: #B24592;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
+        padding: 4rem 2rem 0 2rem;
+        /*background: #B24592;  /* fallback for old browsers 
+        background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 
         background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
