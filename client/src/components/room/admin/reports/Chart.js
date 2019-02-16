@@ -6,64 +6,62 @@ export default class Chart extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.prepeareChart());
+        let chartData;
+        if (this.props.chartType === 'member') this.chartData = this.getMemberChart();
+
+        //else if (this.props.chartType === 'checkin')
 
         this.data = {
-            labels: this.props.chartData.dataset.map(ts => format.getFormatedDateAndTime(ts)),
+            labels: this.chartData.labels.map(ts => format.getFormatedDateAndTime(ts)),
             datasets: [{
-                data: this.prepeareChart(),
-                backgroundColor: [
-                    'rgba(255, 255, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,255,255, 0.6)',
-                ],
+                data: this.chartData.data,
+                backgroundColor: 'rgba(179, 136, 255, 0.4)',
+                borderColor: 'rgba(179, 136, 255, 0.6)',
                 borderWidth: 1
             }]
         }
 
         this.options = {
-            maintainAspectRatio: false
-        }
-
-        /*this.options = {
             maintainAspectRatio: false,
-            elements: {
-                point:{
-                    radius: 0
-                }
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Members checkins over time',
+                padding: 20,
+                fontSize: 16
             },
             scales: {
                 xAxes: [{
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)",
-                        drawTicks: false
-                    },
                     ticks: {
-                        display: false
+                        fontSize: 8
                     }
                 }],
                 yAxes: [{
                     gridLines: {
-                        color: "rgba(0, 0, 0, 0)",
-                        drawTicks: false
                     },
                     ticks: {
                         display: false,
                     }   
                 }]
             },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                enabled: false,
-                hover: { mode: null},
-            }
-        }*/
+        }
     }
 
-    prepeareChart() {
+    getMemberChart() {
+        return {
+            labels: this.getMemberChartLabels(),
+            data: this.getMemberChartData()
+        }
+    }
+
+    getMemberChartLabels() {
+        return Object.values(this.props.roomCheckins)
+            .reverse().map(checkinData => checkinData.endTime);
+    }
+
+    getMemberChartData() {
         return Object.values(this.props.roomCheckins)
             .reverse().map(checkinData => 
                 checkinData.attendies // check if room has attendies available
@@ -79,7 +77,7 @@ export default class Chart extends Component {
             <Bar
                 data={this.data}
                 width={100}
-                height={300}
+                height={350}
                 options={this.options}
             />
         )

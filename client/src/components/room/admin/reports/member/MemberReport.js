@@ -72,14 +72,6 @@ class MemberReport extends Component {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
             return(
                 <StyledReport className="col s12 animated fadeIn">
-                    <div className="col s12 chart">
-                        <span>Checkins over time</span>
-                        <Chart 
-                            chartData={this.props.activeReport.chartData}
-                            userID={this.props.userData.id} 
-                            roomCheckins={this.props.roomCheckins}
-                        />
-                    </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">
                             <MemberReportInfo data={this.props.userData} />
@@ -87,6 +79,13 @@ class MemberReport extends Component {
                                 <DownloadReports reportType="member" />
                             </div>
                         </StyledDetails>
+                        <div className="col s12 chart">
+                            <Chart 
+                                userID={this.props.userData.id} 
+                                roomCheckins={this.props.roomCheckins}
+                                chartType="member"
+                            />
+                        </div>
                         <MemberReportCheckins 
                             roomID={this.props.roomID}
                             userID={this.props.userData.id}
@@ -147,27 +146,9 @@ const StyledReport = styled.div`
     .chart {
 
         position: relative;
-
-        span {
-            position: absolute;
-            display: block;
-            padding: 0.25rem 1rem;
-            top: 15px;
-            right: 15px;
-            color: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #ffffff;
-            font-size: 0.8rem;
-            opacity: 0.5;
-            margin-bottom: 25px;
-        }
-
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
-        padding: 4rem 2rem 0 2rem;
-        /*background: #B24592;  /* fallback for old browsers 
-        background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 
-        background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        padding: 3rem 1rem;
     }
 
     .details {
