@@ -56,7 +56,18 @@ const StyledCont = styled.div`
         transition: 0.3s ease-in-out;
         position: relative;
         word-break: break-all;
-        border: 1px solid #e0e0e0;
+    }
+
+    .attended-cont {
+        -webkit-box-shadow: 0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+        -moz-box-shadow:    0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+        box-shadow:         0px 4px 14px 0px rgba(46, 82, 217, 0.30);
+    }
+
+    .not-attended-cont {
+        -webkit-box-shadow: 0px 4px 14px 0px rgba(255,39,48, 0.30);
+        -moz-box-shadow:    0px 4px 14px 0px rgba(255,39,48, 0.30);
+        box-shadow:         0px 4px 14px 0px rgba(255,39,48, 0.30);
     }
 
     &:hover {
@@ -65,13 +76,14 @@ const StyledCont = styled.div`
 
     .attended {
         position: absolute;
-        top: -17px;
+        top: -25px;
         right: 10px;
         background-color: ${props => props.attended ? '#81c784' : '#e57373'};
         color: #ffffff;
         height: 35px;
         width: 130px;
         border-radius: 20px;
+        box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.09);
         text-align: center;
 
         span {

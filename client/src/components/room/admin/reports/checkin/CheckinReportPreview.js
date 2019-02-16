@@ -33,7 +33,7 @@ class CheckinReportPreview extends Component {
                             <h5>Checkin ID</h5>
                             <h3>{this.props.data.checkinID}</h3>
                             <a 
-                                className="waves-effect waves-light btn-flat see-details"
+                                className="waves-effect waves-purple btn-flat see-details"
                                 onClick={() => redirect.roomCheckinReport(
                                     this.props.roomID, 
                                     this.props.data.checkinID
@@ -133,7 +133,7 @@ const StyledPreview = styled.div`
         position: relative;
 
         h3 {
-            font-size: 3.9rem;
+            font-size: 4.5rem;
             font-weight: 100;
             margin: 0;
             margin-top: 1rem;
@@ -152,7 +152,7 @@ const StyledPreview = styled.div`
             font-size: 0.9rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-top: -13px;
+            margin-top: -17.5px;
             font-weight: 400;
             opacity: 0.8;
         }
