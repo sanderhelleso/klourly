@@ -24,10 +24,6 @@ class CheckinReportPreview extends Component {
         return (
             <div className="col s12 m6 l4">
                 <StyledPreview className="col s12">
-                    <div className="col s12 chart">
-                        <span>Checkins over time</span>
-                        <Chart chartData={this.generateChartData()} />
-                    </div>
                     <div className="col s12 information">
                         <div className="col s6 attendence">
                             <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
@@ -39,9 +35,9 @@ class CheckinReportPreview extends Component {
                             <a 
                                 className="waves-effect waves-light btn-flat see-details"
                                 onClick={() => redirect.roomCheckinReport(
-                                                this.props.roomID, 
-                                                this.props.data.checkinID)
-                                        }
+                                    this.props.roomID, 
+                                    this.props.data.checkinID
+                                )}
                             >
                                 See Details
                             </a>
