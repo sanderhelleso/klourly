@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { format } from '../../../../../helpers/format';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -22,7 +23,7 @@ class CheckinReport extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.props.membersData !== nextProps.membersData) {
+        if (this.props.membersData !== nextProps.membersData && !this.state.dataLoaded) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
     }
@@ -39,7 +40,7 @@ class CheckinReport extends Component {
         if (this.state.dataLoaded) {
 
             // filter out attendies
-            const checkinID = this.props.match.params.checkinID;
+            const checkinID =   this.props.match.params.checkinID;
             const checkinData = this.props.checkins[checkinID];
             const attendiesData = this.props.membersData.filter(member => 
                                     checkinData && checkinData.attendies
@@ -63,6 +64,13 @@ class CheckinReport extends Component {
         }
     }
 
+    // create tooltip
+    tooltip() {
+        return {
+            label: tooltipItem => `Checked in at: ${format.tsToHHMM(tooltipItem.yLabel)}`
+        }
+    }
+
     renderReport() {
 
         if (this.props.reportData && 
@@ -72,7 +80,10 @@ class CheckinReport extends Component {
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
                         <span>Checkins over time</span>
-                        <Chart chartData={this.props.reportData.chartData} />
+                        <Chart 
+                            chartData={this.props.reportData.chartData}
+                            tooltip={this.tooltip()}
+                        />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">

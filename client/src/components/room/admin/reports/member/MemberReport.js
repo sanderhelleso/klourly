@@ -88,6 +88,14 @@ class MemberReport extends Component {
             );
     }
 
+    // create tooltip
+    tooltip() {
+        return {
+            label: tooltipItem => 
+                tooltipItem.yLabel === 1 ? 'Attended' : 'Did not attend'
+        }
+    }
+
     renderMemberReport() {
 
         if (this.props.activeReport && this.props.activeReport.userID === this.props.userData.id) {
@@ -95,8 +103,11 @@ class MemberReport extends Component {
             return(
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
-                        <span>Checkin consistency (0 Not Attened | 1 Attended)</span>
-                        <Chart chartData={this.props.activeReport.chartData} />
+                        <span>Checkin consistency (Attended / Did not attend)</span>
+                        <Chart 
+                            chartData={this.props.activeReport.chartData} 
+                            tooltip={this.tooltip()}
+                        />
                     </div>
                     <div className="col s12 details">
                         <StyledDetails className="col s12">

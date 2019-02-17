@@ -25,9 +25,6 @@ export default class Chart extends Component {
                     bottom: 10
                 }
             },
-            elements: {
-                
-            },
             scales: {
                 xAxes: [{
                     gridLines: {
@@ -49,7 +46,10 @@ export default class Chart extends Component {
             legend: {
                 display: false
             },
-
+            tooltips: {
+                displayColors: false,
+                callbacks: this.props.tooltip
+            }
         }
     }
 
