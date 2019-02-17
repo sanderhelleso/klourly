@@ -32,18 +32,21 @@ export default class ReportMembers extends Component {
             }
         });
 
+        // get checkin attendies
         const members = Object.values(this.props.data.roomMembers)
                 .sort((a, b) => b.attended - a.attended)
-                .map(member => <ReportMember 
-                                    key={member.id}
-                                    roomID={this.props.roomID}
-                                    data={{
-                                        ...member,
-                                        timestamp: member.attended 
-                                        ? this.props.data.attendies[member.id] 
-                                        : null
-                                    }} 
-                                />);
+                .map(member =>
+                    <ReportMember 
+                        key={member.id}
+                        roomID={this.props.roomID}
+                        data={{
+                            ...member,
+                            timestamp: member.attended 
+                                ? this.props.data.attendies[member.id] 
+                                : null
+                        }} 
+                    />
+                );
         
         this.setState({ members, attended });
     }

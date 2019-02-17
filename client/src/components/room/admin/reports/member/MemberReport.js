@@ -21,7 +21,7 @@ class MemberReport extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.userData !== nextProps.userData) {
+        if (this.props.userData !== nextProps.userData && !this.state.dataLoaded) {
             this.setState({ dataLoaded: true }, () => this.setupMemberReport());
         }
     }
@@ -35,21 +35,15 @@ class MemberReport extends Component {
 
     setupMemberReport() {
 
-
+        // check if data is loaded
         if (this.state.dataLoaded) {
 
-            let labels, dataset = null;
             let attendenceInPercentage = 0;
 
             // if user has checkins available, calculate required checkin stats data
             if (this.props.userData.checkins) {
 
-                labels = Object.values(this.props.userData.checkins)
-                        .map(() => this.props.userData.name);
-
-                dataset = Object.values(this.props.userData.checkins)
-                        .map(value => value).sort((a, b) => a - b);
-
+                // set users attended in percentage
                 attendenceInPercentage = format.getPercentage(
                     Object.keys(this.props.userData.checkins).length,
                     Object.keys(this.props.roomCheckins).length
@@ -59,11 +53,37 @@ class MemberReport extends Component {
             // update specific checkin report state and render
             this.props.setSpecificCheckinReportAction({
                 userID: this.props.userData.id,
-                chartData: { labels, dataset },
+                chartData: this.getMemberChart(),
                 attendenceInPercentage,
                 ...this.props.userData,
             });
         }
+    }
+
+    // get combined chart (labels and dataset)
+    getMemberChart() {
+        return {
+            labels: this.chartMemberLabels(),
+            dataset: this.chartMemberData()
+        }
+    }
+
+    // get chart labels
+    chartMemberLabels() {
+        return Object.values(this.props.roomCheckins)
+            .reverse().map(checkinData => checkinData.endTime);
+    }
+
+    // get chart data
+    chartMemberData() {
+        return Object.values(this.props.roomCheckins)
+            .reverse().map(checkinData => 
+                checkinData.attendies // check if room has attendies available
+                ? Object.keys(checkinData.attendies).indexOf(this.props.userData.id) !== -1
+                    ? 1 // attended
+                    : 0 // not attended
+                : 0 // chceckin had no attendies, thus user did not attend either
+            );
     }
 
     renderMemberReport() {
@@ -162,9 +182,9 @@ const StyledReport = styled.div`
         border-top-right-radius: 12px;
         padding: 0;
         padding-top: 70px;
-        background: #B24592;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: #DA22FF;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
     .details {

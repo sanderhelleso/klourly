@@ -76,7 +76,7 @@ const StyledCont = styled.div`
 
     .attended {
         position: absolute;
-        top: -25px;
+        top: -17px;
         right: 10px;
         background-color: ${props => props.attended ? '#81c784' : '#e57373'};
         color: #ffffff;

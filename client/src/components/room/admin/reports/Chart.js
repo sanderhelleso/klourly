@@ -5,16 +5,15 @@ export default class Chart extends Component {
     constructor(props) {
         super(props);
 
+        console.log(123);
+        console.log(this.props.chartData);
+
         this.data = {
             labels: this.props.chartData.labels,
             datasets: [{
                 data: this.props.chartData.dataset,
-                backgroundColor: [
-                    'rgba(255, 255, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,255,255, 0.6)',
-                ],
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                borderColor: 'rgba(255,255,255, 0.6)',
                 borderWidth: 1
             }]
         }
@@ -22,9 +21,7 @@ export default class Chart extends Component {
         this.options = {
             maintainAspectRatio: false,
             elements: {
-                point:{
-                    radius: 0
-                }
+                
             },
             scales: {
                 xAxes: [{
@@ -49,10 +46,7 @@ export default class Chart extends Component {
             legend: {
                 display: false
             },
-            tooltips: {
-                enabled: false,
-                hover: { mode: null},
-            }
+
         }
     }
 
