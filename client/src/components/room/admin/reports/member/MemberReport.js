@@ -71,7 +71,9 @@ class MemberReport extends Component {
     // get chart labels
     chartMemberLabels() {
         return Object.values(this.props.roomCheckins)
-            .reverse().map(checkinData => checkinData.endTime);
+            .reverse().map(checkinData => 
+                format.getFormatedDateAndTime(checkinData.endTime)
+            );
     }
 
     // get chart data
@@ -93,7 +95,7 @@ class MemberReport extends Component {
             return(
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
-                        <span>Checkins over time</span>
+                        <span>Checkin consistency (0 Not Attened | 1 Attended)</span>
                         <Chart chartData={this.props.activeReport.chartData} />
                     </div>
                     <div className="col s12 details">
