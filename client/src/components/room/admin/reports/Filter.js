@@ -38,8 +38,8 @@ class Filter extends Component {
                     time: msInDay * 183
                 },
                 label6: {
-                    name: 'Last 1 Year',
-                    time: msInDay * 365
+                    name: 'Of all time',
+                    time: 2147483647
                 }
             }
         }

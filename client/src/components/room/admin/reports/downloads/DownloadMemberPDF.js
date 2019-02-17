@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 class DownloadMemberPDF extends Component {
     constructor(props) {
         super(props);
-
-        console.log(props);
     }
 
     createCheckinsData() {
@@ -25,13 +23,16 @@ class DownloadMemberPDF extends Component {
                         end_time: format.getFormatedDateAndTime(checkinData.endTime),
                         checkin_total_attendence_in_percentage: checkinData.attendenceInPercent,
                         checkin_information: checkinData.attendies 
-                                    ? Object.keys(checkinData.attendies)
-                                        .indexOf(this.props.activeReport.userID) !== -1
-                                    ? {
-                                        attended: 'yes',
-                                        checkedin_at: format.getFormatedDateAndTime(
-                                            checkinData.attendies[this.props.activeReport.userID]) 
-                                    } : 'not attended' : 'not attended'
+                            ? Object.keys(checkinData.attendies)
+                                .indexOf(this.props.activeReport.userID) !== -1
+                                ? {
+                                    attended: 'yes',
+                                    checkedin_at: format.tsToHHMM(
+                                        checkinData.attendies[this.props.activeReport.userID]
+                                    ) 
+                                } 
+                                : 'not attended' 
+                            : 'not attended'
                     }
                 }
             }));
@@ -91,8 +92,10 @@ class DownloadMemberPDF extends Component {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(16);
         doc.text(20, 65, `Total Checkins: ${this.props.activeReport.checkins 
-                            ? Object.keys(this.props.activeReport.checkins).length
-                            : 0}/${Object.keys(this.props.activeRoom.checkins).length} (${this.props.activeReport.attendenceInPercentage}%)`);
+            ? Object.keys(this.props.activeReport.checkins).length
+            : 0}/${Object.keys(this.props.activeRoom.checkins).length} (${this.props.activeReport.attendenceInPercentage}%)`
+        );
+
         this.rowHeader(doc, initial);
 
         let startList = 95;
@@ -141,12 +144,15 @@ class DownloadMemberPDF extends Component {
             }
         });
 
-        doc.save(`member-report-${this.props.activeReport.checkinID}.pdf`)
+        doc.save(`member-report-${this.props.activeReport.name.split(' ').join('_')}-${new Date().getTime()}.pdf`)
     }
 
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={this.generatePDF}>
+            <a 
+                class="waves-effect waves btn-flat" 
+                onClick={this.generatePDF}
+            >
                 PDF
             </a>
         )

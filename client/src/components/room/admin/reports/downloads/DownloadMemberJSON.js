@@ -22,13 +22,15 @@ class DownloadMemberJSON extends Component {
                         end_time: format.getFormatedDateAndTime(checkinData.endTime),
                         checkin_total_attendence_in_percentage: checkinData.attendenceInPercent,
                         checkin_information: checkinData.attendies 
-                                    ? Object.keys(checkinData.attendies)
-                                        .indexOf(this.props.activeReport.userID) !== -1
-                                    ? {
-                                        attended: 'yes',
-                                        checkedin_at: format.getFormatedDateAndTime(
-                                            checkinData.attendies[this.props.activeReport.userID]) 
-                                    } : 'not attended' : 'not attended'
+                            ? Object.keys(checkinData.attendies)
+                                .indexOf(this.props.activeReport.userID) !== -1
+                                ? {
+                                    attended: 'yes',
+                                    checkedin_at: format.getFormatedDateAndTime(
+                                    checkinData.attendies[this.props.activeReport.userID]) 
+                                } 
+                                : 'not attended' 
+                            : 'not attended'
                     }
                 }
             }));
@@ -64,8 +66,9 @@ class DownloadMemberJSON extends Component {
             member_name: this.props.activeReport.name,
             report: {
                 total_member_checkins: this.props.activeReport.checkins 
-                                        ? Object.keys(this.props.activeReport.checkins).length
-                                        : 0,
+                    ? Object.keys(this.props.activeReport.checkins).length
+                    : 0
+                ,
                 attendendence_in_percentage: this.props.activeReport.attendenceInPercentage,
                 room_checkins_data: this.createCheckinsData()
             }
@@ -77,7 +80,7 @@ class DownloadMemberJSON extends Component {
 
     format() {
 
-        const fileName = `member-report-${this.props.activeReport.userID}`;
+        const fileName = `member-report-${this.props.activeReport.name.split(' ').join('_')}-${new Date().getTime()}`;
         const extension = '.json';
         const type = 'application/json';
         const data = this.generateJSONReport();
@@ -87,7 +90,10 @@ class DownloadMemberJSON extends Component {
 
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={() => downloadJSON(this.format())}>
+            <a 
+                class="waves-effect waves btn-flat" 
+                onClick={() => downloadJSON(this.format())}
+            >
                 JSON
             </a>
         )

@@ -81,7 +81,7 @@ class DownloadPDF extends Component {
         let counter = 0;
         doc.setFontSize(12);
         this.createMemberList().forEach(member => {
-            counter ++;
+            counter++;
             doc.setTextColor(0, 0, 0);
             doc.text(20, startList, member.name);
 
@@ -102,12 +102,15 @@ class DownloadPDF extends Component {
         });
         
 
-        doc.save(`checkin-report-${this.props.activeReport.userID}.pdf`);
+        doc.save(`checkin-report-${this.props.activeReport.checkinID}-${new Date().getTime()}.pdf`);
     }
 
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={this.generatePDF}>
+            <a 
+                class="waves-effect waves btn-flat" 
+                onClick={this.generatePDF}
+            >
                 PDF
             </a>
         )

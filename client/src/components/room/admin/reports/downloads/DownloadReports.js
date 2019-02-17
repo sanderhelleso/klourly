@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 // redux
@@ -15,16 +15,14 @@ class DownloadReports extends Component {
     constructor(props) {
         super(props);
         
-        this.state = {
-            toggle: true
-        }
+        this.state = { toggle: true }
     }
 
     renderDownloads() {
 
         if (this.props.reportType === 'member') {
             return (
-                <div className="col s12 downloads">
+                <Fragment>
                     <DownloadMemberJSON toggle={this.state.toggle} />
                     <DownloadMemberPDF toggle={this.state.toggle} />
                     <p>
@@ -38,16 +36,16 @@ class DownloadReports extends Component {
                             <span>Only checkins member attended</span>
                         </label>
                     </p>
-                </div>
+                </Fragment>
             )
         }
 
         else if (this.props.reportType === 'checkin') {
             return (
-                <div className="col s12 downloads">
+                <Fragment>
                     <DownloadCheckinJSON />
                     <DownloadCheckinPDF />
-                </div>
+                </Fragment>
             )
         }
     }
@@ -57,7 +55,9 @@ class DownloadReports extends Component {
             <StyledDownloads>
                 <div className="download-cont">
                     <h5>Download Report</h5>
-                    {this.renderDownloads()}
+                    <div className="col s12 downloads">
+                        {this.renderDownloads()}
+                    </div>
                 </div>
             </StyledDownloads>
         )

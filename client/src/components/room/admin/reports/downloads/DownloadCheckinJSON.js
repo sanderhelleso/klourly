@@ -65,7 +65,7 @@ class DownloadCheckinJSON extends Component {
 
     format() {
 
-        const fileName = `checkin-report-${this.props.activeReport.checkinID}`;
+        const fileName = `checkin-report-${this.props.activeReport.checkinID}-${new Date().getTime()}`;
         const extension = '.json';
         const type = 'application/json';
         const data = this.generateJSONReport();
@@ -75,7 +75,10 @@ class DownloadCheckinJSON extends Component {
 
     render() {
         return (
-            <a class="waves-effect waves-purple btn-flat" onClick={() => downloadJSON(this.format())}>
+            <a 
+                class="waves-effect waves btn-flat" 
+                onClick={() => downloadJSON(this.format())}
+            >
                 JSON
             </a>
         )
