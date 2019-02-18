@@ -12,6 +12,8 @@ import ReportMembers from '../ReportMembers';
 import CheckinReportInfo from './CheckinReportInfo';
 import DownloadReports from '../downloads/DownloadReports';
 import Back from '../../../../dashboard/Back';
+import CircularLoader from '../../../../loaders/CircularLoader';
+import ReportData from '../../../../dataPrefetch/ReportData';
 
 
 class CheckinReport extends Component {
@@ -33,6 +35,15 @@ class CheckinReport extends Component {
         if (this.props.membersData) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
+    }
+
+    fetchData() {
+
+        if (!this.props.reports) {
+            return <ReportData />
+        }
+
+        return null;
     }
 
     prepareReport() {
@@ -104,7 +115,12 @@ class CheckinReport extends Component {
             )
         }
 
-        return <p>Loading...</p>
+        return (
+            <StyledLoaderCont>
+                {this.fetchData()}
+                <CircularLoader size="big" />
+            </StyledLoaderCont>
+        );
     }
 
     render() {
@@ -122,6 +138,7 @@ class CheckinReport extends Component {
 
 const mapStateToProps = state => {
     return { 
+        reports: state.room.activeRoom.reports,
         roomID: state.room.activeRoom.id,
         reportData: state.room.activeRoom.activeReport,
         checkins: state.room.activeRoom.checkins,
@@ -186,4 +203,9 @@ const StyledDetails = styled.div`
     border-bottom: 1px solid #eeeeee;
     padding-bottom: 2rem !important;
     margin-bottom: 2rem;
+`;
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 45vh;
 `;

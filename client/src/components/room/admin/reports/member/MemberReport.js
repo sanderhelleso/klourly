@@ -12,6 +12,9 @@ import Back from '../../../../dashboard/Back';
 import DownloadReports from '../downloads/DownloadReports';
 import MemberReportInfo from './MemberReportInfo';
 import MemberReportCheckins from './MemberReportCheckins';
+import CircularLoader from '../../../../loaders/CircularLoader';
+import ReportData from '../../../../dataPrefetch/ReportData';
+
 
 class MemberReport extends Component {
     constructor(props) {
@@ -31,6 +34,15 @@ class MemberReport extends Component {
         if (this.props.userData) {
             this.setState({ dataLoaded: true }, () => this.setupMemberReport());
         }
+    }
+
+    fetchData() {
+        
+        if (!this.props.reports) {
+            return <ReportData />
+        }
+
+        return null;
     }
 
     setupMemberReport() {
@@ -128,7 +140,12 @@ class MemberReport extends Component {
             )
         }
 
-        return <p>Loading...</p>
+        return (
+            <StyledLoaderCont>
+                {this.fetchData()}
+                <CircularLoader size="big" />
+            </StyledLoaderCont>
+        );
     }
 
     render() {
@@ -148,14 +165,15 @@ const mapStateToProps = (state, props) => {
 
     // get user
     return { 
-            activeReport: state.room.activeRoom.activeReport,
-            roomID: state.room.activeRoom.id,
-            roomCheckins: state.room.activeRoom.checkins,
-            userData: state.room.activeRoom.membersData
-                        ? Object.values(state.room.activeRoom.membersData)
-                          .filter(member => member.id === props.match.params.memberID)[0]
-                        : null  
-            }
+        reports: state.room.activeRoom.reports,
+        activeReport: state.room.activeRoom.activeReport,
+        roomID: state.room.activeRoom.id,
+        roomCheckins: state.room.activeRoom.checkins,
+        userData: state.room.activeRoom.membersData
+            ? Object.values(state.room.activeRoom.membersData)
+                .filter(member => member.id === props.match.params.memberID)[0]
+            : null  
+        }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -218,4 +236,10 @@ const StyledDetails = styled.div`
     padding-bottom: 3rem !important;
     margin-bottom: 3rem;
 `;
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 45vh;
+`;
+
 
