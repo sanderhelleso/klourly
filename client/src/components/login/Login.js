@@ -25,7 +25,9 @@ export default class Login extends Component {
 	render() {
 		return (
 			<main>
-				<h2 id="login-logo"><a onClick={redirect.home}>Klourly</a></h2>
+				<h2 id="login-logo">
+					<a onClick={redirect.home}>Klourly</a>
+				</h2>
 				<Form params={this.getQueryParams()} />
 			</main>
 		)

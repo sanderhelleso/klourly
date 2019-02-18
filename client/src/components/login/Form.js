@@ -16,6 +16,7 @@ import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
 
 import LinearLoader from '../loaders/LinearLoader';
+import GoogleAuth from './GoogleAuth';
 
 class Form extends Component {
     constructor(props) {
@@ -87,12 +88,12 @@ class Form extends Component {
             document.addEventListener('keyup', this.loginOnEnterKey);
             return (
                 <button 
-                id="login-btn" 
-                className={this.state.classNameEnable}
-                type="button"
-                onClick={this.login}
+                    id="login-btn" 
+                    className={this.state.classNameEnable}
+                    type="button"
+                    onClick={this.login}
                 >
-                Log In
+                    Log In
                 </button>
             )
         }
@@ -105,10 +106,11 @@ class Form extends Component {
         else {
             return (
                 <button 
-                id="login-btn" 
-                className={this.state.classNameEnableDisable}
-                disabled={true}
-                type="button">
+                    id="login-btn" 
+                    className={this.state.classNameEnableDisable}
+                    disabled={true}
+                    type="button"
+                >
                 Log In
                 </button>
             )
@@ -212,6 +214,7 @@ class Form extends Component {
                         <div className="col s10 offset-s1">
                             <h5 id='login-error'>{this.state.error}</h5>
                             {this.renderLoginBtn()}
+                            <GoogleAuth />
                         </div>
                     </div>
                     <a id="login-signup" onClick={redirect.signup}>Dont have an account?</a>
