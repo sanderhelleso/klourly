@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { redirect } from '../../../helpers/redirect';
 
 const NO_MEMBERS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
-const INVITE_TXT = 'Looks like this room dont have any members yet. Go and spread the word by uing the invitation link above!';
+const INVITE_TXT = 'Looks like this room dont have any members yet. Go and spread the word by using the invitation link above!';
 const CHECKIN_TXT = 'Looks like this room dont have any members yet. Go and spread the word and come back in a bit to try again.';
 
 class NoMembersPlaceholder extends Component {
@@ -26,7 +26,7 @@ class NoMembersPlaceholder extends Component {
 }
 
 const Link = roomID => (
-    <StyledLink onClick={() => redirect.roomAdminMembers(roomID)}>
+    <StyledLink onClick={() => redirect.roomAdminMembers(Object.values(roomID))}>
         Invite Members
     </StyledLink>
 )

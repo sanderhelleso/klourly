@@ -13,7 +13,7 @@ class NoReportsPlaceholder extends Component {
     render () {
         return (
             <StyledPlaceholder className="col s12 m12 l12 animated fadeIn">
-                <h3>No checkin reports avalable</h3>
+                <h3>No checkin reports available</h3>
                 <img src={NO_MEMBERS_ICON} alt="No reports available" />
                 <p>
                     {REPORT_TXT}
@@ -25,10 +25,10 @@ class NoReportsPlaceholder extends Component {
 }
 
 const Link = roomID => (
-    <StyledLink onClick={() => redirect.roomAdminCheckin(roomID)}>
+    <StyledLink onClick={() => redirect.roomAdminCheckin(Object.values(roomID))}>
         Activate a checkin for this room
     </StyledLink>
-)
+);
 
 export default NoReportsPlaceholder;
 

@@ -21,7 +21,11 @@ class AdminCheckin extends Component {
 
         // cant perform checkin if room dont have any members
         if (!this.props.members || this.props.members.length === 0) {
-            return <NoMembersPlaceholder text="checkin" includeLink={true} />
+            return <NoMembersPlaceholder 
+                text="checkin"
+                roomID={this.props.roomID} 
+                includeLink={true} 
+            />
         }
 
         return (

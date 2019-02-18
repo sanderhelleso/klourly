@@ -45,14 +45,26 @@ class RoomReports extends Component {
             )
         }
 
-        else {
+        return (
+            <NoReportsPlaceholder 
+                roomID={this.props.roomID}
+                includeLink={true} 
+            />
+        )
+    }
+
+    renderHeader() {
+
+        if (this.props.reports && this.props.reports.loaded) {
             return (
-                <NoReportsPlaceholder 
-                    roomID={this.props.roomID}
-                    includeLink={true} 
-                />
+                <StyledHeader className="col s12 m6 l6">
+                    <h3>Reports</h3>
+                    <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
+                </StyledHeader>
             )
         }
+
+        return null;
     }
 
     render() {
@@ -60,10 +72,7 @@ class RoomReports extends Component {
             <div className="container">
                 <Back roomID={this.props.roomID} location="room" />
                 <div className="row">
-                    <StyledHeader className="col s12 m6 l6">
-                        <h3>Reports</h3>
-                        <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
-                    </StyledHeader>
+                    {this.renderHeader()}
                     {this.renderRoomReportPreviews()}
                 </div>
             </div>
