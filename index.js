@@ -10,26 +10,30 @@ firebase.initializeApp({
     databaseURL: process.env.FIREBASE_DB_URL
 });
 
-// vals
+// required app modules
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require('passport');
+const googleOauth = require('./keys/googleOauth');
 const http = require("http");
-
-// app
 const app = express();
 const path = require("path");
 const server = http.createServer(app);
 const port = process.env.PORT || 5000;
 const host = process.env.HOST || 'localhost';
 
-// body parser
+// passport setup
+googleOauth(passport);
+app.use(passport.initialize());
+
+// bodyparser setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// routes go here /////////////
+// routes 
 require("./routes/authenticated")(app);
 require("./routes/signup")(app);
-require("./routes/login")(app);
+require("./routes/login")(app, passport);
 require("./routes/userData")(app);
 require("./routes/upload")(app);
 require("./routes/countries")(app);
@@ -39,7 +43,6 @@ require("./routes/attendence")(app);
 require("./routes/messaging")(app);
 require("./routes/report")(app);
 require("./routes/algolia")(app);
-//////////////////////////////
 
 // serve out production assets
 app.use(express.static("client/build"));
