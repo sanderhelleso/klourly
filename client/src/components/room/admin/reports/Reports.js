@@ -11,15 +11,27 @@ import SelectMemberReport from './SelectMemberReport';
 import Back from '../../../dashboard/Back';
 import CircularLoader from '../../../loaders/CircularLoader';
 import NoReportsPlaceholder from '../../placeholders/NoReportsPlaceholder';
+import ReportData from '../../../dataPrefetch/ReportData';
 
 class RoomReports extends Component {
     constructor(props) {
         super(props);
     }
 
+    fetchData() {
+        if (this.props.roomID) {
+            return <ReportData />
+        }
+
+        return null;
+    }
+
     renderRoomReportPreviews() {
 
-        if (this.props.reports && this.props.reports.loaded) {
+        if (this.props.reports && 
+            this.props.reports.loaded && 
+            this.props.membersData && 
+            this.props.checkins) {
             return (
                 <div>
                     <div className="col s12 m6 l6">
@@ -37,7 +49,7 @@ class RoomReports extends Component {
             )
         }
 
-        else if (this.props.reports && !this.props.reports.loaded) {
+        else if (!this.props.reports || this.props.reports && !this.props.reports.loaded) {
             return (
                 <StyledLoaderCont>
                     <CircularLoader size="big" />
@@ -55,7 +67,10 @@ class RoomReports extends Component {
 
     renderHeader() {
 
-        if (this.props.reports && this.props.reports.loaded) {
+        if (this.props.reports && 
+            this.props.reports.loaded && 
+            this.props.membersData && 
+            this.props.checkins) {
             return (
                 <StyledHeader className="col s12 m6 l6">
                     <h3>Reports</h3>
@@ -70,6 +85,7 @@ class RoomReports extends Component {
     render() {
         return (
             <div className="container">
+                {this.fetchData()}
                 <Back roomID={this.props.roomID} location="room" />
                 <div className="row">
                     {this.renderHeader()}
@@ -115,6 +131,6 @@ const StyledHeader = styled.div`
 
 const StyledLoaderCont = styled.div`
     position: relative;
-    min-height: 70vh;
+    min-height: 45vh;
 `;
 

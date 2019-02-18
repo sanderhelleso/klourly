@@ -17,24 +17,25 @@ class ReportData extends Component {
     async componentDidMount() {
 
         // attempt to fetch members data
-        const userResponse = await room.getRoomMembers(
-                                this.props.userID, 
-                                this.props.roomID, 
-                                this.props.membersList.filter(uid => uid !== this.props.userID), 
-                                false,
-                                true
-                            );
+        if (this.props.membersList && this.props.membersList.length > 0) {
 
-        // if fetch was successfull, update report members state
-        if (userResponse.data.success) {
-            this.props.setRoomMembersDataAction(userResponse.data.membersList);
+            const userResponse = await room.getRoomMembers(
+                this.props.userID, 
+                this.props.roomID, 
+                this.props.membersList.filter(uid => uid !== this.props.userID), 
+                false,
+                true
+            );
+
+            // if fetch was successfull, update report members state
+            if (userResponse.data.success) {
+                this.props.setRoomMembersDataAction(userResponse.data.membersList);
+            }
         }
 
         // attempt to fetch the rooms checkins
         const checkinResponse = await report.getRoomReports(
-                                    this.props.userID, 
-                                    this.props.roomID
-                                );
+                this.props.userID, this.props.roomID);
 
         // if fetch was successfull, update checkins state
         if (checkinResponse.data.success) {

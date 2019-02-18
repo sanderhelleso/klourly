@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 
-import ReportData from '../dataPrefetch/ReportData';
 import CheckinReport from '../room/admin/reports/checkin/CheckinReport';
 import MemberReport from '../room/admin/reports/member/MemberReport';
 import Announcement from '../room/announcements/Announcement';
@@ -23,7 +22,6 @@ const RoomRoutes = () => (
         <Route exact path="/dashboard/rooms/:roomID/announcements/:announcementID" component={Announcement} />
         <Route exact path="/dashboard/rooms/:roomID/admin/reports/checkin/:checkinID" component={CheckinReport} />
         <Route exact path="/dashboard/rooms/:roomID/admin/reports/member/:memberID" component={MemberReport} />
-        <Route exact path="/dashboard/rooms/:roomID/admin/reports" component={ReportData} />
     </Fragment>
 );
 
