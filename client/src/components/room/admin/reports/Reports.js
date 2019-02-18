@@ -9,6 +9,8 @@ import CheckinReportPreviews from './checkin/CheckinReportPreviews';
 import Filter from './Filter';
 import SelectMemberReport from './SelectMemberReport';
 import Back from '../../../dashboard/Back';
+import CircularLoader from '../../../loaders/CircularLoader';
+import NoReportsPlaceholder from '../../placeholders/NoReportsPlaceholder';
 
 class RoomReports extends Component {
     constructor(props) {
@@ -35,11 +37,20 @@ class RoomReports extends Component {
             )
         }
 
+        else if (this.props.reports && !this.props.reports.loaded) {
+            return (
+                <StyledLoaderCont>
+                    <CircularLoader size="big" />
+                </StyledLoaderCont>
+            )
+        }
+
         else {
             return (
-                <div className="col s12">
-                    <p>Loading reports...</p>
-                </div>
+                <NoReportsPlaceholder 
+                    roomID={this.props.roomID}
+                    includeLink={true} 
+                />
             )
         }
     }
@@ -91,5 +102,10 @@ const StyledHeader = styled.div`
         font-weight: 400;
         margin-bottom: 2rem;
     }
+`;
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 70vh;
 `;
 
