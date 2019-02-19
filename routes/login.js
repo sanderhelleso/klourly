@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 const db = admin.database();
 const jwt = require('jsonwebtoken');
 
-module.exports = (app, passport) => {
+module.exports = app => {
 
     // get authentication data from client
     app.post('/api/login', (req, res) => {
@@ -50,20 +50,7 @@ module.exports = (app, passport) => {
                 });
             } 
             
-            else res.json({ success: false });
+            else res.status(400).json({ success: false });
         });
     });
-
-    app.get('/api/auth/google', passport.authenticate('google', {
-        scope: ['https://www.googleapis.com/auth/userinfo.profile']
-    }));
-
-    app.get('/api/auth/google/handleCB',
-        passport.authenticate('google', {
-            failureRedirect: '/'
-        }),
-        (req, res) => {
-            console.log(req.user);
-        }
-    );
 }

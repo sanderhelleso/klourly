@@ -8,6 +8,7 @@ export default class GoogleOauthCBHandler extends Component {
     }
 
     async componentDidMount() {
+        console.log(this.getQueryParams());
         const response = await authentication.googleOauth(this.getQueryParams());
         console.log(response);
     }
