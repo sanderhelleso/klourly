@@ -1,16 +1,47 @@
 import React, { Component } from 'react';
 import qs from 'qs';
+import styled from 'styled-components';
 import { authentication } from '../../api/authentication/authentication';
+import { redirect } from '../../helpers/redirect';
+import { notification } from '../../helpers/notification';
 
-export default class GoogleOauthCBHandler extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { loginAction } from '../../actions/loginActions';
+import { userDataActions } from '../../actions/userDataActions';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
+
+import CircularLoader from '../loaders/CircularLoader';
+
+
+class GoogleOauthCBHandler extends Component {
     constructor(props) {
         super(props);
     }
 
     async componentDidMount() {
-        console.log(this.getQueryParams());
+
+        // autenticate and handle google oAuth callback
         const response = await authentication.googleOauth(this.getQueryParams());
-        console.log(response);
+
+        // validate response success
+        if (response.data.success) {
+
+            // set user data and init state, user will redirect on state change
+            this.props.nextStageAction({ stage: 0 });
+            this.props.userDataActions(response.data.userData);
+            this.props.loginAction(response.data.user);
+        }
+
+        // handle error
+        else {
+
+            // notify user and redirect to home
+            notification.error(response.data.message);
+            redirect.home();
+        }
     }
 
     // get query params
@@ -22,9 +53,35 @@ export default class GoogleOauthCBHandler extends Component {
     
     render() {
         return (
-        <div>
-            <p>HI THERE</p>
-        </div>
+            <StyledLoaderCont>
+                <CircularLoader size="big" />
+                <h5>authenticating...</h5>
+            </StyledLoaderCont>
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+        loginAction, 
+        userDataActions, 
+        nextStageAction
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(GoogleOauthCBHandler);
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 90vh;
+
+    h5 {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%);
+        font-size: 1.75rem;
+        color: #bdbdbd;
+        font-weight: 100;
+    }
+`;

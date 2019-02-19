@@ -24,6 +24,7 @@ class LoggedInRoutes extends Component {
                 <Route exact path="/" component={landingRoute} />
                 <Route exact path="/signup" component={landingRoute} />
                 <Route exact path="/login" component={landingRoute} />
+                <Route exact path="/api/auth/google/callback" component={landingRoute} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/dashboard/new-room" component={NewRoom} />
                 <Messaging />
