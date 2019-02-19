@@ -4,6 +4,7 @@ import axios from 'axios';
 export const authentication = {
     signup,
     login,
+    googleOauth,
     validateUser,
     authAndDoAction
 };
@@ -13,7 +14,7 @@ async function signup(firstName, lastName, email, password, location, newsLetter
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/signup',
+            url: '/api/auth/signup',
             data: {
                 firstName: firstName,
                 lastName: lastName,
@@ -36,7 +37,7 @@ async function login(email, password) {
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/login',
+            url: '/api/auth/login',
             data: {
                 email: email,
                 password: password
@@ -50,6 +51,23 @@ async function login(email, password) {
     catch (error) { return error.response };
 }
 
+async function googleOauth(cb) {
+
+   
+    try {
+        const response = await axios({
+            method: 'get',
+            url: `/api/auth/google/handleCB?code=${cb.code}&scope=${cb.profile}`
+        });
+
+        return response;
+    }
+
+    // catch error
+    catch (error) { return error.response };
+}
+
+
 
 async function validateUser(uid) {
 
@@ -62,7 +80,7 @@ async function validateUser(uid) {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
-            url: '/api/authenticated',
+            url: '/api/auth/authenticated',
             data: {
                 uid: uid
             }
@@ -85,7 +103,7 @@ async function authAndDoAction(params, uid) {
     // check for callback
     switch (params.cb) {
         case 'joinRoom':
-            endpoint = '/api/getRoomInvite';
+            endpoint = '/api/auth/getRoomInvite';
             break;
 
         default: return false;

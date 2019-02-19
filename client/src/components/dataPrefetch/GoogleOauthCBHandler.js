@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import qs from 'qs';
+import { authentication } from '../../api/authentication/authentication';
 
 export default class GoogleOauthCBHandler extends Component {
     constructor(props) {
         super(props);
+    }
 
-        console.log(this.props);
+    async componentDidMount() {
+        const response = await authentication.googleOauth(this.getQueryParams());
+        console.log(response);
     }
 
     // get query params
@@ -13,10 +17,6 @@ export default class GoogleOauthCBHandler extends Component {
 		return qs.parse(this.props.location.search, {
 			ignoreQueryPrefix: true
 		});
-    }
-
-    componentDidMount() {
-        console.log(this.getQueryParams());
     }
     
     render() {

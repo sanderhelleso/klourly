@@ -58,7 +58,7 @@ module.exports = (app, passport) => {
         scope: ['https://www.googleapis.com/auth/userinfo.profile']
     }));
 
-    app.get('/api/auth/google/callback',
+    app.get('/api/auth/google/handleCB',
         passport.authenticate('google', {
             failureRedirect: '/'
         }),

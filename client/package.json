@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/api/signup": {
+    "/api/auth/signup": {
       "target": "http://localhost:5000"
     },
-    "/api/login": {
+    "/api/auth/login": {
       "target": "http://localhost:5000"
     },
-    "/api/authenticated": {
+    "/api/auth/google/handleCB": {
+      "target": "http://localhost:5000"
+    },
+    "/api/auth/authenticated": {
       "target": "http://localhost:5000"
     },
     "/api/settings": {
@@ -60,7 +63,7 @@
     "/api/updateRoomInvite": {
       "target": "http://localhost:5000"
     },
-    "/api/getRoomInvite": {
+    "/api/auth/getRoomInvite": {
       "target": "http://localhost:5000"
     },
     "/api/getRoomMembers": {
