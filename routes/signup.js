@@ -6,7 +6,7 @@ const signupRef = db.ref("users");
 module.exports = app => {
 
     // get signup data from client
-    app.post('/api/signup', (req, res) => {
+    app.post('/api/auth/signup', (req, res) => {
         
 
         // attempt to create new user

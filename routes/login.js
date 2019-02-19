@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 module.exports = app => {
 
     // get authentication data from client
-    app.post('/api/login', (req, res) => {
+    app.post('/api/auth/login', (req, res) => {
 
         firebase.signInWithEmail(req.body.email, req.body.password, 
         (error, userRecord) => {
@@ -21,10 +21,11 @@ module.exports = app => {
 
                     // validate error
                     if (error) {
+
+                        // if JWT sign error, notify user
                         return res.status(400).json({
                             success: false,
                             message: 'Hmm, this is our mistake. We are unable to log you in at this time',
-                            reason: 'Unable to sign JWT',
                             error
                         });
                     }
@@ -50,7 +51,11 @@ module.exports = app => {
                 });
             } 
             
-            else res.status(400).json({ success: false });
+            // send back invalid login to user
+            else res.status(401).json({ 
+                success: false,
+                message: 'Invalid e-mail or password. Please try again'
+            });
         });
     });
 }

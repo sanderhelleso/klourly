@@ -44,7 +44,7 @@ class Form extends Component {
 
     // trigger login by enter key
     loginOnEnterKey = e => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && this.state.valid) {
             document.querySelector('#login-btn').click();
         }
     }
@@ -55,60 +55,39 @@ class Form extends Component {
         setTimeout(() => this.checkInput(), 10);
     }
 
+    // validate input and enable/disable login button
     checkInput() {
-        if (this.state.email != '' && this.state.password != '') {
-            this.setState({
-                valid: true
-            });
+        if (this.state.email !== '' && this.state.password !== '') {
+            this.setState({ valid: true });
         }
 
-        else {
-            this.setState({
-                valid: false
-            });
-        }  
+        else this.setState({ valid: false });
     }
 
     renderLoginBtn() {
-        if (this.state.valid) {
-            document.addEventListener('keyup', this.loginOnEnterKey);
+
+        if (!this.state.loading) {
             return (
                 <StyledLoginBtn 
                     id="login-btn" 
                     className="btn waves-effect waves-light"
                     type="button"
-                    onClick={this.login}
+                    disabled={!this.state.valid}
+                    onClick={this.state.valid ? this.login : null}
                 >
                     Log In
                 </StyledLoginBtn>
-            )
+            );
         }
 
-        else if (this.state.loading) {
-            document.removeEventListener('keyup', this.loginOnEnterKey);
-            return <LinearLoader center={false} loading={this.state.loading} />
-        }
-
-        else {
-            return (
-                <StyledLoginBtn
-                    id="login-btn" 
-                    className="btn waves-effect waves-light"
-                    disabled={true}
-                    type="button"
-                >
-                    Log In
-                </StyledLoginBtn>
-            )
-        }
+        return <LinearLoader center={false} loading={this.state.loading} />
     }
 
     // login user
     login = async () => {
-        this.setState({
-            valid: false,
-            loading: true
-        });
+
+        // set loading state
+        this.setState({ valid: false, loading: true });
 
         // authenticate login credentials
         const response = await authentication.login(this.state.email, this.state.password);
@@ -159,7 +138,7 @@ class Form extends Component {
 
             }
 
-            // set user data and init state
+            // set user data and init state, login and redir on state change
             this.props.nextStageAction({ stage: 0 });
             this.props.userDataActions(userData);
             this.props.loginAction(response.data.user);
@@ -170,13 +149,10 @@ class Form extends Component {
             }
         }
 
-        // login failed
+        // login failed, notify user and enable login button again
         else {
-            notification.error('Invalid e-mail or password. Please try again');    
-            this.setState({
-                valid: true,
-                loading: false
-            });
+            notification.error(response.data.message);    
+            this.setState({ valid: true, loading: false });
         }
     }
 
@@ -192,22 +168,20 @@ class Form extends Component {
                     <div className='row login-row'>
                         <div className='input-field col s10 offset-s1'>
                             <input 
-                                id='login-email' 
                                 name='email' 
                                 type='email' 
                                 placeholder="Email Address"
                                 value={this.state.email} 
-                                onChange={(event) => this.handleUserInput(event)} 
+                                onChange={(e) => this.handleUserInput(e)} 
                             />
                         </div>
                         <div className='input-field col s10 offset-s1'>
                             <input 
-                                id='login-password' 
                                 name='password' 
                                 type='password' 
                                 placeholder='Password' 
                                 value={this.state.password} 
-                                onChange={(event) => this.handleUserInput(event)} 
+                                onChange={(e) => this.handleUserInput(e)} 
                             />
                         </div>
                         <div className="col s10 offset-s1">
@@ -249,12 +223,7 @@ const StyledForm = styled.form`
     }
 
     input:focus {
-        border-bottom: 1px solid #ffffff;
-        box-shadow: 0 1px 0 0 #ffffff;
-    }
-    
-    input:focus + label {
-        color: #ffffff;
+        box-shadow: none !important;
     }
 
     h4 {

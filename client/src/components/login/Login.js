@@ -7,11 +7,6 @@ export default class Login extends Component {
 		super(props);
 	}
 
-	componentWillMount() {
-		document.title = 'Log In - Klourly';
-		document.body.id = 'login-body';
-	}
-
 	// get potensial query params
 	getQueryParams() {
 		return qs.parse(this.props.location.search, {
