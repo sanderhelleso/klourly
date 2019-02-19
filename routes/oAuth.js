@@ -60,11 +60,31 @@ function login(token, isNewUser, res) {
             let userData;
             if (isNewUser) userData = await createUserInfo(result.user);
             else userData = await getUserInfo(result.user);
-            
-            res.status(200).json({
-                success: true,
-                message: 'Successfully authenticated with Google',
-                userData
+
+            // create JWT
+            jwt.sign({ uid: result.user.id }, process.env.JWT_SECRET, 
+            (error, token) => {
+
+                // destructor user data
+                const { email, id, authenticatedWith } = result.user;
+
+                // validate error
+                if (error) {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Hmm, this is our mistake. We are unable to log you in at this time',
+                        reason: 'Unable to sign JWT',
+                        error
+                    });
+                }
+
+                // return credentials and data to user, login and redir on client
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully authenticated with Google',
+                    user: { email, id, authenticatedWith, token },
+                    userData
+                });
             });
         }
     });
