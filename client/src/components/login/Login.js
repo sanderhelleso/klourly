@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import qs from 'qs';
 import Form from './Form';
 
-import './styles/login.css';
-import { redirect } from '../../helpers/redirect';
-
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -25,11 +22,10 @@ export default class Login extends Component {
 	render() {
 		return (
 			<main>
-				<h2 id="login-logo">
-					<a onClick={redirect.home}>Klourly</a>
-				</h2>
 				<Form params={this.getQueryParams()} />
 			</main>
 		)
 	}
 }
+
+
