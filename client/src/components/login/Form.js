@@ -70,12 +70,12 @@ class Form extends Component {
             return (
                 <StyledLoginBtn 
                     id="login-btn" 
-                    className="btn waves-effect waves-light"
+                    className="btn waves-effect waves-light login-base-btn hoverable"
                     type="button"
                     disabled={!this.state.valid}
                     onClick={this.state.valid ? this.login : null}
                 >
-                    Log In
+                    Log In with E-mail
                 </StyledLoginBtn>
             );
         }
@@ -159,38 +159,44 @@ class Form extends Component {
     render() {
         return (
             <div>
-                <StyledLoginBg />
-                <StyledForm className='z-depth-3 row animated fadeIn col s12'>
-                    <StyledLoginBgCont>
-                        <h2>Klourly</h2>
-                        <p>Attendence tracking with ease</p>
-                    </StyledLoginBgCont>
-                    <div className='row login-row'>
-                        <div className='input-field col s10 offset-s1'>
-                            <input 
-                                name='email' 
-                                type='email' 
-                                placeholder="Email Address"
-                                value={this.state.email} 
-                                onChange={(e) => this.handleUserInput(e)} 
-                            />
+                <StyledForm className='row animated fadeIn col s12'>
+                    <div className="row">
+                        <div className="col s12 m6 l6">
+                            <StyledLoginBgCont>
+                                <h2>Klourly</h2>
+                                <p>Attendance tracking with ease</p>
+                            </StyledLoginBgCont>
                         </div>
-                        <div className='input-field col s10 offset-s1'>
-                            <input 
-                                name='password' 
-                                type='password' 
-                                placeholder='Password' 
-                                value={this.state.password} 
-                                onChange={(e) => this.handleUserInput(e)} 
-                            />
-                        </div>
-                        <div className="col s10 offset-s1">
-                            <h5 id='login-error'>{this.state.error}</h5>
-                            {this.renderLoginBtn()}
-                            <GoogleAuth />
+                        <div className="col s12 m6 l6">
+                            <div className='row login-row'>
+                                <div className='input-field col s10 offset-s1'>
+                                    <input 
+                                        name='email' 
+                                        type='email' 
+                                        placeholder="Email Address"
+                                        value={this.state.email} 
+                                        onChange={(e) => this.handleUserInput(e)} 
+                                    />
+                                </div>
+                                <div className='input-field col s10 offset-s1'>
+                                    <input 
+                                        name='password' 
+                                        type='password' 
+                                        placeholder='Password' 
+                                        value={this.state.password} 
+                                        onChange={(e) => this.handleUserInput(e)} 
+                                    />
+                                </div>
+                                <div className="col s10 offset-s1">
+                                    <h5 id='login-error'>{this.state.error}</h5>
+                                    {this.renderLoginBtn()}
+                                    <span id="or">OR</span>
+                                    <GoogleAuth />
+                                </div>
+                            </div>
+                            <a id="no-account" onClick={redirect.signup}>Dont have an account?</a>
                         </div>
                     </div>
-                    <a onClick={redirect.signup}>Dont have an account?</a>
                 </StyledForm>
             </div>
         )
@@ -201,16 +207,19 @@ const StyledForm = styled.form`
     background: linear-gradient(
     rgba(141, 58, 235, 1),
     rgb(141, 58, 235, 1));
-    min-width: 30rem;
-    max-width: 30rem;
     margin: 0 auto;
     text-align: center;
     position: absolute;
-    padding-bottom: 3rem;
-    margin-bottom: 5vh;
-    top: 10%;
+    padding: 2rem 0.5rem;
+    border-radius: 20px;
+    box-shadow: 0px 18px 58px rgba(0, 0, 0, 0.25);
+    top: 12.5%;
     left: 50%;
     transform: translate(-50%);
+
+    @media screen and (min-width: 1200px) {
+        width: 920px;
+    }
 
     input {
         color: #ffffff;
@@ -237,7 +246,7 @@ const StyledForm = styled.form`
         color: #e53935;
     }
 
-    a {
+    #no-account {
         color: #ffffff;
         font-weight: 100;
         opacity: 0.5;
@@ -245,40 +254,45 @@ const StyledForm = styled.form`
     }
 
     .login-row {
-        margin: 2rem 0 5rem 0;
+        margin: 2rem 0;
+    }
+
+    .login-base-btn {
+        width: 100%;
+        height: 60px;
+        margin: 1.5rem 0;
+        line-height: 60px;
+        transition: 0.3s ease-in-out;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+
+    #or {
+        display: block;
+        min-width: 100%;
+        color: #ffffff;
+        opacity: 0.3;
+        letter-spacing: 2px;
+        position: relative;
     }
 `;
 
-const StyledLoginBg = styled.div`
-    height: 100%;
-    background: linear-gradient(to right,
-    rgba(166, 81, 223, 0.8),
-    rgba(128, 26, 245, 0.8)),
-    url("/img/login/login.jpg");
-    background-size: cover;
-	background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: 0 100%;
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 0;
-    transform: scale(1.1);
-`;
 
 const StyledLoginBgCont = styled.div`
-    background: linear-gradient(
-    rgba(118, 0, 255, 0.5),
+    background: radial-gradient(circle,
+    rgb(141, 58, 235, 0.5),
+    rgba(141, 58, 235, 1),
     rgb(141, 58, 235, 1)),
     url("/img/login/login.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 0% 70%; 
-    min-height: 300px;
-    padding-top: 4rem;
+    padding-top: 25%;
+    margin-top: 15%;
+    min-height: 100%;
     z-index: 9999;
+    border: none;
+    outline: none;
 
     h2 {
         color: #ffffff;
@@ -299,13 +313,15 @@ const StyledLoginBgCont = styled.div`
 `;
 
 const StyledLoginBtn = styled.button`
-    margin-top: 15px;
-    width: 90%;
-    height: 60px;
     background: #FF5F6D;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    border-radius: 100px;
+
+    &:disabled {
+        background: #eeeeee;
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 `;
 
 const mapDispatchToProps = dispatch => {

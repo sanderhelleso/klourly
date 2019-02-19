@@ -11,11 +11,11 @@ export default class GoogleAuth extends Component {
         return (
             <div>
                 <StyledGoogleBtn
-                    className="btn waves-effect waves-light animated fadeIn"
-                    type="button"
+                    className="btn waves-effect waves-light login-base-btn hoverable"
                     href="http://localhost:5000/api/auth/google"
                 >
-                    Login with google!
+                    <img src="/img/login/google.svg" alt="g-logo"/>
+                    <span>Log in with Google</span>
                 </StyledGoogleBtn>
             </div>
         )
@@ -23,9 +23,24 @@ export default class GoogleAuth extends Component {
 }
 
 const StyledGoogleBtn = styled.a`
-    width: 90%;
-    height: 60px;
-    border-radius: 100px;
-    margin-top: 2rem;
-    line-height: 60px;
+    color: #363636;
+    background-color: #ffffff;
+    position: relative;
+
+    img {
+        position: absolute;
+        height: 2.5rem;
+        width: 2.5rem;
+        top: 20%;
+        left: 10%;
+        transform: translate(-10%);
+    }
+
+    span {
+        margin-left: 10%;
+    }
+
+    &:hover, &:focus {
+        background-color: #ffffff;
+    }
 `;
