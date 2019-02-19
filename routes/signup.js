@@ -16,18 +16,15 @@ module.exports = app => {
             disabled: false,
             password: req.body.password,
         })
-
-        // once user is created, generate custom token
         .then(userRecord => {
 
             // set the user UID reference for the contents of user.
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
             const usersRef = signupRef.child(userRecord.uid);
             usersRef.set({
-                address: req.body.location,
                 signupDate: signupDate,
                 settings: {
-                    displayName: `${capitalize(req.body.firstName)} ${capitalize(req.body.lastName)}`,
+                    displayName: req.body.displayName,
                     phoneNr: '',
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
@@ -37,7 +34,7 @@ module.exports = app => {
             });
 
             // send data back to client and login user with localstorage using UID
-            res.json({
+            res.status(200).json({
                 userData: userRecord,
                 message: 'Successfully created new user',
                 success: true
@@ -52,9 +49,4 @@ module.exports = app => {
             });
         });
     });
-}
-
-// capitalize given string
-function capitalize(str) {
-    return `${str.charAt(0).toUpperCase()}${str.substr(1).toLowerCase()}`;
 }
