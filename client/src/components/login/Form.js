@@ -34,6 +34,7 @@ class Form extends Component {
 
     // add keyup event on mount
     componentDidMount() {
+        this.loginUsingStoredCred();
         document.addEventListener('keyup', this.loginOnEnterKey);
     }
 
@@ -46,6 +47,23 @@ class Form extends Component {
     loginOnEnterKey = e => {
         if (e.keyCode === 13 && this.state.valid) {
             document.querySelector('#login-btn').click();
+        }
+    }
+
+    // attempt to get stored users in browser (Chrome)
+    async loginUsingStoredCred() {
+
+        // attempt to get credentials
+        const credential = await navigator.credentials.get({ password: true });
+
+        // if stored credentials and user accepts
+        if (credential) {
+
+            // set uname and pass
+            this.setState({
+                email: credential.id,
+                password: credential.password
+            }, () => this.login(true)); // login with cred from store
         }
     }
 
@@ -75,7 +93,7 @@ class Form extends Component {
                     disabled={!this.state.valid}
                     onClick={this.state.valid ? this.login : null}
                 >
-                    Log In with E-mail
+                    Log In
                 </StyledLoginBtn>
             );
         }
@@ -84,7 +102,7 @@ class Form extends Component {
     }
 
     // login user
-    login = async () => {
+    login = async fromStore => {
 
         // set loading state
         this.setState({ valid: false, loading: true });
@@ -135,7 +153,17 @@ class Form extends Component {
 
                     default: break;
                 }
+            }
 
+            // persist access information in the local credentials store
+            if (navigator.credentials && navigator.credentials.preventSilentAccess && !fromStore) {
+                const cred = new PasswordCredential({
+                    id: this.state.email,
+                    password: this.state.password,
+                    name: userData.settings.displayName.trim(),
+                    iconURL: userData.settings.photoUrl,
+                });
+                navigator.credentials.store(cred);
             }
 
             // set user data and init state, login and redir on state change
@@ -158,47 +186,45 @@ class Form extends Component {
 
     render() {
         return (
-            <div>
-                <StyledForm className='row animated fadeIn col s12'>
-                    <div className="row">
-                        <div className="col s12 m6 l6">
-                            <StyledLoginBgCont>
-                                <h2>Klourly</h2>
-                                <p>Attendance tracking with ease</p>
-                            </StyledLoginBgCont>
-                        </div>
-                        <div className="col s12 m6 l6">
-                            <div className='row login-row'>
-                                <div className='input-field col s10 offset-s1'>
-                                    <input 
-                                        name='email' 
-                                        type='email' 
-                                        placeholder="Email Address"
-                                        value={this.state.email} 
-                                        onChange={(e) => this.handleUserInput(e)} 
-                                    />
-                                </div>
-                                <div className='input-field col s10 offset-s1'>
-                                    <input 
-                                        name='password' 
-                                        type='password' 
-                                        placeholder='Password' 
-                                        value={this.state.password} 
-                                        onChange={(e) => this.handleUserInput(e)} 
-                                    />
-                                </div>
-                                <div className="col s10 offset-s1">
-                                    <h5 id='login-error'>{this.state.error}</h5>
-                                    {this.renderLoginBtn()}
-                                    <span id="or">OR</span>
-                                    <GoogleAuth />
-                                </div>
-                            </div>
-                            <a id="no-account" onClick={redirect.signup}>Dont have an account?</a>
-                        </div>
+            <StyledForm className='row animated fadeIn col s12'>
+                <div className="row">
+                    <div className="col s12 m6 l6">
+                        <StyledLoginBgCont>
+                            <h2>Klourly</h2>
+                            <p>Attendance tracking with ease</p>
+                        </StyledLoginBgCont>
                     </div>
-                </StyledForm>
-            </div>
+                    <div className="col s12 m6 l6">
+                        <div className='row login-row'>
+                            <div className='input-field col s10 offset-s1'>
+                                <input 
+                                    name='email' 
+                                    type='email' 
+                                    placeholder="Email Address"
+                                    value={this.state.email} 
+                                    onChange={(e) => this.handleUserInput(e)} 
+                                />
+                            </div>
+                            <div className='input-field col s10 offset-s1'>
+                                <input 
+                                    name='password' 
+                                    type='password' 
+                                    placeholder='Password' 
+                                    value={this.state.password} 
+                                    onChange={(e) => this.handleUserInput(e)} 
+                                />
+                            </div>
+                            <div className="col s10 offset-s1">
+                                <h5 id='login-error'>{this.state.error}</h5>
+                                {this.renderLoginBtn()}
+                                <span id="or">OR</span>
+                                <GoogleAuth />
+                            </div>
+                        </div>
+                        <a id="no-account" onClick={redirect.signup}>Dont have an account?</a>
+                    </div>
+                </div>
+            </StyledForm>
         )
     }
 }
@@ -229,10 +255,6 @@ const StyledForm = styled.form`
     input::placeholder {
         font-weight: 100;
         opacity: 0.9;
-    }
-
-    input:focus {
-        box-shadow: none !important;
     }
 
     h4 {

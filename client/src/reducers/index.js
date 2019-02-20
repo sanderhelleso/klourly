@@ -12,7 +12,10 @@ const appReducer = combineReducers({
 });
 
 export const rootReducer = (state, action) => {
+
+    // logout user
     if (action.type === 'LOGOUT_SUCCESS') {
+        navigator.credentials.preventSilentAccess();
         state = undefined
     }
 

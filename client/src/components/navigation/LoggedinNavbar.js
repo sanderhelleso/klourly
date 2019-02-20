@@ -19,7 +19,8 @@ class LoggedinNavbar extends Component {
     }
 
     componentDidMount() {
-        materializeJS.M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+        materializeJS.M.FloatingActionButton.init(
+            document.querySelectorAll('.fixed-action-btn'), {
             hoverEnabled: false
         });
     }
