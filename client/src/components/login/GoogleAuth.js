@@ -11,6 +11,7 @@ export default class GoogleAuth extends Component {
         return (
             <div>
                 <StyledGoogleBtn
+                    id="google-auth-btn"
                     className="btn waves-effect waves-light login-base-btn hoverable"
                     href="http://localhost:5000/api/auth/google"
                 >

@@ -34,8 +34,10 @@ class Form extends Component {
 
     // add keyup event on mount
     componentDidMount() {
-        this.loginUsingStoredCred();
         document.addEventListener('keyup', this.loginOnEnterKey);
+        if (navigator.credentials && navigator.credentials.preventSilentAccess) {
+            this.loginUsingStoredCred();
+        }
     }
 
     // remove keyup event on unmount
@@ -54,16 +56,28 @@ class Form extends Component {
     async loginUsingStoredCred() {
 
         // attempt to get credentials
-        const credential = await navigator.credentials.get({ password: true });
+        const credential = await navigator.credentials.get({
+             password: true,
+             federated: { providers: ['https://accounts.google.com'] }
+        });
 
         // if stored credentials and user accepts
         if (credential) {
 
-            // set uname and pass
-            this.setState({
-                email: credential.id,
-                password: credential.password
-            }, () => this.login(true)); // login with cred from store
+            // provider auth
+            if (credential.type === 'federated' && 
+            credential.provider === 'https://accounts.google.com') {
+                document.querySelector('#google-auth-btn').click();
+            }
+
+            // password auth
+            else {
+                // set uname and pass
+                this.setState({
+                    email: credential.id,
+                    password: credential.password
+                }, () => this.login(true)); // login with cred from store
+            }
         }
     }
 
@@ -157,13 +171,13 @@ class Form extends Component {
 
             // persist access information in the local credentials store
             if (navigator.credentials && navigator.credentials.preventSilentAccess && !fromStore) {
-                const cred = new PasswordCredential({
+                const credentials = new PasswordCredential({
                     id: this.state.email,
                     password: this.state.password,
                     name: userData.settings.displayName.trim(),
                     iconURL: userData.settings.photoUrl,
                 });
-                navigator.credentials.store(cred);
+                navigator.credentials.store(credentials);
             }
 
             // set user data and init state, login and redir on state change
