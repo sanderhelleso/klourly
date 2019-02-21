@@ -12,7 +12,7 @@ export default class GoogleAuth extends Component {
             <div>
                 <StyledGoogleBtn
                     id="google-auth-btn"
-                    className="btn waves-effect waves-light login-base-btn hoverable"
+                    className="btn waves-effect waves-light login-base-btn"
                     href="http://localhost:5000/api/auth/google"
                 >
                     <img src="/img/login/google.svg" alt="g-logo"/>
@@ -27,6 +27,8 @@ const StyledGoogleBtn = styled.a`
     color: #363636;
     background-color: #ffffff;
     position: relative;
+    box-shadow: none;
+    border: 1.25px solid #e0e0e0;
 
     img {
         position: absolute;
@@ -43,5 +45,6 @@ const StyledGoogleBtn = styled.a`
 
     &:hover, &:focus {
         background-color: #ffffff;
+        box-shadow: none;
     }
 `;

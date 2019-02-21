@@ -238,15 +238,10 @@ const StyledForm = styled.form`
     margin: 0 auto;
     text-align: center;
     padding: 2rem 0.5rem;
-    
-    input {
-        color: #ffffff;
-        opacity: 0.9;
-    }
 
+    
     input::placeholder {
         font-weight: 100;
-        opacity: 0.9;
     }
 
     h4 {
