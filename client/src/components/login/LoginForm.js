@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ArrowRight } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -17,9 +16,9 @@ import { token } from '../../api/messaging/token';
 import { redirect } from '../../helpers/redirect';
 import { notification } from '../../helpers/notification';
 
-import LinearLoader from '../loaders/LinearLoader';
 import GoogleAuth from './GoogleAuth';
-import { StyledButtonMain } from '../styles/buttons';
+import ConfirmBtn from './ConfirmBtn';
+
 
 class LoginForm extends Component {
     constructor(props) {
@@ -96,24 +95,6 @@ class LoginForm extends Component {
         }
 
         else this.setState({ valid: false });
-    }
-
-    renderLoginBtn() {
-
-        if (!this.state.loading) {
-            return (
-                <StyledButtonMain 
-                    id="login-btn" 
-                    className="btn waves-effect waves-light base-btn"
-                    disabled={!this.state.valid}
-                    onClick={this.state.valid ? this.login : null}
-                >
-                    Log In <ArrowRight size={22} />
-                </StyledButtonMain>
-            );
-        }
-
-        return <LinearLoader center={false} loading={this.state.loading} />
     }
 
     // login user
@@ -223,7 +204,13 @@ class LoginForm extends Component {
                     </div>
                     <div className="col s10 offset-s1">
                         <h5 id='login-error'>{this.state.error}</h5>
-                        {this.renderLoginBtn()}
+                        <ConfirmBtn 
+                            text="Log In"
+                            id="login-btn"
+                            valid={this.state.valid}
+                            loading={this.state.loading}
+                            onClick={this.state.valid ? this.login : null}
+                        />
                         <span className="or">OR</span>
                         <GoogleAuth text=" Log In with Google"/>
                     </div>

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { ArrowRight } from 'react-feather';
 import { regex } from '../../helpers/regex';
 
 import { authentication } from '../../api/authentication/authentication';
 import { notification } from '../../helpers/notification';
 
-import LinearLoader from '../loaders/LinearLoader';
 import GoogleAuth from './GoogleAuth';
-import { StyledButtonMain } from '../styles/buttons';
+import ConfirmBtn from './ConfirmBtn';
 
 export default class RegisterForm extends Component {
     constructor(props) {
@@ -159,24 +157,6 @@ export default class RegisterForm extends Component {
         else notification.error(response.data.message);*/
     }
 
-    renderRegisterBtn() {
-
-        if (!this.state.loading) {
-            return (
-                <StyledButtonMain 
-                    id="register-btn" 
-                    className="btn waves-effect waves-light base-btn"
-                    disabled={!this.state.valid}
-                    onClick={this.state.valid ? this.register : null}
-                >
-                    Register <ArrowRight size={22} />
-                </StyledButtonMain>
-            );
-        }
-
-        return <LinearLoader center={false} loading={this.state.loading} />
-    }
-
     render() {
         return (
             <form className="col s8 offset-s2">
@@ -226,7 +206,13 @@ export default class RegisterForm extends Component {
                         <p className="signup-error">{this.state.password_error}</p>
                     </div>
                     <div className="col s10 offset-s1">
-                        {this.renderRegisterBtn()}
+                        <ConfirmBtn 
+                            text="Register"
+                            id="register-btn"
+                            valid={this.state.valid}
+                            loading={this.state.loading}
+                            onClick={this.state.valid ? this.register : null}
+                        />
                         <span className="or">OR</span>
                         <GoogleAuth text="Register with Google"/>
                     </div>
