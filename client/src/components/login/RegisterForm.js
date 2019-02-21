@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import { ArrowRight } from 'react-feather';
 import { regex } from '../../helpers/regex';
 
 import { authentication } from '../../api/authentication/authentication';
 import { notification } from '../../helpers/notification';
+
+import LinearLoader from '../loaders/LinearLoader';
+import GoogleAuth from './GoogleAuth';
+import { StyledButtonMain } from '../styles/buttons';
 
 export default class RegisterForm extends Component {
     constructor(props) {
@@ -16,11 +21,10 @@ export default class RegisterForm extends Component {
             last_name: '',
             email: '',
             password: '',
-            confirm_password: '',
             password_error: '',
-            password_confirm_error: '',
             email_error: '',
-            valid: false            
+            valid: false,
+            loading: false        
         };
     }
 
@@ -124,46 +128,14 @@ export default class RegisterForm extends Component {
         }
     }
 
-    // check for matching passwords
-    checkPasswordEquality = password => {
-
-        // if passwords match
-        if (password === this.state.password) {
-            this.setState({ password_confirm_error: '' });
-            return true;
-        }
-
-        // confirm password is empty
-        else if (password === '') {
-            this.setState({ password_confirm_error: '' });
-            return false;
-        }
-
-        // if password dont match
-        else {
-            this.setState({ password_confirm_error: 'Passwords dont match' });
-            return false;
-        }
-    }
-
     // update inputs and state
     handleUserInput = e => {
+
         this.setState({ [e.target.name]: e.target.value });
 
         // perform form validation depending on input
-        switch (e.target.name) {
-            case 'email':
-                this.validateEmail(e.target.value); // email validation
-            break;
-            
-            case 'password':
-                this.validatePassword(e.target.value); // password validation
-            break;
-            
-            case 'confirm_password':
-                this.checkPasswordEquality(e.target.value); // password equality check
-            break;
-        }
+        if (e.target.name === 'email') this.validateEmail(e.target.value); 
+        else this.validatePassword(e.target.value);
     }
 
     // validate data
@@ -185,6 +157,24 @@ export default class RegisterForm extends Component {
         
         // signup failed, display error to user and enable button
         else notification.error(response.data.message);*/
+    }
+
+    renderRegisterBtn() {
+
+        if (!this.state.loading) {
+            return (
+                <StyledButtonMain 
+                    id="register-btn" 
+                    className="btn waves-effect waves-light base-btn"
+                    disabled={!this.state.valid}
+                    onClick={this.state.valid ? this.register : null}
+                >
+                    Register <ArrowRight size={22} />
+                </StyledButtonMain>
+            );
+        }
+
+        return <LinearLoader center={false} loading={this.state.loading} />
     }
 
     render() {
@@ -213,7 +203,7 @@ export default class RegisterForm extends Component {
                     </div>
                     <div className="input-field col s6">
                         <input 
-                            autoComplete="new-password"
+                            autoComplete="off"
                             id="email" 
                             type="email" 
                             name="email" 
@@ -225,7 +215,7 @@ export default class RegisterForm extends Component {
                     </div>
                     <div className="input-field col s6">
                         <input 
-                            autoComplete="new-password"
+                            autoComplete="off"
                             id="password" 
                             type="password" 
                             name="password" 
@@ -235,16 +225,10 @@ export default class RegisterForm extends Component {
                         <label htmlFor="password">Password</label>
                         <p className="signup-error">{this.state.password_error}</p>
                     </div>
-                    <div className="input-field col s6">
-                        <input 
-                            id="confirm-password" 
-                            type="password" 
-                            name="confirm_password" 
-                            value={this.state.confirm_password} 
-                            onChange={(e) => this.handleUserInput(e)} 
-                        />
-                        <label htmlFor="confirm-password">Confirm Password</label>
-                        <p className="signup-error">{this.state.password_confirm_error}</p>
+                    <div className="col s10 offset-s1">
+                        {this.renderRegisterBtn()}
+                        <span className="or">OR</span>
+                        <GoogleAuth text="Register with Google"/>
                     </div>
                 </div>
             </form>

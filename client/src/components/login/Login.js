@@ -128,6 +128,36 @@ const StyledAuthCont = styled.div`
 
 	.auth-form-cont {
 		margin: 12.5vh auto;
+		text-align: center;
+
+		.base-btn {
+			min-width: 100%;
+			height: 60px;
+			margin: 2rem 0;
+			line-height: 60px;
+			transition: 0.3s ease-in-out;
+			font-weight: 600;
+			letter-spacing: 1px;
+			padding: 0;
+			position: relative;
+
+			svg {
+				position: absolute;
+				top: 32.5%;
+				left: 65%;
+				transform: translate(-65%);
+				opacity: 0.6;
+			}
+		}
+
+		.or {
+			display: block;
+			min-width: 100%;
+			opacity: 0.3;
+			letter-spacing: 2px;
+			position: relative;
+			font-size: 0.8rem;
+		}
 	}
 
 	.select-auth-cont {

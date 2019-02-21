@@ -12,11 +12,11 @@ export default class GoogleAuth extends Component {
             <div>
                 <StyledGoogleBtn
                     id="google-auth-btn"
-                    className="btn waves-effect waves-light login-base-btn"
+                    className="btn waves-effect waves-light base-btn"
                     href="http://localhost:5000/api/auth/google"
                 >
                     <img src="/img/login/google.svg" alt="g-logo"/>
-                    <span>Log in with Google</span>
+                    <span>{this.props.text}</span>
                 </StyledGoogleBtn>
             </div>
         )
