@@ -38,7 +38,7 @@ class LoginForm extends Component {
     componentDidMount() {
         document.addEventListener('keyup', this.loginOnEnterKey);
         if (navigator.credentials && navigator.credentials.preventSilentAccess) {
-            //this.loginUsingStoredCred();
+            this.loginUsingStoredCred();
         }
     }
 

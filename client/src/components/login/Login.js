@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import qs from 'qs';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 import NeedHelp from './NeedHelp';
 
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
+
+		// login / register
+		this.modes = ['Log In', 'Register'];
+
+		this.state = {
+			activeMode: 'login'
+		}
 	}
 
 	// get potensial query params
@@ -14,6 +22,31 @@ export default class Login extends Component {
 		return qs.parse(this.props.location.search, {
 			ignoreQueryPrefix: true
 		});
+	}
+
+	renderModes() {
+
+		// render login / register form triggers
+		return this.modes.map(mode => {
+			const cmp = mode.toLowerCase().split(' ').join(''); // 'Log In' -> 'login'
+			return (
+				<a 	
+					key={cmp}
+					className={`${this.state.activeMode === cmp ? 'active' : 'false'}`}
+					onClick={() => this.setState({ activeMode: cmp })}
+				>
+					{mode}
+				</a>
+			);
+		});
+	}
+
+	renderActiveMode() {
+
+		// render form depending on active mode
+		return this.state.activeMode === 'login'
+		? <LoginForm params={this.getQueryParams()} />
+		: <RegisterForm />;
 	}
 
 	render() {
@@ -27,12 +60,11 @@ export default class Login extends Component {
 						</div>
 					</StyledBgCont>
 					<StyledAuthCont className="col s12 m6 l6 auth-cont">
-						<div class="auth-form-cont row">
+						<div className="auth-form-cont row">
 							<div className="select-auth-cont">
-								<a className="active">Log In</a>
-								<a>Register</a>
+								{this.renderModes()}
 							</div>
-							<LoginForm params={this.getQueryParams()} />
+							{this.renderActiveMode()}
 							<NeedHelp />
 						</div>
 					</StyledAuthCont>

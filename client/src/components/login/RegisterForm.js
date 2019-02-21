@@ -20,7 +20,6 @@ export default class RegisterForm extends Component {
             password_error: '',
             password_confirm_error: '',
             email_error: '',
-            newsLetter: true,
             valid: false            
         };
     }
@@ -46,6 +45,7 @@ export default class RegisterForm extends Component {
     validateEmail = email => {
 
         // email is valid 
+        console.log(email);
         if (regex.email.test(String(email).toLowerCase())) {
             this.setState({ email_error: '' });
             return true;
@@ -64,7 +64,7 @@ export default class RegisterForm extends Component {
     }
 
     // validate password
-    validatePassword(password){       
+    validatePassword = password => {       
         
         // check for occurences of characters
         let numUpper    = 0;
@@ -125,7 +125,7 @@ export default class RegisterForm extends Component {
     }
 
     // check for matching passwords
-    checkPasswordEquality(password) {
+    checkPasswordEquality = password => {
 
         // if passwords match
         if (password === this.state.password) {
@@ -150,28 +150,21 @@ export default class RegisterForm extends Component {
     handleUserInput = e => {
         this.setState({ [e.target.name]: e.target.value });
 
-        // form validation
+        // perform form validation depending on input
         switch (e.target.name) {
             case 'email':
-
-                // email validation
-                this.validateEmail(e.target.value)
+                this.validateEmail(e.target.value); // email validation
             break;
             
-            // password validation
             case 'password':
-                this.validatePassword(e.target.value);
+                this.validatePassword(e.target.value); // password validation
             break;
             
-            // password equality check
             case 'confirm_password':
-                this.checkPasswordEquality(e.target.value);
+                this.checkPasswordEquality(e.target.value); // password equality check
             break;
         }
     }
-
-    // update checkbox for newsletter subscription
-    checkNewsletter = () => this.setState({ newsLetter: !this.state.newsLetter });
 
     // validate data
     register = e => {
@@ -179,10 +172,10 @@ export default class RegisterForm extends Component {
         // prevent form from submiting
         e.preventDefault();
 
-        // attempt to  register user with given data
+        /*// attempt to  register user with given data
         const response = await authentication.signup(
-            this.state.first_name, this.state.last_name, this.state.email, 
-            this.state.password,  this.state.newsLetter
+            this.state.first_name, this.state.last_name, 
+            this.state.email, this.state.password
         );
 
         // signup successfull, send confirmation email, then redirect to login page
@@ -191,14 +184,12 @@ export default class RegisterForm extends Component {
         }
         
         // signup failed, display error to user and enable button
-        else {
-            notification.error(response.data.message);
-        }
+        else notification.error(response.data.message);*/
     }
 
     render() {
         return (
-            <form className="col s12">
+            <form className="col s8 offset-s2">
                 <div className="row">
                     <div className="input-field col s6">
                         <input 
@@ -220,8 +211,9 @@ export default class RegisterForm extends Component {
                         />
                         <label htmlFor="last-name">Last Name</label>
                     </div>
-                    <div className="input-field col s12">
+                    <div className="input-field col s6">
                         <input 
+                            autoComplete="new-password"
                             id="email" 
                             type="email" 
                             name="email" 
@@ -231,8 +223,9 @@ export default class RegisterForm extends Component {
                         <label htmlFor="email">E-Mail</label>
                         <p className="signup-error">{this.state.email_error}</p>
                     </div>
-                    <div className="input-field col s12">
+                    <div className="input-field col s6">
                         <input 
+                            autoComplete="new-password"
                             id="password" 
                             type="password" 
                             name="password" 
@@ -242,7 +235,7 @@ export default class RegisterForm extends Component {
                         <label htmlFor="password">Password</label>
                         <p className="signup-error">{this.state.password_error}</p>
                     </div>
-                    <div className="input-field col s12">
+                    <div className="input-field col s6">
                         <input 
                             id="confirm-password" 
                             type="password" 
@@ -252,18 +245,6 @@ export default class RegisterForm extends Component {
                         />
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <p className="signup-error">{this.state.password_confirm_error}</p>
-                    </div>
-                    <div className="input-field col s12 news-letter-cont">
-                        <p className="center">
-                        <label>
-                            <input 
-                                type="checkbox" 
-                                checked={this.state.newsLetter} 
-                                onChange={() => this.checkNewsletter()} 
-                            />
-                            <span>subscribe to our newsletter to see whats new!</span>
-                        </label>
-                        </p>
                     </div>
                 </div>
             </form>
