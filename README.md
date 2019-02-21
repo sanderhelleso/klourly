@@ -13,12 +13,8 @@ A flexible, radius based application for taking attendance
 <img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme2.jpg"></img>
 <br>
 
-## User Settings Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlySettings.png"></img>
-<br>
-
 ## Log In Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/klourlyLogin.png"></img>
+<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme3.jpg"></img>
 <br>
 
 ## Features
