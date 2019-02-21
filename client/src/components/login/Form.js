@@ -274,7 +274,7 @@ const StyledForm = styled.form`
     .login-base-btn {
         min-width: 100%;
         height: 60px;
-        margin: 1.5rem 0;
+        margin: 2rem 0;
         line-height: 60px;
         transition: 0.3s ease-in-out;
         font-weight: 600;

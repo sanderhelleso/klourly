@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import qs from 'qs';
 import Form from './Form';
+import NeedHelp from './NeedHelp';
 
 export default class Login extends Component {
 	constructor(props) {
@@ -28,6 +29,7 @@ export default class Login extends Component {
 								<a>Register</a>
 							</div>
 							<Form params={this.getQueryParams()} />
+							<NeedHelp />
 						</div>
 					</StyledAuthCont>
 				</div>
@@ -48,10 +50,12 @@ const StyledMain = styled.main`
 const StyledAuthCont = styled.div`
 	background-color: #ffffff;
 	height: 100%;
+	position: relative;
+	padding: 0 !important;
 	box-shadow: -10px 0px 10px 1px #eeeeee;
 
 	.auth-form-cont {
-		margin: 17.5vh auto;
+		margin: 13.5vh auto;
 	}
 
 	.select-auth-cont {
