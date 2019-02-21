@@ -36,7 +36,7 @@ class Form extends Component {
     componentDidMount() {
         document.addEventListener('keyup', this.loginOnEnterKey);
         if (navigator.credentials && navigator.credentials.preventSilentAccess) {
-            this.loginUsingStoredCred();
+            //this.loginUsingStoredCred();
         }
     }
 
@@ -200,67 +200,44 @@ class Form extends Component {
 
     render() {
         return (
-            <StyledForm className='row animated fadeIn col s12'>
-                <div className="row">
-                    <div className="col s12 m6 l6">
-                        <StyledLoginBgCont>
-                            <h2>Klourly</h2>
-                            <p>Attendance tracking with ease</p>
-                        </StyledLoginBgCont>
+            <StyledForm className='row animated fadeIn col s8 offset-s2'>
+                <div className='row login-row'>
+                    <div className='input-field col s10 offset-s1'>
+                        <input 
+                            name='email' 
+                            type='email' 
+                            placeholder="Email Address"
+                            value={this.state.email} 
+                            onChange={(e) => this.handleUserInput(e)} 
+                        />
                     </div>
-                    <div className="col s12 m6 l6">
-                        <div className='row login-row'>
-                            <div className='input-field col s10 offset-s1'>
-                                <input 
-                                    name='email' 
-                                    type='email' 
-                                    placeholder="Email Address"
-                                    value={this.state.email} 
-                                    onChange={(e) => this.handleUserInput(e)} 
-                                />
-                            </div>
-                            <div className='input-field col s10 offset-s1'>
-                                <input 
-                                    name='password' 
-                                    type='password' 
-                                    placeholder='Password' 
-                                    value={this.state.password} 
-                                    onChange={(e) => this.handleUserInput(e)} 
-                                />
-                            </div>
-                            <div className="col s10 offset-s1">
-                                <h5 id='login-error'>{this.state.error}</h5>
-                                {this.renderLoginBtn()}
-                                <span id="or">OR</span>
-                                <GoogleAuth />
-                            </div>
-                        </div>
-                        <a id="no-account" onClick={redirect.signup}>Dont have an account?</a>
+                    <div className='input-field col s10 offset-s1'>
+                        <input 
+                            name='password' 
+                            type='password' 
+                            placeholder='Password' 
+                            value={this.state.password} 
+                            onChange={(e) => this.handleUserInput(e)} 
+                        />
+                    </div>
+                    <div className="col s10 offset-s1">
+                        <h5 id='login-error'>{this.state.error}</h5>
+                        {this.renderLoginBtn()}
+                        <span id="or">OR</span>
+                        <GoogleAuth />
                     </div>
                 </div>
+                <a id="no-account" onClick={redirect.signup}>Dont have an account?</a>
             </StyledForm>
         )
     }
 }
 
 const StyledForm = styled.form`
-    background: linear-gradient(
-    rgba(141, 58, 235, 1),
-    rgb(141, 58, 235, 1));
     margin: 0 auto;
     text-align: center;
-    position: absolute;
     padding: 2rem 0.5rem;
-    border-radius: 20px;
-    box-shadow: 0px 18px 58px rgba(0, 0, 0, 0.25);
-    top: 12.5%;
-    left: 50%;
-    transform: translate(-50%);
-
-    @media screen and (min-width: 1200px) {
-        width: 920px;
-    }
-
+    
     input {
         color: #ffffff;
         opacity: 0.9;
@@ -306,45 +283,10 @@ const StyledForm = styled.form`
     #or {
         display: block;
         min-width: 100%;
-        color: #ffffff;
         opacity: 0.3;
         letter-spacing: 2px;
         position: relative;
-    }
-`;
-
-
-const StyledLoginBgCont = styled.div`
-    background: radial-gradient(circle,
-    rgb(141, 58, 235, 0.5),
-    rgba(141, 58, 235, 1),
-    rgb(141, 58, 235, 1)),
-    url("/img/login/login.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 0% 70%; 
-    padding-top: 25%;
-    margin-top: 15%;
-    min-height: 100%;
-    z-index: 9999;
-    border: none;
-    outline: none;
-
-    h2 {
-        color: #ffffff;
-        text-transform: lowercase;
-        margin: 7.5rem 0 0.5rem 0;
-        font-weight: 800;
-        letter-spacing: 5px;
-        font-size: 3.5rem;
-    }
-
-    p {
-        color: white;
-        margin-top: 0;
-        letter-spacing: 1px;
-        font-weight: 100;
-        opacity: 0.5;
+        font-size: 0.8rem;
     }
 `;
 

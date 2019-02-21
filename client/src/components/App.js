@@ -190,6 +190,17 @@ const GlobalDashStyle = createGlobalStyle`
         background-color: #b388ff !important;
     }
 
+    @-webkit-keyframes autofill {
+        to {
+            background: transparent;
+        }
+    }
+    
+    input:-webkit-autofill {
+        -webkit-animation-name: autofill;
+        -webkit-animation-fill-mode: both;
+    }
+
     [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
         border: 2px solid #b388ff !important;
     }
