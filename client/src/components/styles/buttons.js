@@ -7,7 +7,9 @@ const backgroundColor = theme('mode', {
 });
 
 const BUTTON_STYLES = `
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+-webkit-box-shadow: 0px 12px 30px 0px rgba(0, 226, 163, 0.5);
+-moz-box-shadow:    0px 12px 30px 0px rgba(0, 226, 163, 0.5);
+box-shadow:         0px 12px 30px 0px rgba(0, 226, 163, 0.5);
     line-height: 0;
     -webkit-letter-spacing: 2px;
     -moz-letter-spacing: 2px;

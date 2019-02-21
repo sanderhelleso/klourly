@@ -48,6 +48,7 @@ const StyledMain = styled.main`
 const StyledAuthCont = styled.div`
 	background-color: #ffffff;
 	height: 100%;
+	box-shadow: -10px 0px 10px 1px #eeeeee;
 
 	.auth-form-cont {
 		margin: 17.5vh auto;

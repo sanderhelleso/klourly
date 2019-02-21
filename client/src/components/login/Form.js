@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { ArrowRight } from 'react-feather';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -18,6 +19,7 @@ import { notification } from '../../helpers/notification';
 
 import LinearLoader from '../loaders/LinearLoader';
 import GoogleAuth from './GoogleAuth';
+import { StyledButtonMain } from '../styles/buttons';
 
 class Form extends Component {
     constructor(props) {
@@ -100,15 +102,14 @@ class Form extends Component {
 
         if (!this.state.loading) {
             return (
-                <StyledLoginBtn 
+                <StyledButtonMain 
                     id="login-btn" 
-                    className="btn waves-effect waves-light login-base-btn hoverable"
-                    type="button"
+                    className="btn waves-effect waves-light login-base-btn"
                     disabled={!this.state.valid}
                     onClick={this.state.valid ? this.login : null}
                 >
-                    Log In
-                </StyledLoginBtn>
+                    Log In <ArrowRight size={22} />
+                </StyledButtonMain>
             );
         }
 
@@ -271,13 +272,23 @@ const StyledForm = styled.form`
     }
 
     .login-base-btn {
-        width: 100%;
+        min-width: 100%;
         height: 60px;
         margin: 1.5rem 0;
         line-height: 60px;
         transition: 0.3s ease-in-out;
-        font-weight: 400;
+        font-weight: 600;
         letter-spacing: 1px;
+        padding: 0;
+        position: relative;
+
+        svg {
+            position: absolute;
+            top: 32.5%;
+            left: 65%;
+            transform: translate(-65%);
+            opacity: 0.6;
+        }
     }
 
     #or {
@@ -287,18 +298,6 @@ const StyledForm = styled.form`
         letter-spacing: 2px;
         position: relative;
         font-size: 0.8rem;
-    }
-`;
-
-const StyledLoginBtn = styled.button`
-    background: #FF5F6D;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    &:disabled {
-        background: #eeeeee;
-        opacity: 0.7;
-        cursor: not-allowed;
     }
 `;
 
