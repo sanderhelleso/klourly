@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { regex } from '../../helpers/regex';
+import styled from 'styled-components';
 
 import { authentication } from '../../api/authentication/authentication';
 import { notification } from '../../helpers/notification';
@@ -14,15 +14,24 @@ export default class RegisterForm extends Component {
         // min password length
         this.MIN_PASSWORD_LENGTH = 12;
 
+        // regex patters for validation
+        this.REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        this.REGEX_UPPERCASE = /[A-Z]/;
+        this.REGEX_LOWERRCASE = /[a-z]/;
+        this.REGEX_NUMBER = /[0-9]/
+        this.REGEX_SPECIAL = /[!|@|#|$|%|^|&|*|(|)|-|_]/
+
         this.state = {
             first_name: '',
             last_name: '',
             email: '',
+            validEmail: false,
             password: '',
+            validPassword: false,
             password_error: '',
             email_error: '',
             valid: false,
-            loading: false        
+            loading: false
         };
     }
 
@@ -46,9 +55,7 @@ export default class RegisterForm extends Component {
     // validate email
     validateEmail = email => {
 
-        // email is valid 
-        console.log(email);
-        if (regex.email.test(String(email).toLowerCase())) {
+        if (this.REGEX_EMAIL.test(String(email).toLowerCase())) {
             this.setState({ email_error: '' });
             return true;
         }
@@ -66,7 +73,9 @@ export default class RegisterForm extends Component {
     }
 
     // validate password
-    validatePassword = password => {       
+    validatePassword = password => {  
+        
+        if (!password) return;
         
         // check for occurences of characters
         let numUpper    = 0;
@@ -77,10 +86,10 @@ export default class RegisterForm extends Component {
         for (let i = 0; i < password.length; i++) {
 
             // handle password requirements
-            if (regex.upperCase.test(password[i])) numUpper++;
-            else if (regex.lowerCase.test(password[i])) numLower++;
-            else if (regex.number.test(password[i])) numNums++;
-            else if (regex.special.test(password[i])) numSpec++;
+            if (this.REGEX_UPPERCASE.test(password[i])) numUpper++;
+            else if (this.REGEX_LOWERRCASE.test(password[i])) numLower++;
+            else if (this.REGEX_NUMBER.test(password[i])) numNums++;
+            else if (this.REGEX_SPECIAL.test(password[i])) numSpec++;
         }
 
         // if empty password
@@ -129,11 +138,31 @@ export default class RegisterForm extends Component {
     // update inputs and state
     handleUserInput = e => {
 
-        this.setState({ [e.target.name]: e.target.value });
+        // update values
+        const name = e.target.name;
+        const value = e.target.value; 
+        this.setState({ [name]: value }, () => {
 
-        // perform form validation depending on input
-        if (e.target.name === 'email') this.validateEmail(e.target.value); 
-        else this.validatePassword(e.target.value);
+            // perform form validation depending on input
+            if (name === 'email') {
+                this.setState({ validEmail: this.validateEmail(value) });
+            }
+
+            else if (name === 'password') {
+                this.setState({ validPassword: this.validatePassword(value) });
+            }
+
+            // check if valid
+            setTimeout(() => this.validateForm(), 10);
+        });
+    }
+
+    validateForm() {
+
+        // get all fields and check if empty aswell as email and password pass the regex validations
+        const fields = Array.from(document.querySelectorAll('input')).map(input => input.value.trim());
+        const valid = Boolean(this.state.validEmail && this.state.validPassword && fields.indexOf('') === -1);
+        this.setState({ valid });
     }
 
     // validate data
@@ -159,7 +188,7 @@ export default class RegisterForm extends Component {
 
     render() {
         return (
-            <form className="col s8 offset-s2">
+            <StyledForm className="col s8 offset-s2 animated fadeIn">
                 <div className="row">
                     <div className="input-field col s6">
                         <input 
@@ -183,7 +212,6 @@ export default class RegisterForm extends Component {
                     </div>
                     <div className="input-field col s6">
                         <input 
-                            autoComplete="off"
                             id="email" 
                             type="email" 
                             name="email" 
@@ -191,11 +219,10 @@ export default class RegisterForm extends Component {
                             onChange={(e) => this.handleUserInput(e)} 
                         />
                         <label htmlFor="email">E-Mail</label>
-                        <p className="signup-error">{this.state.email_error}</p>
+                        <p className="registration-error">{this.state.email_error}</p>
                     </div>
                     <div className="input-field col s6">
                         <input 
-                            autoComplete="off"
                             id="password" 
                             type="password" 
                             name="password" 
@@ -203,7 +230,7 @@ export default class RegisterForm extends Component {
                             onChange={(e) => this.handleUserInput(e)} 
                         />
                         <label htmlFor="password">Password</label>
-                        <p className="signup-error">{this.state.password_error}</p>
+                        <p className="registration-error">{this.state.password_error}</p>
                     </div>
                     <div className="col s10 offset-s1">
                         <ConfirmBtn 
@@ -217,7 +244,18 @@ export default class RegisterForm extends Component {
                         <GoogleAuth text="Register with Google"/>
                     </div>
                 </div>
-            </form>
+            </StyledForm>
         )
     }
 }
+
+const StyledForm = styled.form`
+
+    .registration-error {
+        min-height: 1rem;
+        color: #e53935;
+        font-size: 0.7rem;
+        text-align: left;
+        margin-top: 0.15rem;
+    }
+`;

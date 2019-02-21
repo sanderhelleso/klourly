@@ -165,7 +165,7 @@ const StyledAuthCont = styled.div`
 		margin: 2rem auto;
 
 		a {
-			margin: 1.25rem 1.6rem 1.25rem 1.6rem;
+			margin: 1.25rem 1.8rem 1.25rem 1.8rem;
 			font-size: 1.45rem;
 			color: #e0e0e0;
 			font-weight: 600;

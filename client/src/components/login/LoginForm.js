@@ -182,25 +182,25 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <StyledForm className='row animated fadeIn col s8 offset-s2'>
+            <StyledForm className='col s8 offset-s2 animated fadeIn'>
                 <div className='row login-row'>
                     <div className='input-field col s10 offset-s1'>
                         <input 
                             name='email' 
                             type='email' 
-                            placeholder="Email Address"
                             value={this.state.email} 
                             onChange={(e) => this.handleUserInput(e)} 
                         />
+                        <label htmlFor="email">E-Mail</label>
                     </div>
                     <div className='input-field col s10 offset-s1'>
                         <input 
                             name='password' 
                             type='password' 
-                            placeholder='Password' 
                             value={this.state.password} 
                             onChange={(e) => this.handleUserInput(e)} 
                         />
+                        <label htmlFor="password">Password</label>
                     </div>
                     <div className="col s10 offset-s1">
                         <h5 id='login-error'>{this.state.error}</h5>
