@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import qs from 'qs';
-import Form from './Form';
+import LoginForm from './LoginForm';
 import NeedHelp from './NeedHelp';
 
 export default class Login extends Component {
@@ -32,7 +32,7 @@ export default class Login extends Component {
 								<a className="active">Log In</a>
 								<a>Register</a>
 							</div>
-							<Form params={this.getQueryParams()} />
+							<LoginForm params={this.getQueryParams()} />
 							<NeedHelp />
 						</div>
 					</StyledAuthCont>

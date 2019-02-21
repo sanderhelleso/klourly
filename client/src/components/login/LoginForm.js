@@ -21,7 +21,7 @@ import LinearLoader from '../loaders/LinearLoader';
 import GoogleAuth from './GoogleAuth';
 import { StyledButtonMain } from '../styles/buttons';
 
-class Form extends Component {
+class LoginForm extends Component {
     constructor(props) {
         super(props);
 
@@ -234,6 +234,18 @@ class Form extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+        loginAction, 
+        userDataActions, 
+        nextStageAction,
+        setRoomsAttendingAction
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(LoginForm);
+
+
 const StyledForm = styled.form`
     margin: 0 auto;
     text-align: center;
@@ -295,14 +307,3 @@ const StyledForm = styled.form`
         font-size: 0.8rem;
     }
 `;
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ 
-        loginAction, 
-        userDataActions, 
-        nextStageAction,
-        setRoomsAttendingAction
-    }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(Form);
