@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { loginAction } from '../../actions/loginActions';
+import { setRoomsAttendingAction } from '../../actions/room/setRoomsAttendingAction';
+import { userDataActions } from '../../actions/userDataActions';
+import { nextStageAction } from '../../actions/newRoom/nextStageAction';
+
 import { authentication } from '../../api/authentication/authentication';
 import { notification } from '../../helpers/notification';
 
 import GoogleAuth from './GoogleAuth';
 import ConfirmBtn from './ConfirmBtn';
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
     constructor(props) {
         super(props);
 
@@ -178,9 +187,13 @@ export default class RegisterForm extends Component {
             this.state.email.trim().toLowerCase(), this.state.password.trim()
         );
 
-        // signup successfull, send confirmation email, then redirect to login page
+        // signup successfull, send confirmation email, then redirect to dashboard
         if (response.data.success) {
-            console.log(123);
+            
+            // set user data and init state, login and redir on state change
+            this.props.nextStageAction({ stage: 0 });
+            this.props.userDataActions(response.data.userData);
+            this.props.loginAction(response.data.user);
         }
         
         // signup failed, display error to user and enable button
@@ -251,6 +264,18 @@ export default class RegisterForm extends Component {
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+        loginAction, 
+        userDataActions, 
+        nextStageAction,
+        setRoomsAttendingAction
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(RegisterForm);
+
 
 const StyledForm = styled.form`
 

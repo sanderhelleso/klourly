@@ -60,7 +60,7 @@ function login(gToken, isNewUser, res) {
             else userData = await getUserInfo(result.user);
 
             // create JWT
-            const token = jwt.sign(result.user.id);
+            const token = await jwt.sign(result.user.id);
                     
             // validate token
             if (!token) {

@@ -16,7 +16,7 @@ module.exports = app => {
             if (!error) {
 
                 // create JWT
-                const token = jwt.sign(userRecord.user.id);
+                const token = await jwt.sign(userRecord.user.id);
                 
                 // validate token
                 if (!token) {
