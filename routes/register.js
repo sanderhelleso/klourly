@@ -24,7 +24,6 @@ module.exports = app => {
 
             // get signup date and create verification url
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-            const verificationUrl = `${process.env.DOMAIN}/verify-account/${userRecord.uid}/${verificationID}`;
 
             // set the user UID reference for the contents of user.
             const userRef = ref.child(userRecord.uid);
@@ -42,7 +41,7 @@ module.exports = app => {
             });
 
             // send verification email
-            email.sendVerification(req.body.email, verificationUrl);
+            email.sendVerification(req.body.email, userRecord.uid, verificationID);
 
             // send data back to client and login user with localstorage using UID
             res.status(200).json({
