@@ -165,13 +165,14 @@ export default class RegisterForm extends Component {
         this.setState({ valid });
     }
 
-    // validate data
-    register = e => {
+    // validate data and register user
+    register = async e => {
 
         // prevent form from submiting
         e.preventDefault();
+        this.setState({ loading: true, valid: false });
 
-        /*// attempt to  register user with given data
+        // attempt to  register user with given data
         const response = await authentication.signup(
             this.state.first_name, this.state.last_name, 
             this.state.email, this.state.password
@@ -183,7 +184,9 @@ export default class RegisterForm extends Component {
         }
         
         // signup failed, display error to user and enable button
-        else notification.error(response.data.message);*/
+        else notification.error(response.data.message);
+
+        this.setState({ loading: false, valid: true });
     }
 
     render() {
