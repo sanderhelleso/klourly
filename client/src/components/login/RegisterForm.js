@@ -175,7 +175,7 @@ export default class RegisterForm extends Component {
         // attempt to  register user with given data
         const response = await authentication.register(
             `${this.state.first_name.trim()} ${this.state.last_name.trim()}`,
-            this.state.email.trim(), this.state.password.trim()
+            this.state.email.trim().toLowerCase(), this.state.password.trim()
         );
 
         // signup successfull, send confirmation email, then redirect to login page

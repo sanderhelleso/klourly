@@ -2,6 +2,8 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
 const ref = db.ref("users");
+const email = require('../lib/email');
+const verificationID = require('shortid').generate();
 
 module.exports = app => {
 
@@ -9,20 +11,26 @@ module.exports = app => {
     app.post('/api/auth/register', (req, res) => {
         
 
-        // attempt to create new user
+        // create new user
         firebase.auth().createUser({
-            email: req.body.email.toLowerCase(),
+            email: req.body.email,
             emailVerified: false,
             disabled: false,
             password: req.body.password,
         })
+
+        // store user data and send verification email
         .then(userRecord => {
 
-            // set the user UID reference for the contents of user.
+            // get signup date and create verification url
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            const verificationUrl = `${process.env.DOMAIN}/verify-account/${userRecord.uid}/${verificationID}`;
+
+            // set the user UID reference for the contents of user.
             const userRef = ref.child(userRecord.uid);
             userRef.set({
-                signupDate: signupDate,
+                signupDate,
+                verificationID,
                 settings: {
                     displayName: req.body.displayName,
                     phoneNr: '',
@@ -32,6 +40,9 @@ module.exports = app => {
                     newsLetter: false
                 }
             });
+
+            // send verification email
+            email.sendVerification(req.body.email, verificationUrl);
 
             // send data back to client and login user with localstorage using UID
             res.status(200).json({
