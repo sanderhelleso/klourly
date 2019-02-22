@@ -3,7 +3,7 @@ const firebase = new FirebaseAuth(process.env.FIREBASE_API_KEY);
 const admin = require('firebase-admin');
 const db = admin.database();
 const ref = db.ref("users");
-const jwt = require('jsonwebtoken');
+const jwt = require('../lib/token');
 
 module.exports = (app, passport) => {
 
@@ -18,11 +18,9 @@ module.exports = (app, passport) => {
     // handle google auth callback flow
     app.get('/api/auth/google/handleCB',
         passport.authenticate('google', {
-            failureRedirect: '/'
+            failureRedirect: '/login'
         }),
         (req, res) => {
-
-            //console.log(req.user);
 
             // check if user already exists in system
             admin.auth().getUserByEmail(req.user.profile.emails[0].value)
@@ -33,7 +31,7 @@ module.exports = (app, passport) => {
             })
             .catch(err => { 
 
-                // user doesn't exist yet, create it...
+                // user doesn't exist yet, create it
                 if (err.code === 'auth/user-not-found') {
                     login(req.user.token, true, res);
                 }
@@ -42,14 +40,14 @@ module.exports = (app, passport) => {
     );
 }
 
-function login(token, isNewUser, res) {
-    firebase.loginWithGoogle(token, async (err, result) => {
+function login(gToken, isNewUser, res) {
+    firebase.loginWithGoogle(gToken, async (err, result) => {
 
         // handle login in errors
         if (err) {
             res.status(400).json({
                 success: false,
-                message: 'Unable to login with Google. Please try again'
+                message: 'Unable to authenticate with Google. Please try again'
             });
         }
 
@@ -62,29 +60,27 @@ function login(token, isNewUser, res) {
             else userData = await getUserInfo(result.user);
 
             // create JWT
-            jwt.sign({ uid: result.user.id }, process.env.JWT_SECRET, 
-            (error, token) => {
+            const token = jwt.sign(result.user.id);
+                    
+            // validate token
+            if (!token) {
 
-                // destructor user data
-                const { email, id, authenticatedWith } = result.user;
-
-                // validate error
-                if (error) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'Hmm, this is our mistake. We are unable to log you in at this time',
-                        reason: 'Unable to sign JWT',
-                        error
-                    });
-                }
-
-                // return credentials and data to user, login and redir on client
-                res.status(200).json({
-                    success: true,
-                    message: 'Successfully authenticated with Google',
-                    user: { email, id, authenticatedWith, token },
-                    userData
+                // if JWT sign error, notify user
+                return res.status(400).json({
+                    success: false,
+                    message: 'Hmm, this is our mistake. We are unable to log you in at this time'
                 });
+            }
+
+            // destructor user data
+            const { email, id, authenticatedWith } = result.user;
+
+            // return credentials and data to user, login and redir on client
+            res.status(200).json({
+                success: true,
+                message: 'Successfully authenticated with Google',
+                user: { email, id, authenticatedWith, token },
+                userData
             });
         }
     });
