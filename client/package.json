@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/api/auth/signup": {
+    "/api/auth/register": {
       "target": "http://localhost:5000"
     },
     "/api/auth/login": {

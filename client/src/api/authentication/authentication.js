@@ -2,26 +2,24 @@ import { authHeader } from '../../helpers/authHeader';
 import axios from 'axios';
 
 export const authentication = {
-    signup,
+    register,
     login,
     googleOauth,
     validateUser,
     authAndDoAction
 };
 
-async function signup(firstName, lastName, email, password, location, newsLetter) {
+async function register(displayName, email, password) {
+
     // send data to endpoint and attempt to create user
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/auth/signup',
+            url: '/api/auth/register',
             data: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password,
-                location: location,
-                newsLetter: newsLetter
+                displayName,
+                email,
+                password
             }
         });
 
@@ -33,6 +31,7 @@ async function signup(firstName, lastName, email, password, location, newsLetter
 }
 
 async function login(email, password) {
+    
     // send data to endpoint and attempt to login user
     try {
         const response = await axios({

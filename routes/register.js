@@ -1,12 +1,12 @@
 // firebase setup
 const firebase = require('firebase-admin');
 const db = firebase.database();
-const signupRef = db.ref("users");
+const ref = db.ref("users");
 
 module.exports = app => {
 
-    // get signup data from client
-    app.post('/api/auth/signup', (req, res) => {
+    // get register data from client
+    app.post('/api/auth/register', (req, res) => {
         
 
         // attempt to create new user
@@ -20,8 +20,8 @@ module.exports = app => {
 
             // set the user UID reference for the contents of user.
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-            const usersRef = signupRef.child(userRecord.uid);
-            usersRef.set({
+            const userRef = ref.child(userRecord.uid);
+            userRef.set({
                 signupDate: signupDate,
                 settings: {
                     displayName: req.body.displayName,
@@ -29,7 +29,7 @@ module.exports = app => {
                     occupation: '',
                     status: `Joined Klourly on ${signupDate}`,
                     photoUrl: process.env.DEFAULT_AVATAR,
-                    newsLetter: req.body.newsLetter
+                    newsLetter: false
                 }
             });
 

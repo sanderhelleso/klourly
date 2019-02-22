@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes 
 require("./routes/authenticated")(app);
-require("./routes/signup")(app);
+require("./routes/register")(app);
 require("./routes/login")(app);
 require("./routes/oAuth")(app, passport);
 require("./routes/userData")(app);
