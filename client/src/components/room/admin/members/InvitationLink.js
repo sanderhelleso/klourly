@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RefreshCw } from 'react-feather';
+import { RefreshCw, Mail } from 'react-feather';
 import styled, { keyframes } from 'styled-components';
 import { format } from '../../../../helpers/format';
 import { room } from '../../../../api/room/room';
@@ -25,10 +25,14 @@ class InvitationLink extends Component {
                 <h5 onClick={(e) => this.copyUrl(e)}>
                     {`${this.getHostname()}${this.props.invite.url}`}
                 </h5>
-                <p>Valid from <span>{format.getFormatedDateAndTime(this.props.invite.validFrom)}</span> to <span>{format.getFormatedDateAndTime(this.props.invite.validTo)}</span></p>
+                <p>Valid from 
+                    <span> {format.getFormatedDateAndTime(this.props.invite.validFrom)} </span>
+                     to 
+                    <span> {format.getFormatedDateAndTime(this.props.invite.validTo)}</span>
+                </p>
                 {this.renderAvailableBadge(this.props.invite.validTo)}
                 <GenerateNewBtn 
-                    className="waves-effect waves-purple btn-flat"
+                    className="waves-effect waves-light btn-flat"
                     disabled={this.state.loadingNewInvite}
                     onClick={!this.state.loadingNewInvite ? this.generateNewLink : null}
                 >
@@ -42,7 +46,7 @@ class InvitationLink extends Component {
     renderLoadingIcon() {
         return this.state.loadingNewInvite 
         ? <Rotate><RefreshCw size={22} /></Rotate>
-        : <RefreshCw size={17}/>;
+        : <RefreshCw size={17 }/>;
     }
 
     renderAvailableBadge(validTo) {
@@ -160,7 +164,6 @@ const AvailableBadge = styled.span`
     padding: 0.6rem 1rem;
     border-radius: 4px;
     text-transform: uppercase;
-    font-weight: 100;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 
     span {
@@ -188,8 +191,13 @@ const GenerateNewBtn = styled.button`
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
 
     svg {
-        margin-bottom: -3.5px;
+        margin-bottom: -4px;
         margin-right: 10px;
+    }
+
+    &:hover, &:focus {
+        background-color: #eeeeee;
+        box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
     }
 `;
 

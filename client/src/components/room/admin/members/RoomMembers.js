@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Eye, EyeOff } from 'react-feather';
+import { Eye, EyeOff, Mail } from 'react-feather';
 import styled from 'styled-components';
 
 // redux
@@ -44,14 +44,22 @@ class RoomMembers extends Component {
     renderLinkBtn() {
 
         return (
-            <RenderLinkBtn 
+            <StyledBtn 
                 className="waves-effect waves btn-flat"
                 onClick={() => this.setState({ linkHidden: this.state.linkHidden ? false : true })}
             >
                 {this.state.linkHidden ? <Eye size={18} /> : <EyeOff size={18} />}
                 {this.state.linkHidden ? 'Show' : 'Hide'} Invitation Link
-            </RenderLinkBtn>
+            </StyledBtn>
         );
+    }
+
+    renderSendToEmailsBtn() {
+        return (
+            <StyledBtn className="waves-effect waves btn-flat">
+                <Mail size={17} /> Send to E-mails
+            </StyledBtn>
+        )
     }
 
     renderConfirmDeleteModal() {
@@ -70,8 +78,9 @@ class RoomMembers extends Component {
                 <div className="row">
                     <StyledHeader className="col s12 m6 l6 animated fadeIn">
                         <h3>Members</h3>
-                        <p>Invite, remove and see memebers of the room</p>
+                        <p>Invite, remove and see memebers of the room.</p>
                         {this.renderLinkBtn()}
+                        {this.renderSendToEmailsBtn()}
                     </StyledHeader>
                     {this.renderLink()}
                 </div>
@@ -107,7 +116,6 @@ const StyledHeader = styled.div`
         margin-top: 0;
         font-weight: 800;
         letter-spacing: 3px;
-        text-transform: uppercase;
     }
 
     p {
@@ -121,17 +129,21 @@ const StyledHeader = styled.div`
     }
 `;
 
-const RenderLinkBtn = styled.button`
+const StyledBtn = styled.button`
 
     min-width: 225px;
+    height: 50px;
     font-weight: 600;
     font-size: 0.9rem;
     background-color: #e0e0e0;
     border-radius: 4px;
     color: #757575;
+    display: block;
+    margin-bottom: 1.25rem;
 
     svg {
-        margin-bottom: -3.5px;
-        margin-right: 10px;
+        margin-top: 10px;
+        margin-left: 5px;
+        float: left;
     }
 `;
