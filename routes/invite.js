@@ -1,5 +1,6 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
+const email = require('../lib/email');
 
 module.exports = app => {
 
@@ -118,10 +119,13 @@ module.exports = app => {
 
     // get invitations room data
     app.post('/api/room/sendRoomInviteToRecipients', async (req, res) => {
-        console.log("YUP");
+
+        // send email containing invitation code to list of recipients provided
+        email.sendRoomInvite(req.body.recipients, req.body.roomID, req.body.invitationCode);
+
         res.status(200).json({
             success: true,
-            message: 'WE DID IT'
+            message: 'Invitation successfully sent to recipients'
         });
     });
 }
