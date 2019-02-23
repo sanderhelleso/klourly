@@ -20,7 +20,10 @@ const BUTTON_STYLES = `
     display: block;
     max-width: 320px;
     margin: 2rem auto 0 auto;
+    text-transform: uppercase;
     clear: both;
+    transition: 0.3s ease-in-out;
+    border-radius: 4px;
 `;
 
 export const StyledButtonMain = styled.a`
@@ -28,8 +31,10 @@ export const StyledButtonMain = styled.a`
     background-color: ${backgroundColor};
     ${BUTTON_STYLES};
 
-    &:hover {
-        box-shadow: 0px 18px 56px rgba(0,0,0,0.15);
+    &:hover, &:focus {
+        -webkit-box-shadow: 0px 12px 30px 0px rgba(0, 226, 163, 0.7);
+        -moz-box-shadow:    0px 12px 30px 0px rgba(0, 226, 163, 0.7);
+        box-shadow:         0px 12px 30px 0px rgba(0, 226, 163, 0.7);
         background-color: ${backgroundColor};
     }
 `;
