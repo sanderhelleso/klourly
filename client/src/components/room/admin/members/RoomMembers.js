@@ -10,6 +10,7 @@ import BackToRoom from '../../BackToRoom';
 import InvitationLink from './InvitationLink';
 import MembersList from './MembersList';
 import DeleteMemberModal from './DeleteMemberModal';
+import InviteMembersModal from './InviteMembersModal';
 
 class RoomMembers extends Component {
     constructor(props) {
@@ -63,12 +64,22 @@ class RoomMembers extends Component {
     }
 
     renderConfirmDeleteModal() {
+
+        if (!this.props.confirmDeleteMember) return null;
+
         return (
             <DeleteMemberModal 
                 roomID={this.props.roomID} 
                 data={this.state.confirmDelete.data} 
             />
         );
+    }
+
+    renderInviteMemberModal() {
+
+        if (!this.props.openInviteMembersModal) return null;
+        
+        return <InviteMembersModal roomID={this.props.roomID} />
     }
 
     render() {
@@ -94,6 +105,7 @@ class RoomMembers extends Component {
 const mapStateToProps = state => {
     return { 
         roomID: state.room.activeRoom.id,
+        openInviteMembersModal: state.room.activeRoom.openInviteMembersModal,
         confirmDeleteMember: {
             ...state.room.activeRoom.confirmDeleteMember 
             ? state.room.activeRoom.confirmDeleteMember 

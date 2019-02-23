@@ -167,6 +167,15 @@ const roomReducer = (state = initialState, action) => {
                 }
             }
 
+        case 'UPDATE_INVITE_ROOM_MEMBERS_MODAL':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    openInviteMembersModal: action.payload
+                }
+            }
+
         case 'UPDATE_ROOM_MEMBERS':
             return {
                 ...state,

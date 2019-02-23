@@ -23,7 +23,7 @@ class Member extends Component {
                         <div className="col s4 m4 l4 avatar-cont">
                             <img 
                                 src={this.props.data.photoUrl} 
-                                alt="" 
+                                alt="member photo" 
                             />
                         </div>
                         <div className="col s5 m5 l6">

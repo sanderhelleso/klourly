@@ -4,7 +4,7 @@ const db = firebase.database();
 module.exports = app => {
 
     // get invitations room data
-    app.post('/api/getRoomInvite', async (req, res) => {
+    app.post('/api/auth/getRoomInvite', async (req, res) => {
 
         // get ref to room by id
         const roomRef = db.ref(`rooms/${req.body.roomID}`);

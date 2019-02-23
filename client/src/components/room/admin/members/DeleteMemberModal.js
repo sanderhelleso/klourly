@@ -23,11 +23,9 @@ class DeleteMemberModal extends Component {
 
     componentDidMount() {
 
-        // prepeare modal
-        const modal = document.querySelectorAll('.modal');
-        materializeJS.M.Modal.init(modal, {
-            endingTop: '25%'
-        });
+        // prepare modal
+        const modal = document.querySelector('#confirm-delete-member-modal');
+        materializeJS.M.Modal.init(modal, { endingTop: '25%' });
     }
 
     deleteUser = async () => {

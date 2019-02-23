@@ -10,7 +10,7 @@ async function getRoomInvite(inviteData) {
     try {
         const response = await axios({
             method: 'post',
-            url: '/api/getRoomInvite',
+            url: '/api/auth/getRoomInvite',
             data: inviteData
         });
 

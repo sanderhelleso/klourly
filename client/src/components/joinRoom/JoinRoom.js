@@ -23,8 +23,8 @@ class JoinRoom extends Component {
         const response = await invite.getRoomInvite({
             ...this.props.match.params,
             uid: this.props.state.auth.user 
-                 ? this.props.state.auth.user.id 
-                 : null
+                ? this.props.state.auth.user.id 
+                : null
         });
 
         // set invite state
@@ -103,9 +103,9 @@ class JoinRoom extends Component {
 
     joinRoomNotLoggedIn() {
         redirect.loginWithJoinRoomRedirect(
-                this.props.match.params.inviteID, 
-                this.props.match.params.roomID
-            );
+            this.props.match.params.inviteID, 
+            this.props.match.params.roomID
+        );
     }
 
     setMessage() {
