@@ -5,6 +5,7 @@ import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { updateInviteRoomMembersModalAction } from '../../../../actions/room/members/updateInviteRoomMembersModalAction';
 
 import BackToRoom from '../../BackToRoom';
 import InvitationLink from './InvitationLink';
@@ -16,26 +17,7 @@ class RoomMembers extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            linkHidden: false,
-            confirmDelete: {
-                openModal: false,
-                data: {}
-            }
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        // check for new data
-        if (this.props.confirmDeleteMember !== nextProps.confirmDeleteMember) {
-            this.setState({
-                confirmDelete: {
-                    openModal: true,
-                    data: nextProps.confirmDeleteMember
-                }
-            });
-        }
+        this.state = { linkHidden: false };
     }
 
     renderLink() {
@@ -57,7 +39,10 @@ class RoomMembers extends Component {
 
     renderSendToEmailsBtn() {
         return (
-            <StyledBtn className="waves-effect waves btn-flat">
+            <StyledBtn 
+                className="waves-effect waves btn-flat"
+                onClick={() => this.props.updateInviteRoomMembersModalAction(true)}
+            >
                 <Mail size={17} /> Send to E-mails
             </StyledBtn>
         )
@@ -70,16 +55,18 @@ class RoomMembers extends Component {
         return (
             <DeleteMemberModal 
                 roomID={this.props.roomID} 
-                data={this.state.confirmDelete.data} 
+                data={this.props.confirmDeleteMember} 
             />
         );
     }
 
-    renderInviteMemberModal() {
+    renderInviteMembersModal() {
 
         if (!this.props.openInviteMembersModal) return null;
         
-        return <InviteMembersModal roomID={this.props.roomID} />
+        return (
+            <InviteMembersModal roomID={this.props.roomID} />
+        )
     }
 
     render() {
@@ -96,6 +83,7 @@ class RoomMembers extends Component {
                     {this.renderLink()}
                 </div>
                 <MembersList />
+                {this.renderInviteMembersModal()}
                 {this.renderConfirmDeleteModal()}
             </main>
         )
@@ -106,16 +94,14 @@ const mapStateToProps = state => {
     return { 
         roomID: state.room.activeRoom.id,
         openInviteMembersModal: state.room.activeRoom.openInviteMembersModal,
-        confirmDeleteMember: {
-            ...state.room.activeRoom.confirmDeleteMember 
+        confirmDeleteMember: state.room.activeRoom.confirmDeleteMember 
             ? state.room.activeRoom.confirmDeleteMember 
             : null
-        }
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ updateInviteRoomMembersModalAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomMembers);

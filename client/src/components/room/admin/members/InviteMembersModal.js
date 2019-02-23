@@ -17,7 +17,8 @@ class InviteMembersModal extends Component {
         super(props);
 
         this.state = {
-            loading: false
+            loading: false,
+            instance: null
         }
     }
 
@@ -25,7 +26,13 @@ class InviteMembersModal extends Component {
 
         // prepare modal
         const modal = document.querySelector('#invite-member-modal');
-        materializeJS.M.Modal.init(modal, { endingTop: '25%' });
+        const init = materializeJS.M.Modal.init(modal, { 
+            endingTop: '25%',
+            onCloseEnd: () => {
+                this.props.updateInviteRoomMembersModalAction(false)
+            }
+        });
+        init.open(); 
     }
 
     renderFooter() {
