@@ -64,9 +64,7 @@ class RoomMembers extends Component {
 
         if (!this.props.openInviteMembersModal) return null;
         
-        return (
-            <InviteMembersModal roomID={this.props.roomID} />
-        )
+        return  <InviteMembersModal />
     }
 
     render() {

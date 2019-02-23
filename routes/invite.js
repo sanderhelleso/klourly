@@ -21,7 +21,7 @@ module.exports = app => {
         await roomRef.once('value', async snapshot => {
 
             // check if room exists
-            if (snapshot.val() === null || snapshot.val().invite.inviteID !== req.body.inviteID) {
+            if (!snapshot.exists() || snapshot.val().invite.inviteID !== req.body.inviteID) {
                 status = 404; // not found
                 response = {
                     success: false,
@@ -116,4 +116,12 @@ module.exports = app => {
         res.status(status).json(response);
     });
 
+    // get invitations room data
+    app.post('/api/room/sendRoomInviteToRecipients', async (req, res) => {
+        console.log("YUP");
+        res.status(200).json({
+            success: true,
+            message: 'WE DID IT'
+        });
+    });
 }

@@ -3,7 +3,7 @@ import { AlertOctagon, X, XCircle } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
-import { room } from '../../../../api/room/room';
+import { invite } from '../../../../api/room/invite';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -65,10 +65,32 @@ class InviteMembersModal extends Component {
         });
     }
 
+    sendLinkToRecipients = async () => {
+
+        this.setState({ loading: true });
+
+        const response = await invite.sendRoomInviteToRecipients(
+            this.props.userID, this.props.roomID, 
+            this.props.invitationCode, this.state.recipients
+        );
+
+        if (response.data.success) {
+            this.setState({ recipients: [] });
+            notification.success(response.data.message);
+        }
+
+        else notification.error(response.data.message);
+
+        this.setState({  loading: false });
+    }
+
     renderRecipients() {
         return this.state.recipients.map(recipient => {
             return (
-                <StyledChip className="no-select">
+                <StyledChip 
+                    key={recipient}
+                    className="no-select"
+                >
                     {recipient}
                     <span 
                         onClick={() => this.removeRecipient(recipient)}
@@ -116,9 +138,11 @@ class InviteMembersModal extends Component {
         if (!this.state.loading) {
             return (
                 <div className="modal-footer">
-                    <a className="modal-close waves-effect waves-purple btn-flat">Cancel</a>
+                    <a className="modal-close close-invite waves-effect waves-purple btn-flat">Cancel</a>
                     <button 
                         className="waves-effect waves-purple btn-flat"
+                        disabled={this.state.recipients.length === 0 || this.state.loading}
+                        onClick={this.sendLinkToRecipients}
                     >
                         Send
                     </button>
@@ -152,11 +176,20 @@ class InviteMembersModal extends Component {
     }
 }
 
+
+const mapStateToProps = state => {
+    return { 
+        roomID: state.room.activeRoom.id,
+        userID: state.auth.user.id,
+        invitationCode: state.room.activeRoom.invite.inviteID
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ updateInviteRoomMembersModalAction }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(InviteMembersModal);
+export default connect(mapStateToProps, mapDispatchToProps)(InviteMembersModal);
 
 
 const StyledModal = styled.div`
