@@ -17,34 +17,14 @@ class InviteMembersModal extends Component {
     constructor(props) {
         super(props);
 
+        // regex pattern for valid email
+        this.REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
         this.state = {
             loading: false,
-            instance: null
+            recipients: [],
+            email: ''
         }
-    }
-
-    renderEmailInput() {
-
-        return (
-            <div className="input-field col s10 offset-s1 m9 l6 offset-l2">
-                <input 
-                    required
-                    name="email"
-                    id="new-email-recipent" 
-                    type="email" 
-                />
-                <label htmlFor="new-email-recipent">E-mail recipent</label>
-            </div>
-        )
-    }
-
-    renderaddEmailBtn() {
-
-        return (
-            <StyledBtnCont className="input-field col s10 offset-s1 m3 l2">
-                <StyledButtonMain>Add</StyledButtonMain>
-            </StyledBtnCont>
-        )
     }
 
     componentDidMount() {
@@ -60,11 +40,63 @@ class InviteMembersModal extends Component {
         init.open(); 
     }
 
+    updateEmail = e => this.setState({ [e.target.name]: e.target.value });
+
+    addEmailToList = () => {
+
+        if (this.REGEX_EMAIL.test(String(this.state.email).toLowerCase())) {
+            return this.setState({ 
+                recipients: [...this.state.recipients, this.state.email],
+                email: ''
+            });
+        }
+
+        notification.error('Unable to add recipient. E-mail is in invalid format');
+
+    }
+
+    renderEmailInput() {
+
+        return (
+            <div className="input-field col s10 offset-s1 m9 l6 offset-l2">
+                <input 
+                    required
+                    name="email"
+                    id="new-email-recipent" 
+                    type="email"
+                    value={this.state.email}
+                    onChange={(e) => this.updateEmail(e)}
+                />
+                <label htmlFor="new-email-recipent">E-mail recipent</label>
+            </div>
+        )
+    }
+
+    renderaddEmailBtn() {
+
+        return (
+            <StyledBtnCont className="input-field col s10 offset-s1 m3 l2">
+                <StyledButtonMain 
+                    className="waves-effect waves-light btn"
+                    onClick={this.addEmailToList}
+                    disabled={this.state.email.trim().length < 2}
+                >
+                    Add
+                </StyledButtonMain>
+            </StyledBtnCont>
+        )
+    }
+
     renderFooter() {
         if (!this.state.loading) {
             return (
-                <div>
-                    
+                <div className="modal-footer">
+                    <a className="modal-close waves-effect waves-purple btn-flat">Cancel</a>
+                    <button 
+                        className="waves-effect waves-purple btn-flat"
+                    >
+                        Send
+                    </button>
                 </div>
             )
         }
@@ -74,11 +106,11 @@ class InviteMembersModal extends Component {
 
     render() {
         return (
-            <StyledModal id="invite-member-modal" className="modal">
+            <StyledModal id="invite-member-modal" className="modal modal-fixed-footer">
                 <StyledModalContent className="modal-content">
                     <StyledHeader>
                         <h4>Invite members</h4>
-                        <p>Send the room invitation link to e-mail recipents</p>
+                        <p>Send the room invitation link to e-mail recipients</p>
                     </StyledHeader>
                     <div className="row">
                         {this.renderEmailInput()}

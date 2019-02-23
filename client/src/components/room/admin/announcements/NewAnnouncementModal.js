@@ -191,7 +191,8 @@ class NewAnnouncementModal extends Component {
                     <a className="modal-close waves-effect waves-green btn-flat">Cancel</a>
                     <button 
                         className="waves-effect waves-green btn-flat" 
-                        onClick={this.publishAnnouncement}>
+                        onClick={this.publishAnnouncement}
+                    >
                         Publish
                     </button>
                 </div>
