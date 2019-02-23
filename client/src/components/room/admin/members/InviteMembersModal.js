@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AlertOctagon } from 'react-feather';
+import { AlertOctagon, X, XCircle } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
 import { notification } from '../../../../helpers/notification';
@@ -45,14 +45,39 @@ class InviteMembersModal extends Component {
     addEmailToList = () => {
 
         if (this.REGEX_EMAIL.test(String(this.state.email).toLowerCase())) {
+
+            if (this.state.recipients.indexOf(this.state.email) !== -1) {
+                return notification.error('Unable to add recipient. E-mail is already in list of recipients');
+            }
+
             return this.setState({ 
                 recipients: [...this.state.recipients, this.state.email],
                 email: ''
-            });
+            }, () => document.querySelector('#new-email-recipent').focus());
         }
 
         notification.error('Unable to add recipient. E-mail is in invalid format');
+    }
 
+    removeRecipient = recipient => {
+        this.setState({ 
+            recipients: this.state.recipients.filter(r => r !== recipient) 
+        });
+    }
+
+    renderRecipients() {
+        return this.state.recipients.map(recipient => {
+            return (
+                <StyledChip className="no-select">
+                    {recipient}
+                    <span 
+                        onClick={() => this.removeRecipient(recipient)}
+                    >
+                        <XCircle size={15} />
+                    </span>
+                </StyledChip>
+            )
+        });
     }
 
     renderEmailInput() {
@@ -116,6 +141,10 @@ class InviteMembersModal extends Component {
                         {this.renderEmailInput()}
                         {this.renderaddEmailBtn()}
                     </div>
+                    <StyledRecipients>
+                        <h5>{this.state.recipients.length} recipients added</h5>
+                        {this.renderRecipients()}
+                    </StyledRecipients>
                 </StyledModalContent>
                 {this.renderFooter()}
             </StyledModal>
@@ -131,7 +160,7 @@ export default connect(null, mapDispatchToProps)(InviteMembersModal);
 
 
 const StyledModal = styled.div`
-
+    min-height: 85%;
 `;
 
 const StyledModalContent = styled.div`
@@ -188,6 +217,38 @@ const StyledBtnCont = styled.div`
            padding: 2rem !important;
            height: 50px;
         }
+    }
+`;
+
+const StyledChip = styled.div`
+    border-radius: 20px;
+    background-color: #e0e0e0;
+    color: #757575;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin: 0.25rem;
+    padding: 0.4rem 0.65rem;
+
+    svg {
+        display: inline-block;
+        margin-left: 0.5rem;
+        margin-bottom: -3px;
+        stroke: #9e9e9e;
+        cursor: pointer;
+    }
+`;
+
+const StyledRecipients = styled.div`
+    
+    padding-top: 2rem;
+    border-top: 1px solid #eeeeee;
+    min-width: 100%;
+
+    h5 {
+        font-size: 1rem;
+        color: #9e9e9e;
+        text-align: left;
+        margin-left: 0.65rem;
     }
 `;
 
