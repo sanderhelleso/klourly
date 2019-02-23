@@ -45,44 +45,40 @@ function login(gToken, isNewUser, res) {
 
         // handle login in errors
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Unable to authenticate with Google. Please try again'
             });
         }
 
-        // login user with google credentials
-        else {
+        // if new user, create user record in db
+        let userData;
+        if (isNewUser) userData = await createUserInfo(result.user);
+        else userData = await getUserInfo(result.user);
 
-            // if new user, create user record in db
-            let userData;
-            if (isNewUser) userData = await createUserInfo(result.user);
-            else userData = await getUserInfo(result.user);
+        // create JWT
+        const token = await jwt.sign(result.user.id);
+                
+        // validate token
+        if (!token) {
 
-            // create JWT
-            const token = await jwt.sign(result.user.id);
-                    
-            // validate token
-            if (!token) {
-
-                // if JWT sign error, notify user
-                return res.status(400).json({
-                    success: false,
-                    message: 'Hmm, this is our mistake. We are unable to log you in at this time'
-                });
-            }
-
-            // destructor user data
-            const { email, id, authenticatedWith } = result.user;
-
-            // return credentials and data to user, login and redir on client
-            res.status(200).json({
-                success: true,
-                message: 'Successfully authenticated with Google',
-                user: { email, id, authenticatedWith, token },
-                userData
+            // if JWT sign error, notify user
+            return res.status(400).json({
+                success: false,
+                message: 'Hmm, this is our mistake. We are unable to log you in at this time'
             });
         }
+
+        // destructor user data
+        const { email, id, authenticatedWith } = result.user;
+
+        // return credentials and data to user, login and redir on client
+        res.status(200).json({
+            success: true,
+            message: 'Successfully authenticated with Google',
+            user: { email, id, authenticatedWith, token },
+            userData
+        });
     });
 }
 
@@ -113,8 +109,6 @@ async function createUserInfo(user) {
 
 // get user info
 async function getUserInfo(user) {
-
-    // get user ref and return data
-    const usersRef = ref.child(user.id);
-    return await usersRef.once('value', snapshot => snapshot.val());
+    return await ref.child(user.id)
+    .once('value', snapshot => snapshot.val());
 }
