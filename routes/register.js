@@ -15,7 +15,6 @@ module.exports = app => {
         // create new user
         firebase.auth().createUser({
             email: req.body.email,
-            emailVerified: false,
             disabled: false,
             password: req.body.password,
         })
