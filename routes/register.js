@@ -3,14 +3,14 @@ const firebase = require('firebase-admin');
 const db = firebase.database();
 const ref = db.ref("users");
 const email = require('../lib/email');
-const verificationID = require('shortid').generate();
+const shortid = require('shortid');
 const jwt = require('../lib/token');
+const crypto = require('../lib/crypto');
 
 module.exports = app => {
 
     // get register data from client
     app.post('/api/auth/register', (req, res) => {
-        
 
         // create new user
         firebase.auth().createUser({
@@ -24,6 +24,9 @@ module.exports = app => {
 
             // get signup date and create verification url
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+
+            // create encrypted invitation id
+            const verificationID = crypto.encrypt(shortid.generate());
 
             // set the user UID reference for the contents of user.
             const userRef = ref.child(userRecord.uid);
