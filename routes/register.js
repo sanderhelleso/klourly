@@ -96,7 +96,7 @@ module.exports = app => {
             // send back success response
             res.status(200).json({
                 success: true,
-                message: 'Account successfully verified'
+                message: 'Thanks! Your account was successfully verified.'
             });
         });
     });

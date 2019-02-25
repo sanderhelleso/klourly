@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { authentication } from '../../api/authentication/authentication';
+import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
+import { StyledButtonMain } from '../styles/buttons';
+
 
 export default class VerifyAccount extends Component {
     constructor(props) {
@@ -42,15 +45,32 @@ export default class VerifyAccount extends Component {
         }
 
         else if (this.state.verified) {
-            return <h1>VERIFIED</h1>
+            return (
+                <StyledCont>
+                    <h1>Account is now verified!</h1>
+                    <p>{this.state.message}</p>
+                    <StyledButtonMain 
+                        className="btn waves-effect waves-light"
+                        onClick={redirect.dashboard}
+                    >
+                        Back to Dashboard
+                    </StyledButtonMain>
+                </StyledCont>
+            )
         }
 
         else {
             return (
-                <StyledInvalidCont>
+                <StyledCont>
                     <h1>Something went wrong...</h1>
                     <p>{this.state.message}</p>
-                </StyledInvalidCont>
+                    <StyledButtonMain 
+                        className="btn waves-effect waves-light"
+                        onClick={redirect.home}
+                    >
+                        Back to home
+                    </StyledButtonMain>
+                </StyledCont>
             )
         }
     }
@@ -85,10 +105,10 @@ const StyledLoaderCont = styled.div`
     }
 `;
 
-const StyledInvalidCont = styled.div`
+const StyledCont = styled.div`
     
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%);
     text-align: center;
@@ -106,5 +126,9 @@ const StyledInvalidCont = styled.div`
         opacity: 0.8;
         font-size: 1rem; 
         letter-spacing: 1px;   
+    }
+
+    a {
+        margin-top: 5rem;
     }
 `;
