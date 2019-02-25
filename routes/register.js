@@ -80,18 +80,20 @@ module.exports = app => {
 
     // validate and verify user
     app.post('/api/auth/verifyAccount', (req, res) => {
-        console.log(req.body);
 
         // check if id and verify code is present
         const verifyRef = db.ref(`users/${req.body.userID}/verificationID`);
         verifyRef.once('value', snapshot => {
+
+            // check if code exists or is not valid
             if (!snapshot.exists() || snapshot.val() !== req.body.verificationID) {
                 return res.status(400).json({
                     success: false,
-                    message: 'The veryfication code is removed or might never existed.'
+                    message: 'The verification code is removed or might never existed.'
                 });
             }
 
+            // send back success response
             res.status(200).json({
                 success: true,
                 message: 'Account successfully verified'

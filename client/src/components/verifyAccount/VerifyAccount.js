@@ -10,7 +10,8 @@ export default class VerifyAccount extends Component {
         console.log(this.props);
         this.state = { 
             loading: true ,
-            verified: false
+            verified: false,
+            message: 'verifying account...'
         };
     }
 
@@ -24,7 +25,8 @@ export default class VerifyAccount extends Component {
 
         this.setState({
             loading: false, 
-            verified: response.data.success
+            verified: response.data.success,
+            message: response.data.message
         });
     }
 
@@ -34,7 +36,7 @@ export default class VerifyAccount extends Component {
             return (
                 <StyledLoaderCont>
                     <CircularLoader size="big" />
-                    <h5>verifying account...</h5>
+                    <h5>{this.state.message}</h5>
                 </StyledLoaderCont>
             )
         }
@@ -44,18 +46,28 @@ export default class VerifyAccount extends Component {
         }
 
         else {
-            return <h1>Unable to verify account</h1>
+            return (
+                <StyledInvalidCont>
+                    <h1>Something went wrong...</h1>
+                    <p>{this.state.message}</p>
+                </StyledInvalidCont>
+            )
         }
     }
 
     render() {
         return (
-            <main>
+            <StyledMain>
                {this.renderStatus()}
-            </main>
+            </StyledMain>
         )
     }
 }
+
+const StyledMain = styled.main`
+    position: relative;
+    min-height: 90vh;
+`;
 
 
 const StyledLoaderCont = styled.div`
@@ -70,5 +82,29 @@ const StyledLoaderCont = styled.div`
         font-size: 1.75rem;
         color: #bdbdbd;
         font-weight: 100;
+    }
+`;
+
+const StyledInvalidCont = styled.div`
+    
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+
+    h1 {
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 3px;
+        font-size: 2.75rem;
+    }
+    
+    p {
+        margin: 1.5rem;
+        color: #9e9e9e;
+        opacity: 0.8;
+        font-size: 1rem; 
+        letter-spacing: 1px;   
     }
 `;
