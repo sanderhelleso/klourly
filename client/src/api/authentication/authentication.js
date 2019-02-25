@@ -93,7 +93,7 @@ async function validateUser(uid) {
 }
 
 // verify user
-async function verifyAccount(uid, verificationID) {
+async function verifyAccount(verificationData) {
 
     try {
         const response = await axios({
@@ -101,8 +101,7 @@ async function verifyAccount(uid, verificationID) {
             method: 'post',
             url: '/api/auth/verifyAccount',
             data: {
-                uid,
-                verificationID
+                ...verificationData
             }
         });
 

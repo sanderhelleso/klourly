@@ -80,7 +80,7 @@ module.exports = app => {
 
     // validate and verify user
     app.post('/api/auth/verifyAccount', (req, res) => {
-        console.log(123);
+        console.log(req.body);
 
         res.status(200).json({
             success: true,
