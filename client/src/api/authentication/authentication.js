@@ -6,7 +6,8 @@ export const authentication = {
     login,
     googleOauth,
     validateUser,
-    authAndDoAction
+    authAndDoAction,
+    verifyAccount
 };
 
 async function register(displayName, email, password) {
@@ -38,8 +39,8 @@ async function login(email, password) {
             method: 'post',
             url: '/api/auth/login',
             data: {
-                email: email,
-                password: password
+                email,
+                password
             }
         });
 
@@ -66,8 +67,6 @@ async function googleOauth(cb) {
     catch (error) { return error.response };
 }
 
-
-
 async function validateUser(uid) {
 
     // send data to endpoint and attempt to authenticate user
@@ -81,7 +80,29 @@ async function validateUser(uid) {
             method: 'post',
             url: '/api/auth/authenticated',
             data: {
-                uid: uid
+                uid
+            }
+        });
+
+        // get response from endpoint
+        return response.data.success;
+    }
+
+    // catch error
+    catch (error) { return error.response };
+}
+
+// verify user
+async function verifyAccount(uid, verificationID) {
+
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/auth/verifyAccount',
+            data: {
+                uid,
+                verificationID
             }
         });
 
@@ -115,7 +136,7 @@ async function authAndDoAction(params, uid) {
             method: 'post',
             url: endpoint,
             data: {
-                uid: uid,
+                uid,
                 ...params
             }
         });

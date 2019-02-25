@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('../lib/crypto');
 
 module.exports = (req, res, next) => {
-
-    console.log(req.body);
 
     // get auth header value
     const bearerHeader = req.headers['authorization'];

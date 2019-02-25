@@ -12,9 +12,7 @@ class JoinRoom extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            loading: true
-        }
+        this.state = { loading: true }
     }
 
     async componentDidMount() {
@@ -34,8 +32,8 @@ class JoinRoom extends Component {
             success: response.data.success,
             message: response.data.message,
             invitationData: response.data.invitationData 
-                            ? response.data.invitationData 
-                            : null
+                ? response.data.invitationData 
+                : null
         });
 
         // set heading and message

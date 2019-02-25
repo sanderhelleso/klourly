@@ -25,8 +25,8 @@ module.exports = app => {
             // get signup date and create verification url
             const signupDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
-            // create encrypted invitation id
-            const verificationID = crypto.encrypt(shortid.generate());
+            // create encrypted email validation
+            const verificationID = shortid.generate();
 
             // set the user UID reference for the contents of user.
             const userRef = ref.child(userRecord.uid);
@@ -45,7 +45,7 @@ module.exports = app => {
             userRef.set(userData);
 
             // send verification email
-            email.sendVerification(req.body.email, userRecord.uid, verificationID);
+            email.sendVerification(req.body.email, verificationID, userRecord.uid);
 
             // create JWT
             const token = await jwt.sign(userRecord.uid);
@@ -63,7 +63,7 @@ module.exports = app => {
             // send data back to client and login user with localstorage using UID
             res.status(200).json({
                 userData,
-                user: { email: req.body.email, id: userRecord.id, token },
+                user: { email: req.body.email, id: userRecord.uid, token },
                 message: 'Successfully created new user',
                 success: true
             });
@@ -75,6 +75,16 @@ module.exports = app => {
                 message: error.message,
                 success: false
             });
+        });
+    });
+
+    // validate and verify user
+    app.post('/api/auth/verifyAccount', (req, res) => {
+        console.log(123);
+
+        res.status(200).json({
+            success: true,
+            message: 'Account successfully verified'
         });
     });
 }

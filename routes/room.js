@@ -2,6 +2,7 @@ const firebase = require('firebase-admin');
 const db = firebase.database();
 const shortid = require('shortid');
 const authenticate = require('../middelwares/requireAuth');
+const crypto = require('../lib/crypto');
 
 module.exports = app => {
 

@@ -12,6 +12,9 @@
     "/api/auth/google/handleCB": {
       "target": "http://localhost:5000"
     },
+    "/api/auth/verifyAccount": {
+      "target": "http://localhost:5000"
+    },
     "/api/auth/authenticated": {
       "target": "http://localhost:5000"
     },
