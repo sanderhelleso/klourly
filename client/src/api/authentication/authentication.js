@@ -106,11 +106,13 @@ async function verifyAccount(verificationData) {
         });
 
         // get response from endpoint
-        return response.data.success;
+        return response;
     }
 
     // catch error
-    catch (error) { return error.response };
+    catch (error) { 
+        return error.response;
+    };
 }
 
 // check for params and run action depending on params

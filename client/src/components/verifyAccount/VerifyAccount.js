@@ -8,16 +8,24 @@ export default class VerifyAccount extends Component {
         super(props);
 
         console.log(this.props);
-        this.state = { loading: true };
+        this.state = { 
+            loading: true ,
+            verified: false
+        };
     }
 
     async componentDidMount() {
 
         // check for valid and verification / user id
         const response = await authentication
-        .verifyAccount({ ...this.props.match.params });
+            .verifyAccount({ ...this.props.match.params });
 
         console.log(response);
+
+        this.setState({
+            loading: false, 
+            verified: response.data.success
+        });
     }
 
     renderStatus() {
@@ -31,7 +39,13 @@ export default class VerifyAccount extends Component {
             )
         }
 
-        return <h1>VERIFIED</h1>
+        else if (this.state.verified) {
+            return <h1>VERIFIED</h1>
+        }
+
+        else {
+            return <h1>Unable to verify account</h1>
+        }
     }
 
     render() {
