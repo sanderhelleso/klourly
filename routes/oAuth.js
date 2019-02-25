@@ -76,7 +76,7 @@ function login(gToken, isNewUser, res) {
         res.status(200).json({
             success: true,
             message: 'Successfully authenticated with Google',
-            user: { email, id, authenticatedWith, token },
+            user: { email, id, authenticatedWith, token, verified: true }, // oAuth acc is always verified
             userData
         });
     });

@@ -42,7 +42,12 @@ module.exports = app => {
                     newsLetter: false
                 }
             };
+            
+            // set the content for the user
             userRef.set(userData);
+
+            // remove verification id from datablob sent to client
+            delete userData.verificationID;
 
             // send verification email
             email.sendVerification(req.body.email, verificationID, userRecord.uid);
@@ -63,7 +68,7 @@ module.exports = app => {
             // send data back to client and login user with localstorage using UID
             res.status(200).json({
                 userData,
-                user: { email: req.body.email, id: userRecord.uid, token },
+                user: { email: req.body.email, id: userRecord.uid, token, verified: false },
                 message: 'Successfully created new user',
                 success: true
             });
