@@ -78,8 +78,8 @@ module.exports = app => {
         });
     });
 
-    // validate and verify user
-    app.post('/api/auth/verifyAccount', (req, res) => {
+    // validate and verify user account
+    app.post('/api/auth/verifyAccount', async (req, res) => {
 
         // check if id and verify code is present
         const verifyRef = db.ref(`users/${req.body.userID}/verificationID`);
@@ -92,6 +92,10 @@ module.exports = app => {
                     message: 'The verification code is removed or might never existed.'
                 });
             }
+
+            // verify account and remove verify ref to no longer exist
+            firebase.auth().updateUser(req.body.userID, { emailVerified: true });
+            verifyRef.remove();
 
             // send back success response
             res.status(200).json({

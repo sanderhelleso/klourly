@@ -34,15 +34,20 @@ module.exports = app => {
                 // retrieve data and send to client
                 ref.once('value', snapshot => {
 
-                    // destructor user data
+                    // destructor for user data
                     const { email, id, authenticatedWith } = userRecord.user;
+                    const userData = snapshot.val();
+
+                    // check if verified
+                    const verified = userData.verificationID ? false : true;
+                    if (!verified) delete userData.verificationID;
 
                     // send user data to client and login user
                     res.status(200).json({
                         success: true,
                         message: 'Log In Successful',
-                        userData: snapshot.val(),
-                        user: { email, id, authenticatedWith, token }
+                        userData,
+                        user: { email, id, authenticatedWith, token, verified }
                     });
                 }); 
             } 
