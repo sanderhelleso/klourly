@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateVerifiedAccStatusAction } from '../../actions/auth/updateVerifiedAccStatusAction';
+
 import { authentication } from '../../api/authentication/authentication';
 import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
 import { StyledButtonMain } from '../styles/buttons';
 
 
-export default class VerifyAccount extends Component {
+class VerifyAccount extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
         this.state = { 
             loading: true ,
             verified: false,
@@ -30,6 +34,9 @@ export default class VerifyAccount extends Component {
             loading: false, 
             verified: response.data.success,
             message: response.data.message
+        }, () => {
+            if (this.state.verified) 
+                this.props.updateVerifiedAccStatusAction();
         });
     }
 
@@ -83,6 +90,17 @@ export default class VerifyAccount extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { loggedIn: state.auth.user.loggedIn }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateVerifiedAccStatusAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyAccount);
+
 
 const StyledMain = styled.main`
     position: relative;
