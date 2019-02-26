@@ -9,22 +9,17 @@ const authReducer = (state = { loggedIn: false }, action) => {
                 loggedIn: true,
                 user: action.payload
             };
-    
         
-        case 'SIGNUP_SUCCESS':
+        case 'UPDATE_VERIFIED_ACC_STATUS': 
             return {
                 ...state,
-                loggedIn: true,
-                user: action.payload
+                user: {
+                    ...state.user,
+                    verified: action.payload
+                }
             };
         
-        case 'VALIDATE_USER': 
-            return {
-                ...state,
-                loggedIn: action.payload
-            };
-        
-        default:
+        default: 
             return state;
     }
 }

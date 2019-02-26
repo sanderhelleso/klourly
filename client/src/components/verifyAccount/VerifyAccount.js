@@ -60,7 +60,7 @@ class VerifyAccount extends Component {
                         className="btn waves-effect waves-light"
                         onClick={redirect.dashboard}
                     >
-                        Back to Dashboard
+                        Continue to dashboard
                     </StyledButtonMain>
                 </StyledCont>
             )
@@ -75,7 +75,7 @@ class VerifyAccount extends Component {
                         className="btn waves-effect waves-light"
                         onClick={redirect.home}
                     >
-                        Back to home
+                        Back to safety
                     </StyledButtonMain>
                 </StyledCont>
             )
@@ -92,7 +92,7 @@ class VerifyAccount extends Component {
 }
 
 const mapStateToProps = state => {
-    return { loggedIn: state.auth.user.loggedIn }
+    return { loggedIn: state.auth.user ? state.auth.user.loggedIn : false }
 }
 
 const mapDispatchToProps = dispatch => {

@@ -68,7 +68,9 @@ class RequireVerificationBanner extends Component {
         )
     }
 
-    render() {
+    renderBanner() {
+        if (this.props.verified) return null;
+
         return (
             <StyledBanner>
                 <span>
@@ -79,10 +81,15 @@ class RequireVerificationBanner extends Component {
             </StyledBanner>
         )
     }
+
+    render() {
+        return this.renderBanner();
+    }
 }
 
 const mapStateToProps = state => {
     return {
+        verified: state.auth.user.verified,
         userID: state.auth.user.id,
         email: state.auth.user.email
     }

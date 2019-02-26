@@ -10,7 +10,6 @@ import NewRoom from '../newRoom/NewRoom';
 import Dashboard from '../dashboard/Dashboard';
 import RoomRoutes from './RoomRotues';
 import RoomData from '../dataPrefetch/RoomData';
-import RequireVerificationBanner from '../verifyAccount/RequireVerificationBanner';
 
 class LoggedInRoutes extends Component {
     constructor(props) {
@@ -25,9 +24,8 @@ class LoggedInRoutes extends Component {
                 <Route exact path="/login" component={landingRoute} />
                 <Route exact path="/api/auth/google/callback" component={landingRoute} />
                 <Route path="/dashboard/rooms/:roomID" component={RoomData} />
-                <Route path="/" component={this.props.verified ? <RequireVerificationBanner /> : null} />
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/dashboard/new-room" component={this.props.verified ? <RoomRoutes /> : null} />
+                <Route exact path="/dashboard/new-room" component={this.props.verified ? NewRoom : null} />
                 <Messaging />
                 <UserLocation />
                 <NotificationsData />
