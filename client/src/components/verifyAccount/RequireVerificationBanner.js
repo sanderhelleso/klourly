@@ -14,9 +14,10 @@ export default class RequireVerificationBanner extends Component {
         return (
             <StyledBanner>
                 <span>
-                    <AlertTriangle size={48} />
+                    <AlertTriangle size={40} />
                 </span>
-                {this.pendingTxt}
+                <p>{this.pendingTxt}</p>
+                <a>Resend verification e-mail</a>
             </StyledBanner>
         )
     }
@@ -24,11 +25,45 @@ export default class RequireVerificationBanner extends Component {
 
 const StyledBanner = styled.div`
     position: absolute;
-    top: 5%;
-    left: 5%;
-    transform: translate(-5%);
-    min-width: 30rem;
-    height: 4rem;
+    opacity: 0.9;
+    bottom: 5%;
+    right: 2%;
+    transform: translate(-2%);
+    max-width: 27.5rem;
+    min-height: 5rem;
     text-align: center;
-    padding: 1.5rem 3rem;
+    padding: 1rem 2rem;
+    background: #f46b45;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #ffffff;
+    z-index: 1000;
+    border-radius: 18px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.15);
+    transition: 0.5s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
+    
+    span {
+        float: left;
+        margin-top: 0.65rem;
+        opacity: 0.6;
+    }
+
+    p {
+        margin-top: 0.15rem;
+        margin-left: 3rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    a {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        margin: 0rem;
+    }
 `;
