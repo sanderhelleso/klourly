@@ -4,7 +4,6 @@ import axios from 'axios';
 export const dashboard = {
     uploadAvatar,
     updateSettings,
-    fetchUserData,
     removeAvatar
 };
 
@@ -78,25 +77,3 @@ async function updateSettings(uid, updatedSettings) {
         return error.response;
     }
 }
-
-// fetch user data
-async function fetchUserData(uid) {
-    try {
-        const response = await axios({
-            headers: authHeader(),
-            method: 'post',
-            url: '/api/userData',
-            data: {
-                uid: uid
-            }
-        });
-
-        // set userData as localstorage
-        localStorage.setItem('userData', JSON.stringify(response.data.userData));            
-        return response;
-    }
-
-    catch(error) {
-        console.log(error);
-    }
-} 

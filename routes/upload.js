@@ -21,8 +21,8 @@ const needsVerifiedAcc = require('../middelwares/requireVerifiedAcc');
 module.exports = app => {
 
     // upload user avatar
-    app.post('/api/upload/userAvatar', authenticate, needsVerifiedAcc,
-    multer.single('file'), async (req, res) => {
+    app.post('/api/upload/userAvatar', multer.single('file'),
+    authenticate, needsVerifiedAcc, async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'avatar') {
@@ -55,8 +55,8 @@ module.exports = app => {
     });
 
     // upload room covers
-    app.post('/api/upload/roomCovers', authenticate, needsVerifiedAcc,
-    multer.single('file'), async (req, res) => {
+    app.post('/api/upload/roomCovers', multer.single('file'),
+    authenticate, needsVerifiedAcc, async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'roomCover') {

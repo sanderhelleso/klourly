@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
         jwt.verify(bearerToken, process.env.JWT_SECRET, (error, authData) => {
 
             // if valid, continue
-            if (!error && authData.uid === req.body.uid) return next();
+            if (!error) return next();
 
             // if not, send forbidden
             sendForbidden(res);

@@ -16,9 +16,11 @@ class Form extends Component {
         // destructor to only required fields
         const { newsLetter, occupation, phoneNr, status } = this.props.settings;
         this.originalSettings = { newsLetter, occupation, phoneNr, status };
+
         this.state = {
             settings: this.originalSettings,
-            changed: false
+            changed: false,
+            loading: false
         }
     }
 
@@ -140,7 +142,7 @@ class Form extends Component {
                 <StyledButtonMain
                     className="waves-effect waves-light btn"
                     onClick={this.confirmSettings}
-                    disabled={this.state.changed ? false : true}
+                    disabled={!this.state.changed || this.state.loading}
                 >
                     Update
                 </StyledButtonMain>
@@ -164,7 +166,7 @@ class Form extends Component {
 
     checkChange() {
         this.setState({ 
-            changed: JSON.stringify(this.state.settings) !== 
+            changed: JSON.stringify(this.state.settings) !==
                      JSON.stringify(this.originalSettings)
         });
     }
@@ -183,6 +185,8 @@ class Form extends Component {
     // confirm and save new settings
     confirmSettings = async () => {
 
+        this.setState({ loading: true });
+
         // send settings data and update settings
         const response = await dashboard.updateSettings(this.props.userID, this.state.settings)
         
@@ -195,9 +199,9 @@ class Form extends Component {
             notification.success(response.data.message);    
         }
 
-        else {
-            notification.error(response.data.message);    
-        }
+        else notification.error(response.data.message);    
+
+        this.setState({ loading: false });
     }
 
 

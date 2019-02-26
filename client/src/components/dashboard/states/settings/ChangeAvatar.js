@@ -19,7 +19,13 @@ class ChangeAvatar extends Component {
 
     // trigger hidden file input on avatar click
     selectAvatar() {
-        document.querySelector('#avatar-input').click();
+        if (this.props.verified) {
+            document.querySelector('#avatar-input').click();
+        }
+    }
+
+    requireVerification = () => {
+        notification.error('Your account needs to be verified to perform this action. Please click the link sent to the account registered e-mail address.');
     }
 
     updateAvatar = async e => {
@@ -91,7 +97,6 @@ class ChangeAvatar extends Component {
         )
     }
 
-
     render() {
         return (
             <StyledAvatar className='col s12 m12 l3 change-avatar-cont'>
@@ -105,11 +110,15 @@ class ChangeAvatar extends Component {
                     {this.renderRemoveAvatar()}
                     <input 
                         id='avatar-input' 
-                        type='file' onChange={(e) => this.updateAvatar(e)}
+                        type='file' 
+                        onChange={(e) => this.props.verified ? this.updateAvatar(e) : null}
                         accept="image/jpeg, image/png"
                     />
-                    <div className='avatar-overlay' onClick={this.selectAvatar}>
-                        <div className='avatar-text'>
+                    <div 
+                        className='avatar-overlay'
+                         onClick={this.props.verified ? this.selectAvatar : this.requireVerification}>
+                        <div className='avatar-text'
+                    >
                             <Camera size={40} />
                             <span>
                                 Change Avatar
@@ -122,13 +131,13 @@ class ChangeAvatar extends Component {
     }
 }
 
-// attempt to update state for avatar and settings
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators({ avatarActions }, dispatch);
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
+        verified: state.auth.user.verified,
         userID: state.auth.user.id,
         photoUrl: state.dashboard.userData.settings.photoUrl
     };
