@@ -2,12 +2,72 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { AlertTriangle } from 'react-feather';
 
+import { connect } from 'react-redux';
 
-export default class RequireVerificationBanner extends Component {
+import { authentication } from '../../api/authentication/authentication';
+import { notification } from '../../helpers/notification';
+
+
+class RequireVerificationBanner extends Component {
     constructor(props) {
         super(props);
 
         this.pendingTxt = 'Your account has not yet been verified. Allowed actions is limited until verification is recieved.';
+        this.MS_10_MIN = 10000;
+
+        this.state = { 
+            loading: false,
+            resendTimer: null,
+            canSendAgain: 0
+        };
+    }
+
+    componentWillUnmount = () => clearInterval(this.state.resendTimer);
+
+    resendVerificationEmail = async () => {
+
+        this.setState({ loading: true });
+        
+        // attempt to resend verification email
+        const response = await authentication.resendVerificationEmail(
+            this.props.email, this.props.userID
+        );
+
+        // if resend was successful, update timeout to disable user to resend
+        if (response.data.success) {
+            notification.success(response.data.message);
+            this.setState({
+                canSendAgain: this.MS_10_MIN,
+                resendTimer: setInterval(() => this.updateTimer(), 1000)
+            });
+        }
+
+        // if something went wrong, notify user
+        else notification.error(response.data.message);
+
+        this.setState({ loading: false });
+    }
+
+    updateTimer() {
+        this.setState({ canSendAgain: this.state.canSendAgain -= 1000 },
+        () => {
+            if (this.state.canSendAgain === 0) {
+                clearInterval(this.state.resendTimer);
+            }
+        });
+    }
+
+    renderResendBtn() {
+
+        if (this.state.canSendAgain === 0) {
+            return (
+                <a onClick={this.resendVerificationEmail}>
+                    Resend verification e-mail
+                </a>
+            )
+        }
+
+        return null;
     }
 
     render() {
@@ -17,11 +77,20 @@ export default class RequireVerificationBanner extends Component {
                     <AlertTriangle size={40} />
                 </span>
                 <p>{this.pendingTxt}</p>
-                <a>Resend verification e-mail</a>
+                {this.renderResendBtn()}
             </StyledBanner>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        userID: state.auth.user.id,
+        email: state.auth.user.email
+    }
+}
+
+export default connect(mapStateToProps, null)(RequireVerificationBanner);
 
 const StyledBanner = styled.div`
     position: absolute;

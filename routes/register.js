@@ -5,7 +5,7 @@ const ref = db.ref("users");
 const email = require('../lib/email');
 const shortid = require('shortid');
 const jwt = require('../lib/token');
-const crypto = require('../lib/crypto');
+const authenticated = require('../middelwares/requireAuth');
 
 module.exports = app => {
 
@@ -84,7 +84,7 @@ module.exports = app => {
     });
 
     // validate and verify user account
-    app.post('/api/auth/verifyAccount', async (req, res) => {
+    app.post('/api/auth/verifyAccount', (req, res) => {
 
         // check if id and verify code is present
         const verifyRef = db.ref(`users/${req.body.userID}/verificationID`);
@@ -107,6 +107,26 @@ module.exports = app => {
                 success: true,
                 message: 'Thanks! Your account was successfully verified.'
             });
+        });
+    });
+
+    // resend a verification email to user
+    app.post('/api/auth/resendVerificationEmail', authenticated, (req, res) => {
+
+        // get verification ref
+        const verifyRef = db.ref(`users/${req.body.uid}/verificationID`);
+
+        // generate new id and update
+        const newVerificationID = shortid.generate();
+        verifyRef.set(newVerificationID);
+
+        // send new id link to provided email
+        email.sendVerification(req.body.email, newVerificationID, req.body.uid);
+
+        // send back success response
+        res.status(200).json({
+            success: true,
+            message: 'E-mail sendt! Click the link in the mail to proceed. Cant see it? Try checking spam folder'
         });
     });
 }

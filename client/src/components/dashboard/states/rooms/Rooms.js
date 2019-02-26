@@ -148,11 +148,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
-            nextStageAction, 
-            setRoomsOwningAction, 
-            setRoomsAttendingAction,
-            toggleActiveTabAction
-        }, dispatch);
+        nextStageAction, 
+        setRoomsOwningAction, 
+        setRoomsAttendingAction,
+        toggleActiveTabAction
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

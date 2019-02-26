@@ -7,7 +7,8 @@ export const authentication = {
     googleOauth,
     validateUser,
     authAndDoAction,
-    verifyAccount
+    verifyAccount,
+    resendVerificationEmail
 };
 
 async function register(displayName, email, password) {
@@ -102,6 +103,30 @@ async function verifyAccount(verificationData) {
             url: '/api/auth/verifyAccount',
             data: {
                 ...verificationData
+            }
+        });
+
+        // get response from endpoint
+        return response;
+    }
+
+    // catch error
+    catch (error) { 
+        return error.response;
+    };
+}
+
+// resend a verification email
+async function resendVerificationEmail(email, uid) {
+
+    try {
+        const response = await axios({
+            headers: authHeader(),
+            method: 'post',
+            url: '/api/auth/resendVerificationEmail',
+            data: {
+                email,
+                uid
             }
         });
 
