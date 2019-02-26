@@ -9,6 +9,7 @@ import { notification } from '../../../../helpers/notification';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { nextStageAction } from '../../../../actions/newRoom/nextStageAction';
 import { setRoomsOwningAction } from '../../../../actions/room/setRoomsOwningAction';
 import { setRoomsAttendingAction } from '../../../../actions/room/setRoomsAttendingAction';

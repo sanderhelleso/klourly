@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import DashboardMenu from './DashboardMenu';
 import DashboardMain from './DashboardMain';
+import RequireVerificationBanner from '../verifyAccount/RequireVerificationBanner';
 import Toolbar from './toolbar/Toolbar';
 
 
@@ -20,6 +21,7 @@ export default class Dashboard extends Component {
     render() {
         return (
             <div className='row no-select'>
+                <RequireVerificationBanner />
                 <DashboardMenu />
                 <DashboardMain />
             </div>
