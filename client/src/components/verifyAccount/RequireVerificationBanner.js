@@ -13,7 +13,7 @@ class RequireVerificationBanner extends Component {
         super(props);
 
         this.pendingTxt = 'Your account has not yet been verified. Allowed actions is limited until verification is recieved.';
-        this.MS_10_MIN = 10000;
+        this.MS_10_MIN = 60000 * 10;
 
         this.state = { 
             loading: false,
@@ -58,16 +58,14 @@ class RequireVerificationBanner extends Component {
     }
 
     renderResendBtn() {
-
-        if (this.state.canSendAgain === 0) {
-            return (
-                <a onClick={this.resendVerificationEmail}>
-                    Resend verification e-mail
-                </a>
-            )
-        }
-
-        return null;
+        return (
+            <a 
+                className={`${this.state.canSendAgain !== 0 ? 'disabled' : ''}`}
+                onClick={this.state.canSendAgain === 0 ? this.resendVerificationEmail : null}
+            >
+                Resend verification e-mail
+            </a>
+        )
     }
 
     render() {
@@ -134,5 +132,11 @@ const StyledBanner = styled.div`
         font-size: 0.8rem;
         letter-spacing: 1px;
         margin: 0rem;
+        transition: 0.3s ease-in-out;
+
+        &.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
     }
 `;
