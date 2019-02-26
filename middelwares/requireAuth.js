@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const crypto = require('../lib/crypto');
 
 module.exports = (req, res, next) => {
 
@@ -14,12 +13,16 @@ module.exports = (req, res, next) => {
 
         jwt.verify(bearerToken, process.env.JWT_SECRET, (error, authData) => {
 
-            if (!error && authData.uid === req.body.uid) next();
-            else sendForbidden(res);
+            // if valid, continue
+            if (!error && authData.uid === req.body.uid) return next();
+
+            // if not, send forbidden
+            sendForbidden(res);
         });
 
     }
 
+    // no beared, send forbidden
     else sendForbidden(res);
 };
 

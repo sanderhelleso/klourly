@@ -1,4 +1,3 @@
-const authenticate = require('../middelwares/requireAuth');
 const sharp = require('sharp');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
@@ -6,21 +5,24 @@ const admin = require('firebase-admin');
 const db = admin.database();
 const shortid = require('shortid');
 
-// CONNECT TO STORAGE
+// storage connection
 const storage = new Storage({
     projectId: process.env.FIREBASE_PROJECT_ID,
     keyFilename: process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH
 });
 
-// FIREBASE STORAGE
+// storeage and multer config
 const bucket = storage.bucket(process.env.FIREBASE_STORAGE_BUCKET_KEY);
 const multer = Multer({ storage: Multer.memoryStorage() });
 
+const authenticate = require('../middelwares/requireAuth');
+const needsVerifiedAcc = require('../middelwares/requireVerifiedAcc');
 
 module.exports = app => {
 
     // upload user avatar
-    app.post('/api/upload/userAvatar', multer.single('file'), async (req, res) => {
+    app.post('/api/upload/userAvatar', authenticate, needsVerifiedAcc,
+    multer.single('file'), async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'avatar') {
@@ -53,7 +55,8 @@ module.exports = app => {
     });
 
     // upload room covers
-    app.post('/api/upload/roomCovers', multer.single('file'), async (req, res) => {
+    app.post('/api/upload/roomCovers', authenticate, needsVerifiedAcc,
+    multer.single('file'), async (req, res) => {
 
         // validate file type
         if (req.file.originalname.split('.')[0] !== 'roomCover') {
@@ -109,7 +112,7 @@ module.exports = app => {
         });
     });
 
-    app.post('/api/upload/removeAvatar', (req, res) => { 
+    app.post('/api/upload/removeAvatar', authenticate, needsVerifiedAcc, (req, res) => { 
         
         // delete avatar from storage
         bucket.file(`avatars/${req.body.uid}.png`).delete();
