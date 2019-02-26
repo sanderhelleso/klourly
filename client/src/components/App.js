@@ -42,7 +42,12 @@ class App extends Component {
         if (this.props.auth.loggedIn === null) return null;
 
         else if (this.props.auth.loggedIn) 
-            return <LoggedInRoutes includeRoom={this.props.room.activeRoom} />
+            return (
+                <LoggedInRoutes 
+                    includeRoom={this.props.room.activeRoom}
+                    verified={this.props.auth.user.verified}
+                />
+            );
 
         else return <DefaultRoutes />
     }

@@ -4,6 +4,7 @@ import { room } from '../../../../api/room/room';
 
 import { materializeJS } from '../../../../helpers/materialize';
 import { redirect } from '../../../../helpers/redirect';
+import { notification } from '../../../../helpers/notification';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -37,6 +38,10 @@ class Rooms extends Component {
 
          this.loadAttending();
          this.loadOwning();
+    }
+
+    requireVerification = () => {
+        notification.error('Your account needs to be verified to perform this action. Please click the link sent to the account registered e-mail address.');
     }
 
     async loadOwning() {
@@ -83,7 +88,10 @@ class Rooms extends Component {
                 <StyledBtnCont>
                     <StyledButtonMain
                         className="waves-effect waves-light btn animated fadeIn"
-                        onClick={() => redirect.newRoom()}
+                        onClick={() => this.props.verified 
+                            ? redirect.newRoom() 
+                            : this.requireVerification()
+                        }
                     >
                         Create New
                     </StyledButtonMain>
@@ -120,7 +128,8 @@ class Rooms extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
+        verified: state.auth.user.verified,
         userID: state.auth.user.id,
         owningList: (state.dashboard.userData.rooms 
                         && state.dashboard.userData.rooms.owning) 

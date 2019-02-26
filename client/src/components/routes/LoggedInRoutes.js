@@ -19,13 +19,13 @@ class LoggedInRoutes extends Component {
     render() {
         return (
             <Fragment>
-                {this.props.includeRoom ? <RoomRoutes /> : null}
+                {this.props.includeRoom && this.props.verified ? <RoomRoutes /> : null}
                 <Route path="/dashboard/rooms/:roomID" component={RoomData} />
                 <Route exact path="/" component={landingRoute} />
                 <Route exact path="/login" component={landingRoute} />
                 <Route exact path="/api/auth/google/callback" component={landingRoute} />
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/dashboard/new-room" component={NewRoom} />
+                <Route exact path="/dashboard/new-room" component={this.props.verified ? <RoomRoutes /> : null} />
                 <Messaging />
                 <UserLocation />
                 <NotificationsData />
