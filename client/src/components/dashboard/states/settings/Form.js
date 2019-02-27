@@ -242,7 +242,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Form);
 const StyledForm = styled.form`
 
     .scroll-cont {
-        padding: 3rem 2rem;
+        padding: 0 2rem;
         max-height: 600px;
         overflow-y: auto;
         margin-top: 2.5rem;
@@ -253,6 +253,7 @@ const StyledForm = styled.form`
 
         @media screen and (max-width: 993px) {
             max-height: 40vh;
+            padding: 3rem 2rem;
         }
 
         @media screen and (max-width: 360px) AND (max-height: 640px) {

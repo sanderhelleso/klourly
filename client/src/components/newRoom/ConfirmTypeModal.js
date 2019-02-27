@@ -27,13 +27,9 @@ class ConfirmTypeModal extends Component {
 
     componentDidMount() {
 
-        // prepeare modal
-        const modal = document.querySelectorAll('.modal');
-        materializeJS.M.Modal.init(modal, {
-            endingTop: '15%',
-            inDuration: 500,
-            outDuration: 500
-        });
+        // prepere modal
+        const modal = document.querySelectorAll('#confirm-room-purpose-modal');
+        materializeJS.M.Modal.init(modal, { endingTop: '15%' });
     }
 
     renderAttendenceRequirement() {

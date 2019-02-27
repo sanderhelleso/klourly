@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const NeedHelp = () => (
     <StyledCont>
         <div>
-            <a>Need help?</a>
+            <a>Forgot password?</a>
         </div>
     </StyledCont>
 );
