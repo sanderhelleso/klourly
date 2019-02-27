@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { redirect } from '../../helpers/redirect';
 
 const NeedHelp = () => (
     <StyledCont>
         <div>
-            <a>Forgot password?</a>
+            <a onClick={() => redirect.forgotPasswordSend()}>
+                Forgot password?
+            </a>
         </div>
     </StyledCont>
 );

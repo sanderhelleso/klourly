@@ -20,7 +20,8 @@ export const redirect = {
     redirectActionSuccess,
     roomCheckinReport,
     roomMemberReport,
-    notification
+    notification,
+    forgotPasswordSend
 };
 
 function home() {
@@ -113,4 +114,8 @@ function roomMemberReport(roomID, userID) {
 function notification(fullUrl) {
     const route = fullUrl.split('/');
     history.push(`/${route.slice(3, route.length).join('/')}`); // remove domain form route
+}
+
+function forgotPasswordSend() {
+    history.push('/forgot-password/send');
 }

@@ -139,7 +139,7 @@ const StyledCont = styled.div`
     }
     
     p {
-        margin: 1.5rem;
+        margin: 2rem;
         color: #9e9e9e;
         opacity: 0.8;
         font-size: 1rem; 

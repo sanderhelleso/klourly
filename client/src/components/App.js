@@ -18,6 +18,7 @@ import JoinRoom from './joinRoom/JoinRoom';
 import LoggedInRoutes from './routes/LoggedInRoutes';
 import DefaultRoutes from './routes/DefaultRoutes';
 import VerifyAccount from './verifyAccount/VerifyAccount';
+import ForgotPasswordSend from './forgotPassword/ForgotPasswordSend';
 
 // Initialize Firebase
 const config = {
@@ -60,6 +61,7 @@ class App extends Component {
                         <GlobalDashStyle />
                         {this.renderRoutes()}
                         <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
+                        <Route exact path="/forgot-password/send" component={ForgotPasswordSend} />
                         <Route exact path="/verify-account/:verificationID/:userID" component={VerifyAccount} />
                         <ToastContainer 
                             transition={Fade} 
