@@ -19,6 +19,8 @@ import LoggedInRoutes from './routes/LoggedInRoutes';
 import DefaultRoutes from './routes/DefaultRoutes';
 import VerifyAccount from './verifyAccount/VerifyAccount';
 import ForgotPasswordSend from './forgotPassword/ForgotPasswordSend';
+import ForgotPasswordReset from './forgotPassword/ForgotPasswordReset';
+
 
 // Initialize Firebase
 const config = {
@@ -62,6 +64,7 @@ class App extends Component {
                         {this.renderRoutes()}
                         <Route exact path="/join-room/:inviteID/:roomID" component={JoinRoom} />
                         <Route exact path="/forgot-password/send" component={ForgotPasswordSend} />
+                        <Route exact path="/forgot-password/reset/:resetID/:userID" component={ForgotPasswordReset} />
                         <Route exact path="/verify-account/:verificationID/:userID" component={VerifyAccount} />
                         <ToastContainer 
                             transition={Fade} 

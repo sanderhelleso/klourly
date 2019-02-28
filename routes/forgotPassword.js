@@ -4,8 +4,6 @@ const db = firebase.database();
 const ref = db.ref("users");
 const email = require('../lib/email');
 const shortid = require('shortid');
-const jwt = require('../lib/token');
-const authenticated = require('../middelwares/requireAuth');
 
 module.exports = app => {
 
@@ -17,15 +15,15 @@ module.exports = app => {
         .then(user => {
 
             // generate id
-            const resetID = shortid.generate();
+            const resetPasswordID = shortid.generate();
 
             // update user ref releated to provided email
-            ref.child(`${user.uid}/forgotPasswordCode`).set({ resetID });
+            ref.child(user.uid).update({ resetPasswordID });
 
             // send email to user
-            email.sendforgotPassword(req.body.email, resetID, user.uid);
+            email.sendforgotPassword(req.body.email, resetPasswordID, user.uid);
         })
-        .catch(err => { console.log(err) }); // catch any error, however we dont notify user
+        .catch(err => {}); // catch any error, however we dont notify user
 
         // send back success response
         // send back same response even if no email exists in system due to securtiy
