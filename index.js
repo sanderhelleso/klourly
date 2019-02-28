@@ -43,6 +43,7 @@ require("./routes/invite")(app);
 require("./routes/attendence")(app);
 require("./routes/messaging")(app);
 require("./routes/report")(app);
+require("./routes/forgotPassword")(app);
 require("./routes/algolia")(app);
 
 // serve out production assets

@@ -37,6 +37,14 @@ export const StyledButtonMain = styled.a`
         box-shadow:         0px 12px 30px 0px rgba(0, 226, 163, 0.7);
         background-color: ${backgroundColor};
     }
+
+    &:disabled {
+        &:hover, &:focus {
+            -webkit-box-shadow: none;
+            -moz-box-shadow:    none;
+            box-shadow:         none;
+        }
+    }
 `;
 
 export const StyledButtonCancel = styled.a`

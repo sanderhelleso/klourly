@@ -20,15 +20,19 @@ export default class ForgotPasswordSend extends Component {
     }
 
     sendForgotPassword = async email => {
+
+        this.setState({ loading: true });
         
         // attempt to send forgot password email to recipient
         const response = await authentication.sendForgotPassword(email);
 
+        // successfully sent email
         if (response.data.success) {
-            this.setState({ email: '' });
-            return notification.success(response.data.message);
+            this.setState({ email: '', valid: false });
+            notification.success(response.data.message);
         }
 
+        // something went wrong, notify user
         else notification.error(response.data.message);
 
         this.setState({ loading: false });
@@ -49,10 +53,16 @@ export default class ForgotPasswordSend extends Component {
                         id="email" 
                         type="email"
                         name="email"
+                        placeholder="jared@piedpiper.io"
                         value={this.state.email}
                         onChange={(e) => this.handleChange(e)}
                     />
-                    <label htmlFor="email">E-mail</label>
+                    <label 
+                        htmlFor="email" 
+                        className="active"
+                    >
+                        E-mail
+                    </label>
                 </div>
             </div>
         )
@@ -98,7 +108,7 @@ const StyledCont = styled.div`
     text-align: center;
 
     .row {
-        margin-top: 3rem;
+        margin-top: 4rem;
     }
 
     h1 {
