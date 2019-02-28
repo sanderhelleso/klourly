@@ -8,7 +8,8 @@ export const authentication = {
     validateUser,
     authAndDoAction,
     verifyAccount,
-    resendVerificationEmail
+    resendVerificationEmail,
+    sendForgotPassword
 };
 
 async function register(displayName, email, password) {
@@ -127,6 +128,28 @@ async function resendVerificationEmail(email, uid) {
             data: {
                 email,
                 uid
+            }
+        });
+
+        // get response from endpoint
+        return response;
+    }
+
+    // catch error
+    catch (error) { 
+        return error.response;
+    };
+}
+
+// send a forgot password email
+async function sendForgotPassword(email) {
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/auth/sendForgotPasswordEmail',
+            data: {
+                email
             }
         });
 

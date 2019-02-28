@@ -29,7 +29,7 @@ class GoogleOauthCBHandler extends Component {
         // validate response success
         if (response.data.success) {
 
-            // persist access information in the local credentials store
+            /*// persist access information in the local credentials store
             if (navigator.credentials && navigator.credentials.preventSilentAccess) {
                 const credentials = new FederatedCredential({
                     id: response.data.user.email,
@@ -38,7 +38,7 @@ class GoogleOauthCBHandler extends Component {
                     provider: 'https://accounts.google.com'
                 });
                 navigator.credentials.store(credentials);
-            }
+            }*/
 
             // set user data and init state, user will redirect on state change
             this.props.nextStageAction({ stage: 0 });

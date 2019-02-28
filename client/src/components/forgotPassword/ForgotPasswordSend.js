@@ -1,18 +1,57 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { StyledButtonMain } from '../styles/buttons';
+import { notification } from '../../helpers/notification';
 import { redirect } from '../../helpers/redirect';
+import { authentication } from '../../api/authentication/authentication';
 
 export default class ForgotPasswordSend extends Component {
     constructor(props) {
         super(props);
+
+        // regex email pattern
+        this.REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        this.state = { 
+            loading: false,
+            email: '',
+            valid: false
+        };
+    }
+
+    sendForgotPassword = async email => {
+        
+        // attempt to send forgot password email to recipient
+        const response = await authentication.sendForgotPassword(email);
+
+        if (response.data.success) {
+            this.setState({ email: '' });
+            return notification.success(response.data.message);
+        }
+
+        else notification.error(response.data.message);
+
+        this.setState({ loading: false });
+    }
+
+    handleChange = e => {
+        this.setState({ 
+            email: e.target.value, 
+            valid: this.REGEX_EMAIL.test(String(e.target.value).toLowerCase())
+        });
     }
 
     renderEmailField() {
         return (
             <div className="row">
                 <div className="input-field col s12 col m10 offset-m1 col l6 offset-l3">
-                    <input id="email" type="email" />
+                    <input 
+                        id="email" 
+                        type="email"
+                        name="email"
+                        value={this.state.email}
+                        onChange={(e) => this.handleChange(e)}
+                    />
                     <label htmlFor="email">E-mail</label>
                 </div>
             </div>
@@ -26,7 +65,11 @@ export default class ForgotPasswordSend extends Component {
                     <h1>Forgot your password?</h1>
                     <p>Please enter your e-mail address connected to your account. We will send you instructions on how to reset your password</p>
                     {this.renderEmailField()}
-                    <StyledButtonMain className="btn waves-effect waves-light">
+                    <StyledButtonMain
+                        className="btn waves-effect waves-light"
+                        disabled={this.state.loading || !this.state.valid}
+                        onClick={() => this.sendForgotPassword(this.state.email)}
+                    >
                         Reset my password
                     </StyledButtonMain>
                     <a 
@@ -79,7 +122,7 @@ const StyledCont = styled.div`
     }
 
     .btn {
-        margin: 2.25rem auto;
+        margin: 2.25rem auto 2.5rem auto;
     }
 
     #cancel-forgot-password {
