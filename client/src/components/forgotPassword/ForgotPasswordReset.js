@@ -12,25 +12,29 @@ export default class ForgotPasswordSend extends Component {
         this.state = { 
             loading: false,
             password: '',
-            valid: false
+            //valid: false
         };
+
+        console.log(this.props);
     }
 
     updatePassword = async password => {
 
         this.setState({ loading: true });
         
-        /*// attempt to send forgot password email to recipient
-        const response = await authentication.sendForgotPassword(email);
+        // attempt to send reset password
+        const response = await authentication.resetPassword(
+            this.props.match.params, password
+        );
 
-        // successfully sent email
+        // successfully resetted password
         if (response.data.success) {
-            this.setState({ email: '', valid: false });
+            this.setState({ password: '', valid: false });
             notification.success(response.data.message);
         }
 
         // something went wrong, notify user
-        else notification.error(response.data.message);*/
+        else notification.error(response.data.message);
 
         this.setState({ loading: false });
     }
@@ -70,7 +74,8 @@ export default class ForgotPasswordSend extends Component {
                     {this.renderPasswordField()}
                     <StyledButtonMain
                         className="btn waves-effect waves-light"
-                        disabled={this.state.loading || !this.state.valid}
+                        disabled={this.state.loading}
+                        onClick={() => this.updatePassword(this.state.password)}
                     >
                         Update my password
                     </StyledButtonMain>

@@ -9,7 +9,8 @@ export const authentication = {
     authAndDoAction,
     verifyAccount,
     resendVerificationEmail,
-    sendForgotPassword
+    sendForgotPassword,
+    resetPassword
 };
 
 async function register(displayName, email, password) {
@@ -162,6 +163,30 @@ async function sendForgotPassword(email) {
         return error.response;
     };
 }
+
+// reset password
+async function resetPassword(resetData, password) {
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/auth/resetPassword',
+            data: {
+                ...resetData,
+                password
+            }
+        });
+
+        // get response from endpoint
+        return response;
+    }
+
+    // catch error
+    catch (error) { 
+        return error.response;
+    };
+}
+
 
 // check for params and run action depending on params
 async function authAndDoAction(params, uid) {
