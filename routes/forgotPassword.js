@@ -36,28 +36,39 @@ module.exports = app => {
     // reset password for a specific user
     app.post('/api/auth/resetPassword', (req, res) => {
 
-        console.log(req.body);
+        // get user ref
+        const resetRef = ref.child(`${req.body.userID}/resetID`);
+        resetRef.once('value', snapshot => {
+            if (!snapshot.exists() || snapshot.val() !== req.body.resetID) {
 
-        /*// check if email exists
-        firebase.auth().getUserByEmail(req.body.email)
-        .then(user => {
+                // invalid code or user
+                return res.status(400).json({
+                    success: false,
+                    message: 'The verification code is removed or might never existed.'
+                });  
+            }
 
-            // generate id
-            const resetPasswordID = shortid.generate();
+            // reset password for the connected user
+            firebase.auth().updateUser(req.body.userID, {
+                password: req.body.password
+            })
+            .then(() => {
 
-            // update user ref releated to provided email
-            ref.child(user.uid).update({ resetPasswordID });
+                // send back success response
+                res.status(200).json({
+                    success: true,
+                    message: 'Your password has successfully been reset. You can now login to your account with the new password!'
+                });
+            })
+            .catch(error => {
 
-            // send email to user
-            email.sendforgotPassword(req.body.email, resetPasswordID, user.uid);
-        })
-        .catch(err => {}); // catch any error, however we dont notify user
-
-        // send back success response
-        // send back same response even if no email exists in system due to securtiy
-        res.status(200).json({
-            success: true,
-            message: 'An e-mail containing instruction on how to reset your password has been sent to the provided email!'
-        });*/
+                // send back potensial error response
+                res.status(400).json({
+                    success: false,
+                    message: 'We were unable to reset the password to the connected account. Please try again',
+                    error
+                });  
+            })
+        });
     });
 }
