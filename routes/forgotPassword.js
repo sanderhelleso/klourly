@@ -37,7 +37,7 @@ module.exports = app => {
     app.post('/api/auth/resetPassword', (req, res) => {
 
         // get user ref
-        const resetRef = ref.child(`${req.body.userID}/resetID`);
+        const resetRef = ref.child(`${req.body.userID}/resetPasswordID`);
         resetRef.once('value', snapshot => {
             if (!snapshot.exists() || snapshot.val() !== req.body.resetID) {
 
@@ -46,29 +46,41 @@ module.exports = app => {
                     success: false,
                     message: 'The verification code is removed or might never existed.'
                 });  
+            };
+
+            if (req.body.validate) {
+                
+                // validation successfull
+                return res.status(200).json({
+                    success: true,
+                    message: 'validation successfull.'
+                });  
             }
 
-            // reset password for the connected user
-            firebase.auth().updateUser(req.body.userID, {
-                password: req.body.password
-            })
-            .then(() => {
+            else {
 
-                // send back success response
-                res.status(200).json({
-                    success: true,
-                    message: 'Your password has successfully been reset. You can now login to your account with the new password!'
+                // reset password for the connected user
+                firebase.auth().updateUser(req.body.userID, {
+                    password: req.body.password
+                })
+                .then(() => {
+
+                    // send back success response
+                    res.status(200).json({
+                        success: true,
+                        message: 'Your password has successfully been reset. You can now login to your account with the new password!'
+                    });
+                })
+                .catch(error => {
+
+                    // send back potensial error response
+                    res.status(400).json({
+                        success: false,
+                        message: 'We were unable to reset the password to the connected account. Please try again',
+                        error
+                    });  
                 });
-            })
-            .catch(error => {
-
-                // send back potensial error response
-                res.status(400).json({
-                    success: false,
-                    message: 'We were unable to reset the password to the connected account. Please try again',
-                    error
-                });  
-            })
+            }
         });
     });
 }

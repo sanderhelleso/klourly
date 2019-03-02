@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import CircularLoader from '../loaders/CircularLoader';
 import { StyledButtonMain } from '../styles/buttons';
 import { notification } from '../../helpers/notification';
 import { redirect } from '../../helpers/redirect';
@@ -9,13 +10,32 @@ export default class ForgotPasswordSend extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            loading: false,
-            password: '',
-            //valid: false
-        };
+        // regex patters for validation
+        this.REGEX_PASSWORD = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{12,})');
 
-        console.log(this.props);
+        this.state = { 
+            loading: true,
+            validCode: false,
+            password: '',
+            valid: false,
+            message: 'verifying...'
+        };
+    }
+
+
+    async componentDidMount() {
+
+        // validate code and user
+        const response = await authentication.resetPassword(
+            this.props.match.params, null, true // true for inital load check
+        );
+
+        // update ui depending on success or error from validation
+        this.setState({ 
+            loading: false,
+            validCode: response.data.success,
+            message: response.data.message
+        });
     }
 
     updatePassword = async password => {
@@ -42,9 +62,11 @@ export default class ForgotPasswordSend extends Component {
     handleChange = e => {
         this.setState({ 
             password: e.target.value, 
-            //valid: this.REGEX_EMAIL.test(String(e.target.value).toLowerCase())
+            valid: this.validatePassword(e.target.value)
         });
     }
+
+    validatePassword = password => this.REGEX_PASSWORD.test(password);
 
     renderPasswordField() {
         return (
@@ -65,26 +87,77 @@ export default class ForgotPasswordSend extends Component {
         )
     }
 
+    renderErrorMessage() {
+
+        // notify user about password requirments
+        if (this.state.password.trim() !== '' && !this.state.valid) {
+            return (
+                <p className="registration-error animated fadeIn">
+                    Password must be atleast of length 12, contain 1 lowercase, 1 uppercase and 1 special character
+                </p>
+            )
+        }
+
+        return null;
+    }
+
+    renderCont() {
+
+        if (this.state.loading) {
+            return (
+                <StyledLoaderCont>
+                    <CircularLoader size="big" />
+                    <h5>{this.state.message}</h5>
+                </StyledLoaderCont>
+            )
+        }
+
+        else if (!this.state.loading && !this.state.validCode) {
+            return (
+                <Fragment>
+                    <h1 id="err-heading">Something went wrong...</h1>
+                    <p>{this.state.message}</p>
+                    <StyledButtonMain 
+                        className="btn waves-effect waves-light"
+                        onClick={redirect.home}
+                    >
+                        Back to safety
+                    </StyledButtonMain>
+                </Fragment>
+            );
+        }
+
+        return (
+            <Fragment>
+                <h1>Update your password</h1>
+                <p>Please enter your new password for your account. Once reset you can log back in!</p>
+                {this.renderPasswordField()}
+                {this.renderErrorMessage()}
+                <StyledButtonMain
+                    className="btn waves-effect waves-light"
+                    disabled={this.state.loading || !this.state.valid}
+                    onClick={() => this.state.valid 
+                        ? this.updatePassword(this.state.password)
+                        : null
+                    }
+                >
+                    Update my password
+                </StyledButtonMain>
+                <a 
+                    id="cancel-reset-password"
+                    onClick={redirect.login}
+                >
+                    I changed my mind, take me back to login
+                </a>
+            </Fragment>
+        )
+    }
+
     render() {
         return (
             <StyledMain>
                 <StyledCont className="container animated fadeIn">
-                    <h1>Update your password</h1>
-                    <p>Please enter your new password for your account. Once reset you can log back in!</p>
-                    {this.renderPasswordField()}
-                    <StyledButtonMain
-                        className="btn waves-effect waves-light"
-                        disabled={this.state.loading}
-                        onClick={() => this.updatePassword(this.state.password)}
-                    >
-                        Update my password
-                    </StyledButtonMain>
-                    <a 
-                        id="cancel-reset-password"
-                        onClick={redirect.login}
-                    >
-                        I changed my mind, take me back to login
-                    </a>
+                    {this.renderCont()}
                 </StyledCont>
             </StyledMain>
         )
@@ -94,6 +167,21 @@ export default class ForgotPasswordSend extends Component {
 const StyledMain = styled.main`
     position: relative;
     min-height: 90vh;
+`;
+
+const StyledLoaderCont = styled.div`
+    position: relative;
+    min-height: 35vh;
+
+    h5 {
+        position: absolute;
+        top: 85%;
+        left: 50%;
+        transform: translate(-50%);
+        font-size: 1.75rem;
+        color: #bdbdbd;
+        font-weight: 100;
+    }
 `;
 
 const StyledCont = styled.div`
@@ -113,6 +201,10 @@ const StyledCont = styled.div`
         font-weight: 600;
         letter-spacing: 3px;
         font-size: 2.75rem;
+
+        &#err-heading {
+            margin-top: 10vh;
+        }
     }
     
     p {
@@ -128,8 +220,15 @@ const StyledCont = styled.div`
         }
     }
 
+    .registration-error {
+        color: #e53935;
+        font-size: 0.7rem;
+        max-width: 300px;
+        margin: 0 auto ;
+    }
+
     .btn {
-        margin: 2.25rem auto 2.5rem auto;
+        margin: 2.5rem auto;
     }
 
     #cancel-reset-password {

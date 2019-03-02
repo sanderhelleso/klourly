@@ -18,7 +18,7 @@ class ChangeAvatar extends Component {
     }
 
     // trigger hidden file input on avatar click
-    selectAvatar() {
+    selectAvatar = () => {
         if (this.props.verified) {
             document.querySelector('#avatar-input').click();
         }

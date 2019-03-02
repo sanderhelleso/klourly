@@ -165,7 +165,7 @@ async function sendForgotPassword(email) {
 }
 
 // reset password
-async function resetPassword(resetData, password) {
+async function resetPassword(resetData, password, validate) {
 
     try {
         const response = await axios({
@@ -173,7 +173,8 @@ async function resetPassword(resetData, password) {
             url: '/api/auth/resetPassword',
             data: {
                 ...resetData,
-                password
+                password,
+                validate
             }
         });
 
