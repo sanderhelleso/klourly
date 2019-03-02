@@ -182,9 +182,9 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <StyledForm className='col s8 offset-s2 animated fadeIn'>
+            <StyledForm className='col s10 offset-s1 m8 offset-m2 l8 offset-l2 animated fadeIn'>
                 <div className='row login-row'>
-                    <div className='input-field col s10 offset-s1'>
+                    <div className='input-field col s12 m10 offset-m1 l10 offset-l1'>
                         <input 
                             name='email' 
                             type='email' 
@@ -193,7 +193,7 @@ class LoginForm extends Component {
                         />
                         <label htmlFor="email">E-Mail</label>
                     </div>
-                    <div className='input-field col s10 offset-s1'>
+                    <div className='input-field col s12 m10 offset-m1 l10 offset-l1'>
                         <input 
                             name='password' 
                             type='password' 
@@ -202,7 +202,7 @@ class LoginForm extends Component {
                         />
                         <label htmlFor="password">Password</label>
                     </div>
-                    <div className="col s10 offset-s1">
+                    <div className="col s12 col m10 offset-m1 l10 offset-l1 buttons">
                         <h5 id='login-error'>{this.state.error}</h5>
                         <ConfirmBtn 
                             text="Log In"

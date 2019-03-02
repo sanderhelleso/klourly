@@ -32,15 +32,21 @@ const StyledGoogleBtn = styled.a`
 
     img {
         position: absolute;
-        height: 2.5rem;
-        width: 2.5rem;
-        top: 20%;
-        left: 10%;
-        transform: translate(-10%);
+        height: 2rem;
+        width: 2rem;
+        top: 27%;
+        left: 5%;
+        transform: translate(-5%);
+        
+        @media screen and (max-height: 600px) {
+            height: 1.5rem;
+            width: 1.5rem;
+            top: 35%;
+		}
     }
 
     span {
-        margin-left: 10%;
+        margin-left: 1rem;
     }
 
     &:hover, &:focus {

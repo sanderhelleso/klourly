@@ -53,13 +53,13 @@ export default class Login extends Component {
 		return (
 			<StyledMain>
 				<div className="row main-row">
-					<StyledBgCont className="col s12 m6 l6 bg-cont">
+					<StyledBgCont className="col s0 m0 l6 bg-cont">
 						<div className="info-cont">
 							<h1>Klourly</h1>
 							<p>Attendance tracking with ease</p>
 						</div>
 					</StyledBgCont>
-					<StyledAuthCont className="col s12 m6 l6 auth-cont">
+					<StyledAuthCont className="col s12 m12 l6 auth-cont">
 						<div className="auth-form-cont row">
 							<div className="select-auth-cont">
 								{this.renderModes()}
@@ -94,6 +94,10 @@ const StyledBgCont = styled.div`
 	background-repeat: no-repeat;
 	padding: 0;
 
+	@media screen and (max-width: 993px) {
+		display: none;
+	}
+
 	.info-cont {
 		position: absolute;
 		top: 37.5%;
@@ -126,14 +130,31 @@ const StyledAuthCont = styled.div`
 	position: relative;
 	padding: 0 !important;
 
+	.buttons {
+		padding: 0 !important;
+	}
+
+	@media screen and (max-width: 400px) {
+		.buttons {
+			width: 100% !important;
+			margin-left: 0!important;
+		}
+	}
+
 	.auth-form-cont {
 		margin: 12.5vh auto;
 		text-align: center;
 
+		@media screen and (max-height: 600px) {
+			max-height: 70vh;
+			overflow-y: auto;
+		}
+
 		.base-btn {
-			min-width: 100%;
+			min-width: 90%;
+			max-width: 90%;
 			height: 60px;
-			margin: 2rem 0;
+			margin: 2rem auto;
 			line-height: 60px;
 			transition: 0.3s ease-in-out;
 			font-weight: 600;
@@ -144,8 +165,8 @@ const StyledAuthCont = styled.div`
 			svg {
 				position: absolute;
 				top: 32.5%;
-				left: 65%;
-				transform: translate(-65%);
+				left: 95%;
+				transform: translate(-95%);
 				opacity: 0.6;
 			}
 		}

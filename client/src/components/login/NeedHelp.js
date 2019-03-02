@@ -24,19 +24,31 @@ const StyledCont = styled.div`
     -webkit-clip-path: polygon(100% 0, 100% 38%, 100% 100%, 0 100%, 0% 38%);
     clip-path: polygon(100% 0, 100% 38%, 100% 100%, 0 100%, 0% 38%);
 
+    @media screen and (max-height: 670px) {
+        min-height: 3.5rem;
+    }
+
     div {
         background-color: #f5f5f5;
         min-height: 7.5rem;
         min-width: 100%;
         z-index: -1;
 
+        @media screen and (max-height: 670px) {
+            min-height: 3.5rem;
+        }
+
         a {
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%);
             color: #bdbdbd;
             font-size: 0.9rem;
+
+            @media screen and (max-height: 670px) {
+                top: 50%;
+            }
         }
     }
 `;

@@ -18,7 +18,7 @@ export default class ConfirmBtn extends Component {
                     disabled={!this.props.valid}
                     onClick={this.props.onClick}
                 >
-                    {this.props.text} <ArrowRight size={22} />
+                    {this.props.text} <ArrowRight size={24} />
                 </StyledButtonMain>
             );
         }

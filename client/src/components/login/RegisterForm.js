@@ -204,7 +204,7 @@ class RegisterForm extends Component {
 
     render() {
         return (
-            <StyledForm className="col s8 offset-s2 animated fadeIn">
+            <StyledForm className="col s10 offset-s1 m8 offset-m2 l8 offset-l2 animated fadeIn">
                 <div className="row">
                     <div className="input-field col s6">
                         <input 
@@ -248,7 +248,7 @@ class RegisterForm extends Component {
                         <label htmlFor="password">Password</label>
                         <p className="registration-error">{this.state.password_error}</p>
                     </div>
-                    <div className="col s10 offset-s1">
+                    <div className="col s12 col m10 offset-m1 l10 offset-l1 buttons">
                         <ConfirmBtn 
                             text="Register"
                             id="register-btn"
