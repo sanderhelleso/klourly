@@ -40,7 +40,7 @@ export default class ForgotPasswordSend extends Component {
 
     updatePassword = async password => {
 
-        this.setState({ loading: true });
+        this.setState({ loading: true, message: 'Resetting password...' });
         
         // attempt to send reset password
         const response = await authentication.resetPassword(
@@ -51,6 +51,7 @@ export default class ForgotPasswordSend extends Component {
         if (response.data.success) {
             this.setState({ password: '', valid: false });
             notification.success(response.data.message);
+            redirect.login();
         }
 
         // something went wrong, notify user
@@ -105,7 +106,7 @@ export default class ForgotPasswordSend extends Component {
 
         if (this.state.loading) {
             return (
-                <StyledLoaderCont>
+                <StyledLoaderCont className="animated fadeIn">
                     <CircularLoader size="big" />
                     <h5>{this.state.message}</h5>
                 </StyledLoaderCont>

@@ -49,7 +49,7 @@ module.exports = app => {
             };
 
             if (req.body.validate) {
-                
+
                 // validation successfull
                 return res.status(200).json({
                     success: true,
@@ -58,6 +58,9 @@ module.exports = app => {
             }
 
             else {
+
+                // delete ref
+                resetRef.remove();
 
                 // reset password for the connected user
                 firebase.auth().updateUser(req.body.userID, {
