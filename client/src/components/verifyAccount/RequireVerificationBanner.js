@@ -116,6 +116,19 @@ const StyledBanner = styled.div`
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.15);
     transition: 0.5s ease-in-out;
 
+    @media screen and (max-width: 1000px) {
+        bottom: 12%;
+        right: 0;
+
+        @media screen and (max-height: 640px) {
+            bottom: 20%;
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        max-width: 96%;
+    }
+
     &:hover {
         opacity: 1;
     }
