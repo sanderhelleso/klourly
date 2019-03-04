@@ -100,18 +100,18 @@ class Room extends Component {
                 <StyledCont className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
-                        <div id="room-main" className="col l8 m6 s12">
+                        <div id="room-main" className="col s12 m12 l8">
                             <Announcements />
                         </div>
-                        <aside id="room-aside" className="col l4 m6 s12">
+                        <aside id="room-aside" className="col s12 m12 l4">
                             {this.props.activeRoom.owner.id !== this.props.userID
                                 ? <Checkin /> 
                                 : null
                             }
-                            <div className="col s12 room-aside-section">
+                            <div className="col s12 m6 l12 room-aside-section">
                                 <Times times={this.props.activeRoom.times} />
                             </div>
-                            <div className="col s12 room-aside-section">
+                            <div className="col s12 m6 l12 room-aside-section">
                                 {this.renderLocation()}
                             </div>
                         </aside>
@@ -205,6 +205,13 @@ const StyledCont = styled.div`
 
     #room-main {
         border-right: 1px solid #eeeeee;
+
+        @media screen and (max-width: 1000px) {
+            border-right: none;
+            border-bottom: 1px solid #eeeeee;
+            margin-bottom: 3rem;
+            padding-bottom: 7rem;
+        }
     }
 
     @media screen and (max-width: 600px) {
