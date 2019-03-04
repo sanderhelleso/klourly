@@ -227,4 +227,10 @@ const StyledBtnCont = styled.div`
     position: absolute;
     right: 0;
     top: -155px;
+    
+    a {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
 `;

@@ -39,11 +39,9 @@ export const StyledButtonMain = styled.a`
     }
 
     &:disabled {
-        &:hover, &:focus {
-            -webkit-box-shadow: none;
-            -moz-box-shadow:    none;
-            box-shadow:         none;
-        }
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
     }
 `;
 

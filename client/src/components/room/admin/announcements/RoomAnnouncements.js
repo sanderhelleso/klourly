@@ -60,7 +60,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(RoomAnnouncements);
 const StyledHeader = styled.div`
     margin-top: 3rem;
     padding: 3.5rem 0;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #e0e0e0;
 
     h3 {
         font-weight: 800;

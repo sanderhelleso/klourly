@@ -6,8 +6,9 @@ import { materializeJS } from '../../helpers/materialize';
 
 export default class RoomMenu extends Component {
 
-    componentDidMount = () => materializeJS.M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
-
+    componentDidMount = () => materializeJS.M.Dropdown.init(
+        document.querySelector('.dropdown-trigger'), {}
+    );
 
     render() {
         return (
@@ -34,6 +35,6 @@ const StyledMenu = styled.div`
     position: absolute;
     top: 1rem;
     right: 1rem;
-    z-index: 10000;
+    z-index: 1000;
 `;
 

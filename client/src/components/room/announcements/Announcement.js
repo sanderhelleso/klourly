@@ -98,14 +98,15 @@ const StyledAnnouncement = styled.section`
     box-shadow: 0px 9px 28px rgba(0,0,0,0.09);
     padding: 5rem !important;
     margin-bottom: 5rem;
+    border-radius: 18px;
 
     .announcement {
         h1 {
-        font-size: 2.25rem;
-        text-align: center;
-        font-weight: 800;
-        margin-top: 0;
-    }
+            font-size: 2.25rem;
+            text-align: center;
+            font-weight: 800;
+            margin-top: 0;
+        }
 
         h5 {
             color: #bdbdbd;

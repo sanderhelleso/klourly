@@ -44,10 +44,7 @@ class Room extends Component {
                 }
                 <Parallax
                     blur={{ min: -15, max: 15 }}
-                    bgImage={`${this.state.windowWidth > 480 
-                        ? this.props.activeRoom.cover.large 
-                        : this.props.activeRoom.cover.small}`
-                    }
+                    bgImage={`${this.props.activeRoom.cover.large}`}
                     bgImageAlt={`${this.props.activeRoom.name} cover image`} 
                     strength={200}
                     renderLayer={percentage => (
@@ -170,11 +167,10 @@ const StyledCover = styled.div`
     }
 
     #room-menu {
-        z-index: 10000;
-
         li a {
             text-align: center !important;
             border-bottom: 1px solid #eeeeee;
+            color: #b388ff;
 
             svg {
                 opacity: 0.5;
