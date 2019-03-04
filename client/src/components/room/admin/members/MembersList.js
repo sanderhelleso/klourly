@@ -110,7 +110,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MembersList);
 const StyledMembersList = styled.div`
     margin-top: 4rem;
     padding: 4rem 0;
-    border-top: 1px solid #eeeeee;
+    border-top: 1px solid #e0e0e0;
     position: relative;
 
     .circular-loader {

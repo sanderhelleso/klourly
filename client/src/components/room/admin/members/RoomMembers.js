@@ -72,7 +72,7 @@ class RoomMembers extends Component {
             <main className="container">
                 <BackToRoom id={this.props.roomID} />
                 <div className="row">
-                    <StyledHeader className="col s12 m6 l6 animated fadeIn">
+                    <StyledHeader className="col s12 m8 offset-m2 l6 animated fadeIn">
                         <h3>Members</h3>
                         <p>Invite, remove and see memebers of the room.</p>
                         {this.renderLinkBtn()}
@@ -108,6 +108,11 @@ const StyledHeader = styled.div`
 
     min-height: 220px !important;
 
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
     h3 {
         margin-top: 0;
         font-weight: 800;
@@ -141,5 +146,9 @@ const StyledBtn = styled.button`
         margin-top: 10px;
         margin-left: 5px;
         float: left;
+    }
+
+    @media screen and (max-width: 1000px) {
+        margin: 1.25rem auto;
     }
 `;

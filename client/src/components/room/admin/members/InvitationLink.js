@@ -97,7 +97,7 @@ class InvitationLink extends Component {
 
     render() {
         return (
-            <div className="col s12 m6 l6 animated fadeIn">
+            <div className="col s12 m8 offset-m2 l6 animated fadeIn">
                 {this.renderLink()}
             </div>
         )
@@ -128,6 +128,9 @@ const StyledInvite = styled.div`
     background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #E100FF, #7F00FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+    @media screen and (max-width: 1000px) {
+        margin: 2rem auto;
+    }
 
     h4 {
         color: #ffffff;
@@ -189,6 +192,12 @@ const GenerateNewBtn = styled.button`
     background-color: #eeeeee;
     border-radius: 4px;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+
+    @media screen and (max-width: 380px) {
+        display: block;
+        margin-left: 0;
+        margin-top: 1.25rem;
+    }
 
     svg {
         margin-bottom: -4px;
