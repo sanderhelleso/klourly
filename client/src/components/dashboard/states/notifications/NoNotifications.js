@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const NO_NOTIFICATIONS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
+const NO_NOTIFICATIONS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-notifications.svg?alt=media&token=ba668bec-372f-4745-a4c9-c45790398029';
 const NOTIFICATION_TXT = 'You have no new notifications';
 
 class NoNotifications extends Component {
@@ -29,6 +29,10 @@ const StyledPlaceholder = styled.div`
     text-align: center;
     min-height: 220px !important;
     margin-top: 5rem;
+
+    img {
+        width: 256px;
+    }
 
     p {
         color: #9e9e9e;

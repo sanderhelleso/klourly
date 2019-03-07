@@ -2,20 +2,25 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../helpers/redirect';
 
-const NO_MEMBERS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
-const INVITE_TXT = 'Looks like this room dont have any members yet. Go and spread the word by using the invitation link above!';
-const CHECKIN_TXT = 'Looks like this room dont have any members yet. Go and spread the word and come back in a bit to try again.';
+const NO_MEMBERS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-members.svg?alt=media&token=9c221e13-1c83-4aa7-8b9b-30a56508db12';
+const NO_CHECKINGS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-checkins.svg?alt=media&token=07990293-1212-4fc2-8fbf-e07e704aad97';
+const INVITE_TXT = 'This room dont have any members yet. Go and spread the word by using the invitation link above!';
+const CHECKIN_TXT = 'This room dont have any members yet so we cant perform a checkin session. Invite some members to the room and try again.';
 
 class NoMembersPlaceholder extends Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props.text);
     }
 
     render () {
         return (
             <StyledPlaceholder className="col s12 m12 l12 animated fadeIn">
-                <h3>This room dont have any members yet</h3>
-                <img src={NO_MEMBERS_ICON} alt="No members in this room" />
+                <img 
+                    src={this.props.text === 'invite' ? NO_MEMBERS_ICON : NO_CHECKINGS_ICON} 
+                    alt="No members in this room" 
+                />
                 <p>
                     {this.props.text === 'invite' ? INVITE_TXT : CHECKIN_TXT}
                 </p>
@@ -38,19 +43,14 @@ const StyledPlaceholder = styled.div`
     text-align: center;
     min-height: 220px !important;
 
-    h3 {
-        margin-top: ${props => props.gotMembers ? 1 : 0}rem;
-        margin-bottom: 2rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        text-transform: capitalize;
-        font-size: ${props => props.gotMembers ? 3 : 2}rem;
+    img {
+        width: 256px;
     }
 
     p {
         color: #9e9e9e;
         font-weight: 400;
-        max-width: 550px;
+        max-width: 465px;
         margin: 1rem auto;
         margin-bottom: ${props => props.gotMembers ? 1 : 1.25}rem;
     }

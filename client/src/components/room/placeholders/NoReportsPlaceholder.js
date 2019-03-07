@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../helpers/redirect';
 
-const NO_MEMBERS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
-const REPORT_TXT = 'Looks like this room havent had any checkins to report on yet! Go and spread the word and come back in a bit to try again.';
+const NO_REPORTS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-reports.svg?alt=media&token=6cbf4dc9-b3fb-4dbe-9668-c19d9bd7a04e';
+const REPORT_TXT = 'Looks like this room havent had any checkins to report on yet! Start a new checkin and come back once its completed.';
 
 class NoReportsPlaceholder extends Component {
     constructor(props) {
@@ -13,8 +13,7 @@ class NoReportsPlaceholder extends Component {
     render () {
         return (
             <StyledPlaceholder className="col s12 m12 l12 animated fadeIn">
-                <h3>No checkin reports available</h3>
-                <img src={NO_MEMBERS_ICON} alt="No reports available" />
+                <img src={NO_REPORTS_ICON} alt="No reports available" />
                 <p>
                     {REPORT_TXT}
                 </p>
@@ -37,6 +36,10 @@ const StyledPlaceholder = styled.div`
     text-align: center;
     min-height: 220px !important;
 
+    img {
+        width: 256px;
+    }
+
     h3 {
         margin-top: 1rem;
         margin-bottom: 2rem;
@@ -49,7 +52,7 @@ const StyledPlaceholder = styled.div`
     p {
         color: #9e9e9e;
         font-weight: 400;
-        max-width: 550px;
+        max-width: 450px;
         margin: 1rem auto;
         margin-bottom: 1.25rem;
     }
