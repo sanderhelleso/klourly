@@ -13,6 +13,8 @@ class ConfirmTypeModal extends Component {
     constructor(props) {
         super(props);
 
+        this.NOT_NUM_REGEX = new RegExp(/[^\d]/)
+
         this.state = {
             minimumAttendenceLimit: 95,
             chargeAmount: ''
@@ -32,6 +34,33 @@ class ConfirmTypeModal extends Component {
         materializeJS.M.Modal.init(modal, { endingTop: '15%' });
     }
 
+    handleLimitChange = e => {
+        if (e.target.value.length < 4) {
+
+            if (this.isInt(e.target.value)) {
+                if (parseInt(e.target.value) > 100) {
+                   e.target.value = 100;
+                }
+
+                else if (parseInt(e.target.value) < 0) {
+                    e.target.value = 0
+                }
+
+               this.setState({ 
+                    minimumAttendenceLimit: parseInt(e.target.value.replace(this.NOT_NUM_REGEX, '')) 
+                });
+            }
+
+            else {
+                this.setState({ 
+                    minimumAttendenceLimit: ''
+                });
+            }
+        }
+    }
+
+    isInt = n => !isNaN(parseInt(n));
+
     renderAttendenceRequirement() {
 
         return(
@@ -43,12 +72,7 @@ class ConfirmTypeModal extends Component {
                         name="attendence"
                         placeholder="95"
                         value={this.state.minimumAttendenceLimit}
-                        onChange={(e) => {
-                            if (e.target.value.length < 4) {
-                                if (e.target.value > 100) e.target.value = 100;
-                                this.setState({ minimumAttendenceLimit: e.target.value })
-                            }
-                        }}
+                        onChange={(e) => this.handleLimitChange(e)}
                     />
                     <label htmlFor="attendence">Minimum attendence requirement in %</label>
                     <span className="helper-text">Leave field empty for no requirement</span>
@@ -177,6 +201,11 @@ const StyledModalContent = styled.div`
     .inputs {
         padding-top: 2rem;
         margin-top: 2rem;
+
+        input {
+            max-width: 100% !important;
+            min-width: 100% !important;
+        }
 
         p {
             margin: 0 0 4rem 0;
