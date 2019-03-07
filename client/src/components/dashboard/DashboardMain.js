@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Settings from './states/settings/Settings';
 import Rooms from './states/rooms/Rooms';
 import Notifications from './states/notifications/Notifications';
+import Achievements from './states/achievements/Achievements';
 
 
 class DashboardMain extends Component {
@@ -24,7 +25,7 @@ class DashboardMain extends Component {
                 return <Rooms />
 
             case 3:
-                return "hi again";
+                return <Achievements />
 
             case 4:
                 return <Settings />
