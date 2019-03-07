@@ -38,12 +38,15 @@ class ConfirmTypeModal extends Component {
         if (e.target.value.length < 4) {
 
             if (this.isInt(e.target.value)) {
+
                 if (parseInt(e.target.value) > 100) {
                    e.target.value = 100;
                 }
 
-                else if (parseInt(e.target.value) < 0) {
-                    e.target.value = 0
+                else if (parseInt(e.target.value) <= 0) {
+                    return this.setState({ 
+                        minimumAttendenceLimit: '' 
+                    });
                 }
 
                this.setState({ 
@@ -68,7 +71,7 @@ class ConfirmTypeModal extends Component {
                 <div className="input-field">
                     <input 
                         id="attendece" 
-                        type="number"
+                        type="text"
                         name="attendence"
                         placeholder="95"
                         value={this.state.minimumAttendenceLimit}
