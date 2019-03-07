@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Notification from './Notification';
 import NotificationDate from './NotificationDate';
+import NoNotificationsPlaceholder from './NoNotifications'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,7 +15,8 @@ class Notifications extends Component {
 
     renderNotifications() {
 
-        if (!this.props.notifications) return <p>No notifications</p>;
+        if (Object.entries(this.props.notifications).length === 0) 
+            return <NoNotificationsPlaceholder />
 
         let lastTime;
         return Object.values(this.props.notifications)
