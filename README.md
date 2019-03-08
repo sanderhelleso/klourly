@@ -5,15 +5,24 @@
 </p>
  
 <br>
+
 ## What is klourly?
 
-```
+<p>
 klourly provides a flexible and detailed report system for every user, session or group.  
 An open-source platform thai aims to simplify the way groups of any size perform attendance taking.
 The application is built with the user in mind. Attendance taking should be quick and easy for
 every user, wheter you are the one performing the attendance test or is the administrator of it.
+</p>
 
- ```
+ 
+ ## Motivation
+
+<p>
+ As a CS student that takes alot of classes, I notice a common pattern among classed and group activities.
+ Spending minutes every class, every day for a semester adds up, taking up the focus from the class and lecturer.
+ This lost time could be used to increace the outcome of the class in different ways than waste it on attendance taking.
+</p>
 
  
 ## Room Preview
