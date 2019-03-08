@@ -1,6 +1,6 @@
 <p align="center">
     <img src="https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fstage-3-256.png?alt=media&token=f3594431-5a2d-4809-b0a8-caa68afd9f38" height="175" width="175" />
-    <h1 align="center">klourly</h1>
+    <h1 align="center" style="font-size:50px;">klourly</h1>
     <br>
 </p>
  
