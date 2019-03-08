@@ -32,16 +32,16 @@ export const StyledButtonMain = styled.a`
     ${BUTTON_STYLES};
 
     &:hover, &:focus {
-        -webkit-box-shadow: 0px 12px 30px 0px rgba(0, 226, 163, 0.7);
-        -moz-box-shadow:    0px 12px 30px 0px rgba(0, 226, 163, 0.7);
-        box-shadow:         0px 12px 30px 0px rgba(0, 226, 163, 0.7);
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow:    none !important;
+        box-shadow:         none !important;
         background-color: ${backgroundColor};
     }
 
     &:disabled {
-        -webkit-box-shadow: none;
-        -moz-box-shadow:    none;
-        box-shadow:         none;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow:    none !important;
+        box-shadow:         none !important;
     }
 `;
 

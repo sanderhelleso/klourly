@@ -22,17 +22,16 @@ class Activate extends Component {
 
     activateRoom = async () => {
 
+        // if no location, alert user that unable to activate room
         if (!this.props.gotLocation) return notification.error(this.NO_LOCATION_ERROR);
 
         this.setState({ loading: true })
 
         // attempt to activate the current room
         const response = await room.activateRoom(
-                            this.props.userID, 
-                            this.props.roomID, 
-                            this.props.currentLocation,
-                            this.props.radiusOption
-                        );
+            this.props.userID, this.props.roomID, 
+            this.props.currentLocation, this.props.radiusOption
+        );
         
         // validate that checkin was successfully started
         if (response.data.success) {
@@ -79,7 +78,7 @@ class Activate extends Component {
 
     render() {
         return (
-            <div className="col s12 m6 l6">
+            <div className="col s12">
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
                     disabled={this.props.active || this.state.loading}
@@ -95,6 +94,8 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
+        activeCheckin: state.room.activeRoom.checkin,
+        roomID: state.room.activeRoom.id,
         radiusOption: state.room.activeRoom.checkin.radius,
         gotLocation: state.location.gotLocation,
         currentLocation: state.location.coords,

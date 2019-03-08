@@ -78,11 +78,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(RadiusOptions);
 
 const StyledOptions = styled.div`
 
-    margin-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
-    text-align: left;
-    padding-top: 1.25rem !important;
-    padding-left: 1.75rem !important;
+    margin-top: 0;
+    text-align: center;
+    padding-bottom: 2rem !important;
+    margin-bottom: 1rem;
 
     @media screen and (max-width: 1000px) {
         text-align: center;
