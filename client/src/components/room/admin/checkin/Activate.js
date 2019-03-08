@@ -16,11 +16,15 @@ class Activate extends Component {
         super(props);
 
         this.NO_LOCATION_ERROR = 'Unable to activate room with radius because we are unable to fetch your location. Please try again';
+
+        this.state = { loading: false }
     }
 
     activateRoom = async () => {
 
         if (!this.props.gotLocation) return notification.error(this.NO_LOCATION_ERROR);
+
+        this.setState({ loading: true })
 
         // attempt to activate the current room
         const response = await room.activateRoom(
@@ -32,9 +36,6 @@ class Activate extends Component {
         
         // validate that checkin was successfully started
         if (response.data.success) {
-
-            // notify user
-            notification.success(response.data.message);
 
             // get checkin ref of newly generated checkin
             const checkinID = response.data.checkinData.checkinID;
@@ -72,20 +73,17 @@ class Activate extends Component {
 
         // notify user about potensial errors
         else notification.error(response.data.message);
+
+        this.setState({ loading: false })
     }
 
     render() {
         return (
             <div className="col s12 m6 l6">
                 <StyledButtonMain
-                    className={`waves-effect waves-light btn animated fadeIn"
-                    ${
-                        this.props.active 
-                        ? 'disabled-btn' 
-                        : 'active-btn'
-                    }`}
-                    disabled={this.props.active}
-                    onClick={this.activateRoom}
+                    className="waves-effect waves-light btn animated fadeIn"
+                    disabled={this.props.active || this.state.loading}
+                    onClick={!this.props.active ? this.activateRoom : null}
                 >
                     Activate
                 </StyledButtonMain>

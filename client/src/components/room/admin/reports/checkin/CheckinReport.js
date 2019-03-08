@@ -86,7 +86,7 @@ class CheckinReport extends Component {
 
         if (this.props.reportData && 
             this.props.reportData.checkinID === this.props.match.params.checkinID) {
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            //document.body.scrollTop = document.documentElement.scrollTop = 0;
             return (
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">

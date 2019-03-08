@@ -111,7 +111,7 @@ class MemberReport extends Component {
     renderMemberReport() {
 
         if (this.props.activeReport && this.props.activeReport.userID === this.props.userData.id) {
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            //document.body.scrollTop = document.documentElement.scrollTop = 0;
             return(
                 <StyledReport className="col s12 animated fadeIn">
                     <div className="col s12 chart">
