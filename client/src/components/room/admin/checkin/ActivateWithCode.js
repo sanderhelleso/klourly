@@ -16,6 +16,7 @@ export default class ActivateWithCode extends Component {
             <StyledActivationCont className="col s12 m12 l6">
                 <h5>With Generated Code</h5>
                 <img src={this.ICON} alt="Members icon" />
+                <p>Activate with a generated link. Users do not need to have an account to register.</p>
                 <Activate />
             </StyledActivationCont>
         )

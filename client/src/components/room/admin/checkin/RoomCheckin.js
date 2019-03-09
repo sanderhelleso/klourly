@@ -61,12 +61,13 @@ class AdminCheckin extends Component {
 
     render() {
         return (
-            <main className="container">
+            <StyledMain className="container">
+                <h1>Checkin</h1>
                 <BackToRoom id={this.props.roomID} />
                 <div className="row">
                     {this.renderComponent()}
                 </div>
-            </main>
+            </StyledMain>
         )
     }
 }
@@ -86,6 +87,29 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCheckin);
 
+const StyledMain = styled.main`
+    position: relative;
+
+    h1 {
+        position: absolute;
+        font-size: 6.5rem;
+        color: #e0e0e0;
+        font-weight: 100;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        top: 50%;
+        left: -30%;
+        z-index: -1;
+        opacity: 0.7;
+        transform: rotate(-90deg);
+
+        @media screen and (max-width: 1200px) {
+            display: none;
+        }
+    }
+`;
+
+
 const StyledOptionCont = styled.div`
     text-align: center;
 
@@ -100,6 +124,13 @@ const StyledOptionCont = styled.div`
         max-width: 175px;
         min-height: 175px;
         max-height: 175px;
+    }
+
+    p {
+        color: #9e9e9e;
+        max-width: 300px;
+        margin: 0 auto;
+        margin-bottom: 1rem;
     }
 
     a {
