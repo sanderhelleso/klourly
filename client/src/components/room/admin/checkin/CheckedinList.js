@@ -18,11 +18,14 @@ class CheckedinList extends Component {
 
     async componentDidMount() {
 
-        if (this.props.type === 'code') return;
+        // handle checkedin users from code
+        if (this.props.type === 'code') {
+            return this.setState({ checkedinUsersFromCode: [] });
+        }
 
         this.setState({ loading: true });
 
-        // load attendies
+        // handle checked in members of room
         const response = await room.getRoomMembers(
             this.props.userID,
             this.props.roomID,
@@ -38,6 +41,7 @@ class CheckedinList extends Component {
 
     isMemberCheckedIn(uid) {
 
+        // valdidate if a user with given UID has checked into room or not
         if (this.props.checkedinMembers) {
             if (this.props.checkedinMembers.hasOwnProperty(uid)) {
                 return true;
@@ -51,6 +55,7 @@ class CheckedinList extends Component {
 
     renderRoomMembers() {
 
+        // validate that membersData is not null
         if (this.state.membersData) {
 
             // add checkin prop to member
@@ -70,7 +75,17 @@ class CheckedinList extends Component {
 
     renderCheckedInMembersFromCode() {
 
-        if (this.state.checkinMembers) {
+        // validate that checkedinUsersFromCode is not null
+        if (this.state.checkedinUsersFromCode) {
+
+            // check if empty list
+            if (this.state.checkedinUsersFromCode.length === 0) {
+                return (
+                    <StyledWaitingCont>
+                        <p>Waiting for checkins...</p>
+                    </StyledWaitingCont>
+                )
+            }
 
             // return list of checked in users from code
             return this.state.checkedinUsersFromCode
@@ -126,5 +141,22 @@ const StyledListCont = styled.div`
 
     .circular-loader {
         top: 130% !important;
+    }
+`;
+
+const StyledWaitingCont = styled.div`
+    position: relative;
+    min-height: 200px;
+
+    p {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%);
+        color: #9e9e9e;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
     }
 `;
