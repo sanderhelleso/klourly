@@ -20,6 +20,7 @@ import DefaultRoutes from './routes/DefaultRoutes';
 import VerifyAccount from './verifyAccount/VerifyAccount';
 import ForgotPasswordSend from './forgotPassword/ForgotPasswordSend';
 import ForgotPasswordReset from './forgotPassword/ForgotPasswordReset';
+import CheckinWithCode from './checkinWithCode/CheckinWithCode';
 
 
 // Initialize Firebase
@@ -66,6 +67,7 @@ class App extends Component {
                         <Route exact path="/forgot-password/send" component={ForgotPasswordSend} />
                         <Route exact path="/forgot-password/reset/:resetID/:userID" component={ForgotPasswordReset} />
                         <Route exact path="/verify-account/:verificationID/:userID" component={VerifyAccount} />
+                        <Route exact path="/checkin/:checkinCode/:roomID" component={CheckinWithCode} />
                         <ToastContainer 
                             transition={Fade} 
                             closeButton={false}
