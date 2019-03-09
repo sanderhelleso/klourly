@@ -1,10 +1,12 @@
 const firebase = require('firebase-admin');
 const db = firebase.database();
+const shortid = require('shortid');
+const authenticate = require('../middelwares/requireAuth');
 
 module.exports = app => {
 
-    // get attendence registration data
-    app.post('/api/registerAttendence', (req, res) => {
+    // register for room member
+    app.post('/api/registerAttendence', authenticate, (req, res) => {
 
         const checkinTimestamp = new Date().getTime();
         
@@ -26,11 +28,42 @@ module.exports = app => {
             success: true,
             message: 'Attendence was successfully registered'
         });
-        
+    });
+
+    // register for non-user by type 'code'
+    app.post('/api/registerAttendenceByCode', (req, res) => {
+
+        // get rooms checkin ref
+        const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
+        checkinRef.once('value', snapshot => {
+
+            // validate ref
+            if (!validateCheckinRef(snapshot)) {
+                return invalidCheckinRef(res);
+            }
+
+            // timestamp of checkin & name from request
+            const checkinData = {
+                checkinTimestamp: new Date().getTime(),
+                name: req.body.name
+            }
+
+            // get checkin ref for user & update the rooms current checkin ref
+            const checkinsRef = db.ref(`rooms/${req.body.roomID}/checkins/${req.body.checkinID}`);
+            checkinsRef.child(`attendies/${shortid.generate()}`)
+            .set(checkinData);
+
+            // send back response with success message
+            res.status(200).json({ 
+                success: true,
+                message: 'Attendence was successfully registered'
+            });
+
+        });
     });
 
     // get attendence for a specific user for a room
-    app.post('/api/getAttendence', (req, res) => {
+    app.post('/api/getAttendence', authenticate, (req, res) => {
         
         // get room reference
         const roomCheckinsRef = db.ref(`rooms/${req.body.roomID}/checkins`);
@@ -38,8 +71,7 @@ module.exports = app => {
 
             // get total room checkins
             const totalRoomCheckins = roomCheckinSnapshot.val() 
-                                      ? Object.keys(roomCheckinSnapshot.val()).length
-                                      : 0;
+                ? Object.keys(roomCheckinSnapshot.val()).length : 0;
 
             // get user reference
             const userCheckinRef = db.ref(`users/${req.body.uid}/checkins/${req.body.roomID}`);
@@ -47,8 +79,7 @@ module.exports = app => {
 
                 // get total user checkins for room
                 const totalUserCheckinsForRoom = userCheckinsnapshot.val()
-                                                 ? Object.keys(userCheckinsnapshot.val()).length
-                                                 : 0
+                    ? Object.keys(userCheckinsnapshot.val()).length : 0
 
                 // send back response with success message and data
                 res.status(200).json({ 
@@ -61,6 +92,29 @@ module.exports = app => {
                 });
             });
         });
-        
+    });
+}
+
+// validateCheckinRef validates the given ref
+// and check if its present, and id matches
+function validateCheckinRef(snapshot) {
+
+    // validate ref
+    if (!snapshot.exists() ||
+        snapshot.val().type !== 'code' ||
+        snapshot.val().checkinID !== checkinID) {
+        return false;
+    }
+
+    return true;
+}
+
+// send back invalid checkin response
+function invalidCheckinRef(res) {
+
+    // send back error response
+    res.status(404).json({ 
+        success: false,
+        message: 'The registration has expired or might never existed.'
     });
 }
