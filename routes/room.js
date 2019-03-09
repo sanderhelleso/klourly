@@ -402,11 +402,17 @@ module.exports = app => {
         const checkinID = shortid.generate();
         const timestamp = new Date().getTime();
 
+        // if type 'code' generate link
+        let checkinLink = null;
+        if (req.body.type === 'code') 
+            checkinLink = `${process.env.DOMAIN}/checkin/${checkinID}/${req.body.roomID}`;
+
         // update checkin data
         roomRef.update({
             checkin: {
                 timestamp,
                 checkinID,
+                checkinLink,
                 radius: req.body.radius,
                 type: req.body.type,
                 active: true,
@@ -431,6 +437,7 @@ module.exports = app => {
                 checkinData: {
                     timestamp,
                     checkinID,
+                    checkinLink,
                     membersList: snapshot.val().members ? snapshot.val().members : [],
                     totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
                 }
