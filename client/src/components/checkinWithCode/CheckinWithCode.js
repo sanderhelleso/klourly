@@ -4,6 +4,7 @@ import { StyledButtonMain } from '../styles/buttons';
 import { attendence } from '../../api/room/attendence';
 import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
+import { notification } from '../../helpers/notification';
 
 export default class CheckinWithCode extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ export default class CheckinWithCode extends Component {
             loading: true,
             name: '',
             valid: null,
+            registeredSuccessfull: false,
             ...props.match.params
         }
     }
@@ -32,17 +34,35 @@ export default class CheckinWithCode extends Component {
         });
     }
 
-    handleChange = e => this.setState({
-        [e.target.name]: e.target.value
-    });
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value});
+    }
 
     registerAttendance = async () => {
 
+        this.setState({ loading: true })
+
+        // attempt to set registration
         const response = await attendence.registerAttendenceByCode(
             this.state.name, this.state.roomID, this.state.checkinID
         );
 
-        console.log(response);
+        // update state
+        this.setState({
+            loading: false,
+            registeredSuccessfull: response.data.success
+        });
+
+        // update localstorage if success
+        if (response.data.success) {
+            return localStorage.setItem(
+                [`checkin-${this.state.checkinID}-${this.state.roomID}`],
+                true
+            );
+        }
+
+        // notify user if error
+        notification.error(response.data.error);
     }
 
     renderInput() {
@@ -69,7 +89,11 @@ export default class CheckinWithCode extends Component {
                 {this.renderInput()}
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
-                    onClick={this.registerAttendance}
+                    disabled={this.state.name.length < 2 || this.state.name.length > 128}
+                    onClick={
+                        this.state.name.length > 1 && this.state.name.length < 128
+                        ? this.registerAttendance : null
+                    }
                 >
                     Register
                 </StyledButtonMain>
@@ -94,8 +118,13 @@ export default class CheckinWithCode extends Component {
 
     renderContent() {
 
-         // loading
-         if (this.state.loading) {
+        // user has registered for thic checkin
+        if (this.state.registeredSuccessfull) {
+            return <p>YOU HAVE REGISTRED</p>
+        }
+
+        // loading
+        else if (this.state.loading) {
             return <CircularLoader size="big" />
         }
 
