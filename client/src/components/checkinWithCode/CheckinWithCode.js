@@ -1,33 +1,61 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { StyledButtonMain } from '../styles/buttons';
+import { attendence } from '../../api/room/attendence';
+import { redirect } from '../../helpers/redirect';
+import CircularLoader from '../loaders/CircularLoader';
 
 export default class CheckinWithCode extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            loading: false,
+            loading: true,
             name: '',
-            valid: null
+            valid: null,
+            ...props.match.params
         }
+    }
+
+    async componentDidMount() {
+
+        // validate endpoint
+        const response = await attendence.validateRegisterCode(
+            this.state.roomID, this.state.checkinID
+        );
+
+        // update state with result
+        this.setState({ 
+            valid: response.data.success,
+            message: response.data.message,
+            loading: false
+        });
     }
 
     handleChange = e => this.setState({
         [e.target.name]: e.target.value
     });
 
+    registerAttendance = async () => {
+
+        const response = await attendence.registerAttendenceByCode(
+            this.state.name, this.state.roomID, this.state.checkinID
+        );
+
+        console.log(response);
+    }
+
     renderInput() {
         return (
-            <div class="row">
-                <div class="input-field col s12">
+            <div className="row">
+                <div className="input-field col s12">
                     <input 
                         id="name" 
                         name="name" 
                         type="text"
                         onChange={this.handleChange}
                     />
-                    <label for="name">Your full name</label>
+                    <label htmlFor="name">Your full name</label>
                 </div>
             </div>
         )
@@ -35,12 +63,13 @@ export default class CheckinWithCode extends Component {
 
     renderCheckin() {
         return (
-            <StyledCont>
+            <StyledCont className="animated fadeIn cont">
                 <h1>Checkin</h1>
                 <p>Register your attendance for CST 370</p>
                 {this.renderInput()}
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
+                    onClick={this.registerAttendance}
                 >
                     Register
                 </StyledButtonMain>
@@ -48,25 +77,49 @@ export default class CheckinWithCode extends Component {
         );
     }
 
-    render() {
+    renderInvalid() {
         return (
-            this.renderCheckin()
+            <div className="animated fadeIn cont">
+                <h1>Something went wrong...</h1>
+                <p>{this.state.message}</p>
+                <StyledButtonMain 
+                    className="btn waves-effect waves-light"
+                    onClick={redirect.home}
+                >
+                    Back to safety
+                </StyledButtonMain>
+            </div>
+        )
+    }
+
+    renderContent() {
+
+         // loading
+         if (this.state.loading) {
+            return <CircularLoader size="big" />
+        }
+
+        // not valid
+        else if (!this.state.valid) {
+            return this.renderInvalid();
+        }
+
+        // valid
+        return this.renderCheckin();
+    }
+
+    render() {
+
+        return (
+            <StyledMain>
+                {this.renderContent()}
+            </StyledMain>
         )
     }
 }
 
-const StyledCont = styled.div`
-    padding: 4rem 3rem;
-    box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    background-color: #ffffff;
-    max-width: 500px;
-    min-width: 500px;
-    position: absolute;
-    top: 27.5%;
-    left: 50%;
-    transform: translate(-50%);
-    text-align: center;
+const StyledMain = styled.main`
+    min-height: 90vh;
 
     h1 {
         font-weight: 800;
@@ -78,6 +131,23 @@ const StyledCont = styled.div`
         color: #9e9e9e;
         margin-bottom: 3rem;
     }
+
+    .cont {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%);
+        text-align: center;
+    }
+`;
+
+const StyledCont = styled.div`
+    padding: 4rem 3rem;
+    box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background-color: #ffffff;
+    max-width: 500px;
+    min-width: 500px;
 
     img {
         position: absolute;

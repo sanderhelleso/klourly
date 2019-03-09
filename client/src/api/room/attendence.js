@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export const attendence = {
     registerAttendence,
+    validateRegisterCode,
+    registerAttendenceByCode,
     getAttendence
 }
 
@@ -12,7 +14,7 @@ async function registerAttendence(uid, roomID) {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
-            url: '/api/registerAttendence',
+            url: '/api/attendance/registerAttendence',
             data: {
                 uid,
                 roomID
@@ -23,7 +25,51 @@ async function registerAttendence(uid, roomID) {
     }
 
     catch(error) {
+        return error.response;
         console.log(error);
+    }
+} 
+
+// validare register code at given endpoint
+async function validateRegisterCode(roomID, checkinID) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/attendance/validateRegisterCode',
+            data: {
+                roomID,
+                checkinID
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
+    }
+} 
+
+// register attendence for a user aswell as lookup if already checkedin
+async function registerAttendenceByCode(name, roomID, checkinID) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/attendance/registerAttendenceWithCode',
+            data: {
+                name,
+                roomID,
+                checkinID
+            }
+        });
+
+        return response;
+    }
+
+    catch(error) {
+        console.log(error);
+        return error.response;
     }
 } 
 
@@ -33,7 +79,7 @@ async function getAttendence(uid, roomID) {
         const response = await axios({
             headers: authHeader(),
             method: 'post',
-            url: '/api/getAttendence',
+            url: '/api/attendance/getAttendence',
             data: {
                 uid,
                 roomID

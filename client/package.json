@@ -87,10 +87,16 @@
     "/api/removeRoomMember": {
       "target": "http://localhost:5000"
     },
-    "/api/registerAttendence": {
+    "/api/attendance/registerAttendence": {
       "target": "http://localhost:5000"
     },
-    "/api/getAttendence": {
+    "/api/attendance/validateRegisterCode": {
+      "target": "http://localhost:5000"
+    },
+    "/api/attendance/registerAttendenceWithCode": {
+      "target": "http://localhost:5000"
+    },
+    "/api/attendance/getAttendence": {
       "target": "http://localhost:5000"
     },
     "/api/activateRoom": {

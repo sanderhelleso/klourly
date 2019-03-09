@@ -67,7 +67,7 @@ class App extends Component {
                         <Route exact path="/forgot-password/send" component={ForgotPasswordSend} />
                         <Route exact path="/forgot-password/reset/:resetID/:userID" component={ForgotPasswordReset} />
                         <Route exact path="/verify-account/:verificationID/:userID" component={VerifyAccount} />
-                        <Route exact path="/checkin/:checkinCode/:roomID" component={CheckinWithCode} />
+                        <Route exact path="/checkin/:checkinID/:roomID" component={CheckinWithCode} />
                         <ToastContainer 
                             transition={Fade} 
                             closeButton={false}

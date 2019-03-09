@@ -6,7 +6,7 @@ const authenticate = require('../middelwares/requireAuth');
 module.exports = app => {
 
     // register for room member
-    app.post('/api/registerAttendence', authenticate, (req, res) => {
+    app.post('/api/attendance/registerAttendence', authenticate, (req, res) => {
 
         const checkinTimestamp = new Date().getTime();
         
@@ -20,7 +20,8 @@ module.exports = app => {
             userCheckinRef.set(checkinTimestamp);
 
             // update the rooms checkin ref
-            roomRef.child(`checkins/${checkinID}/attendies/${req.body.uid}`).set(checkinTimestamp);
+            roomRef.child(`checkins/${checkinID}/attendies/${req.body.uid}`)
+            .set(checkinTimestamp);
         });
 
         // send back response with success message
@@ -30,15 +31,35 @@ module.exports = app => {
         });
     });
 
-    // register for non-user by type 'code'
-    app.post('/api/registerAttendenceByCode', (req, res) => {
+    // validate checkin link
+    app.post('/api/attendance/validateRegisterCode', (req, res) => {
 
         // get rooms checkin ref
         const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
         checkinRef.once('value', snapshot => {
 
             // validate ref
-            if (!validateCheckinRef(snapshot)) {
+            if (!validateCheckinRef(snapshot, req.body.checkinID)) {
+                return invalidCheckinRef(res);
+            }
+
+            // send back response with success message
+            res.status(200).json({ 
+                success: true,
+                message: 'Registration code is valid'
+            });
+        });
+    });
+
+    // register for non-user by type 'code'
+    app.post('/api/attendance/registerAttendenceWithCode', (req, res) => {
+
+        // get rooms checkin ref
+        const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
+        checkinRef.once('value', snapshot => {
+
+            // validate ref
+            if (!validateCheckinRef(snapshot, req.body.checkinID)) {
                 return invalidCheckinRef(res);
             }
 
@@ -63,7 +84,7 @@ module.exports = app => {
     });
 
     // get attendence for a specific user for a room
-    app.post('/api/getAttendence', authenticate, (req, res) => {
+    app.post('/api/attendance/getAttendence', authenticate, (req, res) => {
         
         // get room reference
         const roomCheckinsRef = db.ref(`rooms/${req.body.roomID}/checkins`);
@@ -97,7 +118,7 @@ module.exports = app => {
 
 // validateCheckinRef validates the given ref
 // and check if its present, and id matches
-function validateCheckinRef(snapshot) {
+function validateCheckinRef(snapshot, checkinID) {
 
     // validate ref
     if (!snapshot.exists() ||
