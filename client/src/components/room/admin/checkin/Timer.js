@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -25,6 +26,7 @@ class Timer extends Component {
     // intitialize new timer on mount
     componentDidMount() {
         
+        // start ticking
         const timer = setInterval(() => this.calculateTime(), this.SEC)
         this.setState({ timer });
     }
@@ -55,15 +57,13 @@ class Timer extends Component {
         });
     }
 
-    renderTimer() {
-        return <p>{this.state.timeElapsed}</p>
-    }
 
     render() {
         return (
-            <div>
-                {this.renderTimer()}
-            </div>
+            <StyledTimer className="animated fadeIn">
+                <span id="elapsed-info">Time elapsed</span>
+                <p>{this.state.timeElapsed}</p>
+            </StyledTimer>
         )
     }
 }
@@ -77,3 +77,21 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+
+const StyledTimer = styled.div`
+    letter-spacing: 2px;
+    min-height: 65px;
+    
+    #elapsed-info {
+        display: block;
+        font-size: 0.8rem;
+        color: #9e9e9e;
+        opacity: 0.7;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 1.75rem;
+    }
+`;
