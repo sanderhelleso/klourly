@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Activate from './Activate';
-import Deactivate from './Deactivate';
 import BackToRoom from '../../BackToRoom';
 import CheckinStatus from './CheckinStatus';
 import RadiusOptions from './RadiusOptions';
@@ -46,13 +44,7 @@ class AdminCheckin extends Component {
                     >
                         {this.renderDeactivateForType()}
                     </StyledDeactivateCont>
-                    <CheckinStatus 
-                        roomID={this.props.roomID}
-                        userID={this.props.userID}
-                        checkinID={this.props.activeCheckin.active 
-                        ? this.props.activeCheckin.checkinID 
-                        : null} 
-                    />
+                    <CheckinStatus />
                 </div>
             )
         }

@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { WifiOff } from 'react-feather';
-import { materializeJS } from '../../../../helpers/materialize';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CheckedInMember from './CheckedInMember';
+
 import CheckinPercentage from './CheckinPercentage';
 import CheckinCounter from './CheckinCounter';
 import CheckedinList from './CheckedinList';
@@ -15,60 +13,60 @@ class CheckinStatus extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            statusData: this.props.activeCheckinStatus 
-                        ? this.props.activeCheckinStatus[this.props.checkinID]
-                        : false
-        };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.activeCheckinStatus !== nextProps.activeCheckinStatus) {
-            this.setState({
-                statusData: nextProps.activeCheckinStatus[this.props.checkinID]
-            });
-        }
-    }
-
+    // returns the amount of attendies of chekin
     getAttendies = () => {
-        return this.state.statusData.attendies 
-                ? Object.keys(this.state.statusData.attendies).length
-                : 0;
+        return this.props.activeCheckin.attendies
+            ? Object.keys(this.props.activeCheckin.attendies).length
+            : 0;
+    }
+
+    renderCheckinConunter() {
+
+        return (
+            <CheckinCounter
+                totalMembers={
+                    this.props.type === 'members' 
+                    ? this.props.activeCheckin.totalMembers
+                    : null
+                }
+                attendies={this.getAttendies()}
+            />
+        );
+    }
+
+    renderCheckinPercentage() {
+
+        if (this.props.type === "members") {
+            return (
+                <CheckinPercentage
+                    totalMembers={this.props.activeCheckin.totalMembers}
+                    attendies={this.getAttendies()}
+                />
+            )
+        }
+
+        return null;
     }
 
     renderStatus = () => {
-
-        if (this.props.checkinID && this.state.statusData) {
-            return (
-                <div>
-                    <Attended className="animated fadeIn row">
-                        <CheckinCounter
-                            totalMembers={this.state.statusData.totalMembers}
-                            attendies={this.getAttendies()}
-                        />
-                        <CheckinPercentage
-                            totalMembers={this.state.statusData.totalMembers}
-                            attendies={this.getAttendies()}
-                        />
-                    </Attended>
-                    <CheckedinList 
-                        roomID={this.props.roomID}
-                        userID={this.props.userID}
-                        membersList={this.state.statusData.membersList}
-                        checkedinMembers={this.state.statusData.attendies}
-                    />
-                </div>
-            );
-        }
-
-        else {
-            return (
-                <NotActive>
-                    <WifiOff size={70} />
-                    <h5>Not Active</h5>
-                </NotActive>
-            );
-        }
+        return (
+            <Fragment>
+                <Attended className="animated fadeIn row">
+                    {this.renderCheckinConunter()}
+                    {this.renderCheckinPercentage()}
+                </Attended>
+                <CheckedinList
+                    membersList={
+                        this.props.type === 'members' 
+                        ? this.props.activeCheckin.membersList
+                        : null
+                    }
+                    checkedinMembers={this.props.activeCheckin.attendies}
+                />    
+            </Fragment>
+        );
     }
 
     render() {
@@ -82,7 +80,10 @@ class CheckinStatus extends Component {
 
 const mapStateToProps = state => {
     return { 
-        activeCheckinStatus: state.room.activeCheckins
+        activeCheckin: state.room.activeRoom.checkin,
+        roomID: state.room.activeRoom.id,
+        userID: state.auth.user.id,
+        type: state.room.activeRoom.checkin.type
     };
 }
 
