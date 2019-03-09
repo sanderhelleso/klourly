@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Deactivate from './Deactivate';
+import Timer from './Timer';
 
 export default class DeactivateForCode extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ export default class DeactivateForCode extends Component {
             <Fragment>
                 <h5>Currently active for users with code</h5>
                 <img src={this.ICON} alt="Members icon" />
+                <Timer />
                 <Deactivate type="code" />
             </Fragment>
         )

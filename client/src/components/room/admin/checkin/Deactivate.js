@@ -18,8 +18,6 @@ class Deactivate extends Component {
 
     deactivateRoom = async () => {
 
-        console.log(123);
-
         this.setState({ loading: true })
 
         // decativate the current room, disabling all future checkins
@@ -50,7 +48,12 @@ class Deactivate extends Component {
 }
 
 const mapStateToProps = state => {
-    return { checkinID: state.room.activeRoom.checkin.checkinID };
+    return { 
+        checkinID: state.room.activeRoom.checkin.checkinID,
+        userID: state.auth.user.id,
+        roomID: state.room.activeRoom.id,
+        active: state.room.activeRoom.checkin.active
+    };
 }
 
 const mapDispatchToProps = dispatch => {
