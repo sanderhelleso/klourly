@@ -408,6 +408,7 @@ module.exports = app => {
                 timestamp,
                 checkinID,
                 radius: req.body.radius,
+                type: req.body.type,
                 active: true,
                 coords: req.body.checkinData
             }

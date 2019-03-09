@@ -29,8 +29,11 @@ class Activate extends Component {
 
         // attempt to activate the current room
         const response = await room.activateRoom(
-            this.props.userID, this.props.roomID, 
-            this.props.currentLocation, this.props.radiusOption
+            this.props.userID, 
+            this.props.roomID, 
+            this.props.currentLocation, 
+            this.props.radiusOption,
+            this.props.type
         );
         
         // validate that checkin was successfully started
