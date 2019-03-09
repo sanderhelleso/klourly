@@ -5,6 +5,7 @@ import { attendence } from '../../api/room/attendence';
 import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
 import { notification } from '../../helpers/notification';
+import { format } from '../../helpers/format';
 
 export default class CheckinWithCode extends Component {
     constructor(props) {
@@ -21,6 +22,14 @@ export default class CheckinWithCode extends Component {
 
     async componentDidMount() {
 
+        // validate if already checkedin
+        const checkedinData = this.checkIfUserHasCheckedin();
+        if (checkedinData) {
+            return this.setState({
+                ...JSON.parse(checkedinData)
+            });
+        }
+
         // validate endpoint
         const response = await attendence.validateRegisterCode(
             this.state.roomID, this.state.checkinID
@@ -32,6 +41,13 @@ export default class CheckinWithCode extends Component {
             message: response.data.message,
             loading: false
         });
+    }
+
+    checkIfUserHasCheckedin() {
+
+        // return localstorage data of checkin, returns null if not
+        return localStorage
+            .getItem(`checkin-${this.state.checkinID}-${this.state.roomID}`);
     }
 
     handleChange = e => {
@@ -57,7 +73,11 @@ export default class CheckinWithCode extends Component {
         if (response.data.success) {
             return localStorage.setItem(
                 [`checkin-${this.state.checkinID}-${this.state.roomID}`],
-                true
+                JSON.stringify({ 
+                    registeredSuccessfull: response.data.success,
+                    timestamp: new Date().getTime(), 
+                    user: this.state.name,
+                })
             );
         }
 
@@ -116,11 +136,40 @@ export default class CheckinWithCode extends Component {
         )
     }
 
+    renderSuccess() {
+        return (
+            <div className="animated fadeIn cont">
+                <h1>Registration Successfull</h1>
+                <p>You attendance to this checkin has been successfully registered</p>
+                <div className="stats row">
+                    <div className="col s12 m12 l6">
+                        <h5>
+                            <span className="checkedin">Checkedin as</span>
+                            <span>{this.state.user}</span>
+                        </h5>
+                    </div>
+                    <div className="col s12 m12 l6">
+                        <h5>
+                            <span className="checkedin">Checkedin at</span>
+                            <span>{format.getFormatedDateAndTime(this.state.timestamp)}</span>
+                        </h5>
+                    </div>
+                </div>
+                <StyledButtonMain 
+                    className="btn waves-effect waves-light"
+                    onClick={redirect.home}
+                >
+                    Back to home
+                </StyledButtonMain>
+            </div>
+        )
+    }
+
     renderContent() {
 
         // user has registered for thic checkin
         if (this.state.registeredSuccessfull) {
-            return <p>YOU HAVE REGISTRED</p>
+            return this.renderSuccess()
         }
 
         // loading
@@ -167,6 +216,25 @@ const StyledMain = styled.main`
         left: 50%;
         transform: translate(-50%);
         text-align: center;
+
+        .stats {
+            margin-bottom: 3rem;
+        }
+
+        h5 {
+            font-size: 1.5rem;
+            color: #9e9e9e;
+            margin-bottom: 1.5rem;
+
+            .checkedin {
+                font-size: 0.9rem;
+                opacity: 0.7;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                display: block;
+                margin-bottom: 0.40rem;
+            }
+        }
     }
 `;
 
