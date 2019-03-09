@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { CheckCircle } from 'react-feather';
 import { StyledButtonMain } from '../styles/buttons';
 import { attendence } from '../../api/room/attendence';
 import { redirect } from '../../helpers/redirect';
@@ -63,26 +64,34 @@ export default class CheckinWithCode extends Component {
             this.state.name, this.state.roomID, this.state.checkinID
         );
 
-        // update state
-        this.setState({
-            loading: false,
-            registeredSuccessfull: response.data.success
-        });
-
         // update localstorage if success
         if (response.data.success) {
-            return localStorage.setItem(
+
+            // registration data
+            const data = {
+                registeredSuccessfull: response.data.success,
+                timestamp: new Date().getTime(), 
+                user: this.state.name,
+            }
+
+            // update state
+            this.setState({
+                loading: false,
+                ...data
+            });
+
+            // set storage
+            localStorage.setItem(
                 [`checkin-${this.state.checkinID}-${this.state.roomID}`],
-                JSON.stringify({ 
-                    registeredSuccessfull: response.data.success,
-                    timestamp: new Date().getTime(), 
-                    user: this.state.name,
-                })
+                JSON.stringify(data)
             );
         }
 
         // notify user if error
-        notification.error(response.data.error);
+        else {
+            notification.error(response.data.error);
+            this.setState({ loading: false });
+        }
     }
 
     renderInput() {
@@ -139,21 +148,20 @@ export default class CheckinWithCode extends Component {
     renderSuccess() {
         return (
             <div className="animated fadeIn cont">
-                <h1>Registration Successfull</h1>
-                <p>You attendance to this checkin has been successfully registered</p>
-                <div className="stats row">
-                    <div className="col s12 m12 l6">
-                        <h5>
-                            <span className="checkedin">Checkedin as</span>
-                            <span>{this.state.user}</span>
-                        </h5>
-                    </div>
-                    <div className="col s12 m12 l6">
-                        <h5>
-                            <span className="checkedin">Checkedin at</span>
-                            <span>{format.getFormatedDateAndTime(this.state.timestamp)}</span>
-                        </h5>
-                    </div>
+                <h1>
+                    <CheckCircle size={40} />
+                    Registration Successfull
+                </h1>
+                <p>Your attendance to this checkin has been successfully registered</p>
+                <div className="stats">
+                    <h5>
+                        <span className="checkedin">Checked In as</span>
+                        <span>{this.state.user}</span>
+                    </h5>
+                    <h5>
+                        <span className="checkedin">Checked In at</span>
+                        <span>{format.getFormatedDateAndTime(this.state.timestamp)}</span>
+                    </h5>
                 </div>
                 <StyledButtonMain 
                     className="btn waves-effect waves-light"
@@ -216,9 +224,22 @@ const StyledMain = styled.main`
         left: 50%;
         transform: translate(-50%);
         text-align: center;
+        min-width: 500px;
+        margin-bottom: 2rem;
+
+        @media screen and (max-width: 600px) {
+            min-width: 90%;
+            top: 15%;
+        }
+
+        svg {
+            stroke: #12e2a3;
+            margin-bottom: -0.5rem;
+            margin-right: 1rem;
+        }
 
         .stats {
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         h5 {
