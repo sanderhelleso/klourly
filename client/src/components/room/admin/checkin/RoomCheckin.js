@@ -41,9 +41,11 @@ class AdminCheckin extends Component {
         if (this.props.activeCheckin.active) {
             return (
                 <div className="row">
-                    <div className="col s12 m12 l6">
+                    <StyledDeactivateCont 
+                        className="col s12 m12 l6 deactivation-cont animated fadeIn"
+                    >
                         {this.renderDeactivateForType()}
-                    </div>
+                    </StyledDeactivateCont>
                     <CheckinStatus 
                         roomID={this.props.roomID}
                         userID={this.props.userID}
@@ -56,7 +58,9 @@ class AdminCheckin extends Component {
         }
 
         return (
-            <StyledOptionCont className="row animated fadeIn">
+            <StyledOptionCont 
+                className="row animated fadeIn options-cont"
+            >
                 <span>or</span>
                 <ActivateForMembers />
                 <ActivateWithCode />
@@ -131,37 +135,39 @@ const StyledMain = styled.main`
             display: none;
         }
     }
+
+    .deactivation-cont, .options-cont {
+        h5 {
+            text-transform: capitalize;
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        img {
+            min-width: 175px;
+            max-width: 175px;
+            min-height: 175px;
+            max-height: 175px;
+        }
+
+        p {
+            color: #9e9e9e;
+            max-width: 300px;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            max-width: 250px;
+            margin: 1rem auto;
+        }
+    }
 `;
 
 
 const StyledOptionCont = styled.div`
     text-align: center;
     position: relative;
-
-    h5 {
-        text-transform: capitalize;
-        margin-bottom: 1rem;
-        font-size: 1.75rem;
-    }
-
-    img {
-        min-width: 175px;
-        max-width: 175px;
-        min-height: 175px;
-        max-height: 175px;
-    }
-
-    p {
-        color: #9e9e9e;
-        max-width: 300px;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-    }
-
-    a {
-        max-width: 250px;
-        margin: 1rem auto;
-    }
 
     span {
         display: block;
@@ -202,4 +208,9 @@ const StyledHeader = styled.div`
         display: block;
         color: #9e9e9e;
     }
+`;
+
+const StyledDeactivateCont = styled.div`
+    text-align: center;
+
 `;

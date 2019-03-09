@@ -36,7 +36,7 @@ class Deactivate extends Component {
 
     render() {
         return (
-            <div className="col s12 m6 l6">
+            <div className="col s12 m12 l12">
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
                     disabled={!this.props.active || this.state.loading}
