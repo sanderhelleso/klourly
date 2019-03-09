@@ -47,6 +47,7 @@ class Activate extends Component {
             // update rooms checking state and activate room for members
             this.props.activateCheckinAction({
                 ...response.data.checkinData,
+                type: this.props.type,
                 coords: this.props.currentLocation
             });
 

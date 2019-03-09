@@ -13,10 +13,26 @@ import RadiusOptions from './RadiusOptions';
 import NoMembersPlaceholder from '../../placeholders/NoMembersPlaceholder';
 import ActivateWithCode from './ActivateWithCode';
 import ActivateForMembers from './ActivateForMembers';
+import DeactivateForMembers from './DeactivateForMembers';
+import DeactivateForCode from './DeactivateForCode';
 
 class AdminCheckin extends Component {
     constructor(props) {
         super(props);
+    }
+
+    renderDeactivateForType() {
+
+        console.log(this.props.activeCheckin)
+
+        // render deactivate type depending on activated type
+        if (this.props.activeCheckin.type === 'members') 
+            return <DeactivateForMembers />
+        
+        else if (this.props.activeCheckin.type === 'code') 
+            return <DeactivateForCode />
+
+        else return null;
     }
 
     renderStatus() {
@@ -25,7 +41,9 @@ class AdminCheckin extends Component {
         if (this.props.activeCheckin.active) {
             return (
                 <div className="row">
-                    <div className="col s12 m12 l6">qweqe</div>
+                    <div className="col s12 m12 l6">
+                        {this.renderDeactivateForType()}
+                    </div>
                     <CheckinStatus 
                         roomID={this.props.roomID}
                         userID={this.props.userID}
@@ -38,7 +56,7 @@ class AdminCheckin extends Component {
         }
 
         return (
-            <StyledOptionCont className="row">
+            <StyledOptionCont className="row animated fadeIn">
                 <span>or</span>
                 <ActivateForMembers />
                 <ActivateWithCode />
