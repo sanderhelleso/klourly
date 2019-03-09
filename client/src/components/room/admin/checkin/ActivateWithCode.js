@@ -13,22 +13,12 @@ export default class ActivateWithCode extends Component {
 
     render() {
         return (
-            <StyledActivationCont className="col s12 m12 l6">
+            <div className="col s12 m12 l6">
                 <h5>With Generated Code</h5>
                 <img src={this.ICON} alt="Members icon" />
                 <p>Activate with a generated link. Users do not need to have an account to register.</p>
-                <Activate />
-            </StyledActivationCont>
+                <Activate type="code" />
+            </div>
         )
     }
 }
-
-const StyledActivationCont = styled.div`
-
-`;
-
-const StyledLink = styled.a`
-    color: #b388ff;
-    font-weight: 800;
-    font-size: 1.25rem;
-`;

@@ -12,16 +12,12 @@ export default class ActivateForMembers extends Component {
 
     render() {
         return (
-            <StyledCont className="col s12 m12 l6">
+            <div className="col s12 m12 l6">
                 <h5>For members</h5>
                 <img src={this.ICON} alt="Members icon" />
                 <p>Activate the room for checkin registration. Active for all of the rooms members.</p>
-                <Activate />
-            </StyledCont>
+                <Activate type="members" />
+            </div>
         )
     }
 }
-
-const StyledCont = styled.div`
-
-`;

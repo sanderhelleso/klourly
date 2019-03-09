@@ -24,17 +24,26 @@ class AdminCheckin extends Component {
         // render checkin status if active checkin
         if (this.props.activeCheckin.active) {
             return (
-                <CheckinStatus 
-                    roomID={this.props.roomID}
-                    userID={this.props.userID}
-                    checkinID={this.props.activeCheckin.active 
-                    ? this.props.activeCheckin.checkinID 
-                    : null} 
-                />
+                <div className="row">
+                    <div className="col s12 m12 l6">qweqe</div>
+                    <CheckinStatus 
+                        roomID={this.props.roomID}
+                        userID={this.props.userID}
+                        checkinID={this.props.activeCheckin.active 
+                        ? this.props.activeCheckin.checkinID 
+                        : null} 
+                    />
+                </div>
             )
         }
 
-        return null;
+        return (
+            <StyledOptionCont className="row">
+                <span>or</span>
+                <ActivateForMembers />
+                <ActivateWithCode />
+            </StyledOptionCont>
+        )
     }
 
     renderComponent() {
@@ -50,11 +59,7 @@ class AdminCheckin extends Component {
 
         return (
             <Fragment>
-                <StyledOptionCont className="row">
-                    <ActivateForMembers />
-                    <ActivateWithCode />
-                    {this.renderStatus()}
-                </StyledOptionCont>
+                {this.renderStatus()}
             </Fragment>
         );
     }
@@ -102,6 +107,7 @@ const StyledMain = styled.main`
         z-index: -1;
         opacity: 0.7;
         transform: rotate(-90deg);
+        display: none;
 
         @media screen and (max-width: 1200px) {
             display: none;
@@ -112,6 +118,7 @@ const StyledMain = styled.main`
 
 const StyledOptionCont = styled.div`
     text-align: center;
+    position: relative;
 
     h5 {
         text-transform: capitalize;
@@ -137,6 +144,20 @@ const StyledOptionCont = styled.div`
         max-width: 250px;
         margin: 1rem auto;
     }
+
+    span {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%);
+        text-transform: uppercase;
+        font-size: 4rem;
+        letter-spacing: 5px;
+        color: #e0e0e0;
+        opacity: 0.7;
+        z-index: -1;
+    } 
 `;
 
 const StyledHeader = styled.div`
