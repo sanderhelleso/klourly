@@ -25,6 +25,8 @@ class ActiveRoomsData extends Component {
         // check if data fetch is successfull
         if (response.data.success) {
 
+            let initialRead = false;
+
             // update state with the fetched active checkin room
             this.props.setInitialActiveCheckinsAction(response.data.activeCheckins);
             this.props.setInitialUsersCheckedinRoomsAction(response.data.usersCheckedinRooms);
@@ -40,12 +42,16 @@ class ActiveRoomsData extends Component {
                 // on value change, update checkin status state
                 checkinRef.on('value', snapshot => {
                     if (!snapshot.hasChild('endTime')) {
-                        update.setActiveRoom(snapshot, value.checkinData, this.props, checkinID);
+                        if (!initialRead) {
+                            update.setActiveRoom(snapshot, value.checkinData, this.props, checkinID);
+                        }
                     }
     
                     else checkinRef.off('value');
                 });
             });
+
+            initialRead = true;
         }
     }
 

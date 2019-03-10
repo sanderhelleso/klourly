@@ -80,8 +80,11 @@ class CheckedinList extends Component {
 
     renderCheckedInMembersFromCode() {
 
+        console.log(this.props.activeCheckin);
+
         // validate that checkedinUsersFromCode is not null
-        if (this.props.activeCheckin) {
+        if (this.props.activeCheckin &&
+            Object.values(this.props.activeCheckin.attendies).length > 0) {
 
             // return list of checked in users from code
             return Object.values(this.props.activeCheckin.attendies)

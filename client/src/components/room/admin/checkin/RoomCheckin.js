@@ -34,7 +34,7 @@ class AdminCheckin extends Component {
     renderStatus() {
 
         // render checkin status if active checkin
-        if (this.props.activeCheckin.active) {
+        if (this.props.activeCheckin.active && this.props.hasCheckinRef) {
             return (
                 <div className="row">
                     <StyledDeactivateCont 
@@ -42,7 +42,7 @@ class AdminCheckin extends Component {
                     >
                         {this.renderDeactivateForType()}
                     </StyledDeactivateCont>
-                    <CheckinStatus />
+                    <CheckinStatus checkinID={this.props.activeCheckin.checkinID} />
                 </div>
             )
         }
@@ -92,7 +92,8 @@ class AdminCheckin extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
+        hasCheckinRef: state.room.activeCheckins,
         activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,

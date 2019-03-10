@@ -421,7 +421,7 @@ module.exports = app => {
         });
 
         const checkinRefData = {
-            startTime: timestamp,
+            timestamp,
             attendies: {}
         }
 

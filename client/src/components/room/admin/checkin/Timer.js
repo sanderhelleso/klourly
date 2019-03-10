@@ -69,7 +69,7 @@ class Timer extends Component {
 }
 
 const mapStateToProps = state => {
-    return { startTime: state.room.activeRoom.checkin.startTime };
+    return { startTime: state.room.activeRoom.checkin.timestamp };
 }
 
 const mapDispatchToProps = dispatch => {
