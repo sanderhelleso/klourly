@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-
 import Activate from './Activate';
 
 export default class ActivateWithCode extends Component {

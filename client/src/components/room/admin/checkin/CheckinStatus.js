@@ -12,7 +12,6 @@ import CheckedinList from './CheckedinList';
 class CheckinStatus extends Component {
     constructor(props) {
         super(props);
-
     }
 
     // returns the amount of attendies of chekin
@@ -57,14 +56,10 @@ class CheckinStatus extends Component {
                     {this.renderCheckinConunter()}
                     {this.renderCheckinPercentage()}
                 </Attended>
-                <CheckedinList
-                    membersList={
-                        this.props.type === 'members' 
-                        ? this.props.activeCheckin.membersList
-                        : null
-                    }
-                    checkedinMembers={this.props.activeCheckin.attendies}
-                />    
+                <CheckedinList 
+                    type={this.props.type}
+                    checkinID={this.props.activeCheckin.checkinID} 
+                /> 
             </Fragment>
         );
     }

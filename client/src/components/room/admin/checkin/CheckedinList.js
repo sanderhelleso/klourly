@@ -18,10 +18,8 @@ class CheckedinList extends Component {
 
     async componentDidMount() {
 
-        // handle checkedin users from code
-        if (this.props.type === 'code') {
-            return this.setState({ checkedinUsersFromCode: [] });
-        }
+        // if type is 'code' dont fetch get members
+        if (this.props.type === 'code') return;
 
         this.setState({ loading: true });
 
@@ -76,10 +74,10 @@ class CheckedinList extends Component {
     renderCheckedInMembersFromCode() {
 
         // validate that checkedinUsersFromCode is not null
-        if (this.state.checkedinUsersFromCode) {
+        if (this.props.checkedinMembers) {
 
             // check if empty list
-            if (this.state.checkedinUsersFromCode.length === 0) {
+            if (Object.entries(this.props.checkedinMembers).length === 0) {
                 return (
                     <StyledWaitingCont>
                         <p>Waiting for checkins...</p>
@@ -88,8 +86,9 @@ class CheckedinList extends Component {
             }
 
             // return list of checked in users from code
-            return this.state.checkedinUsersFromCode
-                .map(user => <CheckedInMember key={user.id} data={user} type="code" />
+            return Object.entries(this.props.checkedinMembers)
+                .map(([uid, user]) => 
+                    <CheckedInMember key={uid} data={user} type="code" />
             );
         }
 
@@ -120,12 +119,14 @@ class CheckedinList extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, cState) => {
     return { 
-        activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
-        type: state.room.activeRoom.checkin.type
+        checkedinMembers: state.room.activeRoom.checkins[cState.checkinID].attendies,
+        membersList: cState.type === 'members' 
+            ? state.room.activeRoom.checkin.membersList
+            : null
     };
 }
 

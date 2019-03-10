@@ -21,8 +21,6 @@ class AdminCheckin extends Component {
 
     renderDeactivateForType() {
 
-        console.log(this.props.activeCheckin)
-
         // render deactivate type depending on activated type
         if (this.props.activeCheckin.type === 'members') 
             return <DeactivateForMembers />
@@ -64,11 +62,13 @@ class AdminCheckin extends Component {
 
         // cant perform checkin if room dont have any members
         if (!this.props.members || this.props.members.length === 0) {
-            return <NoMembersPlaceholder 
-                text="checkin"
-                roomID={this.props.roomID} 
-                includeLink={true} 
-            />
+            return (
+                <NoMembersPlaceholder 
+                    text="checkin"
+                    roomID={this.props.roomID} 
+                    includeLink={true} 
+                />
+            );
         }
 
         return (
