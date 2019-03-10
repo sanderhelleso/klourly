@@ -47,7 +47,12 @@ class Activate extends Component {
 
             // on value change, update checkin status state
             checkinRef.on('value', snapshot => {
-                update.setActiveRoom(snapshot, response.data, this.props, checkinID);
+
+                if (!snapshot.hasChild('endTime')) {
+                    update.setActiveRoom(snapshot, response.data.checkinData, this.props, checkinID);
+                }
+
+                else checkinRef.off('value');
             });
 
             // update rooms checking state and activate room for members

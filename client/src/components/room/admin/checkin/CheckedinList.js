@@ -16,10 +16,6 @@ class CheckedinList extends Component {
         this.state = { loading: false };
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.logo(nextProps);
-    }
-
     async componentDidMount() {
 
         // if type is 'code' dont fetch get members
@@ -35,6 +31,8 @@ class CheckedinList extends Component {
             true
         );
 
+        console.log(response.data.membersList);
+
         this.setState({ 
             membersData: response.data.membersList,
             loading: false
@@ -44,8 +42,8 @@ class CheckedinList extends Component {
     isMemberCheckedIn(uid) {
 
         // valdidate if a user with given UID has checked into room or not
-        if (this.props.checkedinMembers) {
-            if (this.props.checkedinMembers.hasOwnProperty(uid)) {
+        if (this.props.activeCheckin.attendies) {
+            if (this.props.activeCheckin.attendies.hasOwnProperty(uid)) {
                 return true;
             }
 
@@ -58,11 +56,16 @@ class CheckedinList extends Component {
     renderRoomMembers() {
 
         // validate that membersData is not null
-        if (this.state.membersData) {
+        if (this.state.membersData && this.props.activeCheckin) {
 
             // add checkin prop to member
             this.state.membersData.forEach(member => {
                 member.checkedin = this.isMemberCheckedIn(member.id);
+
+                // if checked in, add timestamp
+                if (member.checkedin) {
+                    member.checkinTimestamp = this.props.activeCheckin.attendies[member.id];
+                }
             });
 
             // return sorted member list, based on check in
@@ -78,7 +81,7 @@ class CheckedinList extends Component {
     renderCheckedInMembersFromCode() {
 
         // validate that checkedinUsersFromCode is not null
-        if (this.props.activeCheckin && this.props.activeCheckin.attendies) {
+        if (this.props.activeCheckin) {
 
             // return list of checked in users from code
             return Object.values(this.props.activeCheckin.attendies)
@@ -120,11 +123,10 @@ class CheckedinList extends Component {
 }
 
 const mapStateToProps = (state, cState) => {
-    console.log(cState);
     return { 
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
-        activeCheckin: state.room.activeRoom.checkins[cState.checkinID],
+        activeCheckin: state.room.activeCheckins[cState.checkinID],
         membersList: cState.type === 'members' 
             ? state.room.activeRoom.checkin.membersList
             : null

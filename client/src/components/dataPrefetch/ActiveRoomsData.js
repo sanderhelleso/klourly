@@ -39,7 +39,11 @@ class ActiveRoomsData extends Component {
 
                 // on value change, update checkin status state
                 checkinRef.on('value', snapshot => {
-                    update.setActiveRoom(snapshot, value, this.props, checkinID);
+                    if (!snapshot.hasChild('endTime')) {
+                        update.setActiveRoom(snapshot, value.checkinData, this.props, checkinID);
+                    }
+    
+                    else checkinRef.off('value');
                 });
             });
         }

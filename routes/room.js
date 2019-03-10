@@ -279,8 +279,8 @@ module.exports = app => {
                 success: true,
                 message: 'Comment successfully posted',
                 commentators: snapshot.exists() ? [...new Set(Object.values(snapshot.val())
-                                .filter(comment => comment.author.userID !== req.body.uid)
-                                .map(comment => comment.author.userID))] : []
+                    .filter(comment => comment.author.userID !== req.body.uid)
+                    .map(comment => comment.author.userID))] : []
             });
         });
     });
@@ -420,20 +420,21 @@ module.exports = app => {
             }
         });
 
+        const checkinRefData = {
+            startTime: timestamp,
+            attendies: {}
+        }
+
         // set checkin ref for members
         roomRef.child('checkins').update({
-            [checkinID]: {
-                startTime: timestamp,
-                attendies: {}
-            }
+            [checkinID]: checkinRefData
         });
 
         roomRef.once('value', snapshot => {
 
             const checkinData =  {
-                timestamp,
                 checkinID,
-                checkinLink,
+                ...checkinRefData,
                 membersList: snapshot.val().members ? snapshot.val().members : [],
                 totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
             }
@@ -442,6 +443,7 @@ module.exports = app => {
             if (req.body.type === 'code') {
                 delete checkinData.membersList;
                 delete checkinData.totalMembers;
+                checkinData.checkinLink = checkinLink;
             }
 
             // send back response with success message and checkin data

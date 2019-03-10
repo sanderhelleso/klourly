@@ -30,7 +30,8 @@ class Checkin extends Component {
 
         // attempt to register attendence
         const response = await attendence.registerAttendence(
-                        this.props.userID, this.props.activeRoomID);
+            this.props.userID, this.props.activeRoomID
+        );
 
         if (response.data.success) {
 
