@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { notification } from '../.././../../helpers/notification';
 import { room } from '../../.././../api/room/room';
 import { token } from '../../.././../api/messaging/token';
+import { update } from '../../../../helpers/update';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -44,6 +45,11 @@ class Activate extends Component {
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;
             const checkinRef = firebase.database().ref(path);
 
+            // on value change, update checkin status state
+            checkinRef.on('value', snapshot => {
+                update.setActiveRoom(snapshot, response.data, this.props, checkinID);
+            });
+
             // update rooms checking state and activate room for members
             this.props.activateCheckinAction({
                 ...response.data.checkinData,
@@ -51,27 +57,15 @@ class Activate extends Component {
                 coords: this.props.currentLocation
             });
 
-            // on value change, update checkin status state
-            checkinRef.on('value', snapshot => {
-
-                // update the checkin state of the created checking ref
-                this.props.updateActiveCheckinStatusAction({
-                    checkinID,
-                    checkinData: {
-                        ...snapshot.val(),
-                        totalMembers: response.data.checkinData.totalMembers,
-                        membersData: response.data.checkinData.membersData,
-                        membersList: response.data.checkinData.membersList
-                    }
-                });
-            });
-
-            // send push notifications to subscribed room members
-            token.getRoomMembersToken(
-                this.props.userID, 
-                response.data.checkinData.membersList, 
-                this.props.notificationData
-            );
+            if (this.props.type === 'members') {
+                
+                // send push notifications to subscribed room members
+                token.getRoomMembersToken(
+                    this.props.userID, 
+                    response.data.checkinData.membersList, 
+                    this.props.notificationData
+                );
+            }
         }
 
         // notify user about potensial errors

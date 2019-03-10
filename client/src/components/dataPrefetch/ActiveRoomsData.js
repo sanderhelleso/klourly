@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { room } from '../../api/room/room';
+import { update } from '../../helpers/update';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -38,18 +39,7 @@ class ActiveRoomsData extends Component {
 
                 // on value change, update checkin status state
                 checkinRef.on('value', snapshot => {
-
-                    // update the checkin state of the ref
-                    this.props.updateActiveCheckinStatusAction({
-                        checkinID,
-                        checkinData: {
-                            ...snapshot.val(),
-                            totalMembers: value.totalMembers,
-                            membersData: value.membersData,
-                            membersList: value.membersList
-                        }
-                    });
-                    
+                    update.setActiveRoom(snapshot, value, this.props, checkinID);
                 });
             });
         }

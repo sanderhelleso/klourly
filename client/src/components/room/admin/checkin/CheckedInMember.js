@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { format } from '../../../../helpers/format';
 
 export default class CheckedInMember extends Component {
     constructor(props) {
         super(props);
+
+        this.DEFAULT_IMG = '/img/dashboard/stock.jpg';
     }
 
     renderCheckedinTime() {
 
-        if (this.props.data.checkedin) {
-            return <p>Checked in 6 minutes ago</p>
+        if (this.props.data.checkedin || this.props.type === 'code') {
+            return (
+                <p>
+                    {format.getFormatedDateAndTime(this.props.data.checkinTimestamp)}
+                </p>
+            )
         }
 
         return <p>Not checked in</p>
@@ -17,8 +24,11 @@ export default class CheckedInMember extends Component {
 
     render() {
         return (
-            <StyledMember checkedin={this.props.data.checkedin} >
-                <img src={this.props.data.photoUrl} alt="" />
+            <StyledMember 
+                checkedin={this.props.data.checkedin}
+                type={this.props.type}
+            >
+                <img src={this.props.data.photoUrl || this.DEFAULT_IMG} alt="" />
                 <div className="member-info">
                     <h5>{this.props.data.name}</h5>
                     {this.renderCheckedinTime()}
@@ -35,7 +45,7 @@ const StyledMember = styled.div`
     margin: 0.25rem 0;
     clear: both;
     transition: 0.3s ease-in-out;
-    opacity: ${props => props.checkedin ? 1 : 0.3};
+    opacity: ${props => props.checkedin || props.type === 'code' ? 1 : 0.3};
 
     img {
         border-radius: 50%;

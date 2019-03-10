@@ -430,17 +430,25 @@ module.exports = app => {
 
         roomRef.once('value', snapshot => {
 
+            const checkinData =  {
+                timestamp,
+                checkinID,
+                checkinLink,
+                membersList: snapshot.val().members ? snapshot.val().members : [],
+                totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
+            }
+
+            // clean up unneeded props if type is 'code'
+            if (req.body.type === 'code') {
+                delete checkinData.membersList;
+                delete checkinData.totalMembers;
+            }
+
             // send back response with success message and checkin data
             res.status(200).json({
                 success: true,
                 message: 'Successfully activated room for checkin',
-                checkinData: {
-                    timestamp,
-                    checkinID,
-                    checkinLink,
-                    membersList: snapshot.val().members ? snapshot.val().members : [],
-                    totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
-                }
+                checkinData
             });
         });
     });
@@ -501,17 +509,15 @@ module.exports = app => {
             if (!userOwnedRooms) {
 
                 // send back response with success message and checkin data
-                res.status(200).json({
+                return res.status(200).json({
                     activeCheckins,
                     success: true,
                     message: 'Successfully fetched active rooms',
                     empty: true,
                     usersCheckedinRooms: usersCheckedinRooms 
-                                         ? usersCheckedinRooms 
-                                         : {}
+                        ? usersCheckedinRooms 
+                        : {}
                 });
-
-                return;
             }
 
             // itterate over list and create set containing currently active rooms 
@@ -527,12 +533,19 @@ module.exports = app => {
                     // check if room is active, if active add to list of active rooms
                     const roomData = roomSnapshot.val();
                     if (roomData.checkin.active && roomData.checkins) {
+                        
                        activeCheckins[roomData.checkin.checkinID] = {
                             ...roomData.checkins[roomData.checkin.checkinID],
                             roomID,
                             membersList: roomData.members,
                             totalMembers: roomData.members.length
                        };
+
+                       // remove unneeded props if type 'code'
+                       if (roomData.checkin.type === 'code') {
+                           delete activeCheckins[roomData.checkin.checkinID].membersList;
+                           delete activeCheckins[roomData.checkin.checkinID].totalMembers;
+                       }
                     }
 
                     // check if counter is equal to list length
@@ -546,8 +559,8 @@ module.exports = app => {
                             message: 'Successfully fetched active rooms',
                             empty: false,
                             usersCheckedinRooms: usersCheckedinRooms 
-                                                 ? usersCheckedinRooms 
-                                                 : {}
+                               ? usersCheckedinRooms 
+                                : {}
                         });
                     }
                 });

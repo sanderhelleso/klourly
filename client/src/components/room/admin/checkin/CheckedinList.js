@@ -16,6 +16,10 @@ class CheckedinList extends Component {
         this.state = { loading: false };
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.logo(nextProps);
+    }
+
     async componentDidMount() {
 
         // if type is 'code' dont fetch get members
@@ -74,25 +78,21 @@ class CheckedinList extends Component {
     renderCheckedInMembersFromCode() {
 
         // validate that checkedinUsersFromCode is not null
-        if (this.props.checkedinMembers) {
-
-            // check if empty list
-            if (Object.entries(this.props.checkedinMembers).length === 0) {
-                return (
-                    <StyledWaitingCont>
-                        <p>Waiting for checkins...</p>
-                    </StyledWaitingCont>
-                )
-            }
+        if (this.props.activeCheckin && this.props.activeCheckin.attendies) {
 
             // return list of checked in users from code
-            return Object.entries(this.props.checkedinMembers)
-                .map(([uid, user]) => 
-                    <CheckedInMember key={uid} data={user} type="code" />
+            return Object.values(this.props.activeCheckin.attendies)
+                .sort((a, b) => b.checkinTimestamp - a.checkinTimestamp)
+                .map(user => 
+                    <CheckedInMember key={user.checkinTimestamp} data={user} type="code" />
             );
         }
 
-        return <CircularLoader size="small" />;
+        return (
+            <StyledWaitingCont>
+                <p>Waiting for checkins...</p>
+            </StyledWaitingCont>
+        )
     }
 
     renderList() {
@@ -120,21 +120,18 @@ class CheckedinList extends Component {
 }
 
 const mapStateToProps = (state, cState) => {
+    console.log(cState);
     return { 
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
-        checkedinMembers: state.room.activeRoom.checkins[cState.checkinID].attendies,
+        activeCheckin: state.room.activeRoom.checkins[cState.checkinID],
         membersList: cState.type === 'members' 
             ? state.room.activeRoom.checkin.membersList
             : null
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CheckedinList);
+export default connect(mapStateToProps, null)(CheckedinList);
 
 const StyledListCont = styled.div`
     padding-bottom: 4rem;
