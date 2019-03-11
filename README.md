@@ -20,9 +20,10 @@ every user, wheter you are the one performing the attendance test or is the admi
  ## Motivation
 
 <p>
- As a CS student that takes alot of classes, I notice a common pattern among classed and group activities.
- Spending minutes every class, every day for a semester adds up, taking up the focus from the class and lecturer.
- This lost time could be used to increace the outcome of the class in different ways than waste it on attendance taking.
+ As a CS student that takes alot of classes, I notice a common pattern among classed and 
+ group activities. Spending minutes every class, every day for a semester adds up, taking
+ up the focus from the class and lecturer. This lost time could be used to increace the 
+ outcome of the class in different ways than waste it on attendance taking.
 </p>
 
 <br>
