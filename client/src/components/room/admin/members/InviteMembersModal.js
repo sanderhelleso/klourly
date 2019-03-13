@@ -27,7 +27,18 @@ class InviteMembersModal extends Component {
         }
     }
 
+    componentCleanup = () => this.props.updateInviteRoomMembersModalAction(false)
+
+    componentWillUnmount() {
+
+        // remove modal acitvation on unmount
+        this.componentCleanup();
+        window.removeEventListener('beforeunload', this.componentCleanup);
+    }
+
     componentDidMount() {
+
+        window.addEventListener('beforeunload', this.componentCleanup);
 
         // prepare modal
         const modal = document.querySelector('#invite-member-modal');

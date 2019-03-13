@@ -24,16 +24,7 @@ class Room extends Component {
         this.state = {};
     }
 
-    componentWillMount() {
-        window.scrollTo(0, 0);
-        this.updateDimensions();
-    }
-
-    componentWillUnmount = () => window.removeEventListener('resize', this.updateDimensions);
-
-    componentDidMount = () => window.addEventListener('resize', this.updateDimensions);
-
-    updateDimensions = () => this.setState({ windowWidth: window.innerWidth });
+    componentDidMount = () => window.scrollTo(0, 0);
 
     renderCover() {
         return (
@@ -90,6 +81,14 @@ class Room extends Component {
         )
     }
 
+    renderTime() {
+
+        if (!this.props.activeRoom.times) 
+            return <p>This room dont have any main times sat</p>
+        
+        return <Times times={this.props.activeRoom.times} />
+    }
+
     renderRoom() {
 
         if (this.props.activeRoom.id === this.props.match.params.roomID) {
@@ -106,7 +105,7 @@ class Room extends Component {
                                 : null
                             }
                             <div className="col s12 m6 l12 room-aside-section">
-                                <Times times={this.props.activeRoom.times} />
+                                {this.renderTime()}
                             </div>
                             <div className="col s12 m6 l12 room-aside-section">
                                 {this.renderLocation()}
@@ -204,9 +203,24 @@ const StyledCont = styled.div`
 
         @media screen and (max-width: 1000px) {
             border-right: none;
-            border-bottom: 1px solid #eeeeee;
-            margin-bottom: 3rem;
-            padding-bottom: 7rem;
+            border-top: 1px solid #eeeeee;
+            padding-top: 7rem;
+            margin-top: 4rem;
+            padding-bottom: 4rem;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+
+        .room-flex-s {
+            display: grid;
+
+            #room-aside {
+                order: 1;
+            }
+            #room-main {
+                order: 2;
+            }
         }
     }
 
