@@ -370,18 +370,23 @@ module.exports = app => {
     });
 
     // remove a specific member from a room
-    app.post('/api/removeRoomMember', authenticate, async (req, res) => {
+    app.post('/api/removeRoomMember', authenticate, (req, res) => {
 
         // get ref to rooms members by id
         const roomMembersRef = db.ref(`rooms/${req.body.roomID}/members`);
 
         // delete member from list
-        await roomMembersRef.once('value', async snapshot => {
+        roomMembersRef.once('value', snapshot => {
 
-            // update list and remove user
+            // update list
             const updatedMembersList = snapshot.val().filter(uid => uid !== req.body.uid);
+            roomMembersRef.set(updatedMembersList);
 
-            await roomMembersRef.set(updatedMembersList);
+            // remove room from users attending rooms
+            const userRef = db.ref(`users/${req.body.uid}/rooms/attending`);
+            userRef.once('value', userSnap => {
+                userRef.child(`${userSnap.val().indexOf(req.body.roomID)}`).remove()
+            })
 
             // send back response with updated members list
             res.status(200).json({
@@ -535,12 +540,18 @@ module.exports = app => {
                     // check if room is active, if active add to list of active rooms
                     const roomData = roomSnapshot.val();
                     if (roomData.checkin.active && roomData.checkins) {
+
+                        const hasMembers = roomData.members
+                        const members = {
+                            membersList: hasMembers ? roomData.members : [],
+                            totalMembers:  hasMembers ? roomData.members.length : 0
+                        }
+
                         
-                       activeCheckins[roomData.checkin.checkinID] = {
+                        activeCheckins[roomData.checkin.checkinID] = {
                             ...roomData.checkins[roomData.checkin.checkinID],
+                            ...members,
                             roomID,
-                            membersList: roomData.members,
-                            totalMembers: roomData.members.length
                        };
 
                        // remove unneeded props if type 'code'
@@ -561,8 +572,7 @@ module.exports = app => {
                             message: 'Successfully fetched active rooms',
                             empty: false,
                             usersCheckedinRooms: usersCheckedinRooms 
-                               ? usersCheckedinRooms 
-                                : {}
+                               ? usersCheckedinRooms : {}
                         });
                     }
                 });

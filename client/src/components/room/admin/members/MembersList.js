@@ -10,6 +10,7 @@ import { notification } from '../../../../helpers/notification';
 import Member from './Member';
 import CircularLoader from '../../../loaders/CircularLoader';
 import NoMembersPlaceholder from '../../placeholders/NoMembersPlaceholder';
+import { updateRoomMembersAction } from '../../../../actions/room/updateRoomMembersAction';
 
 class MembersList extends Component {
     constructor(props) {
@@ -18,16 +19,6 @@ class MembersList extends Component {
         this.state = {
             loading: true,
             error: false,
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.membersList !== nextProps.membersList) {
-            this.setState({
-                membersList: this.state.membersList.filter(
-                             member => nextProps.membersList
-                             .indexOf(member.id) !== -1)
-            });
         }
     }
 
@@ -49,12 +40,14 @@ class MembersList extends Component {
                 this.setState({
                     loading: false,
                     error: false,
-                    membersList: response.data.membersList 
-                                ? response.data.membersList.sort(
-                                (a, b) => `${a.name}`
-                                .localeCompare(`${b.name}`)) 
-                                : [] // sort list (A - Z)
                 });
+
+                this.props.updateRoomMembersAction(
+                    response.data.membersList 
+                    ? response.data.membersList.sort(
+                        (a, b) => `${a.name}`.localeCompare(`${b.name}`)) 
+                    : [] // sort list (A - Z)
+                );
             }
 
             // notify user about members
@@ -68,8 +61,8 @@ class MembersList extends Component {
     }
 
     renderMembers() {
-        if (!this.state.loading && this.state.membersList) {
-            return this.state.membersList.map(member => {
+        if (!this.state.loading && this.props.membersList && this.props.membersList.length > 0) {
+            return this.props.membersList.map(member => {
                 return <Member key={member.id} data={member} />
             });
         }
@@ -101,8 +94,8 @@ const mapStateToProps = state => {
      }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateRoomMembersAction }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MembersList);
