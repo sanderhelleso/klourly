@@ -40,7 +40,11 @@ module.exports = app => {
             }
 
             // if user is logged in, check if user is already a member of room
-            else if (req.body.uid && snapshot.val().members && snapshot.val().members.indexOf(req.body.uid) !== -1) {
+            else if ((req.body.uid &&
+                    snapshot.val().members &&
+                    snapshot.val().members.indexOf(req.body.uid) !== -1) ||
+                    req.body.uid === snapshot.val().owner) 
+            {
                 status = 409; // conflict
                 response = {
                     success: false,
