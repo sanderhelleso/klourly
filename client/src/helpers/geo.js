@@ -1,4 +1,4 @@
-import { geolib } from 'geolib';
+import geolib from 'geolib';
 
 export const geo = {
     geopositionToObject,
@@ -16,17 +16,17 @@ function geopositionToObject(geoposition) {
     }
 };
 
+
 function isWithinDistance(currentPos, targetPos, radius) {
 
     const distance = geolib.getDistance(
-        geopositionToObject(currentPos).coords, {
+        currentPos.coords, {
         latitude: targetPos.latitude, 
         longitude: targetPos.longitude
     });
 
     return { 
-        gotLocation: true,
-        withinRadius: distance <= radius,
-        distance,
+        withinDistance: distance <= radius,
+        distance
     };
 }

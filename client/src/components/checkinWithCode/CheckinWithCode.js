@@ -7,10 +7,14 @@ import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
 import { notification } from '../../helpers/notification';
 import { format } from '../../helpers/format';
-import geolib from 'geolib';
 import UserLocation from '../dataPrefetch/UserLocation';
 
-export default class CheckinWithCode extends Component {
+// redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { geo } from '../../helpers/geo';
+
+class CheckinWithCode extends Component {
     constructor(props) {
         super(props);
 
@@ -22,6 +26,14 @@ export default class CheckinWithCode extends Component {
             requireLocation: false,
             distance: 'N/A',
             ...props.match.params
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userLocation !== this.props.userLocation) {
+            if (nextProps.userLocation.gotLocation) {
+                this.validateLocationRange()
+            }
         }
     }
 
@@ -38,34 +50,36 @@ export default class CheckinWithCode extends Component {
             this.state.roomID, this.state.checkinID
         );
 
-        // check if radius is required for register
-        if (response.data.checkin.radius) {
-            this.setState({ requireLocation: true })
-        }
-
         // update state with result
         this.setState({ 
             valid: response.data.success,
             message: response.data.message,
             loading: false,
             checkin: response.data.checkin
+        }, () => {
+
+            // check if radius is required for register
+            if (response.data.checkin.radius) {
+                this.setState({ requireLocation: true })
+
+                // validate if user is within required radius limit
+                if (this.props.userLocation.gotLocation) {
+                    this.validateLocationRange()
+                }
+            }
         });
     }
 
-    /*validateLocationRange() {
-
-        const distance = geolib.getDistance(
-            this.geopositionToObject(position).coords, {
-            latitude: this.state.checkin.coords.latitude, 
-            longitude: this.state.checkin.coords.longitude
-        });
+    validateLocationRange = () => {
 
         this.setState({ 
-            gotLocation: true,
-            withinRadius: distance <= this.state.checkin.radius,
-            distance,
+            ...geo.isWithinDistance(
+                this.props.userLocation,
+                this.state.checkin.coords,
+                this.state.checkin.radius
+            ) 
         });
-    }*/
+    }
 
     checkIfUserHasCheckedin() {
 
@@ -160,7 +174,7 @@ export default class CheckinWithCode extends Component {
     canRegister() {
         return this.state.name.length > 1 &&
                this.state.name.length < 128 &&
-               this.state.withinRadius;
+               this.state.WithinDistance;
     }
 
     renderCheckin() {
@@ -265,6 +279,14 @@ export default class CheckinWithCode extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        userLocation: state.location
+    }
+}
+
+export default connect(mapStateToProps, null)(CheckinWithCode);
 
 const StyledMain = styled.main`
     min-height: 90vh;
