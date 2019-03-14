@@ -138,7 +138,7 @@ export default class CheckinWithCode extends Component {
             <StyledCont className="animated fadeIn cont">
                 {this.renderOwnerImage()}
                 <h5>Register your attendance for</h5>
-                <h2>CST 370</h2>
+                <h2>{this.state.checkin.name}</h2>
                 <span id="started-at">
                     Opened at {format.getFormatedDateAndTime(this.state.checkin.timestamp)}
                 </span>
