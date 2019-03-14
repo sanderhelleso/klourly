@@ -36,41 +36,39 @@ module.exports = app => {
 
         // get rooms checkin ref
         const roomRef = db.ref(`rooms/${req.body.roomID}`);
-        roomRef.child('checkin').once('value', snapshot => {
+        roomRef.child('checkin').once('value', checkinSnap => {
 
             // validate ref
-            if (!validateCheckinRef(snapshot, req.body.checkinID)) {
+            if (!validateCheckinRef(checkinSnap, req.body.checkinID)) {
                 return invalidCheckinRef(res);
             }
 
-            roomRef.child('owner').once('value', owner => {
-                db.ref(`users/${owner.val()}/settings`).once('value', ownerSnap => {
-                    roomRef.child('cover/large').once('value', coverSnap => {
-                        roomRef.child('name').once('value', nameSnap => {
+            roomRef.once('value', roomSnap => {
+                
+                const ownerRef = db.ref(`users/${roomSnap.val().owner}/settings`);
+                ownerRef.once('value', ownerSnap => {
 
-                             // owner data
-                            const owner = {
-                                name: ownerSnap.val().displayName,
-                                photoUrl: ownerSnap.val().photoUrl
-                            }
+                   // owner data
+                   const owner = {
+                        name: ownerSnap.val().displayName,
+                        photoUrl: ownerSnap.val().photoUrl
+                    }
 
-                            // destruct data needed
-                            const { coords, radius, timestamp } = snapshot.val();
+                    // destruct data needed
+                    const { coords, radius, timestamp } = checkinSnap.val();
 
-                            // send back response with success message
-                            res.status(200).json({ 
-                                success: true,
-                                message: 'Registration code is valid',
-                                checkin: {
-                                    coords,
-                                    radius,
-                                    timestamp,
-                                    owner,
-                                    cover: coverSnap.val(),
-                                    name:  nameSnap.val()
-                                }
-                            });
-                        })
+                    // send back response with success message
+                    res.status(200).json({ 
+                        success: true,
+                        message: 'Registration code is valid',
+                        checkin: {
+                            coords,
+                            radius,
+                            timestamp,
+                            owner,
+                            cover: roomSnap.val().cover.large,
+                            name:  roomSnap.val().name
+                        }
                     });
                 })
             })

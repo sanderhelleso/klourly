@@ -7,18 +7,34 @@ import { redirect } from '../../helpers/redirect';
 import CircularLoader from '../loaders/CircularLoader';
 import { notification } from '../../helpers/notification';
 import { format } from '../../helpers/format';
+import geolib from 'geolib';
 
 export default class CheckinWithCode extends Component {
     constructor(props) {
         super(props);
+
+        this.GEO_LOCATION_OPTIONS = { 
+            enableHighAccuracy: true,   // get highest possible accurance
+            timeout: 5000,              // timeout after 5 sec
+            maximumAge: 0,              // 0 sec max age
+            distanceFilter: 1           // update every 1m
+        };
 
         this.state = {
             loading: true,
             name: '',
             valid: null,
             registeredSuccessfull: false,
+            gotLocation: false,
+            distance: 'N/A',
             ...props.match.params
         }
+    }
+
+    componentWillUnmount() {
+
+        // on unmount, remove watcher
+        navigator.geolocation.clearWatch(this.watchID);
     }
 
     async componentDidMount() {
@@ -34,6 +50,8 @@ export default class CheckinWithCode extends Component {
             this.state.roomID, this.state.checkinID
         );
 
+        this.watchLocation()
+
         // update state with result
         this.setState({ 
             valid: response.data.success,
@@ -42,6 +60,43 @@ export default class CheckinWithCode extends Component {
             checkin: response.data.checkin
         });
     }
+
+    watchLocation() {
+
+        // fetch users current location and assign ID
+        this.watchID = navigator.geolocation.watchPosition(position => {
+
+            const distance = geolib.getDistance(
+                this.geopositionToObject(position).coords, {
+                latitude: this.state.checkin.coords.latitude, 
+                longitude: this.state.checkin.coords.longitude
+            });
+
+            this.setState({ 
+                gotLocation: true,
+                withinRadius: distance <= this.state.checkin.radius,
+                distance,
+            });
+        }, 
+        
+        // on error, attempt refetch
+        error => this.handleError(error), this.GEO_LOCATION_OPTIONS);
+    }
+
+    handleError = error => {
+        console.log(error);
+        this.setState({ gotLocation: false })
+        navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    geopositionToObject = geoposition => ({
+        timestamp: geoposition.timestamp,
+        coords: {
+          accuracy: geoposition.coords.accuracy,
+          latitude: geoposition.coords.latitude,
+          longitude: geoposition.coords.longitude
+        }
+    });
 
     checkIfUserHasCheckedin() {
 
@@ -151,7 +206,7 @@ export default class CheckinWithCode extends Component {
                         ? this.registerAttendance : null
                     }
                 >
-                    Register
+                    Register ({this.state.distance} m away)
                 </StyledButtonMain>
             </StyledCont>
         );
