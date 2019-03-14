@@ -26,9 +26,7 @@ export default class CheckinWithCode extends Component {
         // validate if already checkedin
         const checkedinData = this.checkIfUserHasCheckedin();
         if (checkedinData) {
-            return this.setState({
-                ...JSON.parse(checkedinData)
-            });
+            return this.setState({ ...JSON.parse(checkedinData) });
         }
 
         // validate endpoint
@@ -40,7 +38,8 @@ export default class CheckinWithCode extends Component {
         this.setState({ 
             valid: response.data.success,
             message: response.data.message,
-            loading: false
+            loading: false,
+            checkin: response.data.checkin
         });
     }
 
@@ -115,6 +114,9 @@ export default class CheckinWithCode extends Component {
             <StyledCont className="animated fadeIn cont">
                 <h1>Checkin</h1>
                 <p>Register your attendance for CST 370</p>
+                <span id="started-at">
+                    {format.getFormatedDateAndTime(this.state.checkin.timestamp)}
+                </span>
                 {this.renderInput()}
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"

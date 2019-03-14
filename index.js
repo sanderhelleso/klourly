@@ -22,6 +22,11 @@ const server = http.createServer(app);
 const port = process.env.PORT || 5000;
 const host = process.env.HOST || 'localhost';
 
+// handle stacktraces
+process.on('uncaughtException', error => {
+    console.log(error.stack);
+ });
+
 // passport setup
 googleOauth(passport);
 app.use(passport.initialize());

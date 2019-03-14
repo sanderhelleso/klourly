@@ -38,6 +38,9 @@ module.exports = app => {
         const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
         checkinRef.once('value', snapshot => {
 
+            // destruct data needed
+            const { coords, radius, timestamp } = snapshot.val();
+
             // validate ref
             if (!validateCheckinRef(snapshot, req.body.checkinID)) {
                 return invalidCheckinRef(res);
@@ -46,7 +49,12 @@ module.exports = app => {
             // send back response with success message
             res.status(200).json({ 
                 success: true,
-                message: 'Registration code is valid'
+                message: 'Registration code is valid',
+                checkin: {
+                    coords,
+                    radius,
+                    timestamp
+                }
             });
         });
     });
