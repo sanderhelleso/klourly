@@ -93,6 +93,30 @@ export default class CheckinWithCode extends Component {
         }
     }
 
+    renderOwnerImage() {
+        return (
+            <img 
+                className="animated fadeIn"
+                src={this.state.checkin.owner.photoUrl} 
+                alt="Room owner avatar" 
+            />
+        );
+    }
+
+    renderBg() {
+
+        if (!this.state.loading &&
+            this.state.valid && 
+            !this.state.registeredSuccessfull) 
+        {
+            return (
+                <InviteRoomBg url={this.state.checkin.cover} />
+            )
+        }
+
+        return null;
+    }
+
     renderInput() {
         return (
             <div className="row">
@@ -112,10 +136,11 @@ export default class CheckinWithCode extends Component {
     renderCheckin() {
         return (
             <StyledCont className="animated fadeIn cont">
-                <h1>Checkin</h1>
-                <p>Register your attendance for CST 370</p>
+                {this.renderOwnerImage()}
+                <h5>Register your attendance for</h5>
+                <h2>CST 370</h2>
                 <span id="started-at">
-                    {format.getFormatedDateAndTime(this.state.checkin.timestamp)}
+                    Opened at {format.getFormatedDateAndTime(this.state.checkin.timestamp)}
                 </span>
                 {this.renderInput()}
                 <StyledButtonMain
@@ -200,6 +225,7 @@ export default class CheckinWithCode extends Component {
 
         return (
             <StyledMain>
+                {this.renderBg()}
                 {this.renderContent()}
             </StyledMain>
         )
@@ -215,9 +241,35 @@ const StyledMain = styled.main`
         font-size: 2.5rem;
     }
 
-    p {
+    h2 {
+        margin-top: 0;
+        font-size: 2.35rem;
+        font-weight: 800;
+    }
+
+    h5 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    img {
+        position: absolute;
+        top: -40px;
+        left: -25px;
+        border-radius: 50%;
+        min-width: 110px;
+        max-width: 110px;
+        min-height: 110px;
+        max-height: 110px;
+        box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.1);
+        transform: rotate(-7.5deg);
+    }
+
+    #started-at {
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+        display: block;
         color: #9e9e9e;
-        margin-bottom: 3rem;
     }
 
     .cont {
@@ -281,4 +333,24 @@ const StyledCont = styled.div`
         box-shadow: 5px 9px 28px rgba(0, 0, 0, 0.1);
         transform: rotate(-7.5deg);
     }
+`;
+
+const InviteRoomBg = styled.div`
+    height: 101%;
+    background: linear-gradient(to right,
+    rgba(166, 81, 223, 0.8),
+    rgba(128, 26, 245, 0.8)),
+    url(${props => props.url});
+    background-size: cover;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0 50%;
+    position: fixed;
+    top: -1%;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    transform: scale(1.1);
 `;

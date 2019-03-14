@@ -35,8 +35,8 @@ module.exports = app => {
     app.post('/api/attendance/validateRegisterCode', (req, res) => {
 
         // get rooms checkin ref
-        const checkinRef = db.ref(`rooms/${req.body.roomID}/checkin`);
-        checkinRef.once('value', snapshot => {
+        const roomRef = db.ref(`rooms/${req.body.roomID}`);
+        roomRef.child('checkin').once('value', snapshot => {
 
             // destruct data needed
             const { coords, radius, timestamp } = snapshot.val();
@@ -46,16 +46,32 @@ module.exports = app => {
                 return invalidCheckinRef(res);
             }
 
-            // send back response with success message
-            res.status(200).json({ 
-                success: true,
-                message: 'Registration code is valid',
-                checkin: {
-                    coords,
-                    radius,
-                    timestamp
-                }
-            });
+            roomRef.child('owner').once('value', owner => {
+                db.ref(`users/${owner.val()}/settings`).once('value', ownerSnap => {
+
+                    // owner data
+                    const owner = {
+                        name: ownerSnap.val().displayName,
+                        photoUrl: ownerSnap.val().photoUrl
+                    }
+
+                    roomRef.child('cover/large').once('value', coverSnap => {
+
+                        // send back response with success message
+                        res.status(200).json({ 
+                            success: true,
+                            message: 'Registration code is valid',
+                            checkin: {
+                                coords,
+                                radius,
+                                timestamp,
+                                owner,
+                                cover: coverSnap.val()
+                            }
+                        });
+                    });
+                })
+            })
         });
     });
 
