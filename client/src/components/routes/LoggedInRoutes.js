@@ -29,7 +29,6 @@ class LoggedInRoutes extends Component {
                 <Messaging />
                 <UserLocation />
                 <NotificationsData />
-                <CheckinAvailableData />
                 <ActiveRoomsData />
             </Fragment>
         )

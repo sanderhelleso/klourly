@@ -50,7 +50,12 @@ export default class CheckinWithCode extends Component {
             this.state.roomID, this.state.checkinID
         );
 
-        this.watchLocation()
+        // check if radius is required for register
+        if (response.data.checkin.radius) {
+            this.watchLocation()
+        }
+
+        else this.setState({ withinRadius: true });
 
         // update state with result
         this.setState({ 
@@ -188,6 +193,12 @@ export default class CheckinWithCode extends Component {
         )
     }
 
+    canRegister() {
+        return this.state.name.length > 1 &&
+               this.state.name.length < 128 &&
+               this.state.withinRadius;
+    }
+
     renderCheckin() {
         return (
             <StyledCont className="animated fadeIn cont">
@@ -200,11 +211,8 @@ export default class CheckinWithCode extends Component {
                 {this.renderInput()}
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
-                    disabled={this.state.name.length < 2 || this.state.name.length > 128}
-                    onClick={
-                        this.state.name.length > 1 && this.state.name.length < 128
-                        ? this.registerAttendance : null
-                    }
+                    disabled={!this.canRegister()}
+                    onClick={this.canRegister() ? this.registerAttendance : null}
                 >
                     Register ({this.state.distance} m away)
                 </StyledButtonMain>

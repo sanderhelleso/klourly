@@ -86,7 +86,9 @@ class Checkin extends Component {
         if (this.props.availableForCheckin && this.props.availableForCheckin.active) {
 
             // validate that user is within distance of sat radius
-            const withinDistance = validateDistance(this.props.availableForCheckin, this.props.currentUserLocation);
+            const withinDistance = validateDistance(
+                this.props.availableForCheckin, this.props.currentUserLocation
+            );
 
             return (
                 <CheckinRoomButton 

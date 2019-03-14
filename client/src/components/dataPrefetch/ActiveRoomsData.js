@@ -6,18 +6,27 @@ import { update } from '../../helpers/update';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { setInitialActiveCheckinsAction } from '../../actions/room/checkin/setInitialActiveCheckinsAction';
 import { setInitialUsersCheckedinRoomsAction } from '../../actions/room/checkin/setInitialUsersCheckedinRoomsAction';
 import { updateActiveCheckinStatusAction } from '../../actions/room/checkin/updateActiveCheckinStatusAction';
 import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
+import { resetCheckinAvailableAction } from '../../actions/room/checkin/resetCheckinAvailableAction';
+
+import CheckinAvailableData from './CheckinAvailableData';
 
 
 class ActiveRoomsData extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { loaded: false }
     }
 
     async componentDidMount() {
+
+        // clear old checkin available state (if loaded from localstorage)
+        this.props.resetCheckinAvailableAction();
 
         // attempt to fetch users active rooms availale for checkin
         const response = await room.getActiveRooms(this.props.userID);
@@ -52,11 +61,22 @@ class ActiveRoomsData extends Component {
             });
 
             initialRead = true;
+
+            this.setState({ loaded: true })
         }
     }
 
-    render() {
+    renderAvailableForCheckins() {
+
+        if (this.state.loaded) {
+            return <CheckinAvailableData />
+        }
+
         return null;
+    }
+
+    render() {
+        return this.renderAvailableForCheckins()
     }
 }
 
@@ -72,7 +92,8 @@ const mapDispatchToProps = dispatch => {
         setInitialActiveCheckinsAction,
         updateActiveCheckinStatusAction ,
         setInitialUsersCheckedinRoomsAction,
-        setRoomAttendenceAction
+        setRoomAttendenceAction,
+        resetCheckinAvailableAction
     }, dispatch);
 }
 

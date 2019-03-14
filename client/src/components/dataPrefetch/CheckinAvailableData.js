@@ -9,17 +9,11 @@ import { connect } from 'react-redux';
 
 import { setRoomAttendenceAction } from '../../actions/room/attendence/setRoomAttendenceAction';
 import { checkinAvailableAction } from '../../actions/room/checkin/checkinAvailableAction';
-import { resetCheckinAvailableAction } from '../../actions/room/checkin/resetCheckinAvailableAction';
+
 
 class CheckinAvailableData extends Component {
     constructor(props) {
         super(props);
-    }
-
-    componentWillMount() {
-
-        // clear old checkin available state (if loaded from localstorage)
-        this.props.resetCheckinAvailableAction();
     }
 
     async componentDidMount() {
@@ -42,7 +36,8 @@ class CheckinAvailableData extends Component {
                 // validate if user has already checked into room for this checkin
                 if (this.props.usersCheckedinRooms[roomID] &&
                     this.props.usersCheckedinRooms[roomID]
-                    .hasOwnProperty(snapshot.val().checkinID)) return;
+                    .hasOwnProperty(snapshot.val().checkinID)
+                ) return;
 
                 // update checkin state
                 this.props.checkinAvailableAction({
@@ -66,7 +61,6 @@ class CheckinAvailableData extends Component {
 
                 // if initalData is not loaded, return
                 if (!initialDataLoaded) return;
-
 
                 // handle first ever attending
                 if (!this.props.attendence[roomID]) {
@@ -104,7 +98,8 @@ class CheckinAvailableData extends Component {
 const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
-        roomsAttending: state.dashboard.userData.rooms ? state.dashboard.userData.rooms.attending : [],
+        roomsAttending: state.dashboard.userData.rooms 
+            ? state.dashboard.userData.rooms.attending : [],
         availableForCheckin: state.room.availableForCheckin,
         usersCheckedinRooms: state.room.usersCheckedinRooms,
         attendence: state.room.attendence
@@ -116,7 +111,6 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         setRoomAttendenceAction,
         checkinAvailableAction,
-        resetCheckinAvailableAction
     }, dispatch);
 }
 
