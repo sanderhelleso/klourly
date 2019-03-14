@@ -8,33 +8,21 @@ import CircularLoader from '../loaders/CircularLoader';
 import { notification } from '../../helpers/notification';
 import { format } from '../../helpers/format';
 import geolib from 'geolib';
+import UserLocation from '../dataPrefetch/UserLocation';
 
 export default class CheckinWithCode extends Component {
     constructor(props) {
         super(props);
-
-        this.GEO_LOCATION_OPTIONS = { 
-            enableHighAccuracy: true,   // get highest possible accurance
-            timeout: 5000,              // timeout after 5 sec
-            maximumAge: 0,              // 0 sec max age
-            distanceFilter: 1           // update every 1m
-        };
 
         this.state = {
             loading: true,
             name: '',
             valid: null,
             registeredSuccessfull: false,
-            gotLocation: false,
+            requireLocation: false,
             distance: 'N/A',
             ...props.match.params
         }
-    }
-
-    componentWillUnmount() {
-
-        // on unmount, remove watcher
-        navigator.geolocation.clearWatch(this.watchID);
     }
 
     async componentDidMount() {
@@ -52,10 +40,8 @@ export default class CheckinWithCode extends Component {
 
         // check if radius is required for register
         if (response.data.checkin.radius) {
-            this.watchLocation()
+            this.setState({ requireLocation: true })
         }
-
-        else this.setState({ withinRadius: true });
 
         // update state with result
         this.setState({ 
@@ -66,42 +52,20 @@ export default class CheckinWithCode extends Component {
         });
     }
 
-    watchLocation() {
+    /*validateLocationRange() {
 
-        // fetch users current location and assign ID
-        this.watchID = navigator.geolocation.watchPosition(position => {
+        const distance = geolib.getDistance(
+            this.geopositionToObject(position).coords, {
+            latitude: this.state.checkin.coords.latitude, 
+            longitude: this.state.checkin.coords.longitude
+        });
 
-            const distance = geolib.getDistance(
-                this.geopositionToObject(position).coords, {
-                latitude: this.state.checkin.coords.latitude, 
-                longitude: this.state.checkin.coords.longitude
-            });
-
-            this.setState({ 
-                gotLocation: true,
-                withinRadius: distance <= this.state.checkin.radius,
-                distance,
-            });
-        }, 
-        
-        // on error, attempt refetch
-        error => this.handleError(error), this.GEO_LOCATION_OPTIONS);
-    }
-
-    handleError = error => {
-        console.log(error);
-        this.setState({ gotLocation: false })
-        navigator.geolocation.clearWatch(this.watchID);
-    }
-
-    geopositionToObject = geoposition => ({
-        timestamp: geoposition.timestamp,
-        coords: {
-          accuracy: geoposition.coords.accuracy,
-          latitude: geoposition.coords.latitude,
-          longitude: geoposition.coords.longitude
-        }
-    });
+        this.setState({ 
+            gotLocation: true,
+            withinRadius: distance <= this.state.checkin.radius,
+            distance,
+        });
+    }*/
 
     checkIfUserHasCheckedin() {
 
@@ -216,6 +180,12 @@ export default class CheckinWithCode extends Component {
                 >
                     Register ({this.state.distance} m away)
                 </StyledButtonMain>
+                <span id="radius-info">{
+                        this.state.checkin.radius 
+                        ? `Must be within ${this.state.checkin.radius}m of checkin location` 
+                        : ''
+                    }
+                </span>
             </StyledCont>
         );
     }
@@ -288,6 +258,7 @@ export default class CheckinWithCode extends Component {
 
         return (
             <StyledMain>
+                {this.state.requireLocation ? <UserLocation /> : null}
                 {this.renderBg()}
                 {this.renderContent()}
             </StyledMain>
@@ -357,6 +328,12 @@ const StyledMain = styled.main`
 
         .stats {
             margin-bottom: 4rem;
+        }
+
+        #radius-info {
+            display: block;
+            margin-top: 1.25rem;
+            color: #9e9e9e;
         }
 
         h5 {

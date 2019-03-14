@@ -28,6 +28,8 @@ class MembersList extends Component {
         // check if member list is empty
         if (this.props.membersList && this.props.membersList.length > 0) {
 
+            console.log(this.props.membersList);
+
             // attempt to fetch rooms members
             const response = await room.getRoomMembers(
                 this.props.userID, 

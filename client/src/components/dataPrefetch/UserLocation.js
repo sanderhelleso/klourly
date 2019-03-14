@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { store } from '../../store/index';
+import { geo } from '../../helpers/geo';
 import CircularLoader from '../loaders/CircularLoader';
 
 export default class UserLocation extends Component {
@@ -41,7 +42,7 @@ export default class UserLocation extends Component {
                     dispatch({
                         type: 'FETCH_USER_LOCATION_SUCCESS',
                         payload: {
-                            ...this.geopositionToObject(position),
+                            ...geo.geopositionToObject(position),
                             gotLocation: this.state.gotLocation
                         }
                     });
@@ -52,18 +53,10 @@ export default class UserLocation extends Component {
             error => this.handleError(error), this.GEO_LOCATION_OPTIONS);
         }
     };
-    
-    geopositionToObject = geoposition => ({
-        timestamp: geoposition.timestamp,
-        coords: {
-          accuracy: geoposition.coords.accuracy,
-          latitude: geoposition.coords.latitude,
-          longitude: geoposition.coords.longitude
-        }
-    });
 
     handleError = error => {
         console.log(error);
+        
         this.setState({ gotLocation: false })
         navigator.geolocation.clearWatch(this.watchID);
         store.dispatch(this.watchLocation());
