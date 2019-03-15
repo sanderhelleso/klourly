@@ -25,6 +25,7 @@ class CheckinWithCode extends Component {
             registeredSuccessfull: false,
             requireLocation: false,
             distance: 'N/A',
+            signal: false,
             ...props.match.params
         }
     }
@@ -32,7 +33,8 @@ class CheckinWithCode extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.userLocation !== this.props.userLocation) {
             if (nextProps.userLocation.gotLocation) {
-                this.validateLocationRange()
+                this.validateLocationRange();
+                this.updateSignal();
             }
         }
     }
@@ -79,6 +81,40 @@ class CheckinWithCode extends Component {
                 this.state.checkin.radius
             ) 
         });
+    }
+
+    updateSignal()  {
+
+        let signal = ''
+
+        console.log(this.props)
+        if (!this.props.userLocation.gotLocation) {
+            signal = 'NO';
+        }
+
+        else {
+
+            const accuracy = this.props.userLocation.coords.accuracy;
+
+            if (accuracy >= 1000) {
+                signal = 'WEAK'
+            }
+    
+            else if (accuracy >= 500) {
+                signal = 'DECENT'
+            }
+    
+            else if (accuracy <= 100) {
+                signal = 'STRONG'
+            }
+    
+            else if (accuracy <= 20) {
+                signal = 'VERY STRONG'
+            }
+        }
+
+
+        this.setState({ signal });
     }
 
     checkIfUserHasCheckedin() {
@@ -194,6 +230,7 @@ class CheckinWithCode extends Component {
                 >
                     Register ({this.state.distance} m away)
                 </StyledButtonMain>
+                <span id="signal">{this.state.signal ? `${this.state.signal} signal` : ''}</span>
                 <span id="radius-info">{
                         this.state.checkin.radius 
                         ? `Must be within ${this.state.checkin.radius}m of checkin location` 
@@ -352,10 +389,14 @@ const StyledMain = styled.main`
             margin-bottom: 4rem;
         }
 
-        #radius-info {
+        #radius-info, #signal {
             display: block;
             margin-top: 1.25rem;
             color: #9e9e9e;
+        }
+
+        #signal {
+            color: #757575;
         }
 
         h5 {
