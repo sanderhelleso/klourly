@@ -13,6 +13,7 @@ import UserLocation from '../dataPrefetch/UserLocation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geo } from '../../helpers/geo';
+import Signal from '../signal/Signal';
 
 class CheckinWithCode extends Component {
     constructor(props) {
@@ -31,10 +32,9 @@ class CheckinWithCode extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.userLocation !== this.props.userLocation) {
+        if (nextProps.userLocation !== this.props.userLocation && !this.state.loading) {
             if (nextProps.userLocation.gotLocation) {
                 this.validateLocationRange();
-                this.updateSignal();
             }
         }
     }
@@ -81,40 +81,6 @@ class CheckinWithCode extends Component {
                 this.state.checkin.radius
             ) 
         });
-    }
-
-    updateSignal()  {
-
-        let signal = ''
-
-        console.log(this.props)
-        if (!this.props.userLocation.gotLocation) {
-            signal = 'NO';
-        }
-
-        else {
-
-            const accuracy = this.props.userLocation.coords.accuracy;
-
-            if (accuracy >= 1000) {
-                signal = 'WEAK'
-            }
-    
-            else if (accuracy >= 500) {
-                signal = 'DECENT'
-            }
-    
-            else if (accuracy <= 100) {
-                signal = 'STRONG'
-            }
-    
-            else if (accuracy <= 20) {
-                signal = 'VERY STRONG'
-            }
-        }
-
-
-        this.setState({ signal });
     }
 
     checkIfUserHasCheckedin() {
@@ -207,10 +173,25 @@ class CheckinWithCode extends Component {
         )
     }
 
+    renderSignal() {
+
+        if (this.state.checkin.radius) {
+            return (
+                <Signal 
+                    accuracy={this.props.userLocation.coords.accuracy}
+                    gotLocation={this.props.userLocation.gotLocation} 
+                />
+            )
+        }
+
+        return null;
+    }
+
     canRegister() {
+
         return this.state.name.length > 1 &&
                this.state.name.length < 128 &&
-               this.state.WithinDistance;
+               this.state.withinDistance;
     }
 
     renderCheckin() {
@@ -230,13 +211,7 @@ class CheckinWithCode extends Component {
                 >
                     Register ({this.state.distance} m away)
                 </StyledButtonMain>
-                <span id="signal">{this.state.signal ? `${this.state.signal} signal` : ''}</span>
-                <span id="radius-info">{
-                        this.state.checkin.radius 
-                        ? `Must be within ${this.state.checkin.radius}m of checkin location` 
-                        : ''
-                    }
-                </span>
+                {this.renderSignal()}
             </StyledCont>
         );
     }
@@ -260,7 +235,7 @@ class CheckinWithCode extends Component {
         return (
             <div className="animated fadeIn cont">
                 <h1>
-                    <CheckCircle size={40} />
+                    <CheckCircle size={40} id="success-icon" />
                     Registration Successfull
                 </h1>
                 <p>Your attendance to this checkin has been successfully registered</p>
@@ -379,7 +354,7 @@ const StyledMain = styled.main`
             top: 15%;
         }
 
-        svg {
+        #success-icon {
             stroke: #12e2a3;
             margin-bottom: -0.5rem;
             margin-right: 1rem;
@@ -389,14 +364,10 @@ const StyledMain = styled.main`
             margin-bottom: 4rem;
         }
 
-        #radius-info, #signal {
+        #radius-info {
             display: block;
             margin-top: 1.25rem;
             color: #9e9e9e;
-        }
-
-        #signal {
-            color: #757575;
         }
 
         h5 {
