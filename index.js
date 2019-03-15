@@ -63,3 +63,6 @@ app.get("*", (req, res) => {
 server.listen(port, host => {
     console.log(`Magic is happening on ${port}`);
 });
+
+// set maximum timeout allowed (2s)
+server.timeout = 2000;

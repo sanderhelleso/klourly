@@ -14,7 +14,8 @@ class ChangeAvatar extends Component {
     constructor(props) {
         super(props);
 
-        this.defaultAvatar = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/default%2Fstock.jpg?alt=media&token=5e822bd2-7a98-47e3-aa7d-3ee9b0b8821e';
+                this.defaultAvatar = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/default%2Favatar.svg?alt=media&token=330f9231-7f20-431a-bfcb-0fb504aebff9';
+
     }
 
     // trigger hidden file input on avatar click
