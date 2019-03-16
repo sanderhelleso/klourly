@@ -400,8 +400,7 @@ module.exports = app => {
             // send back response with updated members list
             res.status(200).json({
                 success: true,
-                message: 'Successfully deleted member from room',
-                updatedMembersList
+                message: 'Successfully deleted member from room'
             });
         });
     });

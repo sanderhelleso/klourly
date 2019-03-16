@@ -24,8 +24,11 @@ class MembersList extends Component {
 
     componentWillReceiveProps(nextProps) {
 
+        console.log(nextProps.membersList);
+        console.log(this.props.membersList);
+
         // on new member join, update list
-        if (nextProps.membersList.length !== this.props.membersList.length &&
+        if (nextProps.membersList.length > this.props.membersList.length &&
             nextProps.membersList.length !== 0) 
         {
             this.loadMembers(this.getNonLoadedMembers(nextProps.membersList));
@@ -39,29 +42,18 @@ class MembersList extends Component {
         // check if member list is empty
         if (this.props.membersList && this.props.membersList.length > 0) {
 
+            // attempt to fetch rooms members
             // get all members not previously loaded
             const nonLoadedMembers = this.getNonLoadedMembers(this.props.membersList)
-
-            // if all members are loaded, set loaded members
-            if (nonLoadedMembers.length === 0) {
-
-                // sort list (A - Z)
-                this.props.updateRoomMembersAction(
-                    this.props.membersList.sort(
-                    (a, b) => `${a.name}`.localeCompare(`${b.name}`)
-                ));
-
-                return this.setState({ loading: false });
-            }
-
-            // attempt to fetch rooms members
-           const loadMembers = await this.loadMembers(nonLoadedMembers);
+            const loadMembers = await this.loadMembers(nonLoadedMembers);
            
             // notify user about members
            if (!loadMembers) {
-                this.setState({ error: true });
+                this.setState({ loading: false, error: true });
                 notification.error('Unable to retrieve members at this time');
             }
+
+            else this.setState({ loading: false });
         }
 
         else this.setState({ loading: false });
@@ -76,6 +68,18 @@ class MembersList extends Component {
     }
 
     async loadMembers(list) {
+
+        // if all members are loaded, set loaded members
+        if (list.length === 0) {
+
+            // sort list (A - Z)
+            this.props.updateRoomMembersAction(
+                this.props.membersList.sort(
+                (a, b) => `${a.name}`.localeCompare(`${b.name}`)
+            ));
+
+            return true;
+        }
 
         // attempt to fetch rooms members
         const response = await room.getRoomMembers(

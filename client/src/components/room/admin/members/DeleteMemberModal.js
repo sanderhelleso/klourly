@@ -45,7 +45,10 @@ class DeleteMemberModal extends Component {
 
         // if successfull, update members and close modal
         if (response.data.success) {
-            this.props.updateRoomMembersAction(response.data.updatedMembersList);
+            this.props.updateRoomMembersAction(
+                this.props.membersList.filter(m => m.id !== this.props.data.id)
+            );
+
             document.querySelector('.modal-close').click();
 
             // display notification
@@ -100,11 +103,15 @@ class DeleteMemberModal extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { membersList: state.room.activeRoom.members }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ updateRoomMembersAction }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(DeleteMemberModal);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteMemberModal);
 
 
 const StyledModal = styled.div`
