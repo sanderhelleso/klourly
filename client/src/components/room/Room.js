@@ -81,14 +81,6 @@ class Room extends Component {
         )
     }
 
-    renderTime() {
-
-        if (!this.props.activeRoom.times) 
-            return <p>This room dont have any main times sat</p>
-        
-        return <Times times={this.props.activeRoom.times} />
-    }
-
     renderRoom() {
 
         if (this.props.activeRoom.id === this.props.match.params.roomID) {
@@ -105,7 +97,7 @@ class Room extends Component {
                                 : null
                             }
                             <div className="col s12 m6 l12 room-aside-section">
-                                {this.renderTime()}
+                                <Times times={this.props.activeRoom.times} />
                             </div>
                             <div className="col s12 m6 l12 room-aside-section">
                                 {this.renderLocation()}
@@ -232,11 +224,11 @@ const StyledCont = styled.div`
 `;
 
 const StyledAddress = styled.h5`
-
     text-align: center;
     font-size: 1rem;
     max-width: 225px;
     margin: 2rem auto;
     line-height: 1.7;
+    color: #9e9e9e;
 `;
 

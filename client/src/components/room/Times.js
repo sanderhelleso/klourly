@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Calendar } from 'react-feather';
 import { DAYS } from '../../helpers/days';
 
 export default class Times extends Component {
@@ -9,16 +10,23 @@ export default class Times extends Component {
 
     createDayList(days) {
         return days.map(day => 
-                <li key={day}>
-                    {day.substring(0, 3).toUpperCase()}
-                </li>)
+            <li key={day}>
+                {day.substring(0, 3).toUpperCase()}
+            </li>
+        )
     }
 
     renderTimes() {
 
         // room dont have times
-        if (!this.props.times) return null;
-
+        if (!this.props.times) {
+            return (
+                <StyledNoTimesCont>
+                    <Calendar size={30} />
+                    <p>No default times has been set</p>
+                </StyledNoTimesCont>
+            );
+        }
 
         // find rooms active days and display list
         return Object.values(this.props.times)
@@ -47,7 +55,6 @@ export default class Times extends Component {
             );
         });
     }
-
 
     render() {
         return (
@@ -81,6 +88,20 @@ const StyledCont = styled.div`
         font-size: 1.65rem;
         font-weight: 100;
         color: #212121;
+    }
+`;
+
+const StyledNoTimesCont = styled.div`
+
+    svg {
+        margin-bottom: 0.75rem;
+        stroke: #b388ff;
+        opacity: 0.7;
+    }
+
+    p {
+        margin: 0;
+        color: #9e9e9e;
     }
 `;
 
