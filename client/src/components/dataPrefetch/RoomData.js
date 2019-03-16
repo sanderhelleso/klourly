@@ -170,13 +170,16 @@ class RoomData extends Component {
         .limitToLast(1)
         .on('child_added', snapshot => {
 
+            // handle rare case if member added allready is in list
             if (!this.state.initialMembersLoaded) return;
+
+            if (this.props.activeRoom.members.indexOf(snapshot.val()) !== -1) return;
 
             // update rooms member list
             this.props.updateRoomMembersAction(
-                this.props.membersList
-                ? [...this.props.membersList, snapshot.val()] // have members
-                : [snapshot.val()]                            // no members  
+                this.props.activeRoom.members
+                ? [...this.props.activeRoom.members, snapshot.val()] 
+                : [snapshot.val()]                             
             );
         });
     }

@@ -25,7 +25,6 @@ class MembersList extends Component {
     componentWillReceiveProps(nextProps) {
 
         // on new member join, update list
-        console.log(nextProps);
         if (nextProps.membersList.length !== this.props.membersList.length &&
             nextProps.membersList.length !== 0) 
         {
@@ -34,6 +33,8 @@ class MembersList extends Component {
     }
 
     async componentDidMount() {
+
+        this.setState({ loading: true });
 
         // check if member list is empty
         if (this.props.membersList && this.props.membersList.length > 0) {
@@ -76,10 +77,6 @@ class MembersList extends Component {
 
     async loadMembers(list) {
 
-        this.setState({ loading: true });
-
-        console.log(list);
-
         // attempt to fetch rooms members
         const response = await room.getRoomMembers(
             this.props.userID, 
@@ -102,14 +99,11 @@ class MembersList extends Component {
                 : []
             );
 
-            this.setState({
-                loading: false,
-                error: false
-            })
-
             return true;
         }
 
+        // handle error
+        this.setState({ error: true });
         return false;
     }
 

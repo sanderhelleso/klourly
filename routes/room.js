@@ -323,7 +323,11 @@ module.exports = app => {
             const userRef = db.ref(`users/${member}`);
 
             // fetch email
-            const memberRes = await firebase.auth().getUser(member);
+            try {
+                var memberRes = await firebase.auth().getUser(member);
+            }
+
+            catch(error) { console.log(error) }
 
             // retieve releated user data
             await userRef.once('value', snapshot => {
@@ -335,8 +339,8 @@ module.exports = app => {
                         name: snapshot.val().settings.displayName,
                         photoUrl: snapshot.val().settings.photoUrl,
                         checkins: snapshot.val().checkins 
-                                  ? snapshot.val().checkins[req.body.roomID] 
-                                  : null
+                            ? snapshot.val().checkins[req.body.roomID] 
+                            : null
                     });
                 }
 
