@@ -38,13 +38,17 @@ const Link = roomID => (
 
 export default NoMembersPlaceholder;
 
+
 const StyledPlaceholder = styled.div`
 
     text-align: center;
     min-height: 220px !important;
 
     img {
-        width: 256px;
+        max-width: 256px;
+        min-width: 256px;
+        min-height: 256px;
+        max-height: 256px;
     }
 
     p {

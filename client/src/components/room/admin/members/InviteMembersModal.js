@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { AlertOctagon, X, XCircle } from 'react-feather';
 import styled from 'styled-components';
 import { materializeJS } from '../../../../helpers/materialize';
@@ -19,6 +19,9 @@ class InviteMembersModal extends Component {
 
         // regex pattern for valid email
         this.REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        this.RECIPIENT_ERROR = 'Unable to add recipient. E-mail is already in list of recipients';
+        this.EMAIL_ERROR = 'Unable to add recipient. E-mail is in invalid format';
+        this.modal = null;
 
         this.state = {
             loading: false,
@@ -42,13 +45,13 @@ class InviteMembersModal extends Component {
 
         // prepare modal
         const modal = document.querySelector('#invite-member-modal');
-        const init = materializeJS.M.Modal.init(modal, { 
+        this.modal = materializeJS.M.Modal.init(modal, { 
             endingTop: '7.5',
             onCloseEnd: () => {
                 this.props.updateInviteRoomMembersModalAction(false)
             }
         });
-        init.open(); 
+        this.modal.open(); 
     }
 
     updateEmail = e => this.setState({ [e.target.name]: e.target.value });
@@ -58,7 +61,7 @@ class InviteMembersModal extends Component {
         if (this.REGEX_EMAIL.test(String(this.state.email).toLowerCase())) {
 
             if (this.state.recipients.indexOf(this.state.email) !== -1) {
-                return notification.error('Unable to add recipient. E-mail is already in list of recipients');
+                return notification.error(this.RECIPIENT_ERROR);
             }
 
             return this.setState({ 
@@ -67,7 +70,7 @@ class InviteMembersModal extends Component {
             }, () => document.querySelector('#new-email-recipent').focus());
         }
 
-        notification.error('Unable to add recipient. E-mail is in invalid format');
+        notification.error(this.EMAIL_ERROR);
     }
 
     removeRecipient = recipient => {
@@ -80,16 +83,20 @@ class InviteMembersModal extends Component {
 
         this.setState({ loading: true });
 
+        // send invitation link to each recipient in list
         const response = await invite.sendRoomInviteToRecipients(
             this.props.userID, this.props.roomID, 
             this.props.invitationCode, this.state.recipients
         );
 
+        // if successfull, reset and close
         if (response.data.success) {
             this.setState({ recipients: [] });
             notification.success(response.data.message);
+            this.modal.close();
         }
 
+        // if not, alert user of error
         else notification.error(response.data.message);
 
         this.setState({  loading: false });
@@ -114,7 +121,6 @@ class InviteMembersModal extends Component {
     }
 
     renderEmailInput() {
-
         return (
             <div className="input-field col s10 offset-s1 m9 l6 offset-l2">
                 <input 
@@ -131,7 +137,6 @@ class InviteMembersModal extends Component {
     }
 
     renderaddEmailBtn() {
-
         return (
             <StyledBtnCont className="input-field col s10 offset-s1 m3 l2">
                 <StyledButtonMain 
@@ -148,7 +153,7 @@ class InviteMembersModal extends Component {
     renderFooter() {
         if (!this.state.loading) {
             return (
-                <div className="modal-footer">
+                <Fragment>
                     <a className="modal-close close-invite waves-effect waves-purple btn-flat">Cancel</a>
                     <button 
                         className="waves-effect waves-purple btn-flat"
@@ -157,11 +162,15 @@ class InviteMembersModal extends Component {
                     >
                         Send
                     </button>
-                </div>
+                </Fragment>
             )
         }
 
-        return <LinearLoader center={false} loading={this.state.loading} />
+        return (
+            <StyledLoader>
+                <LinearLoader center={false} loading={this.state.loading} />
+            </StyledLoader>
+        )
     }
 
     render() {
@@ -181,7 +190,9 @@ class InviteMembersModal extends Component {
                         {this.renderRecipients()}
                     </StyledRecipients>
                 </StyledModalContent>
-                {this.renderFooter()}
+                <div className="modal-footer">
+                    {this.renderFooter()}
+                </div>
             </StyledModal>
         )
     }
@@ -296,3 +307,7 @@ const StyledRecipients = styled.div`
     }
 `;
 
+const StyledLoader = styled.div`
+    max-width: 70%;
+    margin: 0 auto;
+`;
