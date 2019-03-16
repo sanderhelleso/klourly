@@ -92,7 +92,7 @@ class DeleteMemberModal extends Component {
                     <p>{`Are you sure you want to remove ${this.props.data.name} 
                         from this room? Removal will delete all records and statistics
                         available for the user. This action is not reversable and 
-                        ${this.props.data.name} will need a new invitation to join the room again`}
+                        the user will need a new invitation to re-join`}
                     </p>
                 </StyledModalContent>
                 <ModalFooter>

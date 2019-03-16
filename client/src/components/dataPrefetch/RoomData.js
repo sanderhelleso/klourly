@@ -170,8 +170,6 @@ class RoomData extends Component {
         .limitToLast(1)
         .on('child_added', snapshot => {
 
-            console.log(snapshot.val());
-
             if (!this.state.initialMembersLoaded) return;
 
             // handle rare case if member added allready is in list

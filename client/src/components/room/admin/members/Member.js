@@ -30,12 +30,11 @@ class Member extends Component {
                             <h5>{this.props.data.name}</h5>
                             <p>{this.props.data.email}</p>
                         </div>
-                        <div className="col s3 m3 l2">
-                            <span 
-                                onClick={() => this.confirmDelete(this.props.data)}
-                                data-target="confirm-delete-member-modal"
-                                className="modal-trigger"
-                            >
+                        <div className="col s3 m3 l2 modal-trigger"
+                            data-target="confirm-delete-member-modal"
+                            onClick={() => this.confirmDelete(this.props.data)}
+                        >
+                            <span>
                                 <Trash2 size={30} />
                             </span>
                         </div>
@@ -68,8 +67,14 @@ const MemberCard= styled.div`
         text-align: center;
     }
 
+    .modal-trigger {
+        min-height: 2rem;
+        cursor: pointer;
+        margin-top: 1.75rem;
+    }
+
     img {
-        margin-top: 1.25rem;
+        margin-top: 1rem;
         border-radius: 50%;
         box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
         min-height: 55px;
@@ -80,20 +85,19 @@ const MemberCard= styled.div`
 
     h5 {
         font-weight: 800;
+        margin-bottom: 0.35rem;
     }
 
     p {
         color: #9e9e9e;
+        margin-top: 0;
         font-size: 0.9rem;
         opacity: 0.7;
     }
 
     svg {
         display: block;
-        margin-top: 1.75rem;
-        margin-right: 1rem;
         stroke: #ff5252;
-        cursor: pointer;
         opacity: 0.7;
         transition: 0.3s ease-in-out;
     }

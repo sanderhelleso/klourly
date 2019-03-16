@@ -24,9 +24,6 @@ class MembersList extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        console.log(nextProps.membersList);
-        console.log(this.props.membersList);
-
         // on new member join, update list
         if (nextProps.membersList.length > this.props.membersList.length &&
             nextProps.membersList.length !== 0) 
