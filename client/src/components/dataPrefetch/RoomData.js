@@ -132,8 +132,11 @@ class RoomData extends Component {
         }, 
         () => {
 
+            // set initial data load
             this.fetchAnnouncements();
+            this.fetchMembers();
 
+            // start listen on new data
             this.startAnnouncementListener();
             this.startMembersListener();
             
@@ -170,9 +173,11 @@ class RoomData extends Component {
             if (!this.state.initialMembersLoaded) return;
 
             // update rooms member list
-            this.props.updateRoomMembersAction(snapshot.val())
-
-            console.log(snapshot.val());
+            this.props.updateRoomMembersAction(
+                this.props.membersList
+                ? [...this.props.membersList, snapshot.val()] // have members
+                : [snapshot.val()]                            // no members  
+            );
         });
     }
 

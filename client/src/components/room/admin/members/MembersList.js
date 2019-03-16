@@ -22,38 +22,42 @@ class MembersList extends Component {
         }
     }
 
-    async componentDidMount() {
+    componentWillReceiveProps(nextProps) {
 
+        // on new member join, update list
+        console.log(nextProps);
+        if (nextProps.membersList.length !== this.props.membersList.length &&
+            nextProps.membersList.length !== 0) 
+        {
+            this.loadMembers(this.getNonLoadedMembers(nextProps.membersList));
+        }
+    }
+
+    async componentDidMount() {
 
         // check if member list is empty
         if (this.props.membersList && this.props.membersList.length > 0) {
 
-            console.log(this.props.membersList);
+            // get all members not previously loaded
+            const nonLoadedMembers = this.getNonLoadedMembers(this.props.membersList)
 
-            // attempt to fetch rooms members
-            const response = await room.getRoomMembers(
-                this.props.userID, 
-                this.props.roomID, 
-                this.props.membersList
-            );
+            // if all members are loaded, set loaded members
+            if (nonLoadedMembers.length === 0) {
 
-            // set members
-            if (response.data.success) {
-                this.setState({
-                    loading: false,
-                    error: false,
-                });
-
+                // sort list (A - Z)
                 this.props.updateRoomMembersAction(
-                    response.data.membersList 
-                    ? response.data.membersList.sort(
-                        (a, b) => `${a.name}`.localeCompare(`${b.name}`)) 
-                    : [] // sort list (A - Z)
-                );
+                    this.props.membersList.sort(
+                    (a, b) => `${a.name}`.localeCompare(`${b.name}`)
+                ));
+
+                return this.setState({ loading: false });
             }
 
+            // attempt to fetch rooms members
+           const loadMembers = await this.loadMembers(nonLoadedMembers);
+           
             // notify user about members
-            else {
+           if (!loadMembers) {
                 this.setState({ error: true });
                 notification.error('Unable to retrieve members at this time');
             }
@@ -62,11 +66,64 @@ class MembersList extends Component {
         else this.setState({ loading: false });
     }
 
+    getNonLoadedMembers(list) {
+        return list.filter(m => typeof m !== 'object');
+    }
+
+    getLoadedMembers() {
+        return this.props.membersList.filter(m => typeof m === 'object');
+    }
+
+    async loadMembers(list) {
+
+        this.setState({ loading: true });
+
+        console.log(list);
+
+        // attempt to fetch rooms members
+        const response = await room.getRoomMembers(
+            this.props.userID, 
+            this.props.roomID, 
+            list
+        );
+
+        // set members
+        if (response.data.success) {
+
+            // sort list (A - Z) and update
+            this.props.updateRoomMembersAction(
+
+                // cobine loaded members data from api with preloaded data from store
+                response.data.membersList 
+                ? [
+                    ...response.data.membersList, 
+                    ...this.getLoadedMembers()]
+                    .sort((a, b) => `${a.name}`.localeCompare(`${b.name}`)) 
+                : []
+            );
+
+            this.setState({
+                loading: false,
+                error: false
+            })
+
+            return true;
+        }
+
+        return false;
+    }
+
     renderMembers() {
-        if (!this.state.loading && this.props.membersList && this.props.membersList.length > 0) {
-            return this.props.membersList.map(member => {
-                return <Member key={member.id} data={member} />
-            });
+
+        // if members are loaded, render list of prepeared members with data
+        if (!this.state.loading && 
+            this.props.membersList && 
+            this.props.membersList.length > 0) 
+        {
+            return this.props.membersList
+                .filter(m => typeof m === 'object')
+                .map(m => <Member key={m.id} data={m} />
+            );
         }
 
         else if (this.state.error) return <p>Unable to retrieve members at this time</p>;
