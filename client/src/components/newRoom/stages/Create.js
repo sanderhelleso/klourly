@@ -19,6 +19,9 @@ class Create extends Component {
     constructor(props) {
         super(props);
 
+        this.COVER_ERROR    = 'Something went wrong when uploading cover image. Default image has been set';
+        this.CREATE_ERROR   = 'Something went wrong when attempting to create room. Please try again';
+
         this.state = { error: false };
     }
 
@@ -38,12 +41,15 @@ class Create extends Component {
             const coverResponse = await room.uploadRoomCovers(this.props.newRoomData.blob);
 
             // if error, let user know that default cover has been set
-            if (!coverResponse.data.success) notification.error('Something went wrong when uploading cover image. Default image has been set');
+            if (!coverResponse.data.success) 
+                notification.error(this.COVER_ERROR);
 
             // get created roomID and photoUrl
-            updatedRoomData = { id: coverResponse.data.id, cover: coverResponse.data.covers };
+            updatedRoomData = { 
+                id: coverResponse.data.id, 
+                cover: coverResponse.data.covers 
+            };
         }
-
 
         // attempt to create room with recieved ID
         let roomResponse = await room.createRoom(
@@ -62,11 +68,14 @@ class Create extends Component {
                 id: roomData.id,
                 cover: roomData.cover.medium,
                 name: roomData.name,
+                type: roomData.type,
                 times: roomData.times 
             }
             
             // update owning rooms state
             this.props.newRoomCreatedAction(
+
+                // handle case if no rooms or more
                 this.props.owning 
                 ? [...this.props.owning, roomData.id]
                 : [roomData.id]
@@ -75,21 +84,20 @@ class Create extends Component {
             // set active room, add to preview
             this.props.enterRoomAction(roomData);
             this.props.setRoomsOwningAction(
+
+                // handle case if no rooms or more
                 this.props.owningPreview 
                 ? [...this.props.owningPreview, preview] 
                 : [preview]
             );
 
             // redirect to room once ready
-            redirect.room(roomData.id);
+            return redirect.room(roomData.id);
         }       
 
-        else {
-
-            // room creation failed. Notify user and allow user to retry
-            notification.error('Something went wrong when attempting to create room. Please try again');
-            this.setState({ error: true });
-        }
+        // room creation failed. Notify user and allow user to retry
+        notification.error(this.CREATE_ERROR);
+        this.setState({ error: true });
     }
 
     render() {
@@ -101,7 +109,8 @@ const mapStateToProps = state => {
     return { 
         userID: state.auth.user.id,
         newRoomData: state.dashboard.newRoom,
-        owning: state.dashboard.userData.rooms ? state.dashboard.userData.rooms.owning : [],
+        owning: state.dashboard.userData.rooms 
+            ? state.dashboard.userData.rooms.owning : [],
         owningPreview: state.room.owningPreview
     };
 };

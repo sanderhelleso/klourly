@@ -9,6 +9,8 @@ module.exports = app => {
     // create new room
     app.post('/api/createRoom', authenticate, (req, res) => {
 
+        console.log(req.body.roomData);
+
         // create data obj and cleanup props
         const roomData = req.body.roomData;
         const radius = roomData.radius;
@@ -35,6 +37,8 @@ module.exports = app => {
         // set room id for refrence path
         userRef.child('rooms/owning').once('value', snapshot => {
             userRef.child('rooms/owning').set(
+
+                // handle case if user have more or no rooms
                 snapshot.exists()
                 ? [...snapshot.val(), roomData.id] 
                 : [roomData.id]
@@ -186,7 +190,8 @@ module.exports = app => {
     app.post('/api/updateAnnouncementReaction', authenticate, (req, res) => {
 
         // get annoucement ref
-        const announcementRef = db.ref(`rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`);
+        const route = `rooms/${req.body.roomID}/announcements/${req.body.announcementID}/reactions/${req.body.reactionName}`;
+        const announcementRef = db.ref(route);
 
         // get the value and proceed to updte counter
         announcementRef.once('value', snapshot => {

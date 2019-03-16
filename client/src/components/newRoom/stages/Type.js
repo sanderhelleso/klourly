@@ -26,9 +26,7 @@ export default class Type extends Component {
             }
         }
 
-        this.state = {
-            modalData: {}
-        };
+        this.state = { modalData: {} };
     }
 
     renderCards = () => {

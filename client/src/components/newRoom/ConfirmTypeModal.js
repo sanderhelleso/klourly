@@ -29,7 +29,7 @@ class ConfirmTypeModal extends Component {
 
     componentDidMount() {
 
-        // prepere modal
+        // prepare modal
         const modal = document.querySelectorAll('#confirm-room-purpose-modal');
         materializeJS.M.Modal.init(modal, { endingTop: '15%' });
     }
@@ -50,7 +50,9 @@ class ConfirmTypeModal extends Component {
                 }
 
                this.setState({ 
-                    minimumAttendenceLimit: parseInt(e.target.value.replace(this.NOT_NUM_REGEX, '')) 
+                    minimumAttendenceLimit: parseInt(
+                        e.target.value.replace(this.NOT_NUM_REGEX, '')
+                    ) 
                 });
             }
 
