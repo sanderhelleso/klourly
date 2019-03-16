@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { enterRoomAction } from '../../actions/room/enterRoomAction';
+import { updateRoomMembersAction} from '../../actions/room/updateRoomMembersAction';
 import { updateAnnouncementsAction } from '../../actions/room/announcement/updateAnnouncementsAction';
 import { loadNewAnnouncementsAction } from '../../actions/room/announcement/loadNewAnnouncementsAction';
 
@@ -87,8 +88,6 @@ class RoomData extends Component {
             .limitToLast(this.state.announcementLimit)
             .once('value', snapshot => {
 
-                console.log(this.state);
-
                 // update rooms announcement list to be up to date on room render
                 if (snapshot.exists()) {
 
@@ -103,8 +102,6 @@ class RoomData extends Component {
 
                     // allow user to keep fetching annoucements
                     if (fetchNew) this.props.loadNewAnnouncementsAction(false);
-
-
                 }
 
                 // notifiy listeners that they can start listening for child added
@@ -113,33 +110,69 @@ class RoomData extends Component {
         }
     }
 
+    fetchMembers() {
+
+        // prefetch data to only recieve callbacks on new data added
+        this.state.listeners.membersRef
+        .once('value', snapshot => {
+            
+            // notifiy listeners that they can start listening for child added
+            this.setState({ initialMembersLoaded: true });
+        });        
+    }
+
     setListeners() {
 
         // set db refs
         this.setState({
             listeners: { 
-                announcementsRef: firebase.database().ref(`rooms/${this.props.activeRoom.id}/announcements`) 
+                announcementsRef: firebase.database().ref(`rooms/${this.props.activeRoom.id}/announcements`),
+                membersRef: firebase.database().ref(`rooms/${this.props.activeRoom.id}/members`),
             }
-        }, () => {
+        }, 
+        () => {
 
             this.fetchAnnouncements();
 
-            // on value change, update state and announcements
-            this.state.listeners.announcementsRef
-            .orderByChild('timestamp')
-            .limitToLast(1)
-            .on('child_added', snapshot => {
+            this.startAnnouncementListener();
+            this.startMembersListener();
+            
+        });
+    }
 
-                // if initalData is not loaded, return
-                if (!this.state.initialAnnouncementsLoaded) return;
+    startAnnouncementListener() {
 
-                // update rooms announcement list
-                this.setAnnouncements({
-                    [snapshot.key]: snapshot.val()
-                });
+        // on value change, update state and announcements
+        this.state.listeners.announcementsRef
+        .orderByChild('timestamp')
+        .limitToLast(1)
+        .on('child_added', snapshot => {
+
+            // if initalData is not loaded, return
+            if (!this.state.initialAnnouncementsLoaded) return;
+
+            // update rooms announcement list
+            this.setAnnouncements({
+                [snapshot.key]: snapshot.val()
             });
+        });
 
-            this.props.loadNewAnnouncementsAction(false);
+        this.props.loadNewAnnouncementsAction(false);
+    }
+
+    startMembersListener() {
+
+        // on value change, update state and announcements
+        this.state.listeners.membersRef
+        .limitToLast(1)
+        .on('child_added', snapshot => {
+
+            if (!this.state.initialMembersLoaded) return;
+
+            // update rooms member list
+            this.props.updateRoomMembersAction(snapshot.val())
+
+            console.log(snapshot.val());
         });
     }
 
@@ -171,7 +204,8 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         enterRoomAction,
         updateAnnouncementsAction,
-        loadNewAnnouncementsAction
+        loadNewAnnouncementsAction,
+        updateRoomMembersAction
     }, dispatch);
 }
 
