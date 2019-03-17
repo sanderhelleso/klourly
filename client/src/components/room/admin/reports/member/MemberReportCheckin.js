@@ -36,7 +36,7 @@ export default class MemberReportCheckin extends Component {
                         <h5>Checkin ID</h5>
                         <h4>{this.props.data.checkinID}</h4>
                         <div className="start-end">
-                            <p><Cloud /> <span>{format.getFormatedDateAndTime(this.props.data.startTime)}</span></p>
+                            <p><Cloud /> <span>{format.getFormatedDateAndTime(this.props.data.timestamp)}</span></p>
                             <p><CloudOff /> <span>{format.getFormatedDateAndTime(this.props.data.endTime)}</span></p>
                         </div>
                     </div>

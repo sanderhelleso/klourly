@@ -117,7 +117,7 @@ class MembersList extends Component {
         {
             return this.props.membersList
                 .filter(m => typeof m === 'object')
-                .map(m => <Member key={m.id} data={m} />
+                .map(m => <Member key={m.id} data={m} roomID={this.props.roomID} />
             );
         }
 

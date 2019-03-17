@@ -23,7 +23,7 @@ class DownloadCheckinJSON extends Component {
             ? {
                 name,
                 attended: true,
-                checkedin_at: `${format.tsToDate(this.props.activeReport.attendies[member.id])} ${format.tsToHHMM(this.props.activeReport.attendies[member.id])}`
+                checkedin_at: `${format.getFormatedDateAndTime(this.props.activeReport.attendies[member.id])}}`
             } : { name, attended: false }
         });
 
@@ -35,9 +35,9 @@ class DownloadCheckinJSON extends Component {
 
         // create meta data for report
         const now = new Date().getTime();
-        const report_generated_at = `${format.tsToDate(now)} ${format.tsToHHMM(now)}`;
-        const start_time =          `${format.tsToDate(this.props.activeReport.startTime)} ${format.tsToHHMM(this.props.activeReport.startTime)}`;
-        const end_time =            `${format.tsToDate(this.props.activeReport.endTime)} ${format.tsToHHMM(this.props.activeReport.endTime)}`;
+        const report_generated_at = `${format.getFormatedDateAndTime(now)}`;
+        const start_time =          `${format.getFormatedDateAndTime(this.props.activeReport.timestamp)}`;
+        const end_time =            `${format.getFormatedDateAndTime(this.props.activeReport.endTime)}`;
 
 
         return { 

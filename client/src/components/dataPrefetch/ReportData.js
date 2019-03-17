@@ -19,10 +19,18 @@ class ReportData extends Component {
         // attempt to fetch members data
         if (this.props.membersList && this.props.membersList.length > 0) {
 
+            // check if membersList contains data or UIDs
+            let membersList;
+            if (typeof this.props.membersList[0] === 'object') {
+                membersList = this.props.membersList.map(member => member.id);
+            }
+
+            else membersList = this.props.membersList;
+
             const userResponse = await room.getRoomMembers(
                 this.props.userID, 
                 this.props.roomID, 
-                this.props.membersList.filter(uid => uid !== this.props.userID), 
+                membersList, 
                 false,
                 true
             );

@@ -19,7 +19,7 @@ class DownloadMemberPDF extends Component {
                 return {
                     [checkinID]: {
                         checkinID,
-                        start_time: format.getFormatedDateAndTime(checkinData.startTime),
+                        start_time: format.getFormatedDateAndTime(checkinData.timestamp),
                         end_time: format.getFormatedDateAndTime(checkinData.endTime),
                         checkin_total_attendence_in_percentage: checkinData.attendenceInPercent,
                         checkin_information: checkinData.attendies 

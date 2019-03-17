@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 // redux
@@ -33,7 +33,11 @@ class RoomReports extends Component {
             this.props.membersData && 
             this.props.checkins) {
             return (
-                <div>
+                <Fragment>
+                    <StyledHeader className="col s12 m6 l6">
+                        <h3>Reports</h3>
+                        <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
+                    </StyledHeader>
                     <div className="col s12 m6 l6">
                         <Filter />
                         <SelectMemberReport 
@@ -45,7 +49,7 @@ class RoomReports extends Component {
                         checkins={this.props.checkins}
                         membersData={this.props.membersData}
                     />
-                </div>
+                </Fragment>
             )
         }
 
@@ -65,30 +69,12 @@ class RoomReports extends Component {
         )
     }
 
-    renderHeader() {
-
-        if (this.props.reports && 
-            this.props.reports.loaded && 
-            this.props.membersData && 
-            this.props.checkins) {
-            return (
-                <StyledHeader className="col s12 m6 l6">
-                    <h3>Reports</h3>
-                    <p>See statistics, details and generate reports of the room, aswell as individual report of members and checkins</p>
-                </StyledHeader>
-            )
-        }
-
-        return null;
-    }
-
     render() {
         return (
             <div className="container">
                 {this.fetchData()}
                 <Back roomID={this.props.roomID} location="room" />
                 <div className="row">
-                    {this.renderHeader()}
                     {this.renderRoomReportPreviews()}
                 </div>
             </div>

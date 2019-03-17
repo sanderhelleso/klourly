@@ -8,7 +8,7 @@ export default class CheckinReportInfo extends Component {
     constructor(props) {
         super(props);
 
-        this.startTime = format.getFormatedDateAndTime(this.props.info.startTime);     
+        this.startTime = format.getFormatedDateAndTime(this.props.info.timestamp);     
         this.endTime =  format.getFormatedDateAndTime(this.props.info.endTime);           
     }
 

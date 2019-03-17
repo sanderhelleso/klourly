@@ -25,7 +25,7 @@ class DownloadPDF extends Component {
             ? {
                 name,
                 attended: true,
-                checkedin_at: `${format.tsToDate(this.props.activeReport.attendies[member.id])} ${format.tsToHHMM(this.props.activeReport.attendies[member.id])}`
+                checkedin_at: `${format.getFormatedDateAndTime(this.props.activeReport.attendies[member.id])}`
             } : { name, attended: false }
         });
 
@@ -35,9 +35,11 @@ class DownloadPDF extends Component {
     generatePDF = () => {
 
         const now = new Date().getTime();
-        const report_generated_at = `${format.tsToDate(now)} ${format.tsToHHMM(now)}`;
-        const startTime =           `${format.tsToDate(this.props.activeReport.startTime)} ${format.tsToHHMM(this.props.activeReport.startTime)}`;
-        const endTime =             `${format.tsToDate(this.props.activeReport.endTime)} ${format.tsToHHMM(this.props.activeReport.endTime)}`;
+        const report_generated_at = `${format.getFormatedDateAndTime(now)}`;
+        const startTime =           `${format.getFormatedDateAndTime(this.props.activeReport.timestamp)}`;
+        const endTime =             `${format.getFormatedDateAndTime(this.props.activeReport.endTime)}`;
+
+        console.log(startTime, 123);
 
         // create a new pdf
         const doc = new jsPDF();
@@ -50,7 +52,7 @@ class DownloadPDF extends Component {
         doc.setFontSize(14);
         doc.text(20, 35, `Room Name: ${this.props.activeRoom.name}`);
 
-        // meta data ( checkin ID / start / end)
+        // meta data (checkin ID / start / end)
         doc.setTextColor(150);
         doc.setFontSize(10);
         doc.text(140, 22, 'ID:');

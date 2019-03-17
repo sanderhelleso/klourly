@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Trash2 } from 'react-feather';
+import { redirect} from '../../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -21,7 +22,11 @@ class Member extends Component {
                 <MemberCard>
                     <div className="row">
                         <div className="col s4 m4 l4 avatar-cont">
-                            <img 
+                            <img
+                                onClick={() => redirect.roomMemberReport(
+                                    this.props.roomID, this.props.data.id
+                                )}
+                                title="See member details"
                                 src={this.props.data.photoUrl} 
                                 alt="member photo" 
                             />
@@ -81,6 +86,7 @@ const MemberCard= styled.div`
         min-width: 55px;
         max-height: 55px;
         max-width: 55px;
+        cursor: pointer;
     }
 
     h5 {
