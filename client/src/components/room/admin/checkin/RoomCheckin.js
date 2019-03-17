@@ -12,6 +12,7 @@ import ActivateWithCode from './ActivateWithCode';
 import ActivateForMembers from './ActivateForMembers';
 import DeactivateForMembers from './DeactivateForMembers';
 import DeactivateForCode from './DeactivateForCode';
+import Signal from '../../../signal/Signal';
 
 class AdminCheckin extends Component {
     constructor(props) {
@@ -28,6 +29,18 @@ class AdminCheckin extends Component {
             return <DeactivateForCode />
 
         else return null;
+    }
+
+    renderSignal() {
+
+        return (
+            <div id="signal-cont" className="col s12">
+                <Signal 
+                    accuracy={this.props.userLocation.coords.accuracy}
+                    gotLocation={this.props.userLocation.gotLocation} 
+                />
+            </div>
+        )
     }
 
     renderStatus() {
@@ -56,6 +69,7 @@ class AdminCheckin extends Component {
                     roomID={this.props.roomID}
                 />
                 <ActivateWithCode />
+                {this.renderSignal()}
             </StyledOptionCont>
         )
     }
@@ -79,7 +93,8 @@ const mapStateToProps = state => {
         activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
-        members: state.room.activeRoom.members
+        members: state.room.activeRoom.members,
+        userLocation: state.location
     };
 }
 
@@ -109,6 +124,10 @@ const StyledMain = styled.main`
         @media screen and (max-width: 1200px) {
             display: none;
         }
+    }
+
+    #signal-cont {
+        margin-top: 4rem;
     }
 
     .deactivation-cont, .options-cont {

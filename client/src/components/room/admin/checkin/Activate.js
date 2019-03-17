@@ -86,10 +86,10 @@ class Activate extends Component {
             <div className="col s12">
                 <StyledButtonMain
                     className="waves-effect waves-light btn animated fadeIn"
-                    disabled={this.props.active || this.state.loading}
+                    disabled={this.props.active || this.state.loading || !this.props.gotLocation}
                     onClick={!this.props.active ? this.activateRoom : null}
                 >
-                    Activate
+                    {!this.props.gotLocation ? 'Fetching Location' : 'Activate'}
                 </StyledButtonMain>
             </div>
         )

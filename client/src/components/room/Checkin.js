@@ -102,15 +102,19 @@ class Checkin extends Component {
             return this.setState({ available })
         }
 
-        // update location state
-        this.setState({
-            available, 
-            ...geo.isWithinDistance(
-                this.props.userLocation,
-                this.props.availableForCheckin.coords,
-                this.props.availableForCheckin.radius
-            ) 
-        });
+        // if user location, get stats
+        if (this.props.userLocation.gotLocation) {
+            
+            // update location state
+            this.setState({
+                available, 
+                ...geo.isWithinDistance(
+                    this.props.userLocation,
+                    this.props.availableForCheckin.coords,
+                    this.props.availableForCheckin.radius
+                ) 
+            });
+        }
     }
 
     setButtonMessage() {
