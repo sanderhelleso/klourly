@@ -2,7 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { Circle } from 'react-feather';
 import styled from 'styled-components';
 
-export default class Signal extends Component {
+// redux
+import { connect } from 'react-redux';
+
+
+class Signal extends Component {
     constructor(props) {
         super(props);
 
@@ -19,8 +23,10 @@ export default class Signal extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.accuracy !== nextProps.accuracy) {
+    componentWillReceiveProps(nextProps) {        
+        if (this.props.userLocation.coords.accuracy !== 
+            nextProps.userLocation.coords.accuracy) 
+        {
             this.updateSignal()
         }
     }
@@ -32,14 +38,14 @@ export default class Signal extends Component {
         let signal = '';
 
         // no singal, dont have connection
-        if (!this.props.gotLocation) {
+        if (!this.props.userLocation.gotLocation) {
             signal = 'no';
         }
 
         // have signal, determine strength
         else {
 
-            const accuracy = this.props.accuracy;
+            const accuracy = this.props.userLocation.coords.accuracy;
 
             if (accuracy >= 1000) {
                 signal = 'weak'
@@ -81,6 +87,14 @@ export default class Signal extends Component {
         return this.renderSignal()
     }
 }
+
+
+const mapStateToProps = state => {
+    return { userLocation: state.location }
+}
+
+export default connect(mapStateToProps, null)(Signal);
+
 
 const StyledSignal = styled.div`
     text-transform: uppercase;

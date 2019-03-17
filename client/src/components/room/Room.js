@@ -88,10 +88,10 @@ class Room extends Component {
                 <StyledCont className="animated fadeIn">
                     {this.renderCover()}
                     <div className="row room-flex-s">
-                        <div id="room-main" className="col s12 m12 l8">
+                        <div id="room-main" className="col s12 m12 l7">
                             <Announcements />
                         </div>
-                        <aside id="room-aside" className="col s12 m12 l4">
+                        <aside id="room-aside" className="col s12 m12 l5">
                             {this.props.activeRoom.owner.id !== this.props.userID
                                 ? <Checkin /> 
                                 : null
@@ -141,6 +141,7 @@ const StyledRoom = styled.div`
     min-height: 75vh;
     margin-bottom: 15vh;
     padding-bottom: 10vh;
+    min-width: 80%;
 `;
 
 const StyledCover = styled.div`

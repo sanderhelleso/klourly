@@ -128,6 +128,7 @@ const StyledAnnouncementPreview = styled.div`
 
     p {
         color: #757575;
+        max-width: 90%;
     }
 
     @media screen and (max-width: 600px) {

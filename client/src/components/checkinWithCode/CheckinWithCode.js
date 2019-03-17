@@ -10,7 +10,6 @@ import { format } from '../../helpers/format';
 import UserLocation from '../dataPrefetch/UserLocation';
 
 // redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geo } from '../../helpers/geo';
 import Signal from '../signal/Signal';
@@ -176,12 +175,7 @@ class CheckinWithCode extends Component {
     renderSignal() {
 
         if (this.state.checkin.radius) {
-            return (
-                <Signal 
-                    accuracy={this.props.userLocation.coords.accuracy}
-                    gotLocation={this.props.userLocation.gotLocation} 
-                />
-            )
+            return <Signal />
         }
 
         return null;

@@ -35,10 +35,7 @@ class AdminCheckin extends Component {
 
         return (
             <div id="signal-cont" className="col s12">
-                <Signal 
-                    accuracy={this.props.userLocation.coords.accuracy}
-                    gotLocation={this.props.userLocation.gotLocation} 
-                />
+                <Signal />
             </div>
         )
     }

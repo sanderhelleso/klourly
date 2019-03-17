@@ -99,7 +99,7 @@ class Checkin extends Component {
         const available = this.props.availableForCheckin && this.props.availableForCheckin.active;
 
         if (!available) {
-            return this.setState({ available })
+            return this.setState({ available });
         }
 
         // if user location, get stats
@@ -115,6 +115,8 @@ class Checkin extends Component {
                 ) 
             });
         }
+
+        else this.setState({ available });
     }
 
     setButtonMessage() {
@@ -157,12 +159,7 @@ class Checkin extends Component {
 
     renderSignal() {
         if (this.state.available) {
-            return (
-                <Signal 
-                    accuracy={this.props.userLocation.coords.accuracy}
-                    gotLocation={this.props.userLocation.gotLocation} 
-                />
-            )
+            return <Signal />
         }
 
         return null;

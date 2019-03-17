@@ -15,7 +15,11 @@ class Announcements extends Component {
         this.lastScroll; // decide if user has scrolled downwars or not
         this.noAnnouncementIcon = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-announcement-256.png?alt=media&token=b3fcffdc-682c-4c99-850e-608e01c1e330';
 
-        this.state = { loadEventFired: false };
+        this.state = { 
+            loadEventFired: false, 
+            haveAnnouncements: false,
+            checkedAnnouncements: false
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -36,11 +40,22 @@ class Announcements extends Component {
             // add event to load data on cont scroll end
             window.addEventListener('scroll', this.handleScroll);
 
+            if (!this.state.haveAnnouncements) {
+                this.setState({ haveAnnouncements: true });
+            }
+
             // render announcemnts in descending order (date posted)
             return Object.entries(this.props.announcements)
                 .sort((a, b) => b[1].timestamp - a[1].timestamp)
                 .map(([id, announcement]) => <AnnouncementPreview key={id} id={id} />
             );
+        }
+
+        else if (!this.state.checkedAnnouncements) {
+            this.setState({ 
+                haveAnnouncements: false,
+                checkedAnnouncements: true
+            })
         }
     
         return (
@@ -87,7 +102,7 @@ class Announcements extends Component {
     render() {
         return (
             <StyledAnnouncements>
-                <h2>Announcements</h2>
+                {this.state.haveAnnouncements ? <h2>Announcements</h2> : null}
                 <div id="announcements-cont" className="row">
                     {this.renderAnnouncements()}
                 </div>
@@ -141,6 +156,12 @@ const StyledAnnouncements = styled.div`
 const StyledNoAnnouncements = styled.div`
 
     text-align: center;
+    margin-top: 4rem;
+
+    img {
+        min-width: 256px;
+        min-height: 256px;   
+    }
 
     p {
         color: #9e9e9e;
