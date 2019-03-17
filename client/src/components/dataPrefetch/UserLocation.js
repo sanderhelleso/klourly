@@ -16,6 +16,8 @@ export default class UserLocation extends Component {
             distanceFilter: 1           // update every 1m
         };
 
+        this.ACCURACY_LIMIT = 30;
+
         this.state = { gotLocation: false }
     }
 
@@ -38,15 +40,19 @@ export default class UserLocation extends Component {
 
             // fetch users current location and assign ID
             this.watchID = navigator.geolocation.watchPosition(position => {
-                this.setState({ gotLocation: true }, () => {
-                    dispatch({
-                        type: 'FETCH_USER_LOCATION_SUCCESS',
-                        payload: {
-                            ...geo.geopositionToObject(position),
-                            gotLocation: this.state.gotLocation
-                        }
-                    });
-                })
+
+                // only allow high accuaracy results
+                if (position.coords.accuracy <= this.ACCURACY_LIMIT) {
+                    this.setState({ gotLocation: true }, () => {
+                        dispatch({
+                            type: 'FETCH_USER_LOCATION_SUCCESS',
+                            payload: {
+                                ...geo.geopositionToObject(position),
+                                gotLocation: this.state.gotLocation
+                            }
+                        });
+                    })
+                }
             }, 
 
             // on error, attempt refetch
