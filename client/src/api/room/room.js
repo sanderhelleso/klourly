@@ -293,7 +293,7 @@ async function activateRoom(uid, roomID, checkinData, radius, type) {
 }
 
 // deactivate the given room for checkin
-async function deactivateRoom(uid, roomID, checkinID) {
+async function deactivateRoom(uid, roomID, checkinID, type) {
     try {
         const response = await axios({
             headers: authHeader(),
@@ -302,7 +302,8 @@ async function deactivateRoom(uid, roomID, checkinID) {
             data: {
                 uid,
                 roomID,
-                checkinID
+                checkinID,
+                type
             }
         });
 

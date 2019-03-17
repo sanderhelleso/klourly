@@ -490,18 +490,24 @@ module.exports = app => {
             // values to calculate the average attendence for the room
             const totalCheckins = checkinSnap.attendies ? Object.keys(checkinSnap.attendies).length : 0;
             const totalMembers = snapshot.val().members ? snapshot.val().members.length : 0;
-            
-            roomRef.child(`checkins/${req.body.checkinID}`)
-            .update({ 
-                endTime: new Date().getTime(),
-                attendenceInPercent: Math.round((totalCheckins / totalMembers) * 100)
-            });
-        });
 
-        // send back response with success message and checkin data
-        res.status(200).json({
-            success: true,
-            message: 'Successfully deactivated room for checkin'
+            const deactivatedRoom = {
+                timestamp: snapshot.val().checkins[req.body.checkinID].timestamp,
+                endTime: new Date().getTime(),
+                attendenceInPercent: Math.round((totalCheckins / totalMembers) * 100),
+                type: req.body.type
+            }
+            
+            // update checkin ref
+            roomRef.child(`checkins/${req.body.checkinID}`)
+            .update({ ...deactivatedRoom });
+
+            // send back response with success message and checkin data
+            res.status(200).json({
+                success: true,
+                message: 'Successfully deactivated room for checkin',
+                deactivatedRoom
+            });
         });
     });
 

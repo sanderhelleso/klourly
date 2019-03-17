@@ -23,7 +23,7 @@ class Deactivate extends Component {
         // decativate the current room, disabling all future checkins
         this.props.deactivateCheckinAction(this.props.checkinID);
         const response = await room.deactivateRoom(
-            this.props.userID, this.props.roomID, this.props.checkinID
+            this.props.userID, this.props.roomID, this.props.checkinID, this.props.type
         );
 
         // display notification
@@ -52,7 +52,8 @@ const mapStateToProps = state => {
         checkinID: state.room.activeRoom.checkin.checkinID,
         userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
-        active: state.room.activeRoom.checkin.active
+        active: state.room.activeRoom.checkin.active,
+        type: state.room.activeRoom.checkin.type
     };
 }
 

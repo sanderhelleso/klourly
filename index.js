@@ -65,4 +65,4 @@ server.listen(port, host => {
 });
 
 // set maximum timeout allowed (2s)
-server.timeout = 2000;
+//server.timeout = 2000;
