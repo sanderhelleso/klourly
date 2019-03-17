@@ -193,6 +193,7 @@ const StyledCont = styled.div`
 
     #room-main {
         border-right: 1px solid #eeeeee;
+        min-height: 70vh;
 
         @media screen and (max-width: 1000px) {
             border-right: none;
@@ -200,6 +201,7 @@ const StyledCont = styled.div`
             padding-top: 7rem;
             margin-top: 4rem;
             padding-bottom: 4rem;
+            min-height: none;
         }
     }
 
