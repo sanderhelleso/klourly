@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { redirect } from '../../../../../helpers/redirect';
+import { format } from '../../../../../helpers/format';
+import { ArrowRight } from 'react-feather';
 import Chart from '../Chart';
 
 // redux
@@ -26,14 +28,20 @@ class CheckinReportPreview extends Component {
 
     render() {
         return (
-            <div className="col s12 m6 l4">
+            <div className="col s12 m10 offset-m1 l6">
                 <StyledPreview className="col s12">
                     <h3 id="checkin-ID">#{this.props.data.checkinID}</h3>
+                    <div id="times">
+                        <span>Opened at</span>
+                        <p>{format.getFormatedDateAndTime(this.props.data.timestamp)}</p>
+                        <span>Closed at</span>
+                        <p>{format.getFormatedDateAndTime(this.props.data.endTime)}</p>
+                    </div>
+                    <div className="attendence">
+                        <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
+                        <h5>Attendance</h5>
+                    </div>
                     <div className="col s12 information">
-                        <div className="col s12 attendence">
-                            <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
-                            <h5>Attendance</h5>
-                        </div>
                         <div className="col s12">
                             <a 
                                 className="waves-effect waves-light btn-flat see-details"
@@ -42,7 +50,7 @@ class CheckinReportPreview extends Component {
                                     this.props.data.checkinID
                                 )}
                             >
-                                See Details
+                                See Details <ArrowRight size={20} />
                             </a>
                         </div>
                     </div>
@@ -64,18 +72,38 @@ export default connect(mapStateToProps, mapDispatchToProps)(CheckinReportPreview
 
 
 const StyledPreview = styled.div`
-    margin: 1rem 3rem;
+    margin: 1rem 0;
     padding: 0 !important;
-    border-radius: 12px;
-    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
+    border-radius: 6px;
+    box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.15);
+    transform: scale(1.01);
     background: #DA22FF;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 250px !important;
+    max-height: 250px !important;
     color: #ffffff;
     position: relative;
+
+    #times {
+        text-align: left;
+        position: absolute;
+        left: 1rem;
+        top: 0.5rem;
+        opacity: 0.9;
+
+        span {
+            opacity: 0.8;
+            font-size: 0.7rem;
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.8rem;
+        }
+    }
 
     #checkin-ID {
         position: absolute;
@@ -97,22 +125,38 @@ const StyledPreview = styled.div`
     }
 
     .see-details {
-        margin-top: 1.5rem;
         font-size: 0.9rem;
-        border: 1.25px solid #ffffff;
         color: #ffffff;
-        line-height: 35px;
-        padding: 0 25px;
+        position: absolute;
+        bottom: 1rem;
+        right: 0.5rem;
+
+        svg {
+            margin-bottom: -5px;
+            opacity: 0.5;
+            margin-left: 0.25rem;
+        }
+
+        @media screen and (max-width: 320px) {
+
+            font-size: 0.7rem;
+
+            svg {
+                margin-left: 0.10rem;
+            }
+        }
     }
 
 
     .attendence {
-
         opacity: 0.6;
-        position: relative;
+        position: absolute;
+        left: 2rem;
+        bottom: 0.6rem;
+        padding: 1rem 0;
 
         h3 {
-            font-size: 3.9rem;
+            font-size: 5rem;
             font-weight: 100;
             margin: 0;
             margin-top: 1rem;
