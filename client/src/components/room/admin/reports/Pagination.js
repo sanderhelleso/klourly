@@ -40,10 +40,10 @@ class Pagination extends Component {
                 <li key={index}
                     onClick={() => this.calculateNextIndex(index)}
                     className={`waves-effect animated fadeIn 
-                                ${index === this.props.reports.options.index + 1 
-                                    ? 'active' 
-                                    : ''
-                                }`}
+                        ${index === this.props.reports.options.index + 1 
+                        ? 'active' 
+                        : ''
+                    }`}
                 >
                     <a>{index}</a>
                 </li>
@@ -76,6 +76,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+
 
 const StyledPagination = styled.div`
     min-height: 60px !important;

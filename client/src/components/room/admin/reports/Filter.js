@@ -47,7 +47,6 @@ class Filter extends Component {
 
     updateFilter = option => {
 
-        console.log(option);
         this.props.updateRoomReportsFilterAction({
             by: option.name,
             time: option.time
@@ -88,9 +87,7 @@ class Filter extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
-        filter: state.room.activeRoom.reports.options.filter
-    }
+    return { filter: state.room.activeRoom.reports.options.filter }
 }
 
 const mapDispatchToProps = dispatch => {

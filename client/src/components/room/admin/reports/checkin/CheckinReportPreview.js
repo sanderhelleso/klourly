@@ -15,8 +15,12 @@ class CheckinReportPreview extends Component {
 
     generateChartData() {
         return {
-            labels: this.props.data.attendies.map(attendie => attendie.name),
-            dataset: this.props.data.attendies.map(attendie => attendie.checkins[this.props.data.checkinID])
+            labels: this.props.data.attendies.map(
+                attendie => attendie.name
+            ),
+            dataset: this.props.data.attendies.map(
+                attendie => attendie.checkins[this.props.data.checkinID]
+            )
         }
     }
 
@@ -24,14 +28,13 @@ class CheckinReportPreview extends Component {
         return (
             <div className="col s12 m6 l4">
                 <StyledPreview className="col s12">
+                    <h3 id="checkin-ID">#{this.props.data.checkinID}</h3>
                     <div className="col s12 information">
-                        <div className="col s6 attendence">
+                        <div className="col s12 attendence">
                             <h3>{this.props.data.attendenceInPercent}<span>%</span></h3>
-                            <h5>Attendence</h5>
+                            <h5>Attendance</h5>
                         </div>
-                        <div className="col s6 checkinID">
-                            <h5>Checkin ID</h5>
-                            <h3>{this.props.data.checkinID}</h3>
+                        <div className="col s12">
                             <a 
                                 className="waves-effect waves-light btn-flat see-details"
                                 onClick={() => redirect.roomCheckinReport(
@@ -50,9 +53,7 @@ class CheckinReportPreview extends Component {
 }
 
 const mapStateToProps = state => {
-    return { 
-        roomID: state.room.activeRoom.id,
-    }
+    return { roomID: state.room.activeRoom.id }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -61,41 +62,34 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckinReportPreview);
 
+
 const StyledPreview = styled.div`
     margin: 1rem 3rem;
     padding: 0 !important;
     border-radius: 12px;
     box-shadow: 0px 9px 28px rgba(0, 0, 0, 0.09);
-    background-color: #ffffff;
+    background: #DA22FF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     min-height: 300px;
     max-height: 300px;
+    color: #ffffff;
+    position: relative;
 
-    .chart {
-
-        position: relative;
-
-        span {
-            position: absolute;
-            display: block;
-            padding: 0.25rem 1rem;
-            top: 10px;
-            right: 10px;
-            color: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #ffffff;
-            font-size: 0.8rem;
-            opacity: 0.5;
-            margin-bottom: 25px;
-        }
-
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        padding: 0;
-        background: #B24592;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    #checkin-ID {
+        position: absolute;
+        top: -1rem;
+        right: 1rem;
+        font-size: 0.8rem;
+        opacity: 0.5;
     }
+
+    .information .col {
+        min-width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    }   
 
     .information {
         padding: 1rem;
@@ -105,32 +99,15 @@ const StyledPreview = styled.div`
     .see-details {
         margin-top: 1.5rem;
         font-size: 0.9rem;
-        color: #bdbdbd;
-        border: 1px solid #bdbdbd;
-        padding: 0 10px;
+        border: 1.25px solid #ffffff;
+        color: #ffffff;
+        line-height: 35px;
+        padding: 0 25px;
     }
 
-    .checkinID {
-
-        margin-top: 0.8rem;
-
-        h5 {
-            font-size: 1rem;
-            margin: 0.35rem 0;
-            color: #9e9e9e;
-            opacity: 0.8;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            margin: 0;
-            font-weight: 600;
-        }
-    }
 
     .attendence {
 
-        color: #9e9e9e;
         opacity: 0.6;
         position: relative;
 
@@ -145,7 +122,6 @@ const StyledPreview = styled.div`
                 display: inline-block;
                 margin-left: 5px;
                 font-weight: 400;
-                opacity: 0.8;
             }
         }
 
@@ -157,18 +133,6 @@ const StyledPreview = styled.div`
             margin-top: -15.5px;
             font-weight: 400;
             opacity: 0.8;
-        }
-    }
-
-    @media screen and (max-width: 1300px) {
-        .information .col {
-            min-width: 100%;
-            text-align: center;
-            margin-bottom: 2rem;
-        }   
-
-        .see-details {
-            padding: 0 25px;
         }
     }
 `;
