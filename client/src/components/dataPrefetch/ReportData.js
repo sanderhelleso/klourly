@@ -17,7 +17,7 @@ class ReportData extends Component {
     async componentDidMount() {
 
         // attempt to fetch members data
-        if (this.props.membersList && this.props.membersList.length > 0) {
+        if (this.props.membersList && this.props.membersList.length > 0 && !this.props.membersData) {
 
             // check if membersList contains data or UIDs
             let membersList;
@@ -43,7 +43,8 @@ class ReportData extends Component {
 
         // attempt to fetch the rooms checkins
         const checkinResponse = await report.getRoomReports(
-                this.props.userID, this.props.roomID);
+            this.props.userID, this.props.roomID
+        );
 
         // if fetch was successfull, update checkins state
         if (checkinResponse.data.success) {
