@@ -4,7 +4,7 @@ import { StyledButtonMain } from '../styles/buttons';
 import { attendence } from '../../api/room/attendence';
 import { format } from '../../helpers/format';
 import { notification } from '../../helpers/notification';
-import validateDistance from '../../helpers/validateDistance';
+import { geo } from '../../helpers/geo';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -20,7 +20,19 @@ class Checkin extends Component {
     constructor(props) {
         super(props);
 
+        this.MIN = 60000;
+
         this.state = { loading: false };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.userLocation !== nextProps.userLocation) {
+            this.validateLocationRange();
+        }
+    }
+
+    componentDidMount() {
+        this.validateLocationRange();
     }
 
     registerAttendence = async () => {
@@ -34,6 +46,16 @@ class Checkin extends Component {
         );
 
         if (response.data.success) {
+
+            // disable checkin mode and change button message
+            this.setState({ 
+                available: false,
+                recentCheckinSuccess: true 
+            }, () => {
+                setTimeout(() => {
+                    this.setState({ recentCheckinSuccess: false })
+                }, this.MIN) // change back to default message after 1 min
+            });
 
             // update users checked in rooms
             this.props.updateUsersCheckedinRoomsAction({
@@ -69,25 +91,59 @@ class Checkin extends Component {
         this.setState({ loading: false });
     }
 
-    renderCheckinBtn() {
+    validateLocationRange = () => {
 
         // validate that room is available
         const available = this.props.availableForCheckin && this.props.availableForCheckin.active;
 
-        // validate that user is within distance of sat radius
-        let withinDistance = false;
-        if (available) {
-            withinDistance = validateDistance(this.props.availableForCheckin, this.props.currentUserLocation);
+        if (!available) {
+            return this.setState({ available })
         }
+
+        // update location state
+        this.setState({
+            available, 
+            ...geo.isWithinDistance(
+                this.props.userLocation,
+                this.props.availableForCheckin.coords,
+                this.props.availableForCheckin.radius
+            ) 
+        });
+    }
+
+    setButtonMessage() {
+
+        if (this.state.recentCheckinSuccess) {
+            return 'Registered';
+        }
+
+        else if (this.state.available) {
+            return `Register (${this.state.distance}m away)`;
+        }
+
+        else return 'Unavailable'
+    }
+
+    renderCheckinBtn() {
 
         return (
             <div>
                 <StyledButtonMain 
                     className="waves-effect waves-light btn animated fadeIn"
-                    disabled={available && withinDistance ? false : true || this.state.loading}
-                    onClick={available && withinDistance ? this.registerAttendence : null}
+                    title="Register your attendace for this checkin"
+                    disabled={
+                        !this.state.available || 
+                        !this.state.withinDistance || 
+                        this.state.loading ? true : false
+                    }
+                    onClick={
+                        this.state.available &&
+                        this.state.withinDistance 
+                        ? this.registerAttendence 
+                        : null
+                    }
                 >
-                    {available ? 'Checkin' : 'Unavailable'}
+                    {this.setButtonMessage()}
                 </StyledButtonMain>
             </div>
         )
@@ -111,7 +167,7 @@ const mapStateToProps = state => {
         userID: state.auth.user.id,
         availableForCheckin: state.room.availableForCheckin[state.room.activeRoom.id],
         attendence: state.room.attendence[state.room.activeRoom.id],
-        currentUserLocation: state.location
+        userLocation: state.location
     }
 }
 
