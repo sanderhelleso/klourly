@@ -16,8 +16,11 @@ class ReportData extends Component {
 
     async componentDidMount() {
 
-        // attempt to fetch members data
-        if (this.props.membersList && this.props.membersList.length > 0 && !this.props.membersData) {
+        // attempt to fetch members data, if data is already loaded, dont reload
+        if (this.props.membersList && 
+            this.props.membersList.length > 0 &&
+            !this.props.membersData) 
+        {
 
             // check if membersList contains data or UIDs
             let membersList;
@@ -41,14 +44,18 @@ class ReportData extends Component {
             }
         }
 
-        // attempt to fetch the rooms checkins
-        const checkinResponse = await report.getRoomReports(
-            this.props.userID, this.props.roomID
-        );
+        // fetch report data if not previosly loaded
+        if (!this.props.reportsData) {
 
-        // if fetch was successfull, update checkins state
-        if (checkinResponse.data.success) {
-            this.props.setRoomReportsAction(checkinResponse.data.checkins);
+            // attempt to fetch the rooms checkins
+            const checkinResponse = await report.getRoomReports(
+                this.props.userID, this.props.roomID
+            );
+
+            // if fetch was successfull, update checkins state
+            if (checkinResponse.data.success) {
+                this.props.setRoomReportsAction(checkinResponse.data.checkins);
+            }
         }
     }
 
@@ -63,7 +70,8 @@ const mapStateToProps = state => {
         roomID: state.room.activeRoom.id,
         checkins: state.room.activeRoom.checkins,
         membersList: state.room.activeRoom.members,
-        membersData: state.room.activeRoom.membersData
+        membersData: state.room.activeRoom.membersData,
+        reportsData: state.room.activeRoom.reports
     }
 }
 
