@@ -11,7 +11,7 @@ export default class ActivateWithCode extends Component {
 
     render() {
         return (
-            <div className="col s12 m12 l6">
+            <div className="col s12 m12 l6 activate-cont">
                 <h5>With Generated Code</h5>
                 <img src={this.ICON} alt="Members icon" />
                 <p>Activate with a generated link. Users do not need to have an account to register.</p>

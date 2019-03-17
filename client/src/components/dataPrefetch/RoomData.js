@@ -173,10 +173,19 @@ class RoomData extends Component {
             if (!this.state.initialMembersLoaded) return;
 
             // handle rare case if member added allready is in list
-            if (
-                this.props.activeRoom.members.indexOf(snapshot.val()) !== -1 ||
-                this.props.activeRoom.members.filter(m => m.id === snapshot.val()).length > 0
-            ) return;
+           if (this.props.activeRoom.members) {
+                if (this.props.activeRoom.members.indexOf(snapshot.val()) !== -1) {
+                    return;
+                }
+
+                else {
+                    const filteredList = this.props.activeRoom.members.filter(m => m.id === snapshot.val());
+                    
+                    if (filteredList && filteredList.length > 0) {
+                        return;
+                    }
+                }
+           }
 
             // update rooms member list
             this.props.updateRoomMembersAction(

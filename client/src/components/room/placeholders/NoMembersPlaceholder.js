@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { redirect } from '../../../helpers/redirect';
 
 const NO_MEMBERS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-members.svg?alt=media&token=9c221e13-1c83-4aa7-8b9b-30a56508db12';
-const NO_CHECKINGS_ICON = 'https://firebasestorage.googleapis.com/v0/b/klourly-44ba2.appspot.com/o/illustrations%2Fno-checkins.svg?alt=media&token=07990293-1212-4fc2-8fbf-e07e704aad97';
 const INVITE_TXT = 'This room dont have any members yet. Go and spread the word by using the invitation link above!';
 const CHECKIN_TXT = 'This room dont have any members yet so we cant perform a checkin session. Invite some members to the room and try again.';
 
@@ -18,7 +17,7 @@ class NoMembersPlaceholder extends Component {
         return (
             <StyledPlaceholder className="col s12 m12 l12 animated fadeIn">
                 <img 
-                    src={this.props.text === 'invite' ? NO_MEMBERS_ICON : NO_CHECKINGS_ICON} 
+                    src={NO_MEMBERS_ICON} 
                     alt="No members in this room" 
                 />
                 <p>
@@ -55,8 +54,8 @@ const StyledPlaceholder = styled.div`
         color: #9e9e9e;
         font-weight: 400;
         max-width: 465px;
-        margin: 1rem auto;
-        margin-bottom: ${props => props.gotMembers ? 1 : 1.25}rem;
+        margin: 0 auto;
+        margin-bottom: 2rem !important;
     }
 `;
 

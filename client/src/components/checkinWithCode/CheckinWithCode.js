@@ -320,6 +320,11 @@ const StyledMain = styled.main`
         font-size: 1.5rem;
     }
 
+    p {
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+    }
+
     img {
         position: absolute;
         top: -40px;

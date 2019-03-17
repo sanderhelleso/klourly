@@ -40,6 +40,8 @@ class Activate extends Component {
         // validate that checkin was successfully started
         if (response.data.success) {
 
+            window.scrollTo(0, 0);
+
             // get checkin ref of newly generated checkin
             const checkinID = response.data.checkinData.checkinID;
             const path = `rooms/${this.props.roomID}/checkins/${checkinID}`;

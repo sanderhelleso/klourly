@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import BackToRoom from '../../BackToRoom';
 import CheckinStatus from './CheckinStatus';
 import RadiusOptions from './RadiusOptions';
-import NoMembersPlaceholder from '../../placeholders/NoMembersPlaceholder';
 import ActivateWithCode from './ActivateWithCode';
 import ActivateForMembers from './ActivateForMembers';
 import DeactivateForMembers from './DeactivateForMembers';
@@ -52,30 +51,13 @@ class AdminCheckin extends Component {
                 className="row animated fadeIn options-cont"
             >
                 <span>or</span>
-                <ActivateForMembers />
+                <ActivateForMembers 
+                    members={this.props.members}
+                    roomID={this.props.roomID}
+                />
                 <ActivateWithCode />
             </StyledOptionCont>
         )
-    }
-
-    renderComponent() {
-
-        // cant perform checkin if room dont have any members
-        if (!this.props.members || this.props.members.length === 0) {
-            return (
-                <NoMembersPlaceholder 
-                    text="checkin"
-                    roomID={this.props.roomID} 
-                    includeLink={true} 
-                />
-            );
-        }
-
-        return (
-            <Fragment>
-                {this.renderStatus()}
-            </Fragment>
-        );
     }
 
     render() {
@@ -84,7 +66,7 @@ class AdminCheckin extends Component {
                 <h1>Checkin</h1>
                 <BackToRoom id={this.props.roomID} />
                 <div className="row">
-                    {this.renderComponent()}
+                    {this.renderStatus()}
                 </div>
             </StyledMain>
         )
@@ -174,7 +156,17 @@ const StyledOptionCont = styled.div`
         color: #e0e0e0;
         opacity: 0.7;
         z-index: -1;
+
+        @media screen and (max-width: 1000px) {
+            top: 38.5%;
+        }
     } 
+
+    @media screen and (max-width: 1000px) {
+        .activate-cont {
+            margin-bottom: 12.5rem;
+        }
+    }
 `;
 
 const StyledHeader = styled.div`
