@@ -14,6 +14,7 @@ import { checkinAvailableAction } from '../../actions/room/checkin/checkinAvaila
 import { updateUsersCheckedinRoomsAction } from '../../actions/room/checkin/updateUsersCheckedinRoomsAction';
 
 import Attendence from './Attendence';
+import Signal from '../signal/Signal';
 
 
 class Checkin extends Component {
@@ -22,7 +23,7 @@ class Checkin extends Component {
 
         this.MIN = 60000;
 
-        this.state = { loading: false };
+        this.state = { loading: false, available: false };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -50,6 +51,7 @@ class Checkin extends Component {
             // disable checkin mode and change button message
             this.setState({ 
                 available: false,
+                withinDistance: false,
                 recentCheckinSuccess: true 
             }, () => {
                 setTimeout(() => {
@@ -125,7 +127,6 @@ class Checkin extends Component {
     }
 
     renderCheckinBtn() {
-
         return (
             <div>
                 <StyledButtonMain 
@@ -134,7 +135,8 @@ class Checkin extends Component {
                     disabled={
                         !this.state.available || 
                         !this.state.withinDistance || 
-                        this.state.loading ? true : false
+                        this.state.loading 
+                        ? true : false
                     }
                     onClick={
                         this.state.available &&
@@ -149,12 +151,26 @@ class Checkin extends Component {
         )
     }
 
+    renderSignal() {
+        if (this.state.available) {
+            return (
+                <Signal 
+                    accuracy={this.props.userLocation.coords.accuracy}
+                    gotLocation={this.props.userLocation.gotLocation} 
+                />
+            )
+        }
+
+        return null;
+    }
+
     render() {
         return (
             <CheckinCont className="col s12">
                 <div id="attendance-cont">
                     <Attendence />
                     {this.renderCheckinBtn()}
+                    {this.renderSignal()}
                 </div>
             </CheckinCont>
         )

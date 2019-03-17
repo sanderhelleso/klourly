@@ -67,7 +67,7 @@ export default class Signal extends Component {
             return (
                 <Fragment>
                     <StyledSignal id="signal">
-                        <Circle size={20} stroke={this.state.color} />
+                        <Circle stroke={this.state.color} />
                         {this.state.signal} signal
                     </StyledSignal>
                 </Fragment>
@@ -88,12 +88,12 @@ const StyledSignal = styled.div`
     letter-spacing: 1px;
     margin-top: 2rem;
     font-size: 0.9rem;
-    opacity: 0.8;
+    opacity: 0.7;
     
     svg {
-        margin-bottom: -0.35rem;
+        margin-bottom: -0.225rem;
         margin-right: 0.45rem;
-        height: 1.2rem;
-        width: 1.2rem;
+        height: 1rem;
+        width: 1rem;
     }
 `;
