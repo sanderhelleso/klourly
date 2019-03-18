@@ -58,6 +58,15 @@ const roomReducer = (state = initialState, action) => {
                 },
             }
 
+        case 'SET_MEMBERS_DATA':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    membersData: action.payload
+                },
+            }
+
         case 'UPDATE_ROOM_RADIUS_FOR_CHECKIN':
             return {
                 ...state,

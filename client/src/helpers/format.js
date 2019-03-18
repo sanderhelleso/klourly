@@ -5,7 +5,8 @@ export const format = {
     getPercentage,
     tsToHHMM,
     getFormatedDateAndTime,
-    dateStringToTs
+    dateStringToTs,
+    validateMembers
 }
 
 // capitalize given string
@@ -47,4 +48,12 @@ function removeByKey (obj, deleteKey) {
 
 function getPercentage(num1, num2) {
     return Math.round((num1 / num2) * 100);
+}
+
+function validateMembers(membersList) {
+    if (typeof membersList[0] === 'object') {
+        return membersList.map(m => m.id);
+    }
+
+    return membersList;
 }

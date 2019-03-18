@@ -5,10 +5,12 @@ import { notification } from '../.././../../helpers/notification';
 import { room } from '../../.././../api/room/room';
 import { token } from '../../.././../api/messaging/token';
 import { update } from '../../../../helpers/update';
+import { format } from '../../../../helpers/format';
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { updateActiveCheckinStatusAction } from '../../../../actions/room/checkin/updateActiveCheckinStatusAction';
 import { activateCheckinAction } from '../../../../actions/room/checkin/activateCheckinAction';
 
@@ -69,7 +71,7 @@ class Activate extends Component {
                 // send push notifications to subscribed room members
                 token.getRoomMembersToken(
                     this.props.userID, 
-                    response.data.checkinData.membersList, 
+                    format.validateMembers(this.props.members), 
                     this.props.notificationData
                 );
             }
@@ -99,7 +101,7 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
-        totalMembers: state.room.activeRoom.members,
+        members: state.room.activeRoom.members,
         activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
         radiusOption: state.room.activeRoom.checkin.radius,

@@ -443,27 +443,21 @@ module.exports = app => {
             [checkinID]: checkinRefData
         });
 
-        roomRef.once('value', snapshot => {
+        const checkinData =  {
+            checkinID,
+            ...checkinRefData
+        }
 
-            const checkinData =  {
-                checkinID,
-                ...checkinRefData,
-                membersList: snapshot.val().members,
-            }
+        // add link if type is 'code'
+        if (req.body.type === 'code') {
+            checkinData.checkinLink = checkinLink;
+        }
 
-            // clean up unneeded props if type is 'code'
-            if (req.body.type === 'code') {
-                delete checkinData.membersList;
-                delete checkinData.totalMembers;
-                checkinData.checkinLink = checkinLink;
-            }
-
-            // send back response with success message and checkin data
-            res.status(200).json({
-                success: true,
-                message: 'Successfully activated room for checkin',
-                checkinData
-            });
+        // send back response with success message and checkin data
+        res.status(200).json({
+            success: true,
+            message: 'Successfully activated room for checkin',
+            checkinData
         });
     });
 

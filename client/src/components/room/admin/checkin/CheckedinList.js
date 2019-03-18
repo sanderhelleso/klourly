@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { room } from '../../../../api/room/room';
+import { format } from '../../../../helpers/format'
 
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import { setMembersDataAction } from '../../../../actions/room/checkin/setMembersDataAction';
 
 import CheckedInMember from './CheckedInMember';
 import CircularLoader from '../../../loaders/CircularLoader';
@@ -21,22 +24,26 @@ class CheckedinList extends Component {
         // if type is 'code' dont fetch get members
         if (this.props.type === 'code') return;
 
-        this.setState({ loading: true });
+        // only load new membersdata if not previously loaded
+        if (!this.props.membersData) {
 
-        // handle checked in members of room
-        const response = await room.getRoomMembers(
-            this.props.userID,
-            this.props.roomID,
-            this.props.membersList,
-            true
-        );
+            this.setState({ loading: true });
 
-        console.log(response.data.membersList);
+            // handle checked in members of room
+            const response = await room.getRoomMembers(
+                this.props.userID,
+                this.props.roomID,
+                this.props.membersList,
+                true
+            );
 
-        this.setState({ 
-            membersData: response.data.membersList,
-            loading: false
-        });
+            // set members data to store
+            this.props.setMembersDataAction(response.data.membersList)
+
+            this.setState({ 
+                loading: false
+            });
+        }
     }
 
     isMemberCheckedIn(uid) {
@@ -56,10 +63,10 @@ class CheckedinList extends Component {
     renderRoomMembers() {
 
         // validate that membersData is not null
-        if (this.state.membersData && this.props.activeCheckin) {
+        if (this.props.membersData && this.props.activeCheckin) {
 
             // add checkin prop to member
-            this.state.membersData.forEach(member => {
+            this.props.membersData.forEach(member => {
                 member.checkedin = this.isMemberCheckedIn(member.id);
 
                 // if checked in, add timestamp
@@ -69,7 +76,7 @@ class CheckedinList extends Component {
             });
 
             // return sorted member list, based on check in
-            return this.state.membersData
+            return this.props.membersData
                 .sort((a, b) => b.checkedin - a.checkedin)
                 .map(member => <CheckedInMember key={member.id} data={member} />
             );
@@ -79,8 +86,6 @@ class CheckedinList extends Component {
     }
 
     renderCheckedInMembersFromCode() {
-
-        console.log(this.props.activeCheckin);
 
         // validate that checkedinUsersFromCode is not null
         if (this.props.activeCheckin &&
@@ -130,13 +135,18 @@ const mapStateToProps = (state, cState) => {
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
         activeCheckin: state.room.activeCheckins[cState.checkinID],
+        membersData: state.room.activeRoom.membersData,
         membersList: cState.type === 'members' 
-            ? state.room.activeRoom.checkin.membersList
+            ? format.validateMembers(state.room.activeRoom.members)
             : null
     };
 }
 
-export default connect(mapStateToProps, null)(CheckedinList);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ setMembersDataAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckedinList);
 
 const StyledListCont = styled.div`
     padding-bottom: 4rem;
