@@ -448,8 +448,7 @@ module.exports = app => {
             const checkinData =  {
                 checkinID,
                 ...checkinRefData,
-                membersList: snapshot.val().members ? snapshot.val().members : [],
-                totalMembers: snapshot.val().members ? snapshot.val().members.length : 0
+                membersList: snapshot.val().members,
             }
 
             // clean up unneeded props if type is 'code'

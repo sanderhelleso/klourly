@@ -99,6 +99,7 @@ class Activate extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.auth.user.id,
+        totalMembers: state.room.activeRoom.members,
         activeCheckin: state.room.activeRoom.checkin,
         roomID: state.room.activeRoom.id,
         radiusOption: state.room.activeRoom.checkin.radius,

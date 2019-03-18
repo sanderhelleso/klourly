@@ -126,7 +126,7 @@ class Checkin extends Component {
         }
 
         else if (this.state.available) {
-            return `Register (${this.state.distance}m away)`;
+            return `Register (${this.state.distance ? this.state.distance : 'N/A'} m away)`;
         }
 
         else return 'Unavailable'

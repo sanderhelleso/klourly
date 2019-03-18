@@ -23,12 +23,10 @@ class Signal extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {        
-        if (this.props.userLocation.coords.accuracy !== 
-            nextProps.userLocation.coords.accuracy) 
-        {
+    componentWillReceiveProps(nextProps) { 
+        if (nextProps.userLocation !== this.props.userLocation) {
             this.updateSignal()
-        }
+        }       
     }
 
     componentDidMount = () => this.updateSignal()

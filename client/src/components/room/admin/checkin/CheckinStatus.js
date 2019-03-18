@@ -27,7 +27,7 @@ class CheckinStatus extends Component {
             <CheckinCounter
                 totalMembers={
                     this.props.type === 'members' && this.props.activeCheckin 
-                    ? this.props.activeCheckin.totalMembers
+                    ? this.props.totalMembers
                     : null
                 }
                 attendies={this.getAttendies()}
@@ -40,7 +40,7 @@ class CheckinStatus extends Component {
         if (this.props.type === "members" && this.props.activeCheckin) {
             return (
                 <CheckinPercentage
-                    totalMembers={this.props.activeCheckin.totalMembers}
+                    totalMembers={this.props.totalMembers}
                     attendies={this.getAttendies()}
                 />
             )
@@ -75,6 +75,7 @@ class CheckinStatus extends Component {
 
 const mapStateToProps = (state, cState) => {
     return { 
+        totalMembers: state.room.activeRoom.members.length,
         activeCheckin: state.room.activeCheckins[cState.checkinID],
         roomID: state.room.activeRoom.id,
         userID: state.auth.user.id,
