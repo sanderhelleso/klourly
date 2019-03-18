@@ -5,6 +5,7 @@ import { room } from '../../.././../api/room/room';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setNewReportAction } from '../../../../actions/room/checkin/setNewReportAction';
 import { deactivateCheckinAction } from '../../../../actions/room/checkin/deactivateCheckinAction';
 import { notification } from '../../../../helpers/notification';
 
@@ -26,8 +27,16 @@ class Deactivate extends Component {
             this.props.userID, this.props.roomID, this.props.checkinID, this.props.type
         );
 
-        // display notification
-        if (!response.data.success) notification.error(response.data.message);
+        // if successfully saved checkin, store and redirect
+        if (response.data.success) {
+            this.props.setNewReportAction({
+                checkinID: this.props.checkinID,
+                checkinData: response.data.deactivateRoom
+            });
+        }
+
+        // notify user about error
+        else notification.error(response.data.message);
 
         this.setState({ loading: false })
     }
@@ -58,7 +67,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ deactivateCheckinAction }, dispatch);
+    return bindActionCreators({ 
+        deactivateCheckinAction,
+        setNewReportAction 
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deactivate);

@@ -24,24 +24,24 @@ class CheckinReportPreviews extends Component {
         const filterBy = this.props.reportOptions.filter.time;
         const now = new Date().getTime();
 
-        // itterate over checkins and generate preview reports
+        // iterate over checkins and generate previews
         let filteredCheckins = Object.entries(this.props.checkins)
-        .filter(checkin => filterBy ? (checkin[1].startTime > now - filterBy) : checkin);
+        .filter(checkin => filterBy ? (checkin[1].timestamp > now - filterBy) : checkin);
 
         // set pagination length
         this.props.updateReportsPaginationLengthAction(filteredCheckins.length);
     
         // render checkin previews
-        return filteredCheckins.reverse().slice(fromIndex, toIndex)
+        return filteredCheckins.slice(fromIndex, toIndex)
         .map(([checkinID, checkinData]) => {
 
             // filter out attendies not attended
             const attendies = this.props.membersData
-                            .filter(member => 
-                                checkinData.attendies 
-                                ? Object.keys(checkinData.attendies).indexOf(member.id) !== -1
-                                : null
-                            );
+                .filter(member => 
+                checkinData.attendies 
+                ? Object.keys(checkinData.attendies).indexOf(member.id) !== -1
+                : null
+            );
 
             return <RoomReportPreview 
                         key={checkinID}

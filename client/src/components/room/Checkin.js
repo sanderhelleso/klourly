@@ -27,7 +27,9 @@ class Checkin extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.userLocation !== nextProps.userLocation) {
+        if (this.props.userLocation !== nextProps.userLocation || 
+            this.props.activeRoom !== nextProps.activeRoom) 
+        {
             this.validateLocationRange();
         }
     }
@@ -98,11 +100,10 @@ class Checkin extends Component {
         // validate that room is available
         const available = this.props.availableForCheckin && this.props.availableForCheckin.active;
 
-        if (!available) {
-            return this.setState({ available });
-        }
+        // set not available if not
+        if (!available) return this.setState({ available });
 
-        // if user location, get stats
+        // if user location and available, get stats
         if (this.props.userLocation.gotLocation) {
             
             // update location state

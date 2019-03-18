@@ -101,6 +101,18 @@ const roomReducer = (state = initialState, action) => {
                 activeCheckins: format.removeByKey(state.activeCheckins, action.payload)
             }
 
+        case 'SET_NEW_REPORT':
+            return {
+                ...state,
+                activeRoom: {
+                    ...state.activeRoom,
+                    checkins: {
+                        ...state.activeRoom.checkins,
+                        [action.payload.checkinID]: action.payload.checkinData
+                    }
+                }
+            }
+
         case 'RESET_CHECKIN_AVAILABLE':
             return {
                 ...state,
