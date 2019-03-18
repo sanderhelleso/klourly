@@ -103,6 +103,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AdminCheckin);
 
 const StyledMain = styled.main`
     position: relative;
+    min-width: 80%;
 
     h1 {
         position: absolute;

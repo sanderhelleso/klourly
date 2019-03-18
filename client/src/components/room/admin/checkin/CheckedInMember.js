@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { format } from '../../../../helpers/format';
+import { redirect } from '../../../../helpers/redirect';
 
 export default class CheckedInMember extends Component {
     constructor(props) {
@@ -24,7 +25,11 @@ export default class CheckedInMember extends Component {
 
     render() {
         return (
-            <StyledMember 
+            <StyledMember
+                onClick={() => this.props.type !== 'code'
+                    ? redirect.roomMemberReport(this.props.roomID, this.props.data.id) 
+                    : null
+                }
                 checkedin={this.props.data.checkedin}
                 type={this.props.type}
             >
@@ -46,6 +51,8 @@ const StyledMember = styled.div`
     clear: both;
     transition: 0.3s ease-in-out;
     opacity: ${props => props.checkedin || props.type === 'code' ? 1 : 0.3};
+    cursor: ${props => props.type !== 'code' ? 'pointer' : 'default'};
+
 
     img {
         border-radius: 50%;

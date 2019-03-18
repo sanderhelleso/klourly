@@ -78,7 +78,12 @@ class CheckedinList extends Component {
             // return sorted member list, based on check in
             return this.props.membersData
                 .sort((a, b) => b.checkedin - a.checkedin)
-                .map(member => <CheckedInMember key={member.id} data={member} />
+                .map(member => 
+                <CheckedInMember 
+                    key={member.id} 
+                    data={member} 
+                    roomID={this.props.roomID} 
+                />
             );
         }
 
