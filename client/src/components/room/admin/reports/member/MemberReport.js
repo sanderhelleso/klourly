@@ -83,7 +83,8 @@ class MemberReport extends Component {
     // get chart labels
     chartMemberLabels() {
         return Object.values(this.props.roomCheckins)
-            .reverse().map(checkinData => 
+            .sort((a, b) => a.endTime - b.endTime)
+            .map(checkinData => 
                 format.getFormatedDateAndTime(checkinData.endTime)
             );
     }
@@ -91,7 +92,8 @@ class MemberReport extends Component {
     // get chart data
     chartMemberData() {
         return Object.values(this.props.roomCheckins)
-            .reverse().map(checkinData => 
+            .sort((a, b) => a.endTime - b.endTime)
+            .map(checkinData => 
                 checkinData.attendies // check if room has attendies available
                 ? Object.keys(checkinData.attendies).indexOf(this.props.userData.id) !== -1
                     ? 1 // attended
