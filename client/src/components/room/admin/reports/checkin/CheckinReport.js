@@ -24,14 +24,12 @@ class CheckinReport extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
         if (this.props.membersData !== nextProps.membersData && !this.state.dataLoaded) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
     }
 
     componentDidMount() {
-
         if (this.props.membersData) {
             this.setState({ dataLoaded: true }, () => this.prepareReport());
         }
@@ -54,16 +52,18 @@ class CheckinReport extends Component {
             const checkinID =   this.props.match.params.checkinID;
             const checkinData = this.props.checkins[checkinID];
             const attendiesData = this.props.membersData.filter(member => 
-                                    checkinData && checkinData.attendies
-                                    ? Object.keys(checkinData.attendies).indexOf(member.id) !== -1
-                                    : null
-                                );
+                checkinData && checkinData.attendies
+                ? Object.keys(checkinData.attendies).indexOf(member.id) !== -1
+                : null
+            );
             
             // generate chart data
             const chartData =  {
                 labels: attendiesData.map(attendie => attendie.name),
                 dataset: attendiesData.map(attendie => attendie.checkins[checkinID])
             }
+
+            console.log(attendiesData, chartData, checkinData)
 
             // update specific checkin report state and render
             this.props.setSpecificCheckinReportAction({

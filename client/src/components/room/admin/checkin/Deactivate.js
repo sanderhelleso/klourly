@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyledButtonMain } from '../../../styles/buttons';
 import { room } from '../../.././../api/room/room';
+import { redirect } from '../../../../helpers/redirect';
 
 // redux
 import { bindActionCreators } from 'redux';
@@ -22,7 +23,6 @@ class Deactivate extends Component {
         this.setState({ loading: true })
 
         // decativate the current room, disabling all future checkins
-        this.props.deactivateCheckinAction(this.props.checkinID);
         const response = await room.deactivateRoom(
             this.props.userID, this.props.roomID, this.props.checkinID, this.props.type
         );
@@ -31,8 +31,20 @@ class Deactivate extends Component {
         if (response.data.success) {
             this.props.setNewReportAction({
                 checkinID: this.props.checkinID,
-                checkinData: response.data.deactivateRoom
+                checkinData: {
+                    ...response.data.deactivatedRoom,
+                    attendies: this.props.activeCheckins[this.props.checkinID].attendies
+                }
             });
+
+            // redirect to report
+            redirect.roomCheckinReport(this.props.roomID, this.props.checkinID);
+
+            // notify user
+            notification.success(response.data.message);
+
+            // deactivate checkin
+            this.props.deactivateCheckinAction(this.props.checkinID);
         }
 
         // notify user about error
@@ -59,6 +71,7 @@ class Deactivate extends Component {
 const mapStateToProps = state => {
     return { 
         checkinID: state.room.activeRoom.checkin.checkinID,
+        activeCheckins: state.room.activeCheckins,
         userID: state.auth.user.id,
         roomID: state.room.activeRoom.id,
         active: state.room.activeRoom.checkin.active,
