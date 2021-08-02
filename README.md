@@ -10,7 +10,7 @@
 
 <p>
 klourly provides a flexible and detailed report system for every user, session or group.  
-An open-source platform thai aims to simplify the way groups of any size perform attendance taking.
+An open-source platform that aims to simplify the way groups of any size perform attendance taking.
 The application is built with the user in mind. Attendance taking should be quick and easy for
 every user, wheter you are the one performing the attendance test or is the administrator of it.
 </p>
