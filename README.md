@@ -28,16 +28,6 @@ every user, wheter you are the one performing the attendance test or is the admi
 
 <br>
  
-## Room Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme1.jpg"></img>
-<br>
-
-
-## Rooms Overview Preview
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme2.jpg"></img>
-<br>
-
-## Log In Preview
 <img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme3.jpg"></img>
 <br>
 
