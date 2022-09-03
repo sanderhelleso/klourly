@@ -3,8 +3,6 @@
     <h1 align="center">klourly</h1>
     <br>
 </p>
- 
-<br>
 
 ## What is klourly?
 
@@ -27,9 +25,7 @@ every user, wheter you are the one performing the attendance test or is the admi
 </p>
 
 <br>
- 
-<img src="https://github.com/sanderhelleso/klourly/blob/master/client/public/img/readme/readme3.jpg"></img>
-<br>
+
 
 
 ## Authors
